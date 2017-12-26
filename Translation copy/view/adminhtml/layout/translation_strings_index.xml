@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Naxero_Translation::css/tabulator/tabulator_semantic-ui.min.css" />
+        <css src="Naxero_Translation::css/translation/core.css" />
+   </head>
+    <body>		
+        <referenceContainer name="content">		
+			<block class="Naxero\Translation\Block\Adminhtml\Strings\Index" name="strings_index" template="strings/index.phtml">
+			</block>
+        </referenceContainer>       
+    </body>
+</page>
