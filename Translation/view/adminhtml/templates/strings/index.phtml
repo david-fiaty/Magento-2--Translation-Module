@@ -2,9 +2,6 @@
 	<div id="translation-table-list">
 		<div id="translation-table-toolbar">
 			<div class="admin__form-field">
-				<fieldset class="admin__form-field">
-					<strong><?php echo __('Filters'); ?></strong>
-				</fieldset>
 				<label class="label admin__form-field-label" for="translation-group-filter">
 					<span><?php echo __('Group'); ?></span>
 				</label>
@@ -17,6 +14,18 @@
 				</div>
 			</div>
 			<div class="admin__form-field">
+				<label class="label admin__form-field-label" for="translation-type-filter">
+					<span><?php echo __('Type'); ?></span>
+				</label>
+				<div class="admin__form-field-control">
+					<?php echo $block->getSelect([
+			            'id' => 'translation-type-filter',
+			            'name' => 'translation-type-filter',
+			            'class' => 'select admin__control-select'
+			    	]); ?>	
+				</div>
+			</div>
+			<div class="admin__form-field">
 				<label class="label admin__form-field-label" for="translation-locale-filter">
 					<span><?php echo __('Locale'); ?></span>
 				</label>
@@ -24,6 +33,18 @@
 					<?php echo $block->getSelect([
 			           'id' => 'translation-locale-filter',
 			           'name' => 'translation-locale-filter',
+			           'class' => 'select admin__control-select'
+			    	]); ?>	
+				</div>
+			</div>
+			<div class="admin__form-field">
+				<label class="label admin__form-field-label" for="translation-status-filter">
+					<span><?php echo __('Status'); ?></span>
+				</label>
+				<div class="admin__form-field-control">
+					<?php echo $block->getSelect([
+			           'id' => 'translation-status-filter',
+			           'name' => 'translation-status-filter',
 			           'class' => 'select admin__control-select'
 			    	]); ?>	
 				</div>

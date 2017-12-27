@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Copyright © 2015 Naxerocommerce. All rights reserved.
+ * Copyright © 2018 David Fiaty. All rights reserved.
  */
 namespace Naxero\Translation\Controller\Adminhtml\Strings;
 
@@ -68,8 +68,8 @@ class Detail extends Action
             $fileEntity->load($fileId);
 
             //Convert to array
-            $csvString = $fileEntity->getData('file_path');
-            $csvData = $this->csvParser->getData($csvString);
+            $csvPath = $fileEntity->getData('file_path');
+            $csvData = $this->csvParser->getData($csvPath);
             
             foreach ($csvData as $row) {
                 $output[] = (object) array_combine(['key', 'value'], $row);

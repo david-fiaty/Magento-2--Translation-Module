@@ -25,6 +25,7 @@ div#translation-file-path {
     top: 0px;
     position: relative;
     word-break: break-all;
+    max-width: 50%;
 }
 
 #translation-container fieldset.admin__form-field {

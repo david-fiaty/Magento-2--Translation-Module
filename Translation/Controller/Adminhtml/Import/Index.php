@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Copyright © 2015 Naxerocommerce. All rights reserved.
+ * Copyright © 2018 David Fiaty. All rights reserved.
  */
 namespace Naxero\Translation\Controller\Adminhtml\Import;
 

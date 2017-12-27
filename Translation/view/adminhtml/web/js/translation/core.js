@@ -68,7 +68,17 @@ define([
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
-                    self.cache._(self.options.targetTable).tabulator("setData", data);
+                    // Set the table data
+                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+
+                    // Create the group filter
+                    self.createOptions('#translation-group-filter', data.filter_data.file_group);
+ 
+                    // Create the type filter
+                    self.createOptions('#translation-type-filter', data.filter_data.file_type);
+
+                    // Create the locale filter
+                    self.createOptions('#translation-locale-filter', data.filter_data.file_locale);
                 },
                 error: function (request, status, error) {
                     console.log(error);
@@ -77,6 +87,15 @@ define([
 
             // Configure the behavior
             this.setBehavior();
+        },
+
+        createOptions: function (sel, arr) {
+            var output = [];
+            $.each(arr, function(key, value)
+            {
+              output.push('<option value="'+ key +'">'+ value +'</option>');
+            });
+            this.cache._(sel).html(output.join(''));
         },
 
         setBehavior: function () {
@@ -147,7 +166,7 @@ define([
                         console.log(error);
                     }   
                 }).done(function (data) {
-                    self.cache._(self.options.targetTable).tabulator("setData", data);
+                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
                 });         
             });  
 
@@ -159,21 +178,26 @@ define([
 
         getListColumns: function () {
             return [
-                {title:"Id", field: "file_id", sorter:"number", width:25},
-                {title:"Path", field: "file_path", sorter:"string"},
-                {title:"Created", field: "file_creation_time", sorter:"string"},
-                {title:"Updated", field: "file_update_time", sorter:"string"},
-                {title:"Lines", field: "file_count", sorter:"string"},
-                {title:"Type", field: "file_type", sorter:"string"},
-                {title:"Group", field: "file_group", sorter:"string"},
-                {title:"Locale", field: "file_locale", sorter:"string"}
+                {title:"Id", field: "file_id", sorter: "number", visible: false},
+                {title:"Path", field: "file_path", sorter: "string"},
+                {title:"Created", field: "file_creation_time", sorter: "string"},
+                {title:"Updated", field: "file_update_time", sorter: "string"},
+                {title:"Lines", field: "file_count", sorter: "number"},
+                {title:"Type", field: "file_type", sorter: "string"},
+                {title:"Group", field: "file_group", sorter: "string"},
+                {title:"Locale", field: "file_locale", sorter: "string"},
+                {title:"Status", field: "file_is_active", sorter: "number", formatter:"tickCross"}
             ];
         },
 
         getDetailColumns: function () {
             return [
-                {title:"Key", field: "key", sorter:"string"},
-                {title:"Value", field: "value", sorter:"string"}
+                {title:"Key", field: "key", sorter: "string"},
+                {title:"Value", field: "value", sorter: "string", editor:"input",
+                    accessor: function(value, data, accessorParams) {
+                        console.log('accessor event:' + value);
+                    }
+                }
             ];
         },
 
@@ -209,9 +233,6 @@ define([
             // Prepare the variables
             var self = this;
 
-            // Move the panels
-            this.togglePanes(fileObj.file_id);
-
             // Create the detail table
             this.cache._(self.options.detailView).tabulator({
                 pagination: "local",
@@ -221,8 +242,12 @@ define([
                 responsiveLayout:true,
                 height:"100%",
                 columns: self.getDetailColumns(),
-                rowSelectionChanged:function(data, rows){
+                rowSelectionChanged:function(data, rows) {
                     self.cache._("#select-stats span").html(data.length);
+                },
+                cellEdited:function(cell) {
+                    //This callback is called any time a cell is edidted
+                    console.log('Cell edited event:' + cell);
                 },
             });
 
@@ -231,6 +256,9 @@ define([
 
             // Update the data
             this.updateRowDetails(fileObj.file_id);
+
+            // Move the panels
+            this.togglePanes(fileObj.file_id);
         },
 
         updateRowDetails: function (fileId) {

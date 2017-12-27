@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Copyright © 2015 Naxerocommerce. All rights reserved.
+ * Copyright © 2018 David Fiaty. All rights reserved.
  */
 namespace Naxero\Translation\Controller\Adminhtml\Data;
 
@@ -31,6 +31,11 @@ class Index extends Action
     protected $csvParser;
 
     /**
+     * @var Array
+     */
+    protected $output;
+
+    /**
      * @param Context $context
      * @param PageFactory $resultPageFactory
      */
@@ -43,6 +48,7 @@ class Index extends Action
         $this->resultJsonFactory            = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->csvParser = $csvParser;
+        $this->output = $this->prepareOutputArray();
 
         parent::__construct($context);
     }
@@ -55,8 +61,6 @@ class Index extends Action
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
-
-        $output = array();
 
         if ($this->getRequest()->isAjax()) 
         {
@@ -73,25 +77,48 @@ class Index extends Action
                 $arr = $item->getData();
 
                 // Prepare the fields
-                $arr = $this->getFieldFormats($arr);
+                $arr = $this->getFieldFormats($arr, $item);
                 $arr = $this->getSortingFields($arr);
 
                 // Store the item as an object
-                $output[] = (object) $arr;
+                $this->output['table_data'][] = (object) $arr;
             }
         }
 
+        // Remove duplicate filters
+        $this->removeDuplicateFilterValues();
+
         // Return a JSON output
-        return $result->setData($output);
+        return $result->setData($this->output);
     }
 
-    protected function getFieldFormats($arr) {
+    protected function prepareOutputArray() {
+        return [
+            'table_data' => [],
+            'filter_data' => [
+                'file_type' => [], 
+                'file_group' => [], 
+                'file_locale' => [], 
+                'file_status' => [
+                    __('Active'),
+                    __('Error')
+                ]
+            ]
+        ];
+    }
+
+    protected function removeDuplicateFilterValues() {
+        $this->output['filter_data']['file_type'] = sort(array_unique($this->output['filter_data']['file_type']));
+        $this->output['filter_data']['file_group'] = sort(array_unique($this->output['filter_data']['file_group']));
+        $this->output['filter_data']['file_locale'] = sort(array_unique($this->output['filter_data']['file_locale']));
+    }
+
+    protected function getFieldFormats($arr, $fileEntity) {
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 
         // Set the CSV row count
-        //$arr['file_count'] =  $this->countCSVRows($arr['file_content']);
-        $arr['file_count'] = '110';
+        $arr['file_count'] = $this->countCSVRows($fileEntity->getData('file_path'));
 
         // Unset the content field. Todo : better to refine query
         unset($arr['file_content']);
@@ -104,12 +131,15 @@ class Index extends Action
 
     protected function getSortingFields($arr) {
 
-        $metadata = $this->scanPath($arr['file_path']);
+        $metadata = $this->scanPath($arr);
 
         return array_merge($arr, $metadata);
     }
 
-    protected function scanPath($path) {
+    protected function scanPath($arr) {
+        $path = $arr['file_path'];
+
+        // Todo : detect themes in vendor folder
         if (
             strpos($path, 'vendor/magento') === 0) {
             $arr['file_type'] = __('Module');
@@ -123,6 +153,15 @@ class Index extends Action
             $arr['file_type'] = __('Dev');
             $arr['file_group'] = __('Dev');
         }
+        else if (strpos($path, 'app/design/frontend/Magento') === 0) {
+            $arr['file_type'] = __('Theme');
+            $arr['file_group'] = __('Core');
+        }
+        else if (strpos($path, 'app/design/frontend/') === 0
+                && strpos($path, 'app/design/frontend/Magento') === false) {
+            $arr['file_type'] = __('Theme');
+            $arr['file_group'] = __('Community');
+        }
         else if (
             strpos($path, 'vendor/') === 0 
             && strpos($path, 'vendor/magento') === false
@@ -135,12 +174,21 @@ class Index extends Action
             $arr['file_group'] = __('Undefined');
         }
 
+        // Add type filter data
+        $this->output['filter_data']['file_type'][] = $arr['file_type'];
+
+        // Add group filter data
+        $this->output['filter_data']['file_group'][] = $arr['file_group'];
+
+        // Add locale filter data
+        $this->output['filter_data']['file_locale'][] = basename($path, '.csv');
+
         return $arr;
     }   
 
-    protected function countCSVRows($csvString) {
+    protected function countCSVRows($csvPath) {
         // Parse the string
-        $csvData = $this->csvParser->getData($csvString);
+        $csvData = $this->csvParser->getData($csvPath);
 
         // Return the row count
         return count($csvData);

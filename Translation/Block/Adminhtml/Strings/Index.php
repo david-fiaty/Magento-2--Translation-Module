@@ -10,7 +10,6 @@ use Naxero\Translation\Helper\Data;
 
 class Index extends Template
 {
-
 	protected $helper;
 
 	public function __construct(Context $context, Data $helper)
@@ -35,7 +34,7 @@ class Index extends Template
 
 	public function getSelect($attributes) {
 		$select = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select')->setData($attributes);
-		$select->addOption('', __('-- Please Select --'));
+		$select->addOption('', __('--- All ---'));
 
 		return $select->getHtml();
 	}
