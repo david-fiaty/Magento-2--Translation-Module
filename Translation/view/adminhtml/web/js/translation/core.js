@@ -103,7 +103,7 @@ define([
 
             // Create the status filter
             self.createOptions(filters.status, data.filter_data.file_status);
-        }
+        },
 
         createOptions: function (sel, arr) {
             var output = [];
