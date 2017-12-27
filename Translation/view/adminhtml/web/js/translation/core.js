@@ -79,6 +79,9 @@ define([
 
                     // Create the locale filter
                     self.createOptions('#translation-locale-filter', data.filter_data.file_locale);
+
+                    // Create the status filter
+                    self.createOptions('#translation-status-filter', data.filter_data.file_status);
                 },
                 error: function (request, status, error) {
                     console.log(error);
@@ -193,11 +196,7 @@ define([
         getDetailColumns: function () {
             return [
                 {title:"Key", field: "key", sorter: "string"},
-                {title:"Value", field: "value", sorter: "string", editor:"input",
-                    accessor: function(value, data, accessorParams) {
-                        console.log('accessor event:' + value);
-                    }
-                }
+                {title:"Value", field: "value", sorter: "string", editor:"input"}
             ];
         },
 
@@ -247,7 +246,7 @@ define([
                 },
                 cellEdited:function(cell) {
                     //This callback is called any time a cell is edidted
-                    console.log('Cell edited event:' + cell);
+                    console.log('Cell edited event:' + cell.getData());
                 },
             });
 

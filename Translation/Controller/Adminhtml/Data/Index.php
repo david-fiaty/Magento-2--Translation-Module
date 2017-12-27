@@ -108,9 +108,15 @@ class Index extends Action
     }
 
     protected function removeDuplicateFilterValues() {
-        $this->output['filter_data']['file_type'] = sort(array_unique($this->output['filter_data']['file_type']));
-        $this->output['filter_data']['file_group'] = sort(array_unique($this->output['filter_data']['file_group']));
-        $this->output['filter_data']['file_locale'] = sort(array_unique($this->output['filter_data']['file_locale']));
+        // Remove duplicates
+        $this->output['filter_data']['file_type'] = array_unique($this->output['filter_data']['file_type']);
+        $this->output['filter_data']['file_group'] = array_unique($this->output['filter_data']['file_group']);
+        $this->output['filter_data']['file_locale'] = array_unique($this->output['filter_data']['file_locale']);
+
+        // Sort fields
+        sort($this->output['filter_data']['file_type']);
+        sort($this->output['filter_data']['file_group']);
+        sort($this->output['filter_data']['file_locale']);
     }
 
     protected function getFieldFormats($arr, $fileEntity) {
