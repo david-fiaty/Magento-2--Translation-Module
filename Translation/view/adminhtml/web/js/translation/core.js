@@ -71,26 +71,39 @@ define([
                     // Set the table data
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
 
-                    // Create the group filter
-                    self.createOptions('#translation-group-filter', data.filter_data.file_group);
- 
-                    // Create the type filter
-                    self.createOptions('#translation-type-filter', data.filter_data.file_type);
-
-                    // Create the locale filter
-                    self.createOptions('#translation-locale-filter', data.filter_data.file_locale);
-
-                    // Create the status filter
-                    self.createOptions('#translation-status-filter', data.filter_data.file_status);
+                    // Build options for the lists
+                    self.buildLists(data);
                 },
                 error: function (request, status, error) {
                     console.log(error);
                 }   
             });
 
-            // Configure the behavior
-            this.setBehavior();
+            // Configure the features
+            this.setFeatures();
         },
+
+        buildLists: function (data) {
+            // Prepare filter instances names
+            var filters = {
+                group: '#translation-group-filter',
+                type: '#translation-type-filter',
+                locale: '#translation-locale-filter',
+                status: '#translation-status-filter'
+            };
+
+            // Create the group filter
+            self.createOptions(filters.group, data.filter_data.file_group);
+
+            // Create the type filter
+            self.createOptions(filters.type, data.filter_data.file_type);
+
+            // Create the locale filter
+            self.createOptions(filters.locale, data.filter_data.file_locale);
+
+            // Create the status filter
+            self.createOptions(filters.status, data.filter_data.file_status);
+        }
 
         createOptions: function (sel, arr) {
             var output = [];
@@ -101,7 +114,7 @@ define([
             this.cache._(sel).html(output.join(''));
         },
 
-        setBehavior: function () {
+        setEvents: function () {
             // Set the language
             this.setLocale();
 
