@@ -110,9 +110,6 @@ define([
 
             // Set the pagination
             this.setPaging();
-
-            // Set selectable rows
-            this.setSelectable();
         },
 
         setLocale: function () {
@@ -123,21 +120,6 @@ define([
 
         setPaging: function () {
             this.cache._(this.options.targetTable).tabulator("setPage", 1);
-        },
-
-        setSelectable: function () {
-            // Assign this to self
-            var self = this;
-
-            // Selectable rows
-            this.cache._("#select-row").click(function(){
-                self.cache._(self.options.targetTable).tabulator("selectRow", 1);
-            });
-
-            // Deselect row on "deselect" button click
-            this.cache._("#deselect-row").click(function(){
-                self.cache._(self.options.targetTable).tabulator("deselectRow", 1);
-            });
         },
 
         setToolbarActions: function () {
