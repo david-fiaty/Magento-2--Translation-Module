@@ -31,3 +31,8 @@ div#translation-file-path {
 #translation-container fieldset.admin__form-field {
     font-weight: bold;
 }
+
+#translation-container div.admin__form-field {
+    display: inline-block;
+    margin-right: 15px;
+}
