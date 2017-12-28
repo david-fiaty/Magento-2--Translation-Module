@@ -93,16 +93,16 @@ define([
             };
 
             // Create the group filter
-            self.createOptions(filters.group, data.filter_data.file_group);
+            this.createOptions(filters.group, data.filter_data.file_group);
 
             // Create the type filter
-            self.createOptions(filters.type, data.filter_data.file_type);
+            this.createOptions(filters.type, data.filter_data.file_type);
 
             // Create the locale filter
-            self.createOptions(filters.locale, data.filter_data.file_locale);
+            this.createOptions(filters.locale, data.filter_data.file_locale);
 
             // Create the status filter
-            self.createOptions(filters.status, data.filter_data.file_status);
+            this.createOptions(filters.status, data.filter_data.file_status);
         },
 
         createOptions: function (sel, arr) {
@@ -114,7 +114,7 @@ define([
             this.cache._(sel).html(output.join(''));
         },
 
-        setEvents: function () {
+        setFeatures: function () {
             // Set the language
             this.setLocale();
 
