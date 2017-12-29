@@ -36,3 +36,8 @@ div#translation-file-path {
     display: inline-block;
     margin-right: 15px;
 }
+
+.tabulator-col-content {
+    color: white;
+    background-color: #514943;
+}
