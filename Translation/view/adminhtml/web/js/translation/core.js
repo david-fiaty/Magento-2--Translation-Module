@@ -12,11 +12,12 @@ define([
         isListView: true,
         options: {
             targetTable: '#translation-table-content',
-            detailView:  '#translation-table-detail-content',
+            detailView: '#translation-table-detail-content',
             targetLocale: '',
             dataUrl: '',
             scanUrl: '',
             detailViewUrl: '',
+            fileUpdateUrl: '',
             detailViewid: 0,
             paging: 30
         },
@@ -29,12 +30,12 @@ define([
         _cache: function() {
             var collection = {};
 
-            function get_from_cache( selector ) {
-                if ( undefined === collection[ selector ] ) {
-                    collection[ selector ] = $( selector );
+            function get_from_cache(selector) {
+                if (undefined === collection[selector]) {
+                    collection[selector] = $(selector);
                 }
 
-                return collection[ selector ];
+                return collection[selector];
             }
 
             return { _: get_from_cache };
@@ -50,13 +51,13 @@ define([
                 paginationSize: self.options.paging,
                 selectable: true,
                 layout: "fitColumns",
-                responsiveLayout:true,
-                height:"100%",
+                responsiveLayout: true,
+                height: "100%",
                 columns: self.getListColumns(),
-                rowClick:function(e, row){
+                rowClick: function(e, row) {
                     self.loadRowDetails(row.getData());
                 },
-                rowSelectionChanged:function(data, rows){
+                rowSelectionChanged: function(data, rows) {
                     self.cache._("#select-stats span").text(data.length);
                 },
             });
@@ -74,16 +75,16 @@ define([
                     // Build options for the lists
                     self.buildLists(data);
                 },
-                error: function (request, status, error) {
+                error: function(request, status, error) {
                     console.log(error);
-                }   
+                }
             });
 
             // Configure the features
             this.setFeatures();
         },
 
-        buildLists: function (data) {
+        buildLists: function(data) {
             // Prepare filter instances names
             var filters = {
                 group: '#translation-group-filter',
@@ -105,16 +106,15 @@ define([
             this.createOptions(filters.status, data.filter_data.file_status);
         },
 
-        createOptions: function (sel, arr) {
+        createOptions: function(sel, arr) {
             var output = [];
-            $.each(arr, function(key, value)
-            {
-              output.push('<option value="'+ key +'">'+ value +'</option>');
+            $.each(arr, function(key, value) {
+                output.push('<option value="' + key + '">' + value + '</option>');
             });
             this.cache._(sel).html(output.join(''));
         },
 
-        setFeatures: function () {
+        setFeatures: function() {
             // Set the language
             this.setLocale();
 
@@ -125,83 +125,82 @@ define([
             this.setPaging();
         },
 
-        setLocale: function () {
+        setLocale: function() {
             // Todo : map m2 locales to tabulator js locales
             //$(this.options.targetTable).tabulator("setLocale", this.options.targetLocale);
             this.cache._(this.options.targetTable).tabulator("setLocale", 'en-us');
         },
 
-        setPaging: function () {
+        setPaging: function() {
             this.cache._(this.options.targetTable).tabulator("setPage", 1);
         },
 
-        setToolbarActions: function () {
+        setToolbarActions: function() {
             // Assign this to self
             var self = this;
 
             // Back button
-            this.cache._("#button-back").click(function(){
+            this.cache._("#button-back").click(function() {
                 self.togglePanes(0);
                 self.cache._(self.options.detailView).tabulator("destroy");
             });
 
             // Trigger download of data.csv file
-            this.cache._("#download-file").click(function(){
+            this.cache._("#download-file").click(function() {
                 // Todo : improve file naming from metadata
                 $(self.options.detailView).tabulator("download", "csv", "translation_strings.csv");
             });
 
             // File index update
-            this.cache._("#update-files").click(function(){
+            this.cache._("#update-files").click(function() {
                 $.ajax({
                     type: "GET",
                     url: self.options.scanUrl,
                     dataType: 'json',
                     showLoader: true,
-                    success: function(data) {
-                    },
-                    error: function (request, status, error) {
+                    success: function(data) {},
+                    error: function(request, status, error) {
                         console.log(error);
-                    }   
-                }).done(function (data) {
+                    }
+                }).done(function(data) {
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
-                });         
-            });  
+                });
+            });
 
             // File strings update
-            this.cache._("#update-strings").click(function(){
+            this.cache._("#update-strings").click(function() {
                 self.updateRowDetails(self.detailViewid);
-            });  
+            });
         },
 
-        getListColumns: function () {
+        getListColumns: function() {
             return [
-                {title:"Id", field: "file_id", sorter: "number", visible: false},
-                {title:"Path", field: "file_path", sorter: "string"},
-                {title:"Created", field: "file_creation_time", sorter: "string"},
-                {title:"Updated", field: "file_update_time", sorter: "string"},
-                {title:"Lines", field: "file_count", sorter: "number"},
-                {title:"Type", field: "file_type", sorter: "string"},
-                {title:"Group", field: "file_group", sorter: "string"},
-                {title:"Locale", field: "file_locale", sorter: "string"},
-                {title:"Status", field: "file_is_active", sorter: "number", formatter:"tickCross"}
+                { title: "Id", field: "file_id", sorter: "number", visible: false },
+                { title: "Path", field: "file_path", sorter: "string" },
+                { title: "Created", field: "file_creation_time", sorter: "string" },
+                { title: "Updated", field: "file_update_time", sorter: "string" },
+                { title: "Lines", field: "file_count", sorter: "number" },
+                { title: "Type", field: "file_type", sorter: "string" },
+                { title: "Group", field: "file_group", sorter: "string" },
+                { title: "Locale", field: "file_locale", sorter: "string" },
+                { title: "Status", field: "file_is_active", sorter: "number", formatter: "tickCross" }
             ];
         },
 
-        getDetailColumns: function () {
+        getDetailColumns: function() {
             return [
-                {title:"Key", field: "key", sorter: "string"},
-                {title:"Value", field: "value", sorter: "string", editor:"input"}
+                { title: "Key", field: "key", sorter: "string" },
+                { title: "Value", field: "value", sorter: "string", editor: "input" }
             ];
         },
 
-        togglePanes: function (id) {
+        togglePanes: function(id) {
             if (this.isListView) {
-                 // Get main table width
+                // Get main table width
                 var tableWidth = this.cache._('#translation-table-list').outerWidth() + 'px';
 
                 // Move main table
-                this.cache._('#translation-table-list').animate({left: '-50px'}); 
+                this.cache._('#translation-table-list').animate({ left: '-50px' });
                 this.cache._('#translation-table-list').hide();
 
                 // Show the details table  
@@ -210,12 +209,11 @@ define([
                 // Set the detail view state
                 this.isListView = false;
                 this.detailViewid = id;
-            }
-            else {
+            } else {
                 // Bring the panes back
                 this.cache._('#translation-table-detail').hide();
-                this.cache._('#translation-table-list').animate({left: '0px'}); 
-                this.cache._('#translation-table-list').show(); 
+                this.cache._('#translation-table-list').animate({ left: '0px' });
+                this.cache._('#translation-table-list').show();
 
                 // Set the detail view state
                 this.isListView = true;
@@ -223,7 +221,7 @@ define([
             }
         },
 
-        loadRowDetails: function (fileObj) {
+        loadRowDetails: function(fileObj) {
             // Prepare the variables
             var self = this;
 
@@ -233,15 +231,17 @@ define([
                 paginationSize: self.options.paging,
                 selectable: true,
                 layout: "fitColumns",
-                responsiveLayout:true,
-                height:"100%",
+                responsiveLayout: true,
+                height: "100%",
                 columns: self.getDetailColumns(),
-                rowSelectionChanged:function(data, rows) {
+                rowSelectionChanged: function(data, rows) {
                     self.cache._("#select-stats span").html(data.length);
                 },
-                cellEdited:function(cell) {
-                    //This callback is called any time a cell is edidted
-                    console.log('Cell edited event:' + cell.getData());
+                cellEdited: function(cell) {
+                    self.updateEntityData({
+                        fileId: fileObj.file_id,
+                        fileContent: self.cache._(self.options.detailView).tabulator("getData")
+                    });
                 },
             });
 
@@ -255,26 +255,47 @@ define([
             this.togglePanes(fileObj.file_id);
         },
 
-        updateRowDetails: function (fileId) {
+        updateRowDetails: function(fileId) {
             // Prepare the variables
             var self = this;
-            var fileDetailsUrl = self.options.detailViewUrl + '?file_id=' + fileId;
+            var fileDetailsUrl = this.options.detailViewUrl + '?action=get_data&file_id=' + fileId;
 
-            // Get the detail view data
+            // Send the the request
             $.ajax({
                 type: "GET",
                 url: fileDetailsUrl,
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
-                   self.cache._(self.options.detailView).tabulator("setData", data);
+                    self.cache._(self.options.detailView).tabulator("setData", data);
                 },
-                error: function (request, status, error) {
+                error: function(request, status, error) {
                     console.log(error);
-                }   
-            });         
+                }
+            });
         },
-    })
+
+        updateEntityData: function(row) {
+            // Prepare the variables
+            var self = this;
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + row.fileId;
+            var file_content = { file_content: row.fileContent };
+            // Send the the request
+            $.ajax({
+                type: "POST",
+                url: fileUpdateUrl,
+                dataType: 'json',
+                data: file_content,
+                showLoader: true,
+                success: function(res) {
+                    console.log(res);
+                },
+                error: function(request, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
 
     return $.mage.corejs;
 });
