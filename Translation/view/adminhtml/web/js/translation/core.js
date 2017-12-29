@@ -276,7 +276,6 @@ define([
                 url: fileUpdateUrl,
                 dataType: 'json',
                 data: file_content,
-                showLoader: true,
                 success: function(res) {
                     console.log(res);
                 },
