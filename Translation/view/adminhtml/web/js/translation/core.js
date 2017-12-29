@@ -56,10 +56,7 @@ define([
                 columns: self.getListColumns(),
                 rowClick: function(e, row) {
                     self.loadRowDetails(row.getData());
-                },
-                rowSelectionChanged: function(data, rows) {
-                    self.cache._("#select-stats span").text(data.length);
-                },
+                }
             });
 
             //Load the data into the table
@@ -234,15 +231,12 @@ define([
                 responsiveLayout: true,
                 height: "100%",
                 columns: self.getDetailColumns(),
-                rowSelectionChanged: function(data, rows) {
-                    self.cache._("#select-stats span").html(data.length);
-                },
                 cellEdited: function(cell) {
                     self.updateEntityData({
                         fileId: fileObj.file_id,
                         fileContent: self.cache._(self.options.detailView).tabulator("getData")
                     });
-                },
+                }
             });
 
             // Set the file path
