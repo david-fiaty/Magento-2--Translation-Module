@@ -1,12 +1,10 @@
 define([
     'jquery', 'mage/url', 'tabulator'
 ], function($, urlBuilder, tabulator) {
-
     'use strict';
 
     // Build the widget
     $.widget('mage.corejs', {
-
         // Prepare the options
         cache: null,
         isListView: true,
