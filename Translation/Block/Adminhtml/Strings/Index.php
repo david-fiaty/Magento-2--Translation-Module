@@ -34,7 +34,7 @@ class Index extends Template
 
 	public function getSelect($attributes) {
 		$select = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select')->setData($attributes);
-		$select->addOption('', __('--- All ---'));
+		$select->addOption('alltx', __('--- All ---'));
 
 		return $select->getHtml();
 	}

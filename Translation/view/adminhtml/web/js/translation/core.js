@@ -20,6 +20,13 @@ define([
             paging: 30
         },
 
+        filters: {
+            group: '#translation-group-filter',
+            type: '#translation-type-filter',
+            locale: '#translation-locale-filter',
+            status: '#translation-status-filter'
+        },
+
         _create: function() {
             this.cache = new this._cache();
             this._bind();
@@ -67,7 +74,10 @@ define([
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
 
                     // Build options for the lists
-                    self.buildLists(data);
+                    self.buildFilters(data);
+
+                    // Add the list events
+                    self.addFilterEvents();
                 },
                 error: function(request, status, error) {
                     console.log(error);
@@ -78,26 +88,65 @@ define([
             this.setFeatures();
         },
 
-        buildLists: function(data) {
-            // Prepare filter instances names
-            var filters = {
-                group: '#translation-group-filter',
-                type: '#translation-type-filter',
-                locale: '#translation-locale-filter',
-                status: '#translation-status-filter'
-            };
-
+        buildFilters: function(data) {
             // Create the group filter
-            this.createOptions(filters.group, data.filter_data.file_group);
+            this.createOptions(this.filters.group, data.filter_data.file_group);
 
             // Create the type filter
-            this.createOptions(filters.type, data.filter_data.file_type);
+            this.createOptions(this.filters.type, data.filter_data.file_type);
 
             // Create the locale filter
-            this.createOptions(filters.locale, data.filter_data.file_locale);
+            this.createOptions(this.filters.locale, data.filter_data.file_locale);
 
             // Create the status filter
-            this.createOptions(filters.status, data.filter_data.file_status);
+            this.createOptions(this.filters.status, data.filter_data.file_status);
+        },
+
+        addFilterEvents: function() {
+            var self = this;
+
+            // Prepare the fields
+            var fields = [
+                { selector: self.filters.group, field: 'file_group' },
+                { selector: self.filters.type, field: 'file_type' },
+                { selector: self.filters.locale, field: 'file_locale' },
+                { selector: self.filters.status, field: 'file_status' },
+            ];
+
+            // Assign the events
+            $.each(fields, function(k, obj) {
+                self.cache._(obj.selector).on('change', function() {
+                    let selected = $(this).find(":selected").text();
+                    let selectedKey = $(this).find(":selected").val();
+                    self.updateFilters({ field: obj.field, type: '=', value: selected, key: selectedKey });
+                });
+            });
+        },
+
+        updateFilters: function(newFilter) {
+            var self = this;
+            var filters = $(self.options.targetTable).tabulator('getFilters');
+
+            // Process the new filter
+            if (filters.length == 0) {
+                filters.push(newFilter);
+            } else {
+                for (var i = 0; i < filters.length; i++) {
+                    if (newFilter.key == 'alltx') {
+                        filters.splice(i, 1);
+                    } else {
+                        if (filters[i].field == newFilter.field) {
+                            filters[i] = newFilter;
+                        } else if (filters[i].field == newFilter.field && filters[i].value == newFilter.value) {} else {
+                            filters.push(newFilter);
+                        }
+                    }
+                }
+            }
+            console.dir(filters);
+            // Clea filters and set the new one
+            self.cache._(self.options.targetTable).tabulator('clearFilter');
+            self.cache._(self.options.targetTable).tabulator('setFilter', filters);
         },
 
         createOptions: function(sel, arr) {
@@ -105,7 +154,7 @@ define([
             $.each(arr, function(key, value) {
                 output.push('<option value="' + key + '">' + value + '</option>');
             });
-            this.cache._(sel).html(output.join(''));
+            this.cache._(sel).append(output.join(''));
         },
 
         setFeatures: function() {
@@ -130,9 +179,7 @@ define([
         },
 
         setToolbarActions: function() {
-            // Assign this to self
             var self = this;
-
             // Back button
             this.cache._("#button-back").click(function() {
                 self.togglePanes(0);
