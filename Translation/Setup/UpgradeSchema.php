@@ -37,7 +37,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 ->addColumn('file_is_active', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Is The File Active?')
                 ->addColumn('file_creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
                 ->addColumn('file_update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
-                ->addIndex($installer->getIdxName('translation_file_index', ['file_path']), ['file_path'])
+                ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])
                 ->setComment('Naxero Translation files');
 
             $installer->getConnection()->createTable($table);

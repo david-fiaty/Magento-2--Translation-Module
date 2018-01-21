@@ -36,7 +36,7 @@ class InstallSchema implements InstallSchemaInterface
             ->addColumn('file_creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
             ->addColumn('file_update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
             ->addColumn('file_override', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
-            ->addIndex($installer->getIdxName('translation_file_index', ['file_path']), ['file_path'])
+            ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])
             ->setComment('Naxero Translation Files');
 
         $installer->getConnection()->createTable($table);
