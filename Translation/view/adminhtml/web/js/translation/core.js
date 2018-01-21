@@ -58,6 +58,9 @@ define([
                 responsiveLayout: true,
                 height: "100%",
                 columns: self.getListColumns(),
+                initialSort:[
+                    {column:"file_count", dir:"desc"},
+                ],
                 rowClick: function(e, row) {
                     self.loadRowDetails(row.getData());
                 }
@@ -143,7 +146,7 @@ define([
                     }
                 }
             }
-            console.dir(filters);
+
             // Clea filters and set the new one
             self.cache._(self.options.targetTable).tabulator('clearFilter');
             self.cache._(self.options.targetTable).tabulator('setFilter', filters);
