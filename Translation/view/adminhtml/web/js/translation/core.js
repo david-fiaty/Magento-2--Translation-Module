@@ -192,7 +192,7 @@ define([
             // Trigger download of data.csv file
             this.cache._("#download-file").click(function() {
                 // Todo : improve file naming from metadata
-                self.cache._(self.options.detailView).tabulator("download", "csv", "translation_strings.csv");
+                self.cache._(self.options.detailView).tabulator("download", "csv", "trans_" + Date.now() + ".csv");
             });
 
             // File index update
@@ -233,8 +233,8 @@ define([
 
         getDetailColumns: function() {
             return [
-                { title: "Key", field: "key", sorter: "string" },
-                { title: "Value", field: "value", sorter: "string", editor: "input" }
+                { title: "Key", field: "key", sorter: "string", headerFilter:"input"},
+                { title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input" }
             ];
         },
 
