@@ -41,3 +41,19 @@ div#translation-file-path {
     color: white;
     background-color: #514943;
 }
+
+.tabulator .tabulator-header .tabulator-col .tabulator-header-filter {
+    position: absolute;
+    box-sizing: border-box;
+    margin-top: 2px;
+    width: 50%;
+    text-align: center;
+    right: 30px;
+    top: 8px;
+    color: black;
+    font-weight: normal;
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
+    height: 25px;
+}

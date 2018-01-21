@@ -219,15 +219,15 @@ define([
 
         getListColumns: function() {
             return [
-                { title: "Id", field: "file_id", sorter: "number", visible: false },
-                { title: "Path", field: "file_path", sorter: "string" },
-                { title: "Created", field: "file_creation_time", sorter: "string", visible: false },
-                { title: "Updated", field: "file_update_time", sorter: "string", visible: false },
-                { title: "Lines", field: "file_count", sorter: "number" },
-                { title: "Type", field: "file_type", sorter: "string" },
-                { title: "Group", field: "file_group", sorter: "string" },
-                { title: "Locale", field: "file_locale", sorter: "string" },
-                { title: "Status", field: "file_is_active", sorter: "number", formatter: "tickCross" }
+                { title: "Id", field: "file_id", sorter: "number", visible: false},
+                { title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
+                { title: "Created", field: "file_creation_time", sorter: "string", visible: false},
+                { title: "Updated", field: "file_update_time", sorter: "string", visible: false},
+                { title: "Lines", field: "file_count", sorter: "number"},
+                { title: "Type", field: "file_type", sorter: "string"},
+                { title: "Group", field: "file_group", sorter: "string"},
+                { title: "Locale", field: "file_locale", sorter: "string"},
+                { title: "Status", field: "file_is_active", sorter: "number", formatter: "tickCross"}
             ];
         },
 
@@ -320,15 +320,14 @@ define([
             var self = this;
             var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + row.fileId;
             var file_content = { file_content: row.fileContent };
+
             // Send the the request
             $.ajax({
                 type: "POST",
                 url: fileUpdateUrl,
                 dataType: 'json',
                 data: file_content,
-                success: function(res) {
-                    console.log(res);
-                },
+                success: function(res) {},
                 error: function(request, status, error) {
                     console.log(error);
                 }
