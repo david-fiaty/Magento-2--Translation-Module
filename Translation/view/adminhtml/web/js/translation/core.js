@@ -340,18 +340,16 @@ define([
             });
         },
 
-        saveRowDetails: function(row) {
+        saveRowDetails: function(fileId) {
             // Prepare the variables
             var self = this;
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=save_data&file_id=' + row.fileId;
-            var file_content = { file_content: row.fileContent };
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=save_data&file_id=' + fileId;
 
             // Send the the request
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: fileUpdateUrl,
                 dataType: 'json',
-                data: file_content,
                 showLoader: true,
                 success: function(res) {},
                 error: function(request, status, error) {

@@ -11,6 +11,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Filesystem\DirectoryList;
 use Naxero\Translation\Model\FileEntityFactory;
 use Naxero\Translation\Helper\Data;
 
@@ -37,6 +38,11 @@ class Detail extends Action
 	protected $helper;
 
     /**
+     * @var DirectoryList
+     */
+    protected $tree;
+
+    /**
      * @param Context $context
      * @param PageFactory $resultPageFactory
      */
@@ -44,11 +50,13 @@ class Detail extends Action
         Context $context,
         JsonFactory $resultJsonFactory,
         FileEntityFactory $fileEntityFactory,
+        DirectoryList $tree,
         Csv $csvParser,
         Data $helper
     ) {
         $this->resultJsonFactory            = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
+        $this->tree = $tree;
         $this->csvParser = $csvParser;
 		$this->helper = $helper;
 
@@ -134,16 +142,21 @@ class Detail extends Action
     }
 
     public function saveFileEntityContent($fileEntity) {
-        // Prepare the new content
-        $newContent = $this->arrayToCsv($this->getRequest()->getParam('file_content'));
+        // Get the root path
+        $rootPath = $this->tree->getRoot();
 
-        // Insert the new row
+        // Save the data
         try {
+            // Load the file entity
             $fileId = $this->getFileId();
             $fileEntity = $this->fileEntityFactory->create(); 
             $fileEntity->load($fileId);
-            $fileEntity->setFileContent($newContent);
-            $fileEntity->save();
+
+            // Prepare the full file path
+            $filePath = $rootPath . '/' . $fileEntity->getData('file_path');
+
+            // Save the file
+            file_put_contents($filePath, $fileEntity->getData('file_content'));
 
             return true;
         }
