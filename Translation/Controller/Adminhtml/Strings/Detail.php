@@ -88,6 +88,9 @@ class Detail extends Action
             else if ($action == 'update_data') {
                 $output = $this->updateFileEntityContent($fileEntity);
             }
+            else if ($action == 'save_data') {
+                $output = $this->saveFileEntityContent($fileEntity);
+            }
 
             // Return the content
             return $result->setData($output);
@@ -110,6 +113,27 @@ class Detail extends Action
     }
 
     public function updateFileEntityContent($fileEntity) {
+        // Prepare the new content
+        $newContent = $this->arrayToCsv($this->getRequest()->getParam('file_content'));
+
+        // Insert the new row
+        try {
+            $fileId = $this->getFileId();
+            $fileEntity = $this->fileEntityFactory->create(); 
+            $fileEntity->load($fileId);
+            $fileEntity->setFileContent($newContent);
+            $fileEntity->save();
+
+            return true;
+        }
+        catch (\Exception $e) {
+            throw new LocalizedException(__($e->getMessage()));
+        }
+
+        return false;
+    }
+
+    public function saveFileEntityContent($fileEntity) {
         // Prepare the new content
         $newContent = $this->arrayToCsv($this->getRequest()->getParam('file_content'));
 

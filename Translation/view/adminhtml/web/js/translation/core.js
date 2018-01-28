@@ -212,10 +212,15 @@ define([
                 });
             });
 
-            // File strings update
+            // File strings reload
             this.cache._("#get-strings").click(function() {
                 self.getRowDetails(self.detailViewid);
             });
+
+            // File strings save
+            this.cache._("#save-strings").click(function() {
+                self.saveRowDetails(self.detailViewid);
+            });            
         },
 
         getListColumns: function() {
@@ -333,7 +338,28 @@ define([
                     console.log(error);
                 }
             });
+        },
+
+        saveRowDetails: function(row) {
+            // Prepare the variables
+            var self = this;
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=save_data&file_id=' + row.fileId;
+            var file_content = { file_content: row.fileContent };
+
+            // Send the the request
+            $.ajax({
+                type: "POST",
+                url: fileUpdateUrl,
+                dataType: 'json',
+                data: file_content,
+                showLoader: true,
+                success: function(res) {},
+                error: function(request, status, error) {
+                    console.log(error);
+                }
+            });
         }
+
     });
 
     return $.mage.corejs;
