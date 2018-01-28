@@ -183,6 +183,7 @@ define([
 
         setToolbarActions: function() {
             var self = this;
+            
             // Back button
             this.cache._("#button-back").click(function() {
                 self.togglePanes(0);
@@ -212,8 +213,8 @@ define([
             });
 
             // File strings update
-            this.cache._("#update-strings").click(function() {
-                self.updateRowDetails(self.detailViewid);
+            this.cache._("#get-strings").click(function() {
+                self.getRowDetails(self.detailViewid);
             });
         },
 
@@ -289,13 +290,13 @@ define([
             this.cache._('#translation-file-path').text(fileObj.file_path);
 
             // Update the data
-            this.updateRowDetails(fileObj.file_id);
+            this.getRowDetails(fileObj.file_id);
 
             // Move the panels
             this.togglePanes(fileObj.file_id);
         },
 
-        updateRowDetails: function(fileId) {
+        getRowDetails: function(fileId) {
             // Prepare the variables
             var self = this;
             var fileDetailsUrl = this.options.detailViewUrl + '?action=get_data&file_id=' + fileId;
