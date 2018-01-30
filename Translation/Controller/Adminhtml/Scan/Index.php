@@ -11,6 +11,7 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem\DirectoryList;
 use Naxero\Translation\Model\FileEntityFactory;
+use Naxero\Translation\Helper\Data;
 
 class Index extends Action
 {
@@ -26,6 +27,11 @@ class Index extends Action
     protected $tree;
 
     /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
      * @var FileEntityFactory
      */
     protected $fileEntityFactory;    
@@ -38,12 +44,14 @@ class Index extends Action
         Context $context,
         JsonFactory $resultJsonFactory,
         DirectoryList $tree,
-        FileEntityFactory $fileEntityFactory
+        FileEntityFactory $fileEntityFactory,
+        Data $helper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
         $this->fileEntityFactory = $fileEntityFactory;
-
+        $this->helper = $helper;
+        
         parent::__construct($context);
     }
 
@@ -91,12 +99,8 @@ class Index extends Action
 
     public function saveFile($filePath)
     {
-        // Get the root directory
-        $rootPath = $this->tree->getRoot();
-
-        // Prepare a clean path
-        $search = $rootPath . '/';
-        $cleanPath = str_replace($search, '', $filePath);
+        // Get the clean path
+        $cleanPath = $this->helper->getCleanPath($filePath);
 
         // Save the item
         $fileEntity = $this->fileEntityFactory->create(); 
@@ -113,14 +117,31 @@ class Index extends Action
 
     public function isWantedFile($filePath)
     {
-        // Get the root directory
-        $rootPath = $this->tree->getRoot();
-
         // Validate the conditions - Todo : move exclusion config settings 
         $result = (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
                   && (is_file($filePath))
-                  && (strpos($filePath, 'i18n') !== false);
+                  && (strpos($filePath, 'i18n') !== false)
+                  && !$this->isIndexed($filePath);
 
         return $result;
+    }
+
+    public function isIndexed($filePath) {
+        // Get the clean path
+        $cleanPath = $this->helper->getCleanPath($filePath);
+
+        // Create the collection
+        $fileEntity = $this->fileEntityFactory->create(); 
+        $collection = $fileEntity->getCollection();
+
+        // Prepare the output array
+        foreach($collection as $item)
+        {
+           if ($fileEntity->getData('file_path') == $cleanPath) {
+               return true;
+           }
+        }    
+
+        return false;    
     }
 }
