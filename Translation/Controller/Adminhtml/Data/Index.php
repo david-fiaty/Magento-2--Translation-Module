@@ -5,12 +5,12 @@
  */
 namespace Naxero\Translation\Controller\Adminhtml\Data;
 
-use Magento\Framework\File\Csv;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Naxero\Translation\Model\FileEntityFactory;
+use Naxero\Translation\Helper\Data;
 
 class Index extends Action
 {
@@ -26,14 +26,14 @@ class Index extends Action
     protected $fileEntityFactory;    
 
     /**
-     * @var Csv
-     */
-    protected $csvParser;
-
-    /**
      * @var Array
      */
     protected $output;
+
+    /**
+     * @var Data
+     */
+    protected $helper;
 
     /**
      * @param Context $context
@@ -43,12 +43,12 @@ class Index extends Action
         Context $context,
         JsonFactory $resultJsonFactory,
         FileEntityFactory $fileEntityFactory,
-        Csv $csvParser
+        Data $helper
     ) {
         $this->resultJsonFactory            = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
-        $this->csvParser = $csvParser;
         $this->output = $this->prepareOutputArray();
+        $this->helper = $helper;
 
         parent::__construct($context);
     }
@@ -77,7 +77,7 @@ class Index extends Action
                 $arr = $item->getData();
 
                 // Prepare the fields
-                $arr = $this->getFieldFormats($arr, $item);
+                $arr = $this->helper->getFieldFormats($arr, $item);
                 $arr = $this->getSortingFields($arr);
 
                 // Store the item as an object
@@ -117,22 +117,6 @@ class Index extends Action
         sort($this->output['filter_data']['file_type']);
         sort($this->output['filter_data']['file_group']);
         sort($this->output['filter_data']['file_locale']);
-    }
-
-    protected function getFieldFormats($arr, $fileEntity) {
-        // Cast the id field to integer
-        $arr['file_id'] = (int) $arr['file_id'];
-
-        // Set the CSV row count
-        $arr['file_count'] = $this->countCSVRows($fileEntity->getData('file_path'));
-
-        // Unset the content field. Todo : better to refine query
-        unset($arr['file_content']);
-
-        // Set the language field
-        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
-
-        return $arr;
     }
 
     protected function getSortingFields($arr) {
@@ -191,12 +175,4 @@ class Index extends Action
 
         return $arr;
     }   
-
-    protected function countCSVRows($csvPath) {
-        // Parse the string
-        $csvData = $this->csvParser->getData($csvPath);
-
-        // Return the row count
-        return count($csvData);
-    }
 }

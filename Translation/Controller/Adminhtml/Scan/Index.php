@@ -87,7 +87,7 @@ class Index extends Action
             foreach(new \RecursiveIteratorIterator($rdi) as $filePath)
             {
                 if ($this->isWantedFile($filePath)) {
-                    $output[] = $this->saveFile($filePath);
+                    $output['table_data'][] = $this->saveFile($filePath);
                 }
             }
         }
@@ -117,7 +117,7 @@ class Index extends Action
 
         $fileEntity->save();
 
-        return (object) $fileEntity->getData();
+        return (object) $this->helper->getFieldFormats($fileEntity->getData(), $fileEntity);
     }
 
     public function isWantedFile($filePath)

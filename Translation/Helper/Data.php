@@ -4,6 +4,7 @@
  */
 namespace Naxero\Translation\Helper;
 
+use Magento\Framework\File\Csv;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\Filesystem\DirectoryList;
@@ -11,6 +12,11 @@ use Magento\Backend\Model\Auth\Session as AdminSession;
 
 class Data extends AbstractHelper
 {
+    /**
+     * @var Csv
+     */
+    protected $csvParser;
+
     /**
      * @var Session
      */
@@ -27,11 +33,13 @@ class Data extends AbstractHelper
 	public function __construct(
 		Context $context,
 		AdminSession $adminSession,
-		DirectoryList $tree
+		DirectoryList $tree,
+		Csv $csvParser
 	) {
 		parent::__construct($context);
 		$this->adminSession = $adminSession;
         $this->tree = $tree;
+        $this->csvParser = $csvParser;
 	}
 
 	public function getUserLanguage() {
@@ -49,4 +57,29 @@ class Data extends AbstractHelper
         // Return the clean path
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
+
+    public function getFieldFormats($arr, $fileEntity) {
+        // Cast the id field to integer
+        $arr['file_id'] = (int) $arr['file_id'];
+
+        // Set the CSV row count
+        $arr['file_count'] = $this->countCSVRows($fileEntity->getData('file_path'));
+
+        // Unset the content field. Todo : better to refine query
+        unset($arr['file_content']);
+
+        // Set the language field
+        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
+
+        return $arr;
+    }	
+
+    public function countCSVRows($csvPath) {
+        // Parse the string
+        $csvData = $this->csvParser->getData($csvPath);
+
+        // Return the row count
+        return count($csvData);
+    }
+
 }
