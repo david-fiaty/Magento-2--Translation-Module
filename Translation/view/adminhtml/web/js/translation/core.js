@@ -1,6 +1,6 @@
 define([
-    'jquery', 'mage/url', 'tabulator'
-], function($, urlBuilder, tabulator) {
+    'jquery', 'tabs', 'Magento_Ui/js/modal/prompt', 'mage/url', 'mage/translate', 'tabulator', 
+], function($, tabs, prompt, urlBuilder, __, tabulator) {
     'use strict';
 
     // Build the widget
@@ -198,19 +198,36 @@ define([
 
             // File index update
             this.cache._("#update-files").click(function() {
-                $.ajax({
-                    type: "GET",
-                    url: self.options.scanUrl,
-                    dataType: 'json',
-                    showLoader: true,
-                    success: function(data) {},
-                    error: function(request, status, error) {
-                        console.log(error);
+                // Trigger the prompt
+                prompt({
+                    title: __('Update file index'),
+                    content: self.getPromptOptions([{
+                            id: "update_add",
+                            name: "update_mode",
+                            value: "update_add",
+                            label: __('Add new files'),
+                            note: __('Maximum 255 chars. Meta Description should optimally be between 150-160 characters'),
+                        },
+                        {
+                            id: "update_replace",
+                            name: "update_mode",
+                            value: "update_replace",
+                            label: __('Replace all files'),
+                            note: __('Maximum 255 chars. Meta Description should optimally be between 150-160 characters'),
+                        }
+                    ]),
+                    actions: {
+                        confirm: function(){
+                            self.updateFileIndex();
+                        }, 
+                        cancel: function(){}, 
+                        always: function(){}
                     }
-                }).done(function(data) {
-                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
                 });
-            });
+
+                // Activate the prompt behavior
+
+             });
 
             // File strings reload
             this.cache._("#get-strings").click(function() {
@@ -221,6 +238,44 @@ define([
             this.cache._("#save-strings").click(function() {
                 self.saveRowDetails(self.detailViewid);
             });            
+        },
+
+        updateFileIndex: function(updateMode) {
+            // Prepare the update url
+            var updateUrl = self.options.scanUrl + '?update_mode=' + updateMode;
+
+            // Trigger the update request
+            $.ajax({
+                type: "GET",
+                url: updateUrl,
+                dataType: 'json',
+                showLoader: true,
+                success: function(data) {},
+                error: function(request, status, error) {
+                    console.log(error);
+                }
+            }).done(function(data) {
+                self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+            });
+        },
+
+        getPromptOptions: function(opts) {
+            var html = '';
+            html += '<form action="">';
+            html += '<div class="admin__field-control">';
+            for (var i = 0; i < opts.length; i++) {
+                html += '<div class="class="admin__field admin__field-option">';
+                html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
+                html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
+                html += '</div>';
+                html += '<div class="admin__field-note">';
+                html += '<span>' + opts[i].note + '</span>';
+                html += '</div>';
+            }
+            html += '</div>';
+            html += '</form>';
+
+            return html;
         },
 
         getListColumns: function() {

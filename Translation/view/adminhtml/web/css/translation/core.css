@@ -37,6 +37,7 @@ div#translation-file-path {
     margin-right: 15px;
 }
 
+/* Tabulator */
 .tabulator-headers .tabulator-col-content {
     color: white;
     background-color: #514943;
@@ -56,4 +57,28 @@ div#translation-file-path {
 
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
     height: 25px;
+}
+
+/* Modal prompt */
+.modal-popup.prompt input[data-role="promptField"] {
+    display: none !important;
+}
+
+.modal-popup.prompt input[type="radio"] {
+    width: 30px !important;
+    display: inline !important;
+}
+
+.modal-popup.prompt .admin__field-label {
+    text-align: left  !important;;
+    display: inline !important;
+    font-weight: bold !important;
+}
+
+.modal-popup.prompt .admin__field-option {
+    margin-top: 30px !important;
+}
+
+.modal-popup.prompt .admin__field-note {
+    margin-bottom: 25px !important;
 }
