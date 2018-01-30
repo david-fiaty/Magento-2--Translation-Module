@@ -71,8 +71,14 @@ class Index extends Action
         // Loop through the directory tree
         if ($this->getRequest()->isAjax()) 
         {
+            // Get the update mode
+            //$update_mode = $this->getRequest()->getParam('update_mode');
+
             // Clear the table data
             $this->clearTableData();
+            /*if ($update_mode == 'update_replace') {
+                $this->clearTableData();
+            }*/
 
             // Get the root directory
             $rootPath = $this->tree->getRoot();
@@ -90,7 +96,6 @@ class Index extends Action
     }
 
     public function clearTableData() {
-        // Todo : better to check if the files already exist in db
         $fileEntity = $this->fileEntityFactory->create(); 
         $connection = $fileEntity->getCollection()->getConnection();
         $tableName  = $fileEntity->getCollection()->getMainTable();
@@ -120,27 +125,32 @@ class Index extends Action
         // Validate the conditions - Todo : move exclusion config settings 
         $result = (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
                   && (is_file($filePath))
-                  && (strpos($filePath, 'i18n') !== false)
-                  && !$this->isIndexed($filePath);
+                  && (strpos($filePath, 'i18n') !== false);
+                  //&& !$this->isIndexed($filePath);          
 
         return $result;
     }
 
     public function isIndexed($filePath) {
-        // Get the clean path
-        $cleanPath = $this->helper->getCleanPath($filePath);
+        // Get the update mode
+        $update_mode = $this->getRequest()->getParam('update_mode');
 
-        // Create the collection
-        $fileEntity = $this->fileEntityFactory->create(); 
-        $collection = $fileEntity->getCollection();
+        if ($update_mode == 'update_add') {
+            // Get the clean path
+            $cleanPath = $this->helper->getCleanPath($filePath);
 
-        // Prepare the output array
-        foreach($collection as $item)
-        {
-           if ($fileEntity->getData('file_path') == $cleanPath) {
-               return true;
-           }
-        }    
+            // Create the collection
+            $fileEntity = $this->fileEntityFactory->create(); 
+            $collection = $fileEntity->getCollection();
+
+            // Prepare the output array
+            foreach($collection as $item)
+            {
+                if ($fileEntity->getData('file_path') == $cleanPath) {
+                    return true;
+                }
+            }    
+        }
 
         return false;    
     }

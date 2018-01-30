@@ -66,7 +66,7 @@ define([
                 }
             });
 
-            //Load the data into the table
+            // Load the data into the table
             $.ajax({
                 type: "GET",
                 url: self.options.dataUrl,
@@ -206,28 +206,26 @@ define([
                             name: "update_mode",
                             value: "update_add",
                             label: __('Add new files'),
-                            note: __('Maximum 255 chars. Meta Description should optimally be between 150-160 characters'),
+                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
                         },
                         {
                             id: "update_replace",
                             name: "update_mode",
                             value: "update_replace",
                             label: __('Replace all files'),
-                            note: __('Maximum 255 chars. Meta Description should optimally be between 150-160 characters'),
+                            note: __('Will reload all files in the index and override existing content not saved to files.'),
                         }
                     ]),
                     actions: {
                         confirm: function(){
-                            self.updateFileIndex();
+                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
+                            self.updateFileIndex(optChecked);
                         }, 
                         cancel: function(){}, 
                         always: function(){}
                     }
                 });
-
-                // Activate the prompt behavior
-
-             });
+            });
 
             // File strings reload
             this.cache._("#get-strings").click(function() {
@@ -241,8 +239,10 @@ define([
         },
 
         updateFileIndex: function(updateMode) {
+            var self = this;
+
             // Prepare the update url
-            var updateUrl = self.options.scanUrl + '?update_mode=' + updateMode;
+            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode;
 
             // Trigger the update request
             $.ajax({
@@ -255,13 +255,14 @@ define([
                     console.log(error);
                 }
             }).done(function(data) {
+                console.dir(data.table_data);
                 self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
             });
         },
 
         getPromptOptions: function(opts) {
             var html = '';
-            html += '<form action="">';
+            html += '<form id="prompt_form" action="">';
             html += '<div class="admin__field-control">';
             for (var i = 0; i < opts.length; i++) {
                 html += '<div class="class="admin__field admin__field-option">';
