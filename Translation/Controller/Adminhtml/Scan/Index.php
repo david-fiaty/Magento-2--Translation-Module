@@ -79,13 +79,13 @@ class Index extends Action
         if ($this->getRequest()->isAjax()) 
         {
             // Get the update mode
-            //$update_mode = $this->getRequest()->getParam('update_mode');
+            $update_mode = $this->getRequest()->getParam('update_mode');
 
             // Clear the table data
             $this->clearTableData();
-            /*if ($update_mode == 'update_replace') {
+            if ($update_mode == 'update_replace') {
                 $this->clearTableData();
-            }*/
+            }
 
             // Get the root directory
             $rootPath = $this->tree->getRoot();
@@ -132,8 +132,8 @@ class Index extends Action
         // Validate the conditions - Todo : move exclusion config settings 
         $result = (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
                   && (is_file($filePath))
-                  && (strpos($filePath, 'i18n') !== false);
-                  //&& !$this->isIndexed($filePath);          
+                  && (strpos($filePath, 'i18n') !== false)
+                  && !$this->isIndexed($filePath);          
 
         return $result;
     }
