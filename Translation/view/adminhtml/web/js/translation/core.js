@@ -255,7 +255,6 @@ define([
                     console.log(error);
                 }
             }).done(function(data) {
-                console.dir(data.table_data);
                 self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
             });
         },

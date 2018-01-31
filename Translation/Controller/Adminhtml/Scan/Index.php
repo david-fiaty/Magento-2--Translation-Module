@@ -12,14 +12,19 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem\DirectoryList;
 use Naxero\Translation\Model\FileEntityFactory;
 use Naxero\Translation\Helper\Data;
+use Naxero\Translation\Model\Service\FileDataService;
 
 class Index extends Action
 {
-
     /**
      * @var JsonFactory
      */
     protected $resultJsonFactory;
+
+    /**
+     * @var FileDataService
+     */
+    protected $fileDataService;    
 
     /**
      * @var DirectoryList
@@ -43,6 +48,7 @@ class Index extends Action
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
+        FileDataService $fileDataService,
         DirectoryList $tree,
         FileEntityFactory $fileEntityFactory,
         Data $helper
@@ -51,6 +57,7 @@ class Index extends Action
         $this->tree = $tree;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
+        $this->fileDataService = $fileDataService;
         
         parent::__construct($context);
     }
@@ -87,12 +94,14 @@ class Index extends Action
             foreach(new \RecursiveIteratorIterator($rdi) as $filePath)
             {
                 if ($this->isWantedFile($filePath)) {
-                    $output['table_data'][] = $this->saveFile($filePath);
+                    $this->saveFile($filePath);
                 }
             }
+
+            return $result->setData($this->fileDataService->getList());
         }
 
-        return $result->setData($output);
+        return $result->setData([]);
     }
 
     public function clearTableData() {
@@ -116,8 +125,6 @@ class Index extends Action
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
 
         $fileEntity->save();
-
-        return (object) $this->helper->getFieldFormats($fileEntity->getData(), $fileEntity);
     }
 
     public function isWantedFile($filePath)
