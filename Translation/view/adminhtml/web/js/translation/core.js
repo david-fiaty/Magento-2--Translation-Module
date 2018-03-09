@@ -121,41 +121,55 @@ define([
                 self.cache._(obj.selector).on('change', function() {
                     let selected = $(this).find(":selected").text();
                     let selectedKey = $(this).find(":selected").val();
-                    self.updateFilters({ field: obj.field, type: '=', value: selected, key: selectedKey });
+                    self.updateFilters({ field: obj.field, type: '=', value: selectedKey });
                 });
             });
         },
 
         updateFilters: function(newFilter) {
             var self = this;
-            var filters = $(self.options.targetTable).tabulator('getFilters');
+            var filters = $(self.options.targetTable).tabulator('getFilters'); 
+
+            var found = filters.find(function(element) {
+                    return element.field == newFilter.field;
+            });
 
             // Process the new filter
-            if (filters.length == 0) {
+            if (filters.length == 0 || typeof found === 'undefined') {
                 filters.push(newFilter);
             } else {
                 for (var i = 0; i < filters.length; i++) {
-                    if (newFilter.key == 'alltx') {
-                        filters.splice(i, 1);
-                    } else {
-                        if (filters[i].field == newFilter.field) {
+                    if (filters[i].field == newFilter.field) {
+                        if (newFilter.value === 'alltx') {
+                            filters.splice(i, 1);
+                        } 
+                        else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
                             filters[i] = newFilter;
-                        } else if (filters[i].field == newFilter.field && filters[i].value == newFilter.value) {} else {
-                            filters.push(newFilter);
                         }
-                    }
+                    } 
+                    else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
+                        filters.push(newFilter);
+                    }                    
                 }
             }
 
-            // Clea filters and set the new one
+            // Clear filters and set the new one
             self.cache._(self.options.targetTable).tabulator('clearFilter');
             self.cache._(self.options.targetTable).tabulator('setFilter', filters);
+
+            console.log(filters);
         },
 
         createOptions: function(sel, arr) {
+            var self = this;
             var output = [];
             $.each(arr, function(key, value) {
-                output.push('<option value="' + key + '">' + value + '</option>');
+                // Create the option
+                var option = (sel == self.filters.status) ? '<option value="' + key + '">' : '<option value="' + value + '">';
+                option += value + '</option>';
+
+                // Add it to the output
+                output.push(option);
             });
             this.cache._(sel).append(output.join(''));
         },
@@ -288,7 +302,7 @@ define([
                 { title: "Type", field: "file_type", sorter: "string"},
                 { title: "Group", field: "file_group", sorter: "string"},
                 { title: "Locale", field: "file_locale", sorter: "string"},
-                { title: "Status", field: "file_is_active", sorter: "number", formatter: "tickCross"}
+                //{ title: "Status", field: "file_is_active", sorter:"string"}
             ];
         },
 

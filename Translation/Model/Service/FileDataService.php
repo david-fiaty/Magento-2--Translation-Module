@@ -80,8 +80,8 @@ class FileDataService
                 'file_group' => [], 
                 'file_locale' => [], 
                 'file_status' => [
-                    __('Active'),
-                    __('Error')
+                    __('Error'),
+                    __('Active')
                 ]
             ]
         ];
@@ -110,8 +110,7 @@ class FileDataService
         $path = $arr['file_path'];
 
         // Todo : detect themes in vendor folder
-        if (
-            strpos($path, 'vendor/magento') === 0) {
+        if (strpos($path, 'vendor/magento') === 0) {
             $arr['file_type'] = __('Module');
             $arr['file_group'] = __('Core');
         }

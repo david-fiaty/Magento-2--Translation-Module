@@ -62,7 +62,7 @@ class FileEntity  extends AbstractModel implements FileEntityInterface, Identity
      */
     public function getAvailableStatuses()
     {
-        return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
+        return [self::STATUS_DISABLED => __('Disabled'), self::STATUS_ENABLED => __('Enabled')];
     }
     /**
      * Return unique ID(s) for each object in system

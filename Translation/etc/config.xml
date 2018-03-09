@@ -4,6 +4,7 @@
         <translation>
             <general>
                 <enable>1</enable>
+                <core_file_edit>1</core_file_edit>
             </general>
         </translation> 
     </default>
