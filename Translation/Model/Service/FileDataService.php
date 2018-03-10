@@ -59,7 +59,7 @@ class FileDataService
 
             // Prepare the fields
             $arr = $this->helper->getFieldFormats($arr, $item);
-            $arr = $this->getSortingFields($arr);
+            $arr = $this->buildSortingFields($arr);
 
             // Store the item as an object
             $this->output['table_data'][] = (object) $arr;
@@ -99,7 +99,7 @@ class FileDataService
         sort($this->output['filter_data']['file_locale']);
     }
 
-    protected function getSortingFields($arr) {
+    protected function buildSortingFields($arr) {
 
         $metadata = $this->scanPath($arr);
 
