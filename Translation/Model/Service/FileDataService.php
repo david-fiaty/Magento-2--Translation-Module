@@ -118,14 +118,22 @@ class FileDataService
             $arr['file_type'] = __('Module');
             $arr['file_group'] = __('Community');
         }
-        else if (strpos($path, 'dev/') === 0) {
-            $arr['file_type'] = __('Dev');
+        else if (strpos($path, 'dev/tests/') === 0) {
+            $arr['file_type'] = __('Test');
             $arr['file_group'] = __('Dev');
         }
         else if (strpos($path, 'app/design/frontend/Magento') === 0) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Core');
         }
+        else if (strpos($path, 'pub/static') === 0) {
+            $arr['file_type'] = __('Theme');
+            $arr['file_group'] = __('Static');
+        }
+        else if (strpos($path, 'lib/') === 0) {
+            $arr['file_type'] = __('Web');
+            $arr['file_group'] = __('Library');
+        }        
         else if (strpos($path, 'app/design/frontend/') === 0
                 && strpos($path, 'app/design/frontend/Magento') === false) {
             $arr['file_type'] = __('Theme');
