@@ -3,3 +3,4 @@
 - Check the todos in code
 - Add pagination control to lists
 - Update the tabulator files
+- Add a cache clear button + controller
