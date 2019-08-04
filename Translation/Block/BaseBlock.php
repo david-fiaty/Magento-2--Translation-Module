@@ -9,17 +9,17 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	/**
      * @var \Naxero\Translation\Helper\Data
      */
-	 protected $_devToolHelper;
+	 protected $devToolHelper;
 	 
 	 /**
      * @var \Magento\Framework\Url
      */
-	 protected $_urlApp;
+	 protected $urlApp;
 	 
 	 /**
      * @var \Naxero\Translation\Model\Config
      */
-    protected $_config;
+    protected $config;
 
     /**
      * @param \Naxero\Translation\Block\Context $context
@@ -28,11 +28,10 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
     public function __construct( \Naxero\Translation\Block\Context $context
 	)
     {
-        $this->_devToolHelper = $context->getTranslationHelper();
-		$this->_config = $context->getConfig();
-        $this->_urlApp=$context->getUrlFactory()->create();
+        $this->devToolHelper = $context->getTranslationHelper();
+		$this->config = $context->getConfig();
+        $this->urlApp = $context->getUrlFactory()->create();
 		parent::__construct($context);
-	
     }
 	
 	/**
@@ -41,7 +40,7 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 */
     public function getEventDetails()
     {
-		return  $this->_devToolHelper->getEventDetails();
+		return  $this->devToolHelper->getEventDetails();
     }
 	
 	/**
@@ -49,7 +48,7 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 * @return string
      */
 	public function getCurrentUrl(){
-		return $this->_urlApp->getCurrentUrl();
+		return $this->urlApp->getCurrentUrl();
 	}
 	
 	/**
@@ -59,7 +58,7 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
      */
 	public function getControllerUrl($routePath){
 		
-		return $this->_urlApp->getUrl($routePath);
+		return $this->urlApp->getUrl($routePath);
 	}
 	
 	/**
@@ -68,7 +67,7 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 * @return string
      */
 	public function getConfigValue($path){
-		return $this->_config->getCurrentStoreConfigValue($path);
+		return $this->config->getCurrentStoreConfigValue($path);
 	}
 	
 	/**
