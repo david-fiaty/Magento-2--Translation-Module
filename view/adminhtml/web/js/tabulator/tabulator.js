@@ -6779,7 +6779,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         "headerFilters": {
 
-          "default": "filter column...",
+          "default": "Search keyword...",
 
           "columns": {}
 
