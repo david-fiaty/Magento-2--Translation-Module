@@ -4,7 +4,7 @@
         <translation>
             <general>
                 <enable>1</enable>
-                <core_file_edit>1</core_file_edit>
+                <exclude_core_files>1</exclude_core_files>
                 <exclude_test_files>1</exclude_test_files>
             </general>
         </translation> 
