@@ -156,8 +156,6 @@ define([
             // Clear filters and set the new one
             self.cache._(self.options.targetTable).tabulator('clearFilter');
             self.cache._(self.options.targetTable).tabulator('setFilter', filters);
-
-            console.log(filters);
         },
 
         createOptions: function(sel, arr) {
