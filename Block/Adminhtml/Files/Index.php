@@ -2,7 +2,7 @@
 /**
  * Copyright © 2015 Naxero . All rights reserved.
  */
-namespace Naxero\Translation\Block\Adminhtml\Strings;
+namespace Naxero\Translation\Block\Adminhtml\Files;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
@@ -20,7 +20,7 @@ class Index extends Template
 
 	public function _prepareLayout()
 	{
-	   //set page title
+	   // Set page title
 	   $this->pageConfig->getTitle()->set(__('Manage translations'));
 
 	   return parent::_prepareLayout();

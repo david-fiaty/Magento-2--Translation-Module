@@ -3,7 +3,7 @@
  *
  * Copyright © 2018 David Fiaty. All rights reserved.
  */
-namespace Naxero\Translation\Controller\Adminhtml\Strings;
+namespace Naxero\Translation\Controller\Adminhtml\Files;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
