@@ -21,7 +21,7 @@ class Index extends Template
 	public function _prepareLayout()
 	{
 	   // Set page title
-	   $this->pageConfig->getTitle()->set(__('Manage translation strings'));
+	   $this->pageConfig->getTitle()->set(__('Manage language strings'));
 
 	   return parent::_prepareLayout();
 	}  

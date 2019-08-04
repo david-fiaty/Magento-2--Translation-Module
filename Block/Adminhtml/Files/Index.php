@@ -21,7 +21,7 @@ class Index extends Template
 	public function _prepareLayout()
 	{
 	   // Set page title
-	   $this->pageConfig->getTitle()->set(__('Manage translation files'));
+	   $this->pageConfig->getTitle()->set(__('Manage language files'));
 
 	   return parent::_prepareLayout();
 	}  
