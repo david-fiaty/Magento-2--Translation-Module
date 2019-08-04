@@ -25,7 +25,8 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
      * @param \Naxero\Translation\Block\Context $context
 	 * @param \Magento\Framework\UrlFactory $urlFactory
      */
-    public function __construct( \Naxero\Translation\Block\Context $context
+    public function __construct(
+		\Naxero\Translation\Block\Context $context
 	)
     {
         $this->devToolHelper = $context->getTranslationHelper();
@@ -75,15 +76,15 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 * @return bool
      */
 	public function canShowTranslation(){
-		$isEnabled=$this->getConfigValue('translation/module/is_enabled');
-		if($isEnabled)
+		$isEnabled = $this->getConfigValue('translation/module/is_enabled');
+		if ($isEnabled)
 		{
 			$allowedIps=$this->getConfigValue('translation/module/allowed_ip');
 			 if(is_null($allowedIps)){
 				return true;
 			}
 			else {
-				$remoteIp=$_SERVER['REMOTE_ADDR'];
+				$remoteIp = $_SERVER['REMOTE_ADDR'];
 				if (strpos($allowedIps,$remoteIp) !== false) {
 					return true;
 				}
