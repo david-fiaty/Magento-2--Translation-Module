@@ -1,0 +1,5 @@
+- Link config settings to file exclusion
+- Add a strings view
+- Check the todos in code
+- Add pagination control to lists
+- Update the tabulator files
