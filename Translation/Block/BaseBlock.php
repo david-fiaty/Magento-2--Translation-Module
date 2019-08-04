@@ -48,7 +48,8 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
      * Function for getting current url
 	 * @return string
      */
-	public function getCurrentUrl(){
+	public function getCurrentUrl()
+	{
 		return $this->urlApp->getCurrentUrl();
 	}
 	
@@ -57,8 +58,8 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 * @param string $routePath
 	 * @return string
      */
-	public function getControllerUrl($routePath){
-		
+	public function getControllerUrl($routePath)
+	{
 		return $this->urlApp->getUrl($routePath);
 	}
 	
@@ -67,7 +68,8 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 	 * @param string $path
 	 * @return string
      */
-	public function getConfigValue($path){
+	public function getConfigValue($path)
+	{
 		return $this->config->getCurrentStoreConfigValue($path);
 	}
 	
@@ -75,7 +77,8 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
      * Function canShowTranslation
 	 * @return bool
      */
-	public function canShowTranslation(){
+	public function canShowTranslation()
+	{
 		$isEnabled = $this->getConfigValue('translation/module/is_enabled');
 		if ($isEnabled)
 		{
@@ -92,5 +95,4 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 		}
 		return false;
 	}
-	
 }
