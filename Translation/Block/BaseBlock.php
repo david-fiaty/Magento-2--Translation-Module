@@ -11,12 +11,12 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
      */
 	 protected $devToolHelper;
 	 
-	 /**
+	/**
      * @var \Magento\Framework\Url
      */
 	 protected $urlApp;
 	 
-	 /**
+	/**
      * @var \Naxero\Translation\Model\Config
      */
     protected $config;
@@ -93,6 +93,7 @@ class BaseBlock extends \Magento\Framework\View\Element\Template
 				}
 			}
 		}
+		
 		return false;
 	}
 }
