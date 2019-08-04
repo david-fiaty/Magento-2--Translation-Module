@@ -18,7 +18,12 @@
                     <label>Allow core files edit</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If enabled, administrators will be able to edit core translation files directly. Editing core files directly is not recommended.</comment>
-                </field>                
+                </field>
+                <field id="exclude_test_files" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude test files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If enabled, unit testing files will not be displayed.</comment>
+                </field>           
             </group>
          </section>
     </system>
