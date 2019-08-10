@@ -78,7 +78,7 @@ class Detail extends Action
             $output = '';
 
             // Get the controller action
-            $action  = $this->getAction();
+            $action  = $this->getRequest()->getParam('action');
 
             // Get the factory
             $fileEntity = $this->fileEntityFactory->create(); 
@@ -105,10 +105,6 @@ class Detail extends Action
         }
 
         return [];
-    }
-
-    public function getAction() {
-        return $this->getRequest()->getParam('action');
     }
 
     public function getFileId() {
