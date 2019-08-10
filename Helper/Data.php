@@ -81,5 +81,4 @@ class Data extends AbstractHelper
         // Return the row count
         return count($csvData);
     }
-
 }
