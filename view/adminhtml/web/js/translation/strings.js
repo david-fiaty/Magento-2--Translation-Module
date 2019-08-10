@@ -60,10 +60,7 @@ define([
                 columns: self.getListColumns(),
                 initialSort:[
                     {column:"file_count", dir:"desc"},
-                ],
-                rowClick: function(e, row) {
-                    self.loadRowDetails(row.getData());
-                }
+                ]
             });
 
             // Load the data into the table
@@ -293,7 +290,7 @@ define([
         getListColumns: function() {
             return [
                 { title: "Key", field: "string_key", sorter: "string"},
-                { title: "Value", field: "string_value", sorter: "string"},
+                { title: "Value", field: "string_value", sorter: "string", headerFilter:"input", editor: "input"},
                 //{ title: "Id", field: "file_id", sorter: "number", visible: false},
                 //{ title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
                 //{ title: "Created", field: "file_creation_time", sorter: "string", visible: false},
