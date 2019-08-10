@@ -33,7 +33,6 @@ class FileDataService
         FileEntityFactory $fileEntityFactory,
         Data $helper
     ) {
-        $this->output = $this->prepareOutputArray();
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
     }
@@ -45,6 +44,9 @@ class FileDataService
      */
     public function getList()
     {
+        // Prepare the output array
+        $this->output = $this->prepareOutputArray();
+
         // Get the factory
         $fileEntity = $this->fileEntityFactory->create(); 
 
