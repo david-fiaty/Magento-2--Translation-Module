@@ -74,6 +74,22 @@ class Data extends AbstractHelper
         return $arr;
     }	
 
+    public function formatStringRows($arr, $fileEntity) {
+        // Cast the id field to integer
+        $arr['file_id'] = (int) $arr['file_id'];
+
+        // Set the CSV row count
+        $arr['file_count'] = $this->countCSVRows($fileEntity->getData('file_path'));
+
+        // Unset the content field
+        unset($arr['file_content']);
+
+        // Set the language field
+        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
+
+        return $arr;
+    }	
+
     public function countCSVRows($csvPath) {
         // Parse the string
         $csvData = $this->csvParser->getData($csvPath);

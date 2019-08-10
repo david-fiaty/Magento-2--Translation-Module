@@ -57,22 +57,36 @@ class StringDataService
         // Create the collection
         $collection = $fileEntity->getCollection();
 
-        // Prepare the output array
         foreach ($collection as $item)
         {
             // Get the item data
             $arr = $item->getData();
 
-            // Prepare the fields
-            $arr = $this->helper->getFieldFormats($arr, $item, true);
-            $arr = $this->buildSortingFields($arr);
+            // Get the content rows
+            $rows = explode("\n", $arr['file_content']);
+            unset($arr['file_content']);
+            foreach ($rows as $row) {
+                // Prepare the output array
+                $output = [];
 
-            // Store the item as an object
-            $this->output['table_data'][] = (object) $arr;
+                $line = str_getcsv($row);
+                // Skip empty and non pair values
+                if (!empty($line[0]) && count($line) == 2) {
+                    $output = array_merge([
+                        'string_key' => $line[0],
+                        'string_value' => $line[1]
+                    ], $arr);
+
+                    // Store the item as an object
+                    $this->output['table_data'][] = (object) $output;
+                }
+            }
+
+
         }
 
         // Remove duplicate filters
-        $this->removeDuplicateFilterValues();
+        //$this->removeDuplicateFilterValues();
 
         // Return the data output
         return $this->output;
