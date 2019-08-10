@@ -73,8 +73,6 @@ define([
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
-console.log(data);
-
                     // Set the table data
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
 
