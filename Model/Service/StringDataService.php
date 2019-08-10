@@ -81,8 +81,6 @@ class StringDataService
                     $this->output['table_data'][] = (object) $output;
                 }
             }
-
-
         }
 
         // Remove duplicate filters
