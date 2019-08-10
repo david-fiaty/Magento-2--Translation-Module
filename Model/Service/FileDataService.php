@@ -52,7 +52,7 @@ class FileDataService
         $collection = $fileEntity->getCollection();
 
         // Prepare the output array
-        foreach($collection as $item)
+        foreach ($collection as $item)
         {
             // Get the item data
             $arr = $item->getData();
