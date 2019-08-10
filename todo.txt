@@ -4,3 +4,4 @@
 - Add pagination control to lists
 - Update the tabulator files
 - Add a cache clear button + controller
+- fix max input var issue on save file

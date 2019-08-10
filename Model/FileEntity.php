@@ -6,7 +6,7 @@ use Naxero\Translation\Api\Data\FileEntityInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 
-class FileEntity  extends AbstractModel implements FileEntityInterface, IdentityInterface
+class FileEntity extends AbstractModel implements FileEntityInterface, IdentityInterface
 {
 
     /**#@+
