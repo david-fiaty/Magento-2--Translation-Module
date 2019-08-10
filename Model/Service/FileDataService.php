@@ -64,7 +64,7 @@ class FileDataService
             $arr = $item->getData();
 
             // Prepare the fields
-            $arr = $this->helper->getFieldFormats($arr, $item);
+            $arr = $this->helper->formatFileRow($arr, $item);
             $arr = $this->buildSortingFields($arr);
 
             // Store the item as an object
