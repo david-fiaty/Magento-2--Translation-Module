@@ -72,7 +72,7 @@ class FileDataService
         return $this->output;
     }
 
-    protected function prepareOutputArray() {
+    public function prepareOutputArray() {
         return [
             'table_data' => [],
             'filter_data' => [
@@ -87,7 +87,7 @@ class FileDataService
         ];
     }
 
-    protected function removeDuplicateFilterValues() {
+    public function removeDuplicateFilterValues() {
         // Remove duplicates
         $this->output['filter_data']['file_type'] = array_unique($this->output['filter_data']['file_type']);
         $this->output['filter_data']['file_group'] = array_unique($this->output['filter_data']['file_group']);
@@ -99,14 +99,14 @@ class FileDataService
         sort($this->output['filter_data']['file_locale']);
     }
 
-    protected function buildSortingFields($arr) {
+    public function buildSortingFields($arr) {
 
         $metadata = $this->scanPath($arr);
 
         return array_merge($arr, $metadata);
     }
 
-    protected function scanPath($arr) {
+    public function scanPath($arr) {
         $path = $arr['file_path'];
 
         // Todo : detect themes in vendor folder

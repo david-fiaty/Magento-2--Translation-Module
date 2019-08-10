@@ -35,7 +35,7 @@ class FileEntity extends AbstractDb
      *
      * @return void
      */
-    protected function _construct()
+    public function _construct()
     {
         $this->_init('naxero_translation_file', 'file_id');
     }
@@ -47,7 +47,7 @@ class FileEntity extends AbstractDb
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    public function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
 
         if (!$this->isValidFilePath($object)) {
@@ -90,7 +90,7 @@ class FileEntity extends AbstractDb
      * @param \Naxero\Translation\Model\FileEntity $object
      * @return \Zend_Db_Select
      */
-    protected function _getLoadSelect($field, $value, $object)
+    public function _getLoadSelect($field, $value, $object)
     {
         $select = parent::_getLoadSelect($field, $value, $object);
 
@@ -114,7 +114,7 @@ class FileEntity extends AbstractDb
      * @param int $isActive
      * @return \Magento\Framework\DB\Select
      */
-    protected function _getLoadByFilePathSelect($filePath, $isActive = null)
+    public function _getLoadByFilePathSelect($filePath, $isActive = null)
     {
         $select = $this->getConnection()->select()->from(
             ['bp' => $this->getMainTable()]
@@ -133,7 +133,7 @@ class FileEntity extends AbstractDb
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return bool
      */
-    protected function isNumericFilePath(\Magento\Framework\Model\AbstractModel $object)
+    public function isNumericFilePath(\Magento\Framework\Model\AbstractModel $object)
     {
         return preg_match('/^[0-9]+$/', $object->getData('file_path'));
     }
@@ -145,7 +145,7 @@ class FileEntity extends AbstractDb
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return bool
      */
-    protected function isValidFilePath(\Magento\Framework\Model\AbstractModel $object)
+    public function isValidFilePath(\Magento\Framework\Model\AbstractModel $object)
     {
         //return is_file($object->getData('file_path'));
         return true;

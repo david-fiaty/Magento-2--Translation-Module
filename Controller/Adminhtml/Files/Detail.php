@@ -107,15 +107,15 @@ class Detail extends Action
         return [];
     }
 
-    protected function getAction() {
+    public function getAction() {
         return $this->getRequest()->getParam('action');
     }
 
-    protected function getFileId() {
+    public function getFileId() {
         return $this->getRequest()->getParam('file_id');
     }
 
-    protected function loadFileEntity($fileId) {
+    public function loadFileEntity($fileId) {
         $fileEntity = $this->fileEntityFactory->create(); 
         return $fileEntity->load($fileId);
     }
@@ -167,7 +167,7 @@ class Detail extends Action
         return false;
     }
 
-    protected function arrayToCsv($array) {
+    public function arrayToCsv($array) {
         // Prepare the output
         $csvString = '';
 
@@ -179,7 +179,7 @@ class Detail extends Action
         return $csvString;
     }
 
-    protected function getFileEntityContent($fileEntity) {
+    public function getFileEntityContent($fileEntity) {
         $output = array(); 
 
         $lines = explode(PHP_EOL, $fileEntity->getData('file_content'));

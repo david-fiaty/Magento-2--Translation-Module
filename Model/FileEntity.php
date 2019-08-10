@@ -38,7 +38,7 @@ class FileEntity  extends AbstractModel implements FileEntityInterface, Identity
      *
      * @return void
      */
-    protected function _construct()
+    public function _construct()
     {
         $this->_init('Naxero\Translation\Model\ResourceModel\FileEntity');
     }
