@@ -11,6 +11,7 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Naxero\Translation\Helper\Data;
 use Naxero\Translation\Model\Service\FileDataService;
+use Naxero\Translation\Model\Service\StringDataService;
 
 class Index extends Action
 {
@@ -25,6 +26,11 @@ class Index extends Action
     protected $fileDataService;    
 
     /**
+     * @var StringDataService
+     */
+    protected $stringDataService;  
+
+    /**
      * @var Data
      */
     protected $helper;
@@ -37,10 +43,12 @@ class Index extends Action
         Context $context,
         JsonFactory $resultJsonFactory,
         FileDataService $fileDataService,
+        StringDataService $stringDataService,
         Data $helper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->fileDataService = $fileDataService;
+        $this->stringDataService = $stringDataService;
         $this->helper = $helper;
 
         parent::__construct($context);
@@ -53,16 +61,26 @@ class Index extends Action
      */
     public function execute()
     {
-        $result = $this->resultJsonFactory->create();
+        // Prepare the output array
+        $output = [];
 
+        // Get the view mode
+        $mode = $this->getRequest()->getParam('mode');
+
+        // Process the request
         if ($this->getRequest()->isAjax()) 
         {
-            $output = $this->fileDataService->getList();
+            switch ($mode) {
+                case 'files':
+                    $output = $this->fileDataService->getList();
+                    break;
 
-            // Return a JSON output
-            return $result->setData($output);
+                case 'strings':
+                    $output = $this->stringDataService->getList();
+                    break;
+            }
         }
 
-        return $result->setData([]);
+        return $this->resultJsonFactory->create()->setData($output);
     }
 }

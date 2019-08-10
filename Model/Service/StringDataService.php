@@ -8,7 +8,7 @@ namespace Naxero\Translation\Model\Service;
 use Naxero\Translation\Model\FileEntityFactory;
 use Naxero\Translation\Helper\Data;
 
-class FileDataService
+class StringDataService
 {
     /**
      * @var FileEntityFactory
@@ -64,7 +64,7 @@ class FileDataService
             $arr = $item->getData();
 
             // Prepare the fields
-            $arr = $this->helper->getFieldFormats($arr, $item);
+            $arr = $this->helper->getFieldFormats($arr, $item, true);
             $arr = $this->buildSortingFields($arr);
 
             // Store the item as an object

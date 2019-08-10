@@ -58,15 +58,17 @@ class Data extends AbstractHelper
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
 
-    public function getFieldFormats($arr, $fileEntity) {
+    public function getFieldFormats($arr, $fileEntity, $withContent = false) {
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 
         // Set the CSV row count
         $arr['file_count'] = $this->countCSVRows($fileEntity->getData('file_path'));
 
-        // Unset the content field. Todo : better to refine query
-        unset($arr['file_content']);
+        // Unset the content field
+        if (!$withContent) {
+            unset($arr['file_content']);
+        }
 
         // Set the language field
         $arr['file_locale'] =  basename($arr['file_path'], '.csv');
