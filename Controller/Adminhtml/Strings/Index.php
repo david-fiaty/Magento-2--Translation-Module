@@ -28,15 +28,6 @@ class Index extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
     }
-    /**
-     * Check the permission to run it
-     *
-     * @return bool
-     */
-   /*  protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Magento_Cms::page');
-    } */
 
     /**
      * Index action
