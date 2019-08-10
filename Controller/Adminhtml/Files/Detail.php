@@ -118,8 +118,9 @@ class Detail extends Action
 
     public function updateFileEntityContent($fileEntity) {
         // Prepare the new content
-        $fileContent = $this->getRequest()->getParam('file_content');
-        $newContent = $this->arrayToCsv($fileContent);
+        $newContent = $this->arrayToCsv(
+            $this->getRequest()->getParam('file_content')
+        );
 
         // Insert the new row
         try {
