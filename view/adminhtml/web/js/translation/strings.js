@@ -287,17 +287,8 @@ define([
 
         getListColumns: function() {
             return [
-                { title: "Key", field: "string_key", sorter: "string"},
-                { title: "Value", field: "string_value", sorter: "string", headerFilter:"input", editor: "input"},
-                //{ title: "Id", field: "file_id", sorter: "number", visible: false},
-                //{ title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
-                //{ title: "Created", field: "file_creation_time", sorter: "string", visible: false},
-                //{ title: "Updated", field: "file_update_time", sorter: "string", visible: false},
-                //{ title: "Lines", field: "file_count", sorter: "number"},
-                //{ title: "Type", field: "file_type", sorter: "string"},
-                //{ title: "Group", field: "file_group", sorter: "string"},
-                //{ title: "Locale", field: "file_locale", sorter: "string"},
-                //{ title: "Status", field: "file_is_active", sorter:"string"}
+                {title: "Key", field: "string_key", sorter: "string"},
+                {title: "Value", field: "string_value", sorter: "string", headerFilter:"input", editor: "input"}
             ];
         },
 
