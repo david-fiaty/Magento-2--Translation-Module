@@ -1,10 +1,13 @@
 define([
-    'jquery', 'tabs', 'Magento_Ui/js/modal/prompt', 'mage/url', 'mage/translate', 'tabulator', 
-], function($, tabs, prompt, urlBuilder, __, tabulator) {
+    'jquery',
+    'Magento_Ui/js/modal/prompt',
+    'mage/translate',
+    'tabulator'
+], function($, prompt, __, tabulator) {
     'use strict';
 
     // Build the widget
-    $.widget('mage.corejs', {
+    $.widget('mage.filesjs', {
         // Prepare the options
         cache: null,
         isListView: true,
@@ -68,8 +71,8 @@ define([
 
             // Load the data into the table
             $.ajax({
-                type: "GET",
-                url: self.options.dataUrl,
+                type: "POST",
+                url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
@@ -249,11 +252,11 @@ define([
             var self = this;
 
             // Prepare the update url
-            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode;
+            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode  + '&form_key=' + window.FORM_KEY;
 
             // Trigger the update request
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: updateUrl,
                 dataType: 'json',
                 showLoader: true,
@@ -368,11 +371,11 @@ define([
         getRowDetails: function(fileId) {
             // Prepare the variables
             var self = this;
-            var fileDetailsUrl = this.options.detailViewUrl + '?action=get_data&file_id=' + fileId;
+            var fileDetailsUrl = this.options.detailViewUrl + '?action=get_data&file_id=' + fileId  + '&form_key=' + window.FORM_KEY;
 
             // Send the the request
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: fileDetailsUrl,
                 dataType: 'json',
                 showLoader: true,
@@ -404,27 +407,8 @@ define([
                     console.log(error);
                 }
             });
-        },
-
-        saveRowDetails: function(fileId) {
-            // Prepare the variables
-            var self = this;
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=save_data&file_id=' + fileId;
-
-            // Send the the request
-            $.ajax({
-                type: "GET",
-                url: fileUpdateUrl,
-                dataType: 'json',
-                showLoader: true,
-                success: function(res) {},
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
         }
-
     });
 
-    return $.mage.corejs;
+    return $.mage.filesjs;
 });
