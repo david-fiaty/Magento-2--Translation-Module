@@ -293,13 +293,13 @@ define([
         getListColumns: function() {
             return [
                 {title: "Id", field: "file_id", sorter: "number", visible: false},
-                {title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
+                {title: "Path", field: "file_path", sorter: "string", headerFilter:"input"},
                 {title: "Created", field: "file_creation_time", sorter: "string", visible: false},
                 {title: "Updated", field: "file_update_time", sorter: "string", visible: false},
-                {title: "Lines", field: "file_count", sorter: "number"},
-                {title: "Type", field: "file_type", sorter: "string"},
-                {title: "Group", field: "file_group", sorter: "string"},
-                {title: "Locale", field: "file_locale", sorter: "string"}
+                {title: "Lines", field: "file_count", sorter: "number", width: 100},
+                {title: "Type", field: "file_type", sorter: "string", width: 100},
+                {title: "Group", field: "file_group", sorter: "string", width: 100},
+                {title: "Locale", field: "file_locale", sorter: "string", width: 100}
             ];
         },
 
