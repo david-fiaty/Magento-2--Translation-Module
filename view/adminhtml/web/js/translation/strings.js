@@ -64,6 +64,12 @@ define([
                 responsiveLayout: true,
                 height: "100%",
                 columns: self.getListColumns(),
+                cellEdited: function(cell) {
+                    var row = cell.getRow();
+                    self.updateEntityData({
+                        rowContent: row.getData()
+                    });
+                },
                 initialSort:[
                     {column:"index", dir:"desc"}
                 ]
@@ -329,18 +335,20 @@ define([
             }
         },
 
-        updateEntityData: function(row) {
+        updateEntityData: function(data) {
             // Prepare the variables
-            var self = this;
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + row.fileId;
-            var file_content = { file_content: row.fileContent };
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.file_id + '&form_key=' + window.FORM_KEY;
+            var rowData = {
+                    row_content: data.rowContent,
+                    row_id: data.rowId 
+                };
 
             // Send the the request
             $.ajax({
                 type: "POST",
                 url: fileUpdateUrl,
+                data: rowData,
                 dataType: 'json',
-                data: file_content,
                 success: function(res) {},
                 error: function(request, status, error) {
                     console.log(error);
