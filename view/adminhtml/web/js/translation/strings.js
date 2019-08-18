@@ -20,7 +20,8 @@ define([
             detailViewUrl: '',
             fileUpdateUrl: '',
             detailViewid: 0,
-            paging: 30
+            paging: 30,
+            pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
         },
 
         filters: {
@@ -57,7 +58,9 @@ define([
             this.cache._(this.options.targetTable).tabulator({
                 pagination: "local",
                 paginationSize: self.options.paging,
-                paginationSizeSelector: true,
+                paginationSizeSelector: self.options.pagingSize,
+                persistentLayout: true,
+                persistentSort: true,
                 layout: "fitColumns",
                 responsiveLayout: true,
                 height: "100%",
