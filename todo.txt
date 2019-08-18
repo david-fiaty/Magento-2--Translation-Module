@@ -6,3 +6,4 @@
 - add files permissions check
 - replace file_put_contents by core function
 - add hover txt display for text too long
+- Fix pagination not working
