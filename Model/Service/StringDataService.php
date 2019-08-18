@@ -64,6 +64,9 @@ class StringDataService
             // Get the item data
             $arr = $item->getData();
 
+            // Build the sorting fields
+            $arr = $this->buildSortingFields($arr);
+
             // Get the content rows
             $rows = explode("\n", $arr['file_content']);
             unset($arr['file_content']);
@@ -94,7 +97,7 @@ class StringDataService
         }
 
         // Remove duplicate filters
-        //$this->removeDuplicateFilterValues();
+        $this->removeDuplicateFilterValues();
 
         // Return the data output
         return $this->output;

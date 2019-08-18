@@ -65,12 +65,12 @@ class Index extends Action
         $output = [];
 
         // Get the view mode
-        $mode = $this->getRequest()->getParam('mode');
+        $view = $this->getRequest()->getParam('view');
 
         // Process the request
         if ($this->getRequest()->isAjax()) 
         {
-            switch ($mode) {
+            switch ($view) {
                 case 'files':
                     $output = $this->fileDataService->getList();
                     break;

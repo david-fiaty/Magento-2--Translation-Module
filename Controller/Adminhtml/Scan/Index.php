@@ -13,6 +13,7 @@ use Magento\Framework\Filesystem\DirectoryList;
 use Naxero\Translation\Model\FileEntityFactory;
 use Naxero\Translation\Helper\Data;
 use Naxero\Translation\Model\Service\FileDataService;
+use Naxero\Translation\Model\Service\StringDataService;
 
 class Index extends Action
 {
@@ -24,7 +25,12 @@ class Index extends Action
     /**
      * @var FileDataService
      */
-    protected $fileDataService;    
+    protected $fileDataService; 
+
+    /**
+     * @var StringDataService
+     */
+    protected $stringDataService;  
 
     /**
      * @var DirectoryList
@@ -49,6 +55,7 @@ class Index extends Action
         Context $context,
         JsonFactory $resultJsonFactory,
         FileDataService $fileDataService,
+        StringDataService $stringDataService,
         DirectoryList $tree,
         FileEntityFactory $fileEntityFactory,
         Data $helper
@@ -58,6 +65,7 @@ class Index extends Action
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
         $this->fileDataService = $fileDataService;
+        $this->stringDataService = $stringDataService;
         
         parent::__construct($context);
     }
@@ -81,6 +89,9 @@ class Index extends Action
             // Get the update mode
             $update_mode = $this->getRequest()->getParam('update_mode');
 
+            // Get the view mode
+            $view = $this->getRequest()->getParam('view');
+
             // Clear the table data
             $this->clearTableData();
             if ($update_mode == 'update_replace') {
@@ -90,6 +101,7 @@ class Index extends Action
             // Get the root directory
             $rootPath = $this->tree->getRoot();
 
+            // Scan the files
             $rdi = new \RecursiveDirectoryIterator($rootPath);
             foreach(new \RecursiveIteratorIterator($rdi) as $filePath)
             {
@@ -98,7 +110,18 @@ class Index extends Action
                 }
             }
 
-            return $result->setData($this->fileDataService->getList());
+            // Get the output
+            switch ($view) {
+                case 'files':
+                    $output = $this->fileDataService->getList();
+                    break;
+
+                case 'strings':
+                    $output = $this->stringDataService->getList();
+                    break;
+            }
+
+            return $result->setData($output);
         }
 
         return $result->setData([]);

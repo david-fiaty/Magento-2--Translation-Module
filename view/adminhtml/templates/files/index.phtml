@@ -37,21 +37,6 @@
 			    	]); ?>	
 				</div>
 			</div>
-
-			<!--
-			<div class="admin__form-field">
-				<label class="label admin__form-field-label" for="translation-status-filter">
-					<span><?php echo __('Status'); ?></span>
-				</label>
-				<div class="admin__form-field-control">
-					<?php echo $block->getSelect([
-			           'id' => 'translation-status-filter',
-			           'name' => 'translation-status-filter',
-			           'class' => 'select admin__control-select'
-			    	]); ?>	
-				</div>
-			</div>
-			-->
 			
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
 				<div class="page-actions-inner">
@@ -86,4 +71,4 @@
 	</div>
 </div>
 
-<div data-mage-init='{"filesjs":{"targetLocale": "<?php echo $block->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['mode' => 'files']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?php echo $block->getUrl('translation/files/detail'); ?>"}}'>
+<div data-mage-init='{"filesjs":{"targetLocale": "<?php echo $block->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'files']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?php echo $block->getUrl('translation/files/detail'); ?>"}}'>
