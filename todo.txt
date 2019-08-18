@@ -4,6 +4,6 @@
 - Add pagination control to lists
 - Update the tabulator files
 - Add a cache clear button + controller
-- replace global file updates by line updates to avoid use of file_get_contents() and max_input var issues
 - add a log page for irregular rows in files
 - add files permissions check
+- replace file_put_contents by core function
