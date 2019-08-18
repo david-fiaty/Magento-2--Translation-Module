@@ -73,6 +73,7 @@ define([
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
+                    console.log(data);
                     // Set the table data
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
 
@@ -292,13 +293,6 @@ define([
             ];
         },
 
-        getDetailColumns: function() {
-            return [
-                { title: "Key", field: "key", sorter: "string", headerFilter:"input"},
-                { title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input" }
-            ];
-        },
-
         togglePanes: function(id) {
             if (this.isListView) {
                 // Get main table width
@@ -324,56 +318,6 @@ define([
                 this.isListView = true;
                 this.detailViewid = 0;
             }
-        },
-
-        loadRowDetails: function(fileObj) {
-            // Prepare the variables
-            var self = this;
-
-            // Create the detail table
-            this.cache._(self.options.detailView).tabulator({
-                pagination: "local",
-                paginationSize: self.options.paging,
-                layout: "fitColumns",
-                responsiveLayout: true,
-                height: "100%",
-                columns: self.getDetailColumns(),
-                cellEdited: function(cell) {
-                    self.updateEntityData({
-                        fileId: fileObj.file_id,
-                        fileContent: self.cache._(self.options.detailView).tabulator("getData")
-                    });
-                }
-            });
-
-            // Set the file path
-            this.cache._('#translation-file-path').text(fileObj.file_path);
-
-            // Update the data
-            this.getRowDetails(fileObj.file_id);
-
-            // Move the panels
-            this.togglePanes(fileObj.file_id);
-        },
-
-        getRowDetails: function(fileId) {
-            // Prepare the variables
-            var self = this;
-            var fileDetailsUrl = this.options.detailViewUrl + '?action=get_data&file_id=' + fileId  + '&form_key=' + window.FORM_KEY;
-
-            // Send the the request
-            $.ajax({
-                type: "POST",
-                url: fileDetailsUrl,
-                dataType: 'json',
-                showLoader: true,
-                success: function(data) {
-                    self.cache._(self.options.detailView).tabulator("setData", data);
-                },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
         },
 
         updateEntityData: function(row) {
