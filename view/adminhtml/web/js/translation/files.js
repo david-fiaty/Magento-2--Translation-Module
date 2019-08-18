@@ -113,10 +113,9 @@ define([
 
             // Prepare the fields
             var fields = [
-                { selector: self.filters.group, field: 'file_group' },
-                { selector: self.filters.type, field: 'file_type' },
-                { selector: self.filters.locale, field: 'file_locale' },
-                { selector: self.filters.status, field: 'file_status' },
+                {selector: self.filters.group, field: 'file_group'},
+                {selector: self.filters.type, field: 'file_type'},
+                {selector: self.filters.locale, field: 'file_locale'}
             ];
 
             // Assign the events

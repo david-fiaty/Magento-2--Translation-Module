@@ -78,10 +78,10 @@ define([
                     self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
 
                     // Build options for the lists
-                    //self.buildFilters(data);
+                    self.buildFilters(data);
 
                     // Add the list events
-                    //self.addFilterEvents();
+                    self.addFilterEvents();
                 },
                 error: function(request, status, error) {
                     console.log(error);
@@ -111,10 +111,9 @@ define([
 
             // Prepare the fields
             var fields = [
-                { selector: self.filters.group, field: 'file_group' },
-                { selector: self.filters.type, field: 'file_type' },
-                { selector: self.filters.locale, field: 'file_locale' },
-                { selector: self.filters.status, field: 'file_status' },
+                {selector: self.filters.group, field: 'file_group'},
+                {selector: self.filters.type, field: 'file_type'},
+                {selector: self.filters.locale, field: 'file_locale'}
             ];
 
             // Assign the events

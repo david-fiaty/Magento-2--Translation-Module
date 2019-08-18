@@ -71,6 +71,9 @@ class StringDataService
             $rows = explode("\n", $arr['file_content']);
             unset($arr['file_content']);
 
+            // Set the language field
+            $arr['file_locale'] =  basename($arr['file_path'], '.csv');
+
             // Loop through the rows
             foreach ($rows as $row) {
                 // Prepare the output array
