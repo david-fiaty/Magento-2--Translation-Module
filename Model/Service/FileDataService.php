@@ -64,7 +64,7 @@ class FileDataService
             $arr = $item->getData();
 
             // Prepare the fields
-            $arr = $this->helper->formatFileRow($arr, $item);
+            $arr = $this->formatFileRow($arr, $item);
             $arr = $this->buildSortingFields($arr);
 
             // Store the item as an object
@@ -166,5 +166,21 @@ class FileDataService
         $this->output['filter_data']['file_locale'][] = basename($path, '.csv');
 
         return $arr;
-    }  
+    }
+
+    public function formatFileRow($arr, $fileEntity) {
+        // Cast the id field to integer
+        $arr['file_id'] = (int) $arr['file_id'];
+
+        // Set the CSV row count
+        $arr['file_count'] = $this->helper->countCSVRows($fileEntity->getData('file_path'));
+
+        // Unset the content field
+        unset($arr['file_content']);
+
+        // Set the language field
+        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
+
+        return $arr;
+    }	
 }
