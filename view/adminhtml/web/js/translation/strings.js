@@ -289,7 +289,7 @@ define([
         getListColumns: function() {
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
-                {title: "Key", field: "key", sorter: "string"},
+                {title: "Key", field: "key", sorter: "string", headerFilter:"input"},
                 {title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input"}
             ];
         },
