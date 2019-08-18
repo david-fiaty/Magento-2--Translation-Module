@@ -341,6 +341,7 @@ define([
         loadRowDetails: function(row) {
             // Prepare the variables
             var self = this;
+            var fileObj = row.getData();
 
             // Create the detail table
             this.cache._(self.options.detailView).tabulator({
@@ -353,6 +354,7 @@ define([
                 cellEdited: function(cell) {
                     var row = cell.getRow();
                     self.updateEntityData({
+                        fileId: fileObj.file_id,
                         rowContent: row.getData()
                     });
                 }
@@ -390,7 +392,7 @@ define([
 
         updateEntityData: function(data) {
             // Prepare the variables
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.file_id + '&form_key=' + window.FORM_KEY;
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
             var rowData = {
                     row_content: data.rowContent,
                     row_id: data.rowId 

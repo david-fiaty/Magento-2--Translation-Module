@@ -58,7 +58,7 @@ class Data extends AbstractHelper
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
 
-    public function formatStringRows($arr, $fileEntity) {
+    public function formatFileRow($arr, $fileEntity) {
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 
