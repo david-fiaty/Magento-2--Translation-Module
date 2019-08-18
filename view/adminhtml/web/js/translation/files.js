@@ -57,6 +57,7 @@ define([
             this.cache._(this.options.targetTable).tabulator({
                 pagination: "local",
                 paginationSize: self.options.paging,
+                paginationSizeSelector: true,
                 layout: "fitColumns",
                 responsiveLayout: true,
                 height: "100%",
