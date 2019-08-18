@@ -136,9 +136,12 @@ class Detail extends Action
             $lines[$params['row_content']['index']] = $newRrow;
             $newContent = $this->arrayToCsv($lines);
 
-            // Save the new content
+            // Save the new content to db
             $fileEntity->setFileContent($newContent);
             $fileEntity->save();
+
+            // Update the CSV file
+            $this->saveFileEntityContent($fileEntity);
 
             return true;
         }

@@ -242,12 +242,7 @@ define([
             // File strings reload
             this.cache._("#get-strings").click(function() {
                 self.getRowDetails(self.detailViewid);
-            });
-
-            // File strings save
-            this.cache._("#save-strings").click(function() {
-                self.saveRowDetails(self.detailViewid);
-            });            
+            });        
         },
 
         updateFileIndex: function(updateMode) {
