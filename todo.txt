@@ -5,3 +5,5 @@
 - Update the tabulator files
 - Add a cache clear button + controller
 - replace global file updates by line updates to avoid use of file_get_contents() and max_input var issues
+- add a log page for irregular rows in files
+- remove the save file button and implement auto save to file
