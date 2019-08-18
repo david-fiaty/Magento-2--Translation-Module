@@ -128,7 +128,6 @@ class StringDataService
     }
 
     public function buildSortingFields($arr) {
-
         $metadata = $this->scanPath($arr);
 
         return array_merge($arr, $metadata);
