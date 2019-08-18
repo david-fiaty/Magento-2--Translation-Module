@@ -355,7 +355,7 @@ define([
                     var row = cell.getRow();
                     self.updateEntityData({
                         fileId: fileObj.file_id,
-                        rowContent: row.getData()
+                        rowContent: fileObj
                     });
                 }
             });
