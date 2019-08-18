@@ -1,8 +1,6 @@
 - Link config settings to file exclusion
 - Add a strings view
 - Check the todos in code
-- Add pagination control to lists
-- Update the tabulator files
 - Add a cache clear button + controller
 - add a log page for irregular rows in files
 - add files permissions check
