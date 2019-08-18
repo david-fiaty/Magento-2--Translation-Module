@@ -118,15 +118,25 @@ class Detail extends Action
 
     public function updateFileEntityContent($fileEntity) {
         // Prepare the new content
-        $newContent = $this->arrayToCsv(
-            $this->getRequest()->getParam('file_content')
-        );
+        $params = $this->getRequest()->getParams();
+        $newRrow = $this->rowToCsv($params['row_content']);
 
         // Insert the new row
         try {
+            // Get the current content
             $fileId = $this->getFileId();
             $fileEntity = $this->fileEntityFactory->create(); 
             $fileEntity->load($fileId);
+            $content = $fileEntity->getFileContent();
+
+            // Convert the content to array
+            $lines = explode(PHP_EOL, $content);
+
+            // Update the row
+            $lines[$params['row_content']['index']] = $newRrow;
+            $newContent = $this->arrayToCsv($lines);
+
+            // Save the new content
             $fileEntity->setFileContent($newContent);
             $fileEntity->save();
 
@@ -170,9 +180,25 @@ class Detail extends Action
         $csvString = '';
 
         // Array to CSV
-        foreach ($array as $key => $obj) {
-            $csvString .= "\"" . $obj['key'] . "\"," . "\"" . $obj['value'] . "\"\n";
+        foreach ($array as $row) {
+            $parts = explode(',', $row);
+            if (isset($parts[0]) && isset($parts[1])) {
+                $csvString .= $parts[0] . "," . $parts[1] . "\n";
+            }
+            else if (isset($parts[0]) && !isset($parts[1])) {
+                $csvString .= $parts[0] . "\n";
+            }
+            else {
+                $csvString .= $row . "\n";
+            }
         }
+
+        return $csvString;
+    }
+
+    public function rowToCsv($row) {
+        // Prepare the output
+        $csvString = "\"" . $row['key'] . "\"," . "\"" . $row['value'] . "\"";
 
         return $csvString;
     }
@@ -181,10 +207,13 @@ class Detail extends Action
         $output = array(); 
 
         $lines = explode(PHP_EOL, $fileEntity->getData('file_content'));
+        $i = 0;
         foreach ($lines as $line) {
             $row = str_getcsv($line);
             if (is_array($row) && count($row) == 2) {
-                $output[] = (object) array_combine(['key', 'value'], $row);
+                array_unshift($row , $i);
+                $output[] = (object) array_combine(['index', 'key', 'value'], $row);
+                $i++;
             }
         }
 

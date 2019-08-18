@@ -62,7 +62,7 @@ define([
                     {column:"file_count", dir:"desc"},
                 ],
                 rowClick: function(e, row) {
-                    self.loadRowDetails(row.getData());
+                    self.loadRowDetails(row);
                 }
             });
 
@@ -131,7 +131,7 @@ define([
             var filters = $(self.options.targetTable).tabulator('getFilters'); 
 
             var found = filters.find(function(element) {
-                    return element.field == newFilter.field;
+                return element.field == newFilter.field;
             });
 
             // Process the new filter
@@ -292,22 +292,22 @@ define([
 
         getListColumns: function() {
             return [
-                { title: "Id", field: "file_id", sorter: "number", visible: false},
-                { title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
-                { title: "Created", field: "file_creation_time", sorter: "string", visible: false},
-                { title: "Updated", field: "file_update_time", sorter: "string", visible: false},
-                { title: "Lines", field: "file_count", sorter: "number"},
-                { title: "Type", field: "file_type", sorter: "string"},
-                { title: "Group", field: "file_group", sorter: "string"},
-                { title: "Locale", field: "file_locale", sorter: "string"},
-                //{ title: "Status", field: "file_is_active", sorter:"string"}
+                {title: "Id", field: "file_id", sorter: "number", visible: false},
+                {title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 450},
+                {title: "Created", field: "file_creation_time", sorter: "string", visible: false},
+                {title: "Updated", field: "file_update_time", sorter: "string", visible: false},
+                {title: "Lines", field: "file_count", sorter: "number"},
+                {title: "Type", field: "file_type", sorter: "string"},
+                {title: "Group", field: "file_group", sorter: "string"},
+                {title: "Locale", field: "file_locale", sorter: "string"}
             ];
         },
 
         getDetailColumns: function() {
             return [
-                { title: "Key", field: "key", sorter: "string", headerFilter:"input"},
-                { title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input" }
+                {title: "Index", field: "index", sorter: "number", visible: false},
+                {title: "Key", field: "key", sorter: "string", headerFilter:"input"},
+                {title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input"}
             ];
         },
 
@@ -338,9 +338,10 @@ define([
             }
         },
 
-        loadRowDetails: function(fileObj) {
+        loadRowDetails: function(row) {
             // Prepare the variables
             var self = this;
+            var fileObj = row.getData();
 
             // Create the detail table
             this.cache._(self.options.detailView).tabulator({
@@ -351,9 +352,10 @@ define([
                 height: "100%",
                 columns: self.getDetailColumns(),
                 cellEdited: function(cell) {
+                    var row = cell.getRow();
                     self.updateEntityData({
                         fileId: fileObj.file_id,
-                        fileContent: self.cache._(self.options.detailView).tabulator("getData")
+                        rowContent: row.getData()
                     });
                 }
             });
@@ -388,18 +390,20 @@ define([
             });
         },
 
-        updateEntityData: function(row) {
+        updateEntityData: function(data) {
             // Prepare the variables
-            var self = this;
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + row.fileId;
-            var file_content = { file_content: row.fileContent };
+            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
+            var rowData = {
+                    row_content: data.rowContent,
+                    row_id: data.rowId 
+                };
 
             // Send the the request
             $.ajax({
                 type: "POST",
                 url: fileUpdateUrl,
+                data: rowData,
                 dataType: 'json',
-                data: file_content,
                 success: function(res) {},
                 error: function(request, status, error) {
                     console.log(error);
