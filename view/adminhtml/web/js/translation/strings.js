@@ -62,14 +62,14 @@ define([
                 height: "100%",
                 columns: self.getListColumns(),
                 initialSort:[
-                    {column:"file_count", dir:"desc"},
+                    {column:"index", dir:"desc"}
                 ]
             });
 
             // Load the data into the table
             $.ajax({
                 type: "POST",
-                url: self.options.dataUrl,
+                url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
@@ -288,8 +288,9 @@ define([
 
         getListColumns: function() {
             return [
-                {title: "Key", field: "string_key", sorter: "string"},
-                {title: "Value", field: "string_value", sorter: "string", headerFilter:"input", editor: "input"}
+                {title: "Index", field: "index", sorter: "number", visible: false},
+                {title: "Key", field: "key", sorter: "string"},
+                {title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input"}
             ];
         },
 

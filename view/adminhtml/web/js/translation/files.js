@@ -62,7 +62,7 @@ define([
                 height: "100%",
                 columns: self.getListColumns(),
                 initialSort:[
-                    {column:"file_count", dir:"desc"},
+                    {column:"file_count", dir:"desc"}
                 ],
                 rowClick: function(e, row) {
                     self.loadRowDetails(row);

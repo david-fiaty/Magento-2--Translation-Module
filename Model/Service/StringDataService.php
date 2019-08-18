@@ -57,6 +57,8 @@ class StringDataService
         // Create the collection
         $collection = $fileEntity->getCollection();
 
+        // Process the files content
+        $i = 0;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -65,20 +67,28 @@ class StringDataService
             // Get the content rows
             $rows = explode("\n", $arr['file_content']);
             unset($arr['file_content']);
+
+            // Loop through the rows
             foreach ($rows as $row) {
                 // Prepare the output array
                 $output = [];
 
+                // Get the line
                 $line = str_getcsv($row);
+
                 // Skip empty and non pair values
                 if (!empty($line[0]) && count($line) == 2) {
                     $output = array_merge([
-                        'string_key' => $line[0],
-                        'string_value' => $line[1]
+                        'index' => $i,
+                        'key' => $line[0],
+                        'value' => $line[1]
                     ], $arr);
 
                     // Store the item as an object
                     $this->output['table_data'][] = (object) $output;
+
+                    // Increment the index
+                    $i++;
                 }
             }
         }
