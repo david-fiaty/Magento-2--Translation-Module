@@ -63,38 +63,39 @@ class StringDataService
         {
             // Get the item data
             $arr = $item->getData();
+            if (!$this->helper->excludeFile($arr)) {
+                // Build the sorting fields
+                $arr = $this->buildSortingFields($arr);
 
-            // Build the sorting fields
-            $arr = $this->buildSortingFields($arr);
+                // Get the content rows
+                $rows = explode("\n", $arr['file_content']);
+                unset($arr['file_content']);
 
-            // Get the content rows
-            $rows = explode("\n", $arr['file_content']);
-            unset($arr['file_content']);
+                // Set the language field
+                $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
-            // Set the language field
-            $arr['file_locale'] =  basename($arr['file_path'], '.csv');
+                // Loop through the rows
+                foreach ($rows as $row) {
+                    // Prepare the output array
+                    $output = [];
 
-            // Loop through the rows
-            foreach ($rows as $row) {
-                // Prepare the output array
-                $output = [];
+                    // Get the line
+                    $line = str_getcsv($row);
 
-                // Get the line
-                $line = str_getcsv($row);
+                    // Skip empty and non pair values
+                    if (!empty($line[0]) && count($line) == 2) {
+                        $output = array_merge([
+                            'index' => $i,
+                            'key' => $line[0],
+                            'value' => $line[1]
+                        ], $arr);
 
-                // Skip empty and non pair values
-                if (!empty($line[0]) && count($line) == 2) {
-                    $output = array_merge([
-                        'index' => $i,
-                        'key' => $line[0],
-                        'value' => $line[1]
-                    ], $arr);
+                        // Store the item as an object
+                        $this->output['table_data'][] = (object) $output;
 
-                    // Store the item as an object
-                    $this->output['table_data'][] = (object) $output;
-
-                    // Increment the index
-                    $i++;
+                        // Increment the index
+                        $i++;
+                    }
                 }
             }
         }

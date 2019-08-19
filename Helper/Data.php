@@ -8,6 +8,8 @@ use Magento\Framework\File\Csv;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\Filesystem\DirectoryList;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Backend\Model\Auth\Session as AdminSession;
 
 class Data extends AbstractHelper
@@ -27,6 +29,11 @@ class Data extends AbstractHelper
      */
     protected $tree;
 
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
 	/**
      * @param \Magento\Framework\App\Helper\Context $context
      */
@@ -34,12 +41,14 @@ class Data extends AbstractHelper
 		Context $context,
 		AdminSession $adminSession,
 		DirectoryList $tree,
-		Csv $csvParser
+        Csv $csvParser,
+        ScopeConfigInterface $scopeConfig
 	) {
 		parent::__construct($context);
 		$this->adminSession = $adminSession;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
+        $this->scopeConfig = $scopeConfig;
 	}
 
 	public function getUserLanguage() {
@@ -64,5 +73,19 @@ class Data extends AbstractHelper
 
         // Return the row count
         return count($csvData);
+    }
+
+    public function getConfig($value) {
+        return $this->scopeConfig->getValue(
+            'translation/general/' . $value,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    public function excludeFile($row) {
+        $path = $row['file_path'];
+        $excludeTestFiles = $this->helper->getConfig('exclude_test_files');
+
+        return $excludeTestFiles && strpos($path, 'dev/tests/') === 0;
     }
 }

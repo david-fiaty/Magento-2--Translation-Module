@@ -62,13 +62,14 @@ class FileDataService
         {
             // Get the item data
             $arr = $item->getData();
+            if (!$this->helper->excludeFile($arr)) {
+                // Prepare the fields
+                $arr = $this->formatFileRow($arr, $item);
+                $arr = $this->buildSortingFields($arr);
 
-            // Prepare the fields
-            $arr = $this->formatFileRow($arr, $item);
-            $arr = $this->buildSortingFields($arr);
-
-            // Store the item as an object
-            $this->output['table_data'][] = (object) $arr;
+                // Store the item as an object
+                $this->output['table_data'][] = (object) $arr;
+            }
         }
 
         // Remove duplicate filters
