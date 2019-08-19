@@ -261,9 +261,9 @@ define([
                     url: self.options.cacheUrl + '?form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {
-                        var response = JSON.parse(data);
-                        if (response !== true) {
-                            alert(response);
+                        var success = JSON.parse(data.success);
+                        if (!success) {
+                            alert(data.message);
                         }
                     },
                     error: function(request, status, error) {

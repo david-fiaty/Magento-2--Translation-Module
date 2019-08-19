@@ -46,7 +46,7 @@ class Index extends Action
     public function execute()
     {
         // Prepare the output array
-        $output = ['true'];
+        $output = ['success' => 'true'];
 
         // Get the view mode
         $action = $this->getRequest()->getParam('action');
@@ -58,7 +58,10 @@ class Index extends Action
                 $this->helper->flushCache();
             }
             catch(\Exception $e) {
-                $output = [__($e->getMessage())];
+                $output = [
+                    'success' => false,
+                    'message' => __($e->getMessage())
+                ];
             }
         }
 
