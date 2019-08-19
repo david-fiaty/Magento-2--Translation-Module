@@ -1,4 +1,3 @@
-- Link config settings to file exclusion
 - Check the todos in code
 - Add a cache clear button + controller
 - add a log page for irregular rows in files
