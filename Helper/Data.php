@@ -84,7 +84,7 @@ class Data extends AbstractHelper
 
     public function excludeFile($row) {
         $path = $row['file_path'];
-        $excludeTestFiles = $this->helper->getConfig('exclude_test_files');
+        $excludeTestFiles = $this->getConfig('exclude_test_files');
 
         return $excludeTestFiles && strpos($path, 'dev/tests/') === 0;
     }
