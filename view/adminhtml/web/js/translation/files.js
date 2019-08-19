@@ -251,7 +251,7 @@ define([
             });
 
             // Flush cache
-            this.cache._("#flush-cache").click(function() {
+            this.cache._("button[id^='flush-cache']").click(function() {
                 $.ajax({
                     type: "POST",
                     url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
