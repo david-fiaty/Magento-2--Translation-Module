@@ -2,8 +2,9 @@ define([
     'jquery',
     'Magento_Ui/js/modal/prompt',
     'mage/translate',
+    'mage/url',
     'tabulator'
-], function($, prompt, __, tabulator) {
+], function($, prompt, __, url, tabulator) {
     'use strict';
 
     // Build the widget
@@ -251,7 +252,20 @@ define([
             // File strings reload
             this.cache._("#get-strings").click(function() {
                 self.getRowDetails(self.detailViewid);
-            });         
+            });
+
+            // Flush cache
+            this.cache._("#flush-cache").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: url.build('translation/cache/index'),
+                    showLoader: true,
+                    success: function(data) {},
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
         },
 
         updateFileIndex: function(updateMode) {

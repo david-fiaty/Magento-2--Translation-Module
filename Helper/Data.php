@@ -11,6 +11,9 @@ use Magento\Framework\Filesystem\DirectoryList;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Backend\Model\Auth\Session as AdminSession;
+use Magento\Framework\App\PageCache\Version;
+use Magento\Framework\App\Cache\TypeListInterface;
+use Magento\Framework\App\Cache\Frontend\Pool;
 
 class Data extends AbstractHelper
 {
@@ -34,6 +37,16 @@ class Data extends AbstractHelper
      */
     protected $scopeConfig;
 
+    /**
+     * @var TypeListInterface
+     */
+    protected $cacheTypeList;
+
+    /**
+     * @var Pool
+     */
+    protected $cacheFrontendPool;
+
 	/**
      * @param \Magento\Framework\App\Helper\Context $context
      */
@@ -42,13 +55,17 @@ class Data extends AbstractHelper
 		AdminSession $adminSession,
 		DirectoryList $tree,
         Csv $csvParser,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        TypeListInterface $cacheTypeList, 
+        Pool $cacheFrontendPool
 	) {
 		parent::__construct($context);
 		$this->adminSession = $adminSession;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
         $this->scopeConfig = $scopeConfig;
+        $this->cacheTypeList = $cacheTypeList;
+        $this->cacheFrontendPool = $cacheFrontendPool;
 	}
 
 	public function getUserLanguage() {
@@ -106,5 +123,34 @@ class Data extends AbstractHelper
 
     public function isStaticFile($path) {
         return strpos($path, 'pub/static') === 0;
+    }
+
+    public function flushCache()
+    {
+        // Types list
+        $types = [
+            'config',
+            'layout',
+            'block_html',
+            'collections',
+            'reflection',
+            'db_ddl',
+            'eav',
+            'config_integration',
+            'config_integration_api',
+            'full_page',
+            'translate',
+            'config_webservice'
+        ];
+     
+        // Process the types
+        foreach ($types as $type) {
+            $this->cacheTypeList->cleanType($type);
+        }
+
+        // Process the pools
+        foreach ($this->cacheFrontendPool as $cacheFrontend) {
+            $cacheFrontend->getBackend()->clean();
+        }
     }
 }
