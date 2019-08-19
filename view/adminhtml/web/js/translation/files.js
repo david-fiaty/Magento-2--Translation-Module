@@ -2,9 +2,8 @@ define([
     'jquery',
     'Magento_Ui/js/modal/prompt',
     'mage/translate',
-    'mage/url',
     'tabulator'
-], function($, prompt, __, url, tabulator) {
+], function($, prompt, __, tabulator) {
     'use strict';
 
     // Build the widget
@@ -20,6 +19,7 @@ define([
             scanUrl: '',
             detailViewUrl: '',
             fileUpdateUrl: '',
+            cacheUrl: '',
             detailViewid: 0,
             paging: 30,
             pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -254,7 +254,7 @@ define([
             this.cache._("#flush-cache").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: url.build('translation/cache/index'),
+                    url: self.options.cacheUrl + '?form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {},
                     error: function(request, status, error) {
