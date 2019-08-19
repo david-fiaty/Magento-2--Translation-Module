@@ -258,7 +258,7 @@ define([
             this.cache._("#flush-cache").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: self.options.cacheUrl + '?form_key=' + window.FORM_KEY,
+                    url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {
                         var success = JSON.parse(data.success);
