@@ -260,7 +260,12 @@ define([
                     type: "POST",
                     url: self.options.cacheUrl + '?form_key=' + window.FORM_KEY,
                     showLoader: true,
-                    success: function(data) {},
+                    success: function(data) {
+                        var response = JSON.parse(data);
+                        if (response !== true) {
+                            alert(response);
+                        }
+                    },
                     error: function(request, status, error) {
                         console.log(error);
                     }
