@@ -85,7 +85,26 @@ class Data extends AbstractHelper
     public function excludeFile($row) {
         $path = $row['file_path'];
         $excludeTestFiles = $this->getConfig('exclude_test_files');
+        $excludeCoreFiles = $this->getConfig('exclude_core_files');
+        $excludeStaticFiles = $this->getConfig('exclude_static_files');
 
-        return $excludeTestFiles && strpos($path, 'dev/tests/') === 0;
+        return ($excludeTestFiles && $this->isTestFile($path))
+        || ($excludeCoreFiles && $this->isCoreFile($path))
+        || ($excludeStaticFiles && $this->isStaticFile($path));
+    }
+
+    public function isTestFile($path) {
+        return strpos($path, 'dev/tests/') === 0;
+    }
+
+    public function isCoreFile($path) {
+        return strpos($path, 'dev/tests/') === 0
+        || strpos($path, 'vendor/magento') === 0
+        || strpos($path, 'lib/') === 0
+        || strpos($path, 'app/design/frontend/Magento') === 0;
+    }
+
+    public function isStaticFile($path) {
+        return strpos($path, 'pub/static') === 0;
     }
 }
