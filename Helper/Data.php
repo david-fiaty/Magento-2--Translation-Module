@@ -119,6 +119,18 @@ class Data extends AbstractHelper
         return strpos($path, 'pub/static') === 0;
     }
 
+	public function getSelect($attributes, $layout) {
+		// Build the select list
+		$select = $layout
+		->createBlock('Magento\Framework\View\Element\Html\Select')
+		->setData($attributes);
+
+		// Add an option
+		$select->addOption('alltx', __('--- All ---'));
+
+		return $select->getHtml();
+	}
+
     public function flushCache()
     {
         // Types list

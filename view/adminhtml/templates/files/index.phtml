@@ -6,11 +6,11 @@
 					<span><?php echo __('Group'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->getSelect([
+					<?php echo $block->helper->getSelect([
 			            'id' => 'translation-group-filter',
 			            'name' => 'translation-group-filter',
 			            'class' => 'select admin__control-select'
-			    	]); ?>	
+			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
 			<div class="admin__form-field">
@@ -18,11 +18,11 @@
 					<span><?php echo __('Type'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->getSelect([
+					<?php echo $block->helper->getSelect([
 			            'id' => 'translation-type-filter',
 			            'name' => 'translation-type-filter',
 			            'class' => 'select admin__control-select'
-			    	]); ?>	
+			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
 			<div class="admin__form-field">
@@ -30,11 +30,11 @@
 					<span><?php echo __('Locale'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->getSelect([
+					<?php echo $block->helper->getSelect([
 			           'id' => 'translation-locale-filter',
 			           'name' => 'translation-locale-filter',
 			           'class' => 'select admin__control-select'
-			    	]); ?>	
+			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
 			

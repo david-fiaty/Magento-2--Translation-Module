@@ -4,15 +4,14 @@
  */
 namespace Naxero\Translation\Block\Adminhtml\Files;
 
-use Magento\Backend\Block\Template;
-use Magento\Backend\Block\Template\Context;
-use Naxero\Translation\Helper\Data;
-
-class Index extends Template
+class Index extends \Magento\Backend\Block\Template
 {
-	protected $helper;
+	public $helper;
 
-	public function __construct(Context $context, Data $helper)
+	public function __construct(
+		\Magento\Backend\Block\Template\Context $context,
+		\Naxero\Translation\Helper\Data $helper
+	)
 	{
 		parent::__construct($context);
 		$this->helper = $helper;
@@ -30,12 +29,5 @@ class Index extends Template
 	{
 		$userLanguage = str_replace('_', '-', $this->helper->getUserLanguage());
 		return strtolower($userLanguage);
-	}
-
-	public function getSelect($attributes) {
-		$select = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select')->setData($attributes);
-		$select->addOption('alltx', __('--- All ---'));
-
-		return $select->getHtml();
 	}
 }
