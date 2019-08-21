@@ -5,9 +5,6 @@
  */
 namespace Naxero\Translation\Model\Service;
 
-use Naxero\Translation\Model\FileEntityFactory;
-use Naxero\Translation\Helper\Data;
-
 class StringDataService
 {
     /**
@@ -30,8 +27,8 @@ class StringDataService
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        FileEntityFactory $fileEntityFactory,
-        Data $helper
+        \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
+        \Naxero\Translation\Helper\Data $helper
     ) {
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;

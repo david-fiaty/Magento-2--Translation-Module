@@ -2,9 +2,7 @@
 
 namespace Naxero\Translation\Model\ResourceModel\FileEntity;
 
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-
-class Collection extends AbstractCollection
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
     /**
      * @var string
@@ -18,6 +16,9 @@ class Collection extends AbstractCollection
      */
     public function _construct()
     {
-        $this->_init('Naxero\Translation\Model\FileEntity', 'Naxero\Translation\Model\ResourceModel\FileEntity');
+        $this->_init(
+            'Naxero\Translation\Model\FileEntity',
+            'Naxero\Translation\Model\ResourceModel\FileEntity'
+        );
     }
 }

@@ -1,12 +1,9 @@
 <?php 
 namespace Naxero\Translation\Setup;
 
-use Magento\Framework\Setup\UpgradeSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
 
-class UpgradeSchema implements UpgradeSchemaInterface
+class UpgradeSchema implements Magento\Framework\Setup\UpgradeSchemaInterface
 {
     /**
      * Upgrades DB schema for the module
@@ -15,7 +12,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * @param ModuleContextInterface $context
      * @return void
      */
-    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    public function upgrade(
+        \Magento\Framework\Setup\SchemaSetupInterface $setup,
+        \Magento\Framework\Setup\ModuleContextInterface $context
+    )
     {
         $installer = $setup;
         $installer->startSetup();

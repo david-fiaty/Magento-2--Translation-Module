@@ -2,11 +2,8 @@
 
 namespace Naxero\Translation\Model;
 
-use Naxero\Translation\Api\Data\FileEntityInterface;
-use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\Model\AbstractModel;
-
-class FileEntity extends AbstractModel implements FileEntityInterface, IdentityInterface
+class FileEntity extends \Magento\Framework\Model\AbstractModel 
+implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\DataObject\IdentityInterface
 {
 
     /**#@+

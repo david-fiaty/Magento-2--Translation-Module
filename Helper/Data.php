@@ -4,18 +4,7 @@
  */
 namespace Naxero\Translation\Helper;
 
-use Magento\Framework\File\Csv;
-use Magento\Framework\App\Helper\Context;
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\Filesystem\DirectoryList;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Backend\Model\Auth\Session as AdminSession;
-use Magento\Framework\App\PageCache\Version;
-use Magento\Framework\App\Cache\TypeListInterface;
-use Magento\Framework\App\Cache\Frontend\Pool;
-
-class Data extends AbstractHelper
+class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * @var Csv
@@ -51,13 +40,13 @@ class Data extends AbstractHelper
      * @param \Magento\Framework\App\Helper\Context $context
      */
 	public function __construct(
-		Context $context,
-		AdminSession $adminSession,
-		DirectoryList $tree,
-        Csv $csvParser,
-        ScopeConfigInterface $scopeConfig,
-        TypeListInterface $cacheTypeList, 
-        Pool $cacheFrontendPool
+		\Magento\Framework\App\Helper\Context $context,
+		\Magento\Backend\Model\Auth\Session $adminSession,
+		\Magento\Framework\Filesystem\DirectoryList $tree,
+        \Magento\Framework\File\Csv $csvParser,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
+        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
 	) {
 		parent::__construct($context);
 		$this->adminSession = $adminSession;

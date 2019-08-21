@@ -1,12 +1,10 @@
 <?php
 namespace Naxero\Translation\Model\ResourceModel;
 
-use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
-
 /**
  * File entity mysql resource
  */
-class FileEntity extends AbstractDb
+class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 
     /**
