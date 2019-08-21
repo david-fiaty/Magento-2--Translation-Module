@@ -5,15 +5,9 @@
  */
 namespace Naxero\Translation\Controller\Adminhtml\Data;
 
-use Magento\Backend\App\Action;
-use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Naxero\Translation\Helper\Data;
-use Naxero\Translation\Model\Service\FileDataService;
-use Naxero\Translation\Model\Service\StringDataService;
 
-class Index extends Action
+class Index extends \Magento\Backend\App\Action
 {
 	/**
      * @var JsonFactory
@@ -36,15 +30,14 @@ class Index extends Action
     protected $helper;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * Index class constructor
      */
     public function __construct(
-        Context $context,
-        JsonFactory $resultJsonFactory,
-        FileDataService $fileDataService,
-        StringDataService $stringDataService,
-        Data $helper
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Naxero\Translation\Model\Service\FileDataService $fileDataService,
+        \Naxero\Translation\Model\Service\StringDataService $stringDataService,
+        \Naxero\Translation\Helper\Data $helper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->fileDataService = $fileDataService;

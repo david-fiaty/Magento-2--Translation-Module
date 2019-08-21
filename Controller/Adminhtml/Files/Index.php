@@ -5,25 +5,19 @@
  */
 namespace Naxero\Translation\Controller\Adminhtml\Files;
 
-use Magento\Backend\App\Action;
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\View\Result\PageFactory;
-
 class Index extends \Magento\Backend\App\Action
 {
-
 	/**
      * @var PageFactory
      */
     protected $resultPageFactory;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * Index class constructor
      */
     public function __construct(
-        Context $context,
-        PageFactory $resultPageFactory
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;

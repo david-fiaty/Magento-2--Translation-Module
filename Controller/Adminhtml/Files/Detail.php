@@ -5,17 +5,15 @@
  */
 namespace Naxero\Translation\Controller\Adminhtml\Files;
 
-use Magento\Framework\File\Csv;
-use Magento\Backend\App\Action;
-use Magento\Backend\App\Action\Context;
+use ;
 use Magento\Framework\View\Result\PageFactory;
-use Magento\Framework\Controller\Result\JsonFactory;
+use ;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Filesystem\DirectoryList;
-use Naxero\Translation\Model\FileEntityFactory;
-use Naxero\Translation\Helper\Data;
+use ;
+use ;
+use ;
 
-class Detail extends Action
+class Detail extends \Magento\Backend\App\Action
 {
 	/**
      * @var JsonFactory
@@ -43,16 +41,15 @@ class Detail extends Action
     protected $tree;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * Detail class constructor
      */
     public function __construct(
-        Context $context,
-        JsonFactory $resultJsonFactory,
-        FileEntityFactory $fileEntityFactory,
-        DirectoryList $tree,
-        Csv $csvParser,
-        Data $helper
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
+        \Magento\Framework\Filesystem\DirectoryList $tree,
+        \Magento\Framework\File\Csv $csvParser,
+        \Naxero\Translation\Helper\Data $helper
     ) {
         $this->resultJsonFactory            = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
@@ -70,8 +67,10 @@ class Detail extends Action
      */
     public function execute()
     {
+        // Prepare the response instance
         $result = $this->resultJsonFactory->create();
 
+        // Process the request
         if ($this->getRequest()->isAjax()) 
         {
             // Prepare the output
