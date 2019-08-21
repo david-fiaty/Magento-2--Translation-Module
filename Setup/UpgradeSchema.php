@@ -3,7 +3,7 @@ namespace Naxero\Translation\Setup;
 
 use Magento\Framework\DB\Ddl\Table;
 
-class UpgradeSchema implements Magento\Framework\Setup\UpgradeSchemaInterface
+class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
 {
     /**
      * Upgrades DB schema for the module

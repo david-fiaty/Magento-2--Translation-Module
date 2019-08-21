@@ -5,14 +5,6 @@
  */
 namespace Naxero\Translation\Controller\Adminhtml\Files;
 
-use ;
-use Magento\Framework\View\Result\PageFactory;
-use ;
-use Magento\Framework\Exception\LocalizedException;
-use ;
-use ;
-use ;
-
 class Detail extends \Magento\Backend\App\Action
 {
 	/**
