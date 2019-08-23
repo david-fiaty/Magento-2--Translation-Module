@@ -7,13 +7,21 @@ namespace Naxero\Translation\Controller\Adminhtml\Logs;
 
 class Index extends \Magento\Backend\App\Action
 {
+	/**
+     * @var PageFactory
+     */
+    protected $resultPageFactory;
+
     /**
-     * Index class constructor
+     * @param Context $context
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context
-    ) { 
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+    ) {
         parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
@@ -23,18 +31,8 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        // Prepare the output
-        $result = $this->resultJsonFactory->create();
-
-        // Prepare the output
-        $output = array();
-
-        // Loop through the directory tree
-        if ($this->getRequest()->isAjax()) 
-        {
- 
-        }
-
-        return $result->setData([]);
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        $resultPage = $this->resultPageFactory->create();
+        return $resultPage;
     }
 }
