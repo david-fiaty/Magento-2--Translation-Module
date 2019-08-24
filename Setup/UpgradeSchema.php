@@ -20,10 +20,11 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
         $installer = $setup;
         $installer->startSetup();
         $tableName1 = 'naxero_translation_files';
+        $tableName2 = 'naxero_translation_logs';
 
+        // Create the files table schema
         if ($installer->getConnection()->isTableExists($tableName1) != true) {
-            // Create the files table schema
-            $table = $installer->getConnection()
+            $table1 = $installer->getConnection()
                 ->newTable($installer->getTable($tableName1))
                 ->addColumn(
                     'file_id',
@@ -40,9 +41,24 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
                 ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])
                 ->setComment('Naxero Translation files');
 
-            $installer->getConnection()->createTable($table);
+            $installer->getConnection()->createTable($table1);
         }
 
-        $installer->endSetup();
+        // Create the logs table schema
+        if ($installer->getConnection()->isTableExists($tableName2) != true) {
+            $table2 = $installer->getConnection()
+                ->newTable($installer->getTable($tableName2))
+                ->addColumn(
+                    'file_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['identity' => true, 'nullable' => false, 'primary' => true],
+                    'File ID'
+                )
+                ->addColumn('file_row', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Row number')
+                ->addColumn('comments', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
+                ->setComment('Naxero Translation Logs');
+            $installer->endSetup();
+        }
     }
 }
