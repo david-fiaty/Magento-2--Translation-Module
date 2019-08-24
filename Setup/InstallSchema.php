@@ -19,10 +19,10 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
     {
         $installer = $setup;
         $installer->startSetup();
-        $tableName = 'naxero_translation_file';
 
-        $table = $installer->getConnection()
-            ->newTable($installer->getTable($tableName))
+        // Define the files table
+        $table1 = $installer->getConnection()
+            ->newTable($installer->getTable('naxero_translation_file'))
             ->addColumn(
                 'file_id',
                 Table::TYPE_INTEGER,
@@ -39,8 +39,25 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])
             ->setComment('Naxero Translation Files');
 
-        $installer->getConnection()->createTable($table);
+        // Define the logs table
+        $table2 = $installer->getConnection()
+        ->newTable($installer->getTable('naxero_translation_logs'))
+        ->addColumn(
+            'file_id',
+            Table::TYPE_INTEGER,
+            null,
+            ['identity' => true, 'nullable' => false, 'primary' => true],
+            'File ID'
+        )
+        ->addColumn('file_row', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Row number')
+        ->addColumn('comment', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
+        ->setComment('Naxero Translation Logs');
+
+        // Create the tables
+        $installer->getConnection()->createTable($table1);
+        $installer->getConnection()->createTable($table2);
+
+        // En the setup
         $installer->endSetup();
     }
-
 }
