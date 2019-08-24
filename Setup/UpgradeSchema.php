@@ -19,12 +19,12 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
     {
         $installer = $setup;
         $installer->startSetup();
-        $tableName = 'naxero_translation_file';
+        $tableName1 = 'naxero_translation_files';
 
-        if ($installer->getConnection()->isTableExists($tableName) != true) {
-
+        if ($installer->getConnection()->isTableExists($tableName1) != true) {
+            // Create the files table schema
             $table = $installer->getConnection()
-                ->newTable($installer->getTable($tableName))
+                ->newTable($installer->getTable($tableName1))
                 ->addColumn(
                     'file_id',
                     Table::TYPE_INTEGER,
@@ -45,5 +45,4 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
 
         $installer->endSetup();
     }
-
 }

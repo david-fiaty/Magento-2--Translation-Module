@@ -22,7 +22,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 
         // Define the files table
         $table1 = $installer->getConnection()
-            ->newTable($installer->getTable('naxero_translation_file'))
+            ->newTable($installer->getTable('naxero_translation_files'))
             ->addColumn(
                 'file_id',
                 Table::TYPE_INTEGER,
@@ -38,23 +38,21 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             ->addColumn('file_override', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
             ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])
             ->setComment('Naxero Translation Files');
+        $installer->getConnection()->createTable($table1);
 
         // Define the logs table
         $table2 = $installer->getConnection()
-        ->newTable($installer->getTable('naxero_translation_logs'))
-        ->addColumn(
-            'file_id',
-            Table::TYPE_INTEGER,
-            null,
-            ['identity' => true, 'nullable' => false, 'primary' => true],
-            'File ID'
-        )
-        ->addColumn('file_row', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Row number')
-        ->addColumn('comment', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
-        ->setComment('Naxero Translation Logs');
-
-        // Create the tables
-        $installer->getConnection()->createTable($table1);
+            ->newTable($installer->getTable('naxero_translation_logs'))
+            ->addColumn(
+                'file_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'nullable' => false, 'primary' => true],
+                'File ID'
+            )
+            ->addColumn('file_row', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Row number')
+            ->addColumn('comment', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
+            ->setComment('Naxero Translation Logs');
         $installer->getConnection()->createTable($table2);
 
         // En the setup

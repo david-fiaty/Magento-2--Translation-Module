@@ -35,7 +35,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     public function _construct()
     {
-        $this->_init('naxero_translation_file', 'file_id');
+        $this->_init('naxero_translation_files', 'file_id');
     }
 
     /**
