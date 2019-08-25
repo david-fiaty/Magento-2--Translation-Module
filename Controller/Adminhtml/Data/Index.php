@@ -72,15 +72,15 @@ class Index extends \Magento\Backend\App\Action
         {
             switch ($view) {
                 case 'files':
-                    $output = $this->fileDataService->getList();
+                    $output = $this->fileDataService->init()->getList();
                     break;
 
                 case 'strings':
-                    $output = $this->stringDataService->getList();
+                    $output = $this->stringDataService->init()->getList();
                     break;
 
                 case 'logs':
-                    $output = $this->logDataService->getList();
+                    $output = $this->logDataService->init()->getList();
                     break;
             }
         }
