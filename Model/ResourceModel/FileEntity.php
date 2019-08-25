@@ -90,15 +90,8 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function _getLoadSelect($field, $value, $object)
     {
         $select = parent::_getLoadSelect($field, $value, $object);
-
         if ($object->getStoreId()) {
-
-            $select->where(
-                'file_is_active = ?',
-                1
-            )->limit(
-                1
-            );
+            $select->where('file_is_active = ?', 1)->limit(1);
         }
 
         return $select;
@@ -144,8 +137,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     public function isValidFilePath(\Magento\Framework\Model\AbstractModel $object)
     {
-        //return is_file($object->getData('file_path'));
-        return true;
+        return is_file($object->getData('file_path'));
     }
 
     /**
