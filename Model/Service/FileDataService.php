@@ -23,15 +23,22 @@ class FileDataService
     protected $helper;
 
     /**
+     * @var LogDataService
+     */
+    protected $logDataService;
+
+    /**
      * @param Context $context
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
-        \Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\Data $helper,
+        \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
+        $this->logDataService = $logDataService;
     }
 
     public function init() {
@@ -59,6 +66,8 @@ class FileDataService
         {
             // Get the item data
             $arr = $item->getData();
+
+            // Process the file
             if (!$this->helper->excludeFile($arr)) {
                 // Prepare the fields
                 $arr = $this->formatFileRow($arr, $item);

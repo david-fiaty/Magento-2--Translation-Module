@@ -58,4 +58,40 @@ class LogDataService
         // Return the data output
         return $this->output;
     }
+
+    public function isError($line, $fileId, $rowId) {
+        // Prepare the error array
+        $errors = [];
+
+        // Check for empty lines
+        if (empty($line[0])) { 
+            $errors[] = __('Empty line detected.');
+        }
+
+        // Check for too many values
+        if (count($line) > 2) {
+            $errors[] = __('Incorrect Key/Value structure: more than 2 values detected.');
+        }
+
+        // Check for insufficient values
+        if (count($line) < 2) {
+            $errors[] = __('Incorrect Key/Value structure: less than 2 values detected');
+        }
+
+        // Process the results
+        if (!empty($errors)) {
+            foreach ($errors as $error) {
+                // Save the item
+                $logEntity = $this->logEntityFactory->create(); 
+                $logEntity->setData('file_id', $fileId);
+                $logEntity->setData('file_row', $rowId);
+                $logEntity->setData('comments', $error);
+                $logEntity->save();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -23,15 +23,22 @@ class StringDataService
     protected $helper;
 
     /**
+     * @var LogDataService
+     */
+    protected $logDataService;
+
+    /**
      * @param Context $context
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
-        \Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\Data $helper,
+        \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
+        $this->logDataService = $logDataService;
     }
 
     public function init() {
@@ -72,6 +79,7 @@ class StringDataService
                 $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
                 // Loop through the rows
+                $j = 0;
                 foreach ($rows as $row) {
                     // Prepare the output array
                     $output = [];
@@ -80,7 +88,7 @@ class StringDataService
                     $line = str_getcsv($row);
 
                     // Skip empty and non pair values
-                    if (!empty($line[0]) && count($line) == 2) {
+                    if (!$this->logDataService->isError($line, $arr['file_id'], $j)) {
                         $output = array_merge([
                             'index' => $i,
                             'key' => $line[0],
@@ -93,6 +101,9 @@ class StringDataService
                         // Increment the index
                         $i++;
                     }
+
+                    // Increment the row id
+                    $j++;
                 }
             }
         }
