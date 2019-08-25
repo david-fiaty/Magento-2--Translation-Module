@@ -80,7 +80,7 @@ class Index extends \Magento\Backend\App\Action
                     break;
 
                 case 'logs':
-                    $output = $this->logDataService->init()->getList();
+                    $output = $this->logDataService->getList();
                     break;
             }
         }
