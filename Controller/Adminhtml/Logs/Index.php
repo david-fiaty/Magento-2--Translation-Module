@@ -63,8 +63,9 @@ class Index extends \Magento\Backend\App\Action
     }
 
     public function clearLogs() {
-        $output = [];
-
+        // Prepare the output array
+        $output = ['success' => 'true'];
+        
         try {
             $logEntity = $this->logEntityFactory->create(); 
             $connection = $logEntity->getCollection()->getConnection();
