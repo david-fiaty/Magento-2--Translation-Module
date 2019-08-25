@@ -34,6 +34,13 @@ class LogDataService
         $this->helper = $helper;
     }
 
+    public function init() {
+        // Prepare the output array
+        $this->output = $this->prepareOutputArray();
+
+        return $this;
+    }
+
     /**
      * Index action
      *
@@ -57,6 +64,12 @@ class LogDataService
 
         // Return the data output
         return $this->output;
+    }
+
+    public function prepareOutputArray() {
+        return [
+            'table_data' => []
+        ];
     }
 
     public function isError($line, $fileId, $rowId) {
