@@ -6,7 +6,6 @@ namespace Naxero\Translation\Model\ResourceModel;
  */
 class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */

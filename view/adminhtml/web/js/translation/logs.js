@@ -103,7 +103,7 @@ define([
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
                 {title: "File Id", field: "file_id", sorter: "string"},
-                {title: "Row", field: "file_row", sorter: "string"},
+                {title: "Row", field: "row_id", sorter: "string"},
                 {title: "Comments", field: "comments"}
             ];
         }

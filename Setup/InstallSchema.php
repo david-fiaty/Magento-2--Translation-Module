@@ -51,7 +51,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 'Record ID'
             )
             ->addColumn('file_id', Table::TYPE_INTEGER, null, ['nullable' => false], 'File ID')
-            ->addColumn('file_row', Table::TYPE_INTEGER, null, ['nullable' => false], 'Row number')
+            ->addColumn('row_id', Table::TYPE_INTEGER, null, ['nullable' => false], 'Row ID')
             ->addColumn('comments', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
             ->setComment('Naxero Translation Logs');
         $installer->getConnection()->createTable($table2);

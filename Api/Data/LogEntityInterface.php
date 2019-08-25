@@ -7,8 +7,9 @@ interface LogEntityInterface
     /**
      * Constants for keys of data array.
      */
+    const ID = 'id';
     const FILE_ID = 'file_id';
-    const FILE_ROW = 'file_row';
+    const ROW_ID = 'row_id';
     const COMMENTS = 'comments';
 
     /**
@@ -19,11 +20,18 @@ interface LogEntityInterface
     public function getId();
 
     /**
-     * Get log row
+     * Get file ID
+     *
+     * @return int|null
+     */
+    public function getFileId();
+
+    /**
+     * Get log row ID
      *
      * @return string
      */
-    public function getRow();
+    public function getRowId();
 
     /**
      * Get comments
@@ -41,15 +49,23 @@ interface LogEntityInterface
     public function setId($id);
 
     /**
-     * Set log row
+     * Set file ID
+     *
+     * @param int $id
+     * @return \Naxero\Translation\Api\Data\LogEntityInterface
+     */
+    public function setFileId($id);
+
+    /**
+     * Set log row ID
      *
      * @param string $rowId
      * @return \Naxero\Translation\Api\Data\LogEntityInterface
      */
-    public function setRow($rowId);
+    public function setRowId($rowId);
 
     /**
-     * Set the row comments
+     * Set the log comments
      *
      * @param string $comments
      * @return \Naxero\Translation\Api\Data\LogEntityInterface

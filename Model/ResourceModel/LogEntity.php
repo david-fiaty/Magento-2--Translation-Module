@@ -28,7 +28,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     public function _construct()
     {
-        $this->_init('naxero_translation_logs', 'file_id');
+        $this->_init('naxero_translation_logs', 'id');
     }
 
     /**

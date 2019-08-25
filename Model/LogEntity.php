@@ -49,17 +49,27 @@ implements \Naxero\Translation\Api\Data\LogEntityInterface, \Magento\Framework\D
      */
     public function getId()
     {
+        return $this->getData(self::ID);
+    }
+
+    /**
+     * Get file ID
+     *
+     * @return int|null
+     */
+    public function getFileId()
+    {
         return $this->getData(self::FILE_ID);
     }
 
     /**
-     * Get log row
+     * Get log row ID
      *
      * @return string
      */
-    public function getRow()
+    public function getRowId()
     {
-        return $this->getData(self::FILE_ROW);
+        return $this->getData(self::ROW_ID);
     }
 
     /**
@@ -80,18 +90,29 @@ implements \Naxero\Translation\Api\Data\LogEntityInterface, \Magento\Framework\D
      */
     public function setId($id)
     {
-        return $this->setData(self::FILE_ID, $id);
+        return $this->setData(self::ID, $id);
     }
 
     /**
-     * Set row id
+     * Set file ID
+     *
+     * @param int $fileId
+     * @return \Naxero\Translation\Api\Data\LogEntityInterface
+     */
+    public function setFileId($fileId)
+    {
+        return $this->setData(self::FILE_ID, $fileId);
+    }
+
+    /**
+     * Set row ID
      *
      * @param string $rowId
      * @return \Naxero\Translation\Api\Data\LogEntityInterface
      */
-    public function setRow($rowId)
+    public function setRowId($rowId)
     {
-        return $this->setData(self::FILE_ROW, $rowId);
+        return $this->setData(self::ROW_ID, $rowId);
     }
 
     /**
