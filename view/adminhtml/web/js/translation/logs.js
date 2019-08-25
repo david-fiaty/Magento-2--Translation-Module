@@ -102,6 +102,37 @@ define([
         setToolbarActions: function() {
             var self = this;
 
+            // File index update
+            this.cache._("#update-files").click(function() {
+                // Trigger the prompt
+                prompt({
+                    title: __('Scan files'),
+                    content: self.getPromptOptions([{
+                            id: "update_add",
+                            name: "update_mode",
+                            value: "update_add",
+                            label: __('Add new files'),
+                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
+                        },
+                        {
+                            id: "update_replace",
+                            name: "update_mode",
+                            value: "update_replace",
+                            label: __('Replace all files'),
+                            note: __('Will reload all files in the index and override existing content not saved to files.'),
+                        }
+                    ]),
+                    actions: {
+                        confirm: function(){
+                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
+                            self.updateFileIndex(optChecked);
+                        }, 
+                        cancel: function(){}, 
+                        always: function(){}
+                    }
+                });
+            });
+
             // Clear logs
             this.cache._("#clear-logs").click(function() {
                 $.ajax({
@@ -121,6 +152,27 @@ define([
             });
         },
 
+        updateFileIndex: function(updateMode) {
+            var self = this;
+
+            // Prepare the update url
+            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode  + '&form_key=' + window.FORM_KEY;
+
+            // Trigger the update request
+            $.ajax({
+                type: "POST",
+                url: updateUrl,
+                dataType: 'json',
+                showLoader: true,
+                success: function(data) {},
+                error: function(request, status, error) {
+                    console.log(error);
+                }
+            }).done(function(data) {
+                self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+            });
+        },
+        
         getListColumns: function() {
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
