@@ -110,7 +110,7 @@ class LogDataService
                 // Save the item
                 $logEntity = $this->logEntityFactory->create(); 
                 $logEntity->setData('file_id', $fileId);
-                $logEntity->setData('file_row', $rowId);
+                $logEntity->setData('row_id', $rowId);
                 $logEntity->setData('comments', $error);
                 $logEntity->save();
             }
