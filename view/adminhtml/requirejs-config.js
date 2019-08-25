@@ -2,7 +2,8 @@ var config = {
     map: {
         '*': {
             filesjs:  'Naxero_Translation/js/translation/files',
-            stringsjs:  'Naxero_Translation/js/translation/strings'
+            stringsjs:  'Naxero_Translation/js/translation/strings',
+            logsjs:  'Naxero_Translation/js/translation/logs'
         }
     },
   	paths: {
