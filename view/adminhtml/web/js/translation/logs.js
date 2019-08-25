@@ -16,6 +16,7 @@ define([
             targetLocale: '',
             dataUrl: '',
             fileUpdateUrl: '',
+            clearLogsUrl: '',
             paging: 30,
             pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
         },
@@ -81,6 +82,9 @@ define([
             // Set the language
             this.setLocale();
 
+            // Set the toolbar actions
+            this.setToolbarActions();
+
             // Set the pagination
             this.setPaging();
         },
@@ -97,6 +101,24 @@ define([
 
         setToolbarActions: function() {
             var self = this;
+
+            // Clear logs
+            this.cache._("#clear-logs").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: self.options.clearLogsUrl + '?form_key=' + window.FORM_KEY,
+                    showLoader: true,
+                    success: function(data) {
+                        var success = JSON.parse(data.success);
+                        if (!success) {
+                            alert(data.message);
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });   
+            });
         },
 
         getListColumns: function() {

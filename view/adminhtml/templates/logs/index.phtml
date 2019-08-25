@@ -7,6 +7,9 @@
 						<button id="update-files" name="update-files" type="button" class="action-default primary">
 							<span><?php echo __('Scan files'); ?></span>
 						</button>
+						<button id="clear-logs" name="clear-logs" type="button" class="action-default primary">
+							<span><?php echo __('Clear logs'); ?></span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -15,4 +18,4 @@
 	</div>
 </div>
 
-<div data-mage-init='{"logsjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'logs']); ?>"}}'>
+<div data-mage-init='{"logsjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'logs']); ?>", "clearLogsUrl": "<?php echo $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>"}}'>

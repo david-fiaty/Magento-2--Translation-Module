@@ -82,7 +82,6 @@ class Index extends \Magento\Backend\App\Action
             $view = $this->getRequest()->getParam('view');
 
             // Clear the table data
-            $this->clearTableData();
             if ($update_mode == 'update_replace') {
                 $this->clearTableData();
             }
