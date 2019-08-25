@@ -61,6 +61,13 @@ define([
             });
 
             // Load the data into the table
+            this.getData();
+
+            // Configure the features
+            this.setFeatures();
+        },
+
+        getData: function() {
             $.ajax({
                 type: "POST",
                 url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
@@ -74,9 +81,6 @@ define([
                     console.log(error);
                 }
             });
-
-            // Configure the features
-            this.setFeatures();
         },
 
         setFeatures: function() {
@@ -145,6 +149,9 @@ define([
                         if (!success) {
                             alert(data.message);
                         }
+                        else {
+                            self.getData();
+                        }
                     },
                     error: function(request, status, error) {
                         console.log(error);
@@ -166,7 +173,7 @@ define([
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
-                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+                    self.getData();
                 },
                 error: function(request, status, error) {
                     console.log(error);

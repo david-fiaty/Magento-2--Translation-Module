@@ -74,6 +74,13 @@ define([
             });
 
             // Load the data into the table
+            self.getData();
+
+            // Configure the features
+            this.setFeatures();
+        },
+
+        getData: function() {
             $.ajax({
                 type: "POST",
                 url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
@@ -93,9 +100,6 @@ define([
                     console.log(error);
                 }
             });
-
-            // Configure the features
-            this.setFeatures();
         },
 
         buildFilters: function(data) {
