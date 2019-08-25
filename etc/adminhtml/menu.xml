@@ -9,6 +9,6 @@
     	<add id="Naxero_Translation::manage_translations" dependsOnConfig="translation/general/enable" title="Translation" translate="title" module="Naxero_Translation" sortOrder="50" parent="Magento_Backend::content" resource="Naxero_Translation::manage_translations" />
         <add id="Naxero_Translation::naxero_filesindex" title="Language files" translate="title" module="Naxero_Translation" sortOrder="0" dependsOnModule="Naxero_Translation" action="translation/files/index" parent="Naxero_Translation::manage_translations" resource="Naxero_Translation::naxero_filesindex"/>
         <add id="Naxero_Translation::naxero_stringsindex" title="Language strings" translate="title" module="Naxero_Translation" sortOrder="1" dependsOnModule="Naxero_Translation" action="translation/strings/index" parent="Naxero_Translation::manage_translations" resource="Naxero_Translation::naxero_stringsindex"/>
-        <add id="Naxero_Translation::naxero_logsindex" title="Logs" translate="title" module="Naxero_Translation" sortOrder="2" dependsOnModule="Naxero_Translation" action="translation/logs/index" parent="Naxero_Translation::manage_translations" resource="Naxero_Translation::naxero_logsindex"/>
+        <add id="Naxero_Translation::naxero_logsindex" title="CSV logs" translate="title" module="Naxero_Translation" sortOrder="2" dependsOnModule="Naxero_Translation" action="translation/logs/index" parent="Naxero_Translation::manage_translations" resource="Naxero_Translation::naxero_logsindex"/>
     </menu>
 </config>
