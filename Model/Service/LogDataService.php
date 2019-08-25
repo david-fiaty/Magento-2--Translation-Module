@@ -77,22 +77,22 @@ class LogDataService
         $errors = [];
 
         // Check for empty lines
-        //if (empty($line[0])) { 
+        if (empty($line[0])) { 
             $errors[] = __('Empty line detected.');
-        //}
+        }
 
         // Check for too many values
-        //if (count($line) > 2) {
+        if (count($line) > 2) {
             $errors[] = __('Incorrect Key/Value structure: more than 2 values detected.');
-        //}
+        }
 
         // Check for insufficient values
-        //if (count($line) < 2) {
+        if (count($line) < 2) {
             $errors[] = __('Incorrect Key/Value structure: less than 2 values detected');
-        //}
+        }
 
         // Process the results
-        //if (!empty($errors)) {
+        if (!empty($errors)) {
             foreach ($errors as $error) {
                 // Save the item
                 $logEntity = $this->logEntityFactory->create(); 
@@ -103,7 +103,7 @@ class LogDataService
             }
 
             return true;
-        //}
+        }
 
         return false;
     }
