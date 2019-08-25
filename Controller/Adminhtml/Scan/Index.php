@@ -13,16 +13,6 @@ class Index extends \Magento\Backend\App\Action
     protected $resultJsonFactory;
 
     /**
-     * @var FileDataService
-     */
-    protected $fileDataService; 
-
-    /**
-     * @var StringDataService
-     */
-    protected $stringDataService;  
-
-    /**
      * @var DirectoryList
      */
     protected $tree;
@@ -43,8 +33,6 @@ class Index extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Naxero\Translation\Model\Service\FileDataService $fileDataService,
-        \Naxero\Translation\Model\Service\StringDataService $stringDataService,
         \Magento\Framework\Filesystem\DirectoryList $tree,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Naxero\Translation\Helper\Data $helper
@@ -53,8 +41,6 @@ class Index extends \Magento\Backend\App\Action
         $this->tree = $tree;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
-        $this->fileDataService = $fileDataService;
-        $this->stringDataService = $stringDataService;
         
         parent::__construct($context);
     }
@@ -70,7 +56,7 @@ class Index extends \Magento\Backend\App\Action
         $result = $this->resultJsonFactory->create();
 
         // Prepare the output
-        $output = array();
+        $output = [];
 
         // Loop through the directory tree
         if ($this->getRequest()->isAjax()) 
@@ -99,20 +85,10 @@ class Index extends \Magento\Backend\App\Action
             }
 
             // Get the output
-            switch ($view) {
-                case 'files':
-                    $output = $this->fileDataService->getList();
-                    break;
-
-                case 'strings':
-                    $output = $this->stringDataService->getList();
-                    break;
-            }
-
-            return $result->setData($output);
+            $output = $this->helper->renderView($view);
         }
 
-        return $result->setData([]);
+        return $result->setData($output);
     }
 
     public function clearTableData() {

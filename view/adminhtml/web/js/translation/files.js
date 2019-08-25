@@ -276,7 +276,9 @@ define([
                 url: updateUrl,
                 dataType: 'json',
                 showLoader: true,
-                success: function(data) {},
+                success: function(data) {
+                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+                },
                 error: function(request, status, error) {
                     console.log(error);
                 }
