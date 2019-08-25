@@ -68,6 +68,9 @@ define([
         },
 
         getData: function() {
+            // Assign this to self
+            var self = this;
+            
             $.ajax({
                 type: "POST",
                 url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
