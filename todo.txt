@@ -7,3 +7,4 @@
 - localize the plugin
 - add default message for no results in tables?
 - add list auto refresh after scan
+- check for duplicates in row error recording
