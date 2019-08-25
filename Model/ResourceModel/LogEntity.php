@@ -7,11 +7,6 @@ namespace Naxero\Translation\Model\ResourceModel;
 class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
-     * @var \Magento\Framework\Stdlib\DateTime\DateTime
-     */
-    protected $_date;
-
-    /**
      * Construct
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
@@ -24,7 +19,6 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $resourcePrefix = null
     ) {
         parent::__construct($context, $resourcePrefix);
-        $this->_date = $date;
     }
 
     /**

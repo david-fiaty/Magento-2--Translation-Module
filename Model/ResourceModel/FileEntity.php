@@ -10,22 +10,22 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */
-    protected $_date;
+    protected $dateStamp;
 
     /**
      * Construct
      *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
-     * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
+     * @param \Magento\Framework\Stdlib\DateTime\DateTime $dateStamp
      * @param string|null $resourcePrefix
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
-        \Magento\Framework\Stdlib\DateTime\DateTime $date,
+        \Magento\Framework\Stdlib\DateTime\DateTime $dateStamp,
         $resourcePrefix = null
     ) {
         parent::__construct($context, $resourcePrefix);
-        $this->_date = $date;
+        $this->dateStamp = $dateStamp;
     }
 
     /**
@@ -54,10 +54,10 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         }
 
         if ($object->isObjectNew() && !$object->hasCreationTime()) {
-            $object->setCreationTime($this->_date->gmtDate());
+            $object->setCreationTime($this->dateStamp->gmtDate());
         }
 
-        $object->setUpdateTime($this->_date->gmtDate());
+        $object->setUpdateTime($this->dateStamp->gmtDate());
 
         return parent::_beforeSave($object);
     }

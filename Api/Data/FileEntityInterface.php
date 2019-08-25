@@ -2,18 +2,17 @@
 
 namespace Naxero\Translation\Api\Data;
 
-
 interface FileEntityInterface
 {
     /**
      * Constants for keys of data array.
      */
-    const FILE_ID       = 'file_id';
-    const FILE_PATH     = 'file_path';
-    const FILE_CONTENT  = 'file_content';
+    const FILE_ID = 'file_id';
+    const FILE_PATH = 'file_path';
+    const FILE_CONTENT = 'file_content';
     const FILE_CREATION_TIME = 'file_creation_time';
-    const FILE_UPDATE_TIME   = 'file_update_time';
-    const FILE_IS_ACTIVE     = 'file_is_active';
+    const FILE_UPDATE_TIME = 'file_update_time';
+    const FILE_IS_ACTIVE = 'file_is_active';
 
     /**
      * Get ID
