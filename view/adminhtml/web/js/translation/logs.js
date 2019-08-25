@@ -55,7 +55,7 @@ define([
                 height: "100%",
                 columns: self.getListColumns(),
                 initialSort:[
-                    {column:"index", dir:"desc"}
+                    {column:"id", dir:"desc"}
                 ]
             });
 
@@ -172,11 +172,12 @@ define([
                 self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
             });
         },
-        
+
         getListColumns: function() {
             return [
-                {title: "Index", field: "index", sorter: "number", visible: false},
-                {title: "File Id", field: "file_id", sorter: "string"},
+                {title: "Id", field: "id", sorter: "number", visible: false},
+                {title: "File Id", field: "file_id", sorter: "string", visible: false},
+                {title: "File path", field: "file_path", sorter: "string", headerFilter:"input", width: 200},
                 {title: "Row", field: "row_id", sorter: "string"},
                 {title: "Comments", field: "comments"}
             ];

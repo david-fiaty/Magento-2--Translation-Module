@@ -307,7 +307,7 @@ define([
         getListColumns: function() {
             return [
                 {title: "Id", field: "file_id", sorter: "number", visible: false},
-                {title: "Path", field: "file_path", sorter: "string", headerFilter:"input"},
+                {title: "File path", field: "file_path", sorter: "string", headerFilter:"input"},
                 {title: "Created", field: "file_creation_time", sorter: "string", visible: false},
                 {title: "Updated", field: "file_update_time", sorter: "string", visible: false},
                 {title: "Lines", field: "file_count", sorter: "number", width: 100},

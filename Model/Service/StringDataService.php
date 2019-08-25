@@ -28,8 +28,7 @@ class StringDataService
     protected $logDataService;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * StringDataService constructor
      */
     public function __construct(
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,

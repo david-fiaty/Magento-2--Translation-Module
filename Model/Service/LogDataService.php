@@ -13,6 +13,11 @@ class LogDataService
     protected $logEntityFactory;    
 
     /**
+     * @var FileEntityFactory
+     */
+    protected $fileEntityFactory;  
+
+    /**
      * @var Array
      */
     protected $output;
@@ -23,14 +28,15 @@ class LogDataService
     protected $helper;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * LogDataService constructor
      */
     public function __construct(
         \Naxero\Translation\Model\LogEntityFactory $logEntityFactory,
+        \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Naxero\Translation\Helper\Data $helper
     ) {
         $this->logEntityFactory = $logEntityFactory;
+        $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
     }
 
@@ -59,6 +65,13 @@ class LogDataService
         {
             // Get the item data
             $arr = $item->getData();
+
+            // Add the file path field
+            $fileEntity = $this->fileEntityFactory->create();
+            $fileInstance = $fileEntity->load($arr['file_id']);
+            $arr['file_path'] = $fileInstance->getFilePath();
+
+            // Add to output
             $this->output['table_data'][] = (object) $arr;
         }
 

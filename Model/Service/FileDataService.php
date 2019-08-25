@@ -28,8 +28,7 @@ class FileDataService
     protected $logDataService;
 
     /**
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
+     * FileDataService constructor
      */
     public function __construct(
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,

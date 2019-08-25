@@ -43,7 +43,7 @@ class Detail extends \Magento\Backend\App\Action
         \Magento\Framework\File\Csv $csvParser,
         \Naxero\Translation\Helper\Data $helper
     ) {
-        $this->resultJsonFactory            = $resultJsonFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
