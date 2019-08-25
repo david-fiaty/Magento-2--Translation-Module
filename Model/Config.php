@@ -12,31 +12,31 @@ class Config extends \Magento\Framework\DataObject
 	/**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 	/**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface 
      */
-    protected $_scopeConfig;
+    protected $scopeConfig;
 	/**
      * @var \Magento\Framework\App\Config\ValueInterface
      */
-    protected $_backendModel;
+    protected $backendModel;
 	/**
      * @var \Magento\Framework\DB\Transaction
      */
-    protected $_transaction;
+    protected $transaction;
 	/**
      * @var \Magento\Framework\App\Config\ValueFactory
      */
-    protected $_configValueFactory;
+    protected $configValueFactory;
 	/**
-     * @var int $_storeId
+     * @var int $storeId
      */
-    protected $_storeId;
+    protected $storeId;
 	/**
-     * @var string $_storeCode
+     * @var string $storeCode
      */
-    protected $_storeCode;
+    protected $storeCode;
 
 	/**
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -55,13 +55,13 @@ class Config extends \Magento\Framework\DataObject
         array $data = []
     ) {
         parent::__construct($data);
-        $this->_storeManager = $storeManager;
-        $this->_scopeConfig = $scopeConfig;
-        $this->_backendModel = $backendModel;
-        $this->_transaction = $transaction;
-        $this->_configValueFactory = $configValueFactory;
-		$this->_storeId=(int)$this->_storeManager->getStore()->getId();
-		$this->_storeCode=$this->_storeManager->getStore()->getCode();
+        $this->storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
+        $this->backendModel = $backendModel;
+        $this->transaction = $transaction;
+        $this->configValueFactory = $configValueFactory;
+		$this->storeId = (int) $this->storeManager->getStore()->getId();
+		$this->storeCode = $this->storeManager->getStore()->getCode();
 	}
 	
 	/**
@@ -69,7 +69,7 @@ class Config extends \Magento\Framework\DataObject
      * @param string $path,
      */
 	public function getCurrentStoreConfigValue($path){
-		return $this->_scopeConfig->getValue($path,'store',$this->_storeCode);
+		return $this->scopeConfig->getValue($path,'store',$this->storeCode);
 	}
 	
 	/**
@@ -81,13 +81,13 @@ class Config extends \Magento\Framework\DataObject
 		$data = [
                     'path' => $path,
                     'scope' =>  'stores',
-                    'scope_id' => $this->_storeId,
-                    'scope_code' => $this->_storeCode,
+                    'scope_id' => $this->storeId,
+                    'scope_code' => $this->storeCode,
                     'value' => $value,
                 ];
 
-		$this->_backendModel->addData($data);
-		$this->_transaction->addObject($this->_backendModel);
-		$this->_transaction->save();
+		$this->backendModel->addData($data);
+		$this->transaction->addObject($this->backendModel);
+		$this->transaction->save();
 	}
 }
