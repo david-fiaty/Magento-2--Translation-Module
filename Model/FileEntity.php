@@ -5,7 +5,6 @@ namespace Naxero\Translation\Model;
 class FileEntity extends \Magento\Framework\Model\AbstractModel 
 implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\DataObject\IdentityInterface
 {
-
     /**#@+
      * Files's Statuses
      */
