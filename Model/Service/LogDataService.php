@@ -55,11 +55,6 @@ class LogDataService
             $this->output['table_data'][] = (object) $arr;
         }
 
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
-        $logger = new \Zend\Log\Logger();
-        $logger->addWriter($writer);
-        $logger->info(print_r($this->output, 1));
-
         // Return the data output
         return $this->output;
     }
