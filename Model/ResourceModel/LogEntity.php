@@ -38,6 +38,31 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
+     * Process file data before saving
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return $this
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
+    {
+        return parent::_beforeSave($object);
+    }
+
+    /**
+     * Load an object
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @param mixed $value
+     * @param string $field
+     * @return $this
+     */
+    public function load(\Magento\Framework\Model\AbstractModel $object, $value, $field = null)
+    {
+        return parent::load($object, $value, $field);
+    }
+    
+    /**
      * Retrieve select object for load object data
      *
      * @param string $field
