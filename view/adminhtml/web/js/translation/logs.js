@@ -173,6 +173,25 @@ define([
             });
         },
 
+        getPromptOptions: function(opts) {
+            var html = '';
+            html += '<form id="prompt_form" action="">';
+            html += '<div class="admin__field-control">';
+            for (var i = 0; i < opts.length; i++) {
+                html += '<div class="class="admin__field admin__field-option">';
+                html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
+                html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
+                html += '</div>';
+                html += '<div class="admin__field-note">';
+                html += '<span>' + opts[i].note + '</span>';
+                html += '</div>';
+            }
+            html += '</div>';
+            html += '</form>';
+
+            return html;
+        },
+        
         getListColumns: function() {
             return [
                 {title: "Id", field: "id", sorter: "number", visible: false},
