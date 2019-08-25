@@ -25,6 +25,11 @@ class Index extends \Magento\Backend\App\Action
     protected $stringDataService;  
 
     /**
+     * @var LogDataService
+     */
+    protected $logDataService; 
+
+    /**
      * @var Data
      */
     protected $helper;
@@ -37,11 +42,13 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Naxero\Translation\Model\Service\FileDataService $fileDataService,
         \Naxero\Translation\Model\Service\StringDataService $stringDataService,
+        \Naxero\Translation\Model\Service\LogDataService $logDataService,
         \Naxero\Translation\Helper\Data $helper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->fileDataService = $fileDataService;
         $this->stringDataService = $stringDataService;
+        $this->logDataService = $logDataService;
         $this->helper = $helper;
 
         parent::__construct($context);
@@ -70,6 +77,10 @@ class Index extends \Magento\Backend\App\Action
 
                 case 'strings':
                     $output = $this->stringDataService->getList();
+                    break;
+
+                case 'logs':
+                    $output = $this->logDataService->getList();
                     break;
             }
         }
