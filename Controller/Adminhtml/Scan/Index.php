@@ -23,6 +23,11 @@ class Index extends \Magento\Backend\App\Action
     protected $helper;
 
     /**
+     * @var View
+     */
+    protected $viewHelper;
+
+    /**
      * @var FileEntityFactory
      */
     protected $fileEntityFactory;    
@@ -35,12 +40,14 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
-        \Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\Data $helper,
+        \Naxero\Translation\Helper\View $viewHelper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
+        $this->viewHelper = $viewHelper;
         
         parent::__construct($context);
     }
@@ -85,7 +92,7 @@ class Index extends \Magento\Backend\App\Action
             }
 
             // Get the output
-            $output = $this->helper->renderView($view);
+            $output = $this->viewHelper->render($view);
         }
 
         return $result->setData($output);

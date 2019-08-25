@@ -17,16 +17,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var Session
      */
     protected $adminSession;
-    
-    /**
-     * @var FileDataService
-     */
-    protected $fileDataService; 
-
-    /**
-     * @var StringDataService
-     */
-    protected $stringDataService;  
 
     /**
      * @var DirectoryList
@@ -54,8 +44,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
         \Magento\Backend\Model\Auth\Session $adminSession,
-        \Naxero\Translation\Model\Service\FileDataService $fileDataService,
-        \Naxero\Translation\Model\Service\StringDataService $stringDataService,
 		\Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\File\Csv $csvParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -64,8 +52,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 	) {
 		parent::__construct($context);
         $this->adminSession = $adminSession;
-        $this->fileDataService = $fileDataService;
-        $this->stringDataService = $stringDataService;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
         $this->scopeConfig = $scopeConfig;
@@ -135,28 +121,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 		$select->addOption('alltx', __('--- All ---'));
 
 		return $select->getHtml();
-    }
-    
-    public function renderView($view) {
-        // Prepare the output
-        $output = [];
-
-        // Process the view case
-        switch ($view) {
-            case 'files':
-                $output = $this->fileDataService->init()->getList();
-                break;
-
-            case 'strings':
-                $output = $this->stringDataService->init()->getList();
-                break;
-
-            case 'logs':
-                $output = $this->logDataService->init()->getList();
-                break;
-        }
-
-        return $output;
     }
 
     public function flushCache()

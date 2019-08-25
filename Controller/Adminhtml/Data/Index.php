@@ -15,9 +15,9 @@ class Index extends \Magento\Backend\App\Action
     protected $resultJsonFactory;
 
     /**
-     * @var Data
+     * @var View
      */
-    protected $helper;
+    protected $viewHelper;
 
     /**
      * Index class constructor
@@ -25,10 +25,10 @@ class Index extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\View $viewHelper
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
-        $this->helper = $helper;
+        $this->viewHelper = $viewHelper;
 
         parent::__construct($context);
     }
@@ -50,7 +50,7 @@ class Index extends \Magento\Backend\App\Action
             $view = $this->getRequest()->getParam('view');
 
             // Render the view
-            $output = $this->helper->renderView($view);
+            $output = $this->viewHelper->render($view);
         }
 
         return $this->resultJsonFactory->create()->setData($output);
