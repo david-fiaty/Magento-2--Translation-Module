@@ -9,7 +9,6 @@ namespace Naxero\Translation\Model;
  */
 class Config extends \Magento\Framework\DataObject
 {
-
 	/**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
