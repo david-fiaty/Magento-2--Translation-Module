@@ -249,11 +249,6 @@ define([
                 });
             });
 
-            // File strings reload
-            this.cache._("#get-strings").click(function() {
-                self.getRowDetails(self.detailViewid);
-            });
-
             // Flush cache
             this.cache._("button[id^='flush-cache']").click(function() {
                 $.ajax({
