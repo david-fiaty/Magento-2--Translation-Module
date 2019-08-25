@@ -95,6 +95,41 @@ define([
             this.cache._(this.options.targetTable).tabulator("setPage", 1);
         },
 
+        setToolbarActions: function() {
+            var self = this;
+
+            // File index update
+            this.cache._("#update-files").click(function() {
+                // Trigger the prompt
+                prompt({
+                    title: __('Scan files'),
+                    content: self.getPromptOptions([{
+                            id: "update_add",
+                            name: "update_mode",
+                            value: "update_add",
+                            label: __('Add new files'),
+                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
+                        },
+                        {
+                            id: "update_replace",
+                            name: "update_mode",
+                            value: "update_replace",
+                            label: __('Replace all files'),
+                            note: __('Will reload all files in the index and override existing content not saved to files.'),
+                        }
+                    ]),
+                    actions: {
+                        confirm: function(){
+                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
+                            self.updateFileIndex(optChecked);
+                        }, 
+                        cancel: function(){}, 
+                        always: function(){}
+                    }
+                });
+            });
+        },
+
         getListColumns: function() {
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
