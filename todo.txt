@@ -4,3 +4,4 @@
 - replace file_put_contents by core function
 - Fix pagination not working
 - improve the cache flushing response
+- localize the plugin
