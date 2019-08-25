@@ -177,8 +177,8 @@ define([
             return [
                 {title: "Id", field: "id", sorter: "number", visible: false},
                 {title: "File Id", field: "file_id", sorter: "string", visible: false},
-                {title: "File path", field: "file_path", sorter: "string", headerFilter:"input", width: 200},
-                {title: "Row", field: "row_id", sorter: "string"},
+                {title: "File path", field: "file_path", sorter: "string", headerFilter:"input"},
+                {title: "Row", field: "row_id", sorter: "string", width: 100},
                 {title: "Comments", field: "comments"}
             ];
         }
