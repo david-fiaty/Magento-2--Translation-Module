@@ -150,7 +150,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function checkFilePath($filePath)
     {
         $select = $this->_getLoadByFilePathSelect($filePath, 1);
-        $select->reset(\Zend_Db_Select::COLUMNS)->columns('bp.filet_id')->limit(1);
+        $select->reset(\Zend_Db_Select::COLUMNS)->columns('bp.file_id')->limit(1);
 
         return $this->getConnection()->fetchOne($select);
     }
