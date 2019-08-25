@@ -50,7 +50,7 @@ class Index extends \Magento\Backend\App\Action
         // Process the request
         if ($this->getRequest()->isAjax()) 
         {
-            switch ($view) {
+            switch ($action) {
                 case 'clear_logs':
                     return $this->clearLogs();
                     break;
