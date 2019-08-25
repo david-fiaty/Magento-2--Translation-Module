@@ -205,18 +205,6 @@ define([
 
         setToolbarActions: function() {
             var self = this;
-            
-            // Back button
-            this.cache._("#button-back").click(function() {
-                self.togglePanes(0);
-                self.cache._(self.options.detailView).tabulator("destroy");
-            });
-
-            // Trigger download of data.csv file
-            this.cache._("#download-file").click(function() {
-                // Todo : improve file naming from metadata
-                self.cache._(self.options.detailView).tabulator("download", "csv", "trans_" + Date.now() + ".csv");
-            });
 
             // File index update
             this.cache._("#update-files").click(function() {
@@ -320,33 +308,6 @@ define([
                 {title: "Group", field: "file_group", sorter: "string", width: 100},
                 {title: "Locale", field: "file_locale", sorter: "string", width: 100}
             ];
-        },
-
-        togglePanes: function(id) {
-            if (this.isListView) {
-                // Get main table width
-                var tableWidth = this.cache._('#translation-table-list').outerWidth() + 'px';
-
-                // Move main table
-                this.cache._('#translation-table-list').animate({ left: '-50px' });
-                this.cache._('#translation-table-list').hide();
-
-                // Show the details table  
-                this.cache._('#translation-table-detail').show();
-
-                // Set the detail view state
-                this.isListView = false;
-                this.detailViewid = id;
-            } else {
-                // Bring the panes back
-                this.cache._('#translation-table-detail').hide();
-                this.cache._('#translation-table-list').animate({ left: '0px' });
-                this.cache._('#translation-table-list').show();
-
-                // Set the detail view state
-                this.isListView = true;
-                this.detailViewid = 0;
-            }
         },
 
         updateEntityData: function(data) {
