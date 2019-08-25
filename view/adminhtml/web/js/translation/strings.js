@@ -222,7 +222,7 @@ define([
             this.cache._("#update-files").click(function() {
                 // Trigger the prompt
                 prompt({
-                    title: __('Update files list'),
+                    title: __('Scan files'),
                     content: self.getPromptOptions([{
                             id: "update_add",
                             name: "update_mode",
