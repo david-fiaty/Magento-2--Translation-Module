@@ -47,7 +47,7 @@ class LogDataService
         // Create the collection
         $collection = $logEntity->getCollection();
 
-        // Process the files content
+        // Process the logs
         foreach ($collection as $item)
         {
             // Get the item data
