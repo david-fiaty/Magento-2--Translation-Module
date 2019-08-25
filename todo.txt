@@ -1,7 +1,7 @@
 - Check the todos in code
 - add a log page for irregular rows in files
 - add files permissions check
-- replace file_put_contents by core function
+- replace file_put_contents and file_get_contents by core functions
 - Fix pagination not working
 - improve the cache flushing response
 - localize the plugin
