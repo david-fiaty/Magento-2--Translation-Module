@@ -83,9 +83,6 @@ define([
             // Set the language
             this.setLocale();
 
-            // Set the toolbar actions
-            this.setToolbarActions();
-
             // Set the pagination
             this.setPaging();
         },
@@ -100,22 +97,12 @@ define([
             this.cache._(this.options.targetTable).tabulator("setPage", 1);
         },
 
-        setToolbarActions: function() {
-            var self = this;
-
-        },
-
         getListColumns: function() {
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
-                {title: "Key", field: "key", sorter: "string", headerFilter:"input"},
-                {title: "Value", field: "value", sorter: "string", headerFilter:"input", editor: "input"},
-                {title: "Path", field: "file_path", sorter: "string", headerFilter:"input", width: 200},
-                {title: "Created", field: "file_creation_time", sorter: "string", visible: false},
-                {title: "Updated", field: "file_update_time", sorter: "string", visible: false},
-                {title: "Type", field: "file_type", sorter: "string", width: 100},
-                {title: "Group", field: "file_group", sorter: "string", width: 100},
-                {title: "Locale", field: "file_locale", sorter: "string", width: 100}
+                {title: "File Id", field: "file_id", sorter: "string"},
+                {title: "Row", field: "file_row", sorter: "string"},
+                {title: "Comments", field: "comments"}
             ];
         },
 
