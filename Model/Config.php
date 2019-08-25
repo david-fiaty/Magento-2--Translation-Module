@@ -69,7 +69,7 @@ class Config extends \Magento\Framework\DataObject
      * @param string $path,
      */
 	public function getCurrentStoreConfigValue($path){
-		return $this->scopeConfig->getValue($path,'store',$this->storeCode);
+		return $this->scopeConfig->getValue($path, 'store', $this->storeCode);
 	}
 	
 	/**
