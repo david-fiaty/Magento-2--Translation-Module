@@ -97,37 +97,6 @@ define([
 
         setToolbarActions: function() {
             var self = this;
-
-            // File index update
-            this.cache._("#update-files").click(function() {
-                // Trigger the prompt
-                prompt({
-                    title: __('Scan files'),
-                    content: self.getPromptOptions([{
-                            id: "update_add",
-                            name: "update_mode",
-                            value: "update_add",
-                            label: __('Add new files'),
-                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
-                        },
-                        {
-                            id: "update_replace",
-                            name: "update_mode",
-                            value: "update_replace",
-                            label: __('Replace all files'),
-                            note: __('Will reload all files in the index and override existing content not saved to files.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function(){
-                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
-            });
         },
 
         getListColumns: function() {
@@ -137,27 +106,6 @@ define([
                 {title: "Row", field: "file_row", sorter: "string"},
                 {title: "Comments", field: "comments"}
             ];
-        },
-
-        updateEntityData: function(data) {
-            // Prepare the variables
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
-            var rowData = {
-                    row_content: data.rowContent,
-                    row_id: data.rowId 
-                };
-
-            // Send the the request
-            $.ajax({
-                type: "POST",
-                url: fileUpdateUrl,
-                data: rowData,
-                dataType: 'json',
-                success: function(res) {},
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
         }
     });
 
