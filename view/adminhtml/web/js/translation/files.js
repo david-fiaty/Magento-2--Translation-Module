@@ -83,7 +83,7 @@ define([
         getData: function() {
             // Assign this to self
             var self = this;
-            
+
             $.ajax({
                 type: "POST",
                 url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
@@ -284,7 +284,7 @@ define([
                 dataType: 'json',
                 showLoader: true,
                 success: function(data) {
-                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
+                    self.getData();
                 },
                 error: function(request, status, error) {
                     console.log(error);
