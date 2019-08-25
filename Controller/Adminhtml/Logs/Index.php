@@ -60,12 +60,15 @@ class Index extends \Magento\Backend\App\Action
                     break;
             }
         }
+
+        // Default for normal page load
+        return $this->getData();
     }
 
     public function clearLogs() {
         // Prepare the output array
         $output = ['success' => 'true'];
-        
+
         try {
             $logEntity = $this->logEntityFactory->create(); 
             $connection = $logEntity->getCollection()->getConnection();
