@@ -90,9 +90,6 @@ class LogDataService
         //if (count($line) < 2) {
             $errors[] = __('Incorrect Key/Value structure: less than 2 values detected');
         //}
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
-        $logger = new \Zend\Log\Logger();
-        $logger->addWriter($writer);
 
         // Process the results
         //if (!empty($errors)) {
@@ -103,9 +100,6 @@ class LogDataService
                 $logEntity->setData('file_row', $rowId);
                 $logEntity->setData('comments', $error);
                 $logEntity->save();
-
-
-                $logger->info(print_r($fileId . ' ' . $rowId . ' ' . $error, 1));
             }
 
             return true;
