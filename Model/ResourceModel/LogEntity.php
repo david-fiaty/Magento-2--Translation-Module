@@ -61,7 +61,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      *
      * @param string $field
      * @param mixed $value
-     * @param \Naxero\Translation\Model\FileEntity $object
+     * @param \Naxero\Translation\Model\LogEntity $object
      * @return \Zend_Db_Select
      */
     public function _getLoadSelect($field, $value, $object)
