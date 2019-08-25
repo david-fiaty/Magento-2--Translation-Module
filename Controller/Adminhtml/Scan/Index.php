@@ -30,7 +30,12 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @var FileEntityFactory
      */
-    protected $fileEntityFactory;    
+    protected $fileEntityFactory;
+
+    /**
+     * @var LogDataService
+     */
+    protected $logDataService;
 
     /**
      * Index class constructor
@@ -39,15 +44,17 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
-        \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Naxero\Translation\Helper\Data $helper,
-        \Naxero\Translation\Helper\View $viewHelper
+        \Naxero\Translation\Helper\View $viewHelper,
+        \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
+        \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
-        $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
         $this->viewHelper = $viewHelper;
+        $this->fileEntityFactory = $fileEntityFactory;
+        $this->logDataService = $logDataService;
         
         parent::__construct($context);
     }
@@ -118,6 +125,25 @@ class Index extends \Magento\Backend\App\Action
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();
+
+        // Check for errors
+        $arr = $fileEntity->getData();
+
+        // Get the content rows
+        $rows = explode("\n", $arr['file_content']);
+
+        // Loop through the rows
+        $i = 1;
+        foreach ($rows as $row) {        
+            // Get the line
+            $line = str_getcsv($row);
+
+            // Check errors
+            $this->logDataService->hasErrors($line, $arr['file_id'], $i);
+
+            // Increment
+            $i++;
+        }
     }
 
     public function isWantedFile($filePath)

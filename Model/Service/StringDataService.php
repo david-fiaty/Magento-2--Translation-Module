@@ -78,7 +78,7 @@ class StringDataService
                 $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
                 // Loop through the rows
-                $j = 0;
+                $j = 1;
                 foreach ($rows as $row) {
                     // Prepare the output array
                     $output = [];
@@ -87,7 +87,7 @@ class StringDataService
                     $line = str_getcsv($row);
 
                     // Skip empty and non pair values
-                    if (!$this->logDataService->isError($line, $arr['file_id'], $j)) {
+                    if (!$this->logDataService->hasErrors($line, $arr['file_id'], $j)) {
                         $output = array_merge([
                             'index' => $i,
                             'key' => $line[0],

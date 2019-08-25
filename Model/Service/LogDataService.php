@@ -85,7 +85,7 @@ class LogDataService
         ];
     }
 
-    public function isError($line, $fileId, $rowId) {
+    public function hasErrors($line, $fileId, $rowId) {
         // Prepare the error array
         $errors = [];
 
