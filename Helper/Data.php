@@ -60,8 +60,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 	}
 
 	public function getUserLanguage() {
-        // Return the user locale
-		return $this->adminSession->getUser()->getData()['interface_locale'];
+        $locale = $this->adminSession->getUser()->getData()['interface_locale'];
+		$userLanguage = str_replace('_', '-', $locale);
+		return strtolower($userLanguage);
 	}
 
 	public function getCleanPath($filePath) {

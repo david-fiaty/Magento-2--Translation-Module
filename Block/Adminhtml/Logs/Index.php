@@ -23,11 +23,5 @@ class Index extends \Magento\Backend\Block\Template
 	   $this->pageConfig->getTitle()->set(__('Manage logs'));
 
 	   return parent::_prepareLayout();
-	}  
-
-	public function getUserLanguage()
-	{
-		$userLanguage = str_replace('_', '-', $this->helper->getUserLanguage());
-		return strtolower($userLanguage);
 	}
 }
