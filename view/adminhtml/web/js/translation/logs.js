@@ -15,9 +15,7 @@ define([
             targetTable: '#translation-table-content',
             targetLocale: '',
             dataUrl: '',
-            scanUrl: '',
             fileUpdateUrl: '',
-            cacheUrl: '',
             paging: 30,
             pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
         },
