@@ -90,5 +90,4 @@ class Config extends \Magento\Framework\DataObject
 		$this->_transaction->addObject($this->_backendModel);
 		$this->_transaction->save();
 	}
-	
 }
