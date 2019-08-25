@@ -47,7 +47,6 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     public function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
-
         if (!$this->isValidFilePath($object)) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('The file path is invalid.')

@@ -8,8 +8,8 @@ interface LogEntityInterface
     /**
      * Constants for keys of data array.
      */
-    const FILE_ID       = 'file_id';
-    const FILE_ROW     = 'file_row';
+    const FILE_ID   = 'file_id';
+    const FILE_ROW  = 'file_row';
     const COMMENTS  = 'comments';
 
     /**
