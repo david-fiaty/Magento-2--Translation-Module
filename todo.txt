@@ -5,3 +5,4 @@
 - Fix pagination not working
 - improve the cache flushing response
 - localize the plugin
+- add default message for no results in tables?
