@@ -1,10 +1,9 @@
 define([
     'jquery',
-    'Magento_Ui/js/modal/prompt',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'tabulator'
-], function($, prompt, __, core, tabulator) {
+], function($, __, core, tabulator) {
     'use strict';
 
     // Build the widget
@@ -54,10 +53,13 @@ define([
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
                     var row = cell.getRow();
-                    self.updateEntityData({
-                        fileId: row.getData().file_id,
-                        rowContent: row.getData()
-                    });
+                    core.updateEntityData(
+                        self,
+                        {
+                            fileId: row.getData().file_id,
+                            rowContent: row.getData()
+                        }
+                    );
                 },
                 initialSort:[{
                     column: 'index',
@@ -67,6 +69,9 @@ define([
 
             // Load the data into the table
             core.getData(this);
+
+            // Set the toolbar actions
+            this.setToolbarActions();
         },
 
         setToolbarActions: function() {
@@ -74,33 +79,7 @@ define([
 
             // File index update
             this.cache._("#update-files").click(function() {
-                // Trigger the prompt
-                prompt({
-                    title: __('Scan files'),
-                    content: self.getPromptOptions([{
-                            id: "update_add",
-                            name: "update_mode",
-                            value: "update_add",
-                            label: __('Add new files'),
-                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
-                        },
-                        {
-                            id: "update_replace",
-                            name: "update_mode",
-                            value: "update_replace",
-                            label: __('Replace all files'),
-                            note: __('Will reload all files in the index and override existing content not saved to files.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function(){
-                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            core.updateFileIndex(self, optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
+                core.getScanPrompt(self);
             });
 
             // Flush cache
@@ -122,25 +101,6 @@ define([
             });
         },
 
-        getPromptOptions: function(opts) {
-            var html = '';
-            html += '<form id="prompt_form" action="">';
-            html += '<div class="admin__field-control">';
-            for (var i = 0; i < opts.length; i++) {
-                html += '<div class="class="admin__field admin__field-option">';
-                html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
-                html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
-                html += '</div>';
-                html += '<div class="admin__field-note">';
-                html += '<span>' + opts[i].note + '</span>';
-                html += '</div>';
-            }
-            html += '</div>';
-            html += '</form>';
-
-            return html;
-        },
-
         getListColumns: function() {
             return [
                 {title: "Index", field: "index", sorter: "number", visible: false},
@@ -153,27 +113,6 @@ define([
                 {title: "Group", field: "file_group", sorter: "string", width: 100},
                 {title: "Locale", field: "file_locale", sorter: "string", width: 100}
             ];
-        },
-
-        updateEntityData: function(data) {
-            // Prepare the variables
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
-            var rowData = {
-                    row_content: data.rowContent,
-                    row_id: data.rowId 
-                };
-
-            // Send the the request
-            $.ajax({
-                type: "POST",
-                url: fileUpdateUrl,
-                data: rowData,
-                dataType: 'json',
-                success: function(res) {},
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
         }
     });
 

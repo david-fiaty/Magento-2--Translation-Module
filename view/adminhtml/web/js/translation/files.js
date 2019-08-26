@@ -1,10 +1,9 @@
 define([
     'jquery',
-    'Magento_Ui/js/modal/prompt',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'tabulator'
-], function($, prompt, __, core, tabulator) {
+], function($, __, core, tabulator) {
     'use strict';
 
     // Build the widget
@@ -63,38 +62,9 @@ define([
 
             // Load the data into the table
             core.getData(this);
-        },
 
-        updateFilters: function(newFilter) {
-            var self = this;
-            var filters = $(self.options.targetTable).tabulator('getFilters'); 
-
-            var found = filters.find(function(element) {
-                return element.field == newFilter.field;
-            });
-
-            // Process the new filter
-            if (filters.length == 0 || typeof found === 'undefined') {
-                filters.push(newFilter);
-            } else {
-                for (var i = 0; i < filters.length; i++) {
-                    if (filters[i].field == newFilter.field) {
-                        if (newFilter.value === 'alltx') {
-                            filters.splice(i, 1);
-                        } 
-                        else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
-                            filters[i] = newFilter;
-                        }
-                    } 
-                    else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
-                        filters.push(newFilter);
-                    }                    
-                }
-            }
-
-            // Clear filters and set the new one
-            self.cache._(self.options.targetTable).tabulator('clearFilter');
-            self.cache._(self.options.targetTable).tabulator('setFilter', filters);
+            // Set the toolbar actions
+            this.setToolbarActions();
         },
 
         setToolbarActions: function() {
@@ -114,33 +84,7 @@ define([
 
             // File index update
             this.cache._("#update-files").click(function() {
-                // Trigger the prompt
-                prompt({
-                    title: __('Scan files'),
-                    content: self.getPromptOptions([{
-                            id: "update_add",
-                            name: "update_mode",
-                            value: "update_add",
-                            label: __('Add new files'),
-                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
-                        },
-                        {
-                            id: "update_replace",
-                            name: "update_mode",
-                            value: "update_replace",
-                            label: __('Replace all files'),
-                            note: __('Will reload all files in the index and override existing content not saved to files.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function(){
-                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            core.updateFileIndex(self, optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
+                core.getScanPrompt(self);
             });
 
             // Flush cache
@@ -160,25 +104,6 @@ define([
                     }
                 });
             });          
-        },
-
-        getPromptOptions: function(opts) {
-            var html = '';
-            html += '<form id="prompt_form" action="">';
-            html += '<div class="admin__field-control">';
-            for (var i = 0; i < opts.length; i++) {
-                html += '<div class="class="admin__field admin__field-option">';
-                html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
-                html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
-                html += '</div>';
-                html += '<div class="admin__field-note">';
-                html += '<span>' + opts[i].note + '</span>';
-                html += '</div>';
-            }
-            html += '</div>';
-            html += '</form>';
-
-            return html;
         },
 
         getListColumns: function() {
@@ -244,10 +169,13 @@ define([
                 columns: self.getDetailColumns(),
                 cellEdited: function(cell) {
                     var row = cell.getRow();
-                    self.updateEntityData({
-                        fileId: fileObj.file_id,
-                        rowContent: row.getData()
-                    });
+                    core.updateEntityData(
+                        self,
+                        {
+                            fileId: fileObj.file_id,
+                            rowContent: row.getData()
+                        }
+                    );
                 }
             });
 
@@ -275,27 +203,6 @@ define([
                 success: function(data) {
                     self.cache._(self.options.detailView).tabulator("setData", data);
                 },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
-        },
-
-        updateEntityData: function(data) {
-            // Prepare the variables
-            var fileUpdateUrl = this.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
-            var rowData = {
-                    row_content: data.rowContent,
-                    row_id: data.rowId 
-                };
-
-            // Send the the request
-            $.ajax({
-                type: "POST",
-                url: fileUpdateUrl,
-                data: rowData,
-                dataType: 'json',
-                success: function(res) {},
                 error: function(request, status, error) {
                     console.log(error);
                 }

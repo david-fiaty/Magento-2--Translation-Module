@@ -1,10 +1,9 @@
 define([
     'jquery',
-    'Magento_Ui/js/modal/prompt',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'tabulator'
-], function($, prompt, __, core, tabulator) {
+], function($, __, core, tabulator) {
     'use strict';
 
     // Build the widget
@@ -50,6 +49,9 @@ define([
 
             // Load the data into the table
             core.getData(this);
+
+            // Set the toolbar actions
+            this.setToolbarActions();
         },
 
         setToolbarActions: function() {
@@ -57,33 +59,7 @@ define([
 
             // File index update
             this.cache._("#update-files").click(function() {
-                // Trigger the prompt
-                prompt({
-                    title: __('Scan files'),
-                    content: self.getPromptOptions([{
-                            id: "update_add",
-                            name: "update_mode",
-                            value: "update_add",
-                            label: __('Add new files'),
-                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
-                        },
-                        {
-                            id: "update_replace",
-                            name: "update_mode",
-                            value: "update_replace",
-                            label: __('Replace all files'),
-                            note: __('Will reload all files in the index and override existing content not saved to files.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function(){
-                            var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            core.updateFileIndex(self, optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
+                core.getScanPrompt(self);
             });
 
             // Clear logs
@@ -106,25 +82,6 @@ define([
                     }
                 });   
             });
-        },
-
-        getPromptOptions: function(opts) {
-            var html = '';
-            html += '<form id="prompt_form" action="">';
-            html += '<div class="admin__field-control">';
-            for (var i = 0; i < opts.length; i++) {
-                html += '<div class="class="admin__field admin__field-option">';
-                html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
-                html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
-                html += '</div>';
-                html += '<div class="admin__field-note">';
-                html += '<span>' + opts[i].note + '</span>';
-                html += '</div>';
-            }
-            html += '</div>';
-            html += '</form>';
-
-            return html;
         },
 
         getListColumns: function() {

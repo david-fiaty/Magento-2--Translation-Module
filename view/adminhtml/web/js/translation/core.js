@@ -1,8 +1,10 @@
 define(
     [
-        'jquery'
+        'jquery',
+        'Magento_Ui/js/modal/prompt',
+        'mage/translate'
     ],
-    function ($) {
+    function ($, prompt, __) {
         'use strict';
 
         return {
@@ -46,9 +48,6 @@ define(
                     success: function(data) {
                         // Set the table data
                         com.cache._(com.options.targetTable).tabulator("setData", data.table_data);
-    
-                        // Set the toolbar actions
-                        com.setToolbarActions();
 
                         // Build options for the lists
                         self.buildFilters(com, data);
@@ -171,6 +170,76 @@ define(
                 // Clear filters and set the new one
                 com.cache._(com.options.targetTable).tabulator('clearFilter');
                 com.cache._(com.options.targetTable).tabulator('setFilter', filters);
+            },
+
+            getScannerPrompt: function(com) {
+                var self = this;
+                prompt({
+                    title: __('Scan files'),
+                    content: self.getScannerPromptOptions([{
+                            id: "update_add",
+                            name: "update_mode",
+                            value: "update_add",
+                            label: __('Add new files'),
+                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
+                        },
+                        {
+                            id: "update_replace",
+                            name: "update_mode",
+                            value: "update_replace",
+                            label: __('Replace all files'),
+                            note: __('Will reload all files in the index and override existing content not saved to files.'),
+                        }
+                    ]),
+                    actions: {
+                        confirm: function() {
+                            var optChecked = com.cache._('input[name=update_mode]:checked').val();
+                            self.updateFileIndex(com, optChecked);
+                        }, 
+                        cancel: function(){}, 
+                        always: function(){}
+                    }
+                });
+            },
+
+            getScannerPromptOptions: function(opts) {
+                var html = '';
+                html += '<form id="prompt_form" action="">';
+                html += '<div class="admin__field-control">';
+                for (var i = 0; i < opts.length; i++) {
+                    html += '<div class="class="admin__field admin__field-option">';
+                    html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
+                    html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
+                    html += '</div>';
+                    html += '<div class="admin__field-note">';
+                    html += '<span>' + opts[i].note + '</span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</form>';
+    
+                return html;
+            },
+
+            updateEntityData: function(com, data) {
+                // Prepare the variables
+                var fileUpdateUrl = com.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
+                var rowData = {
+                        row_content: data.rowContent,
+                        row_id: data.rowId 
+                    };
+    
+                // Send the the request
+                $.ajax({
+                    type: "POST",
+                    url: fileUpdateUrl,
+                    data: rowData,
+                    dataType: 'json',
+                    success: function(res) {},
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
             }
         };
     }
