@@ -85,8 +85,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
-    public function excludeFile($row) {
-        $path = $row['file_path'];
+    public function excludeFile($item) {
+        $path = is_array($item) ? $item['file_path'] : $item;
         $excludeTestFiles = $this->getConfig('exclude_test_files');
         $excludeCoreFiles = $this->getConfig('exclude_core_files');
         $excludeStaticFiles = $this->getConfig('exclude_static_files');

@@ -65,13 +65,16 @@ class LogDataService
         {
             // Get the item data
             $arr = $item->getData();
+            
+            // Load the file instance
+            $fileEntity = $this->fileEntityFactory->create();
+            $fileInstance = $fileEntity->load($arr['file_id']);
 
             // Process the file
-            if (!$this->helper->excludeFile($arr)) {
+            $filePath = $fileInstance->getFilePath();
+            if (!$this->helper->excludeFile($filePath)) {
                 // Add the file path field
-                $fileEntity = $this->fileEntityFactory->create();
-                $fileInstance = $fileEntity->load($arr['file_id']);
-                $arr['file_path'] = $fileInstance->getFilePath();
+                $arr['file_path'] = $filePath;
 
                 // Add to output
                 $this->output['table_data'][] = (object) $arr;
