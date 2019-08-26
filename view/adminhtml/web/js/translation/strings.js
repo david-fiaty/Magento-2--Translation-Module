@@ -59,142 +59,14 @@ define([
                         rowContent: row.getData()
                     });
                 },
-                initialSort:[
-                    {column:"index", dir:"desc"}
-                ]
+                initialSort:[{
+                    column: 'index',
+                    dir: 'desc'
+                }]
             });
 
             // Load the data into the table
-            self.getData();
-
-            // Configure the features
-            this.setFeatures();
-        },
-
-        getData: function() {
-            // Assign this to self
-            var self = this;
-
-            $.ajax({
-                type: "POST",
-                url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
-                dataType: 'json',
-                showLoader: true,
-                success: function(data) {
-                    // Set the table data
-                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
-
-                    // Build options for the lists
-                    self.buildFilters(data);
-
-                    // Add the list events
-                    self.addFilterEvents();
-                },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
-        },
-
-        buildFilters: function(data) {
-            // Create the group filter
-            this.createOptions(this.filters.group, data.filter_data.file_group);
-
-            // Create the type filter
-            this.createOptions(this.filters.type, data.filter_data.file_type);
-
-            // Create the locale filter
-            this.createOptions(this.filters.locale, data.filter_data.file_locale);
-
-            // Create the status filter
-            this.createOptions(this.filters.status, data.filter_data.file_status);
-        },
-
-        addFilterEvents: function() {
-            var self = this;
-
-            // Prepare the fields
-            var fields = [
-                {selector: self.filters.group, field: 'file_group'},
-                {selector: self.filters.type, field: 'file_type'},
-                {selector: self.filters.locale, field: 'file_locale'}
-            ];
-
-            // Assign the events
-            $.each(fields, function(k, obj) {
-                self.cache._(obj.selector).on('change', function() {
-                    let selected = $(this).find(":selected").text();
-                    let selectedKey = $(this).find(":selected").val();
-                    self.updateFilters({ field: obj.field, type: '=', value: selectedKey });
-                });
-            });
-        },
-
-        updateFilters: function(newFilter) {
-            var self = this;
-            var filters = $(self.options.targetTable).tabulator('getFilters'); 
-
-            var found = filters.find(function(element) {
-                    return element.field == newFilter.field;
-            });
-
-            // Process the new filter
-            if (filters.length == 0 || typeof found === 'undefined') {
-                filters.push(newFilter);
-            } else {
-                for (var i = 0; i < filters.length; i++) {
-                    if (filters[i].field == newFilter.field) {
-                        if (newFilter.value === 'alltx') {
-                            filters.splice(i, 1);
-                        } 
-                        else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
-                            filters[i] = newFilter;
-                        }
-                    } 
-                    else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
-                        filters.push(newFilter);
-                    }                    
-                }
-            }
-
-            // Clear filters and set the new one
-            self.cache._(self.options.targetTable).tabulator('clearFilter');
-            self.cache._(self.options.targetTable).tabulator('setFilter', filters);
-        },
-
-        createOptions: function(sel, arr) {
-            var self = this;
-            var output = [];
-            $.each(arr, function(key, value) {
-                // Create the option
-                var option = (sel == self.filters.status) ? '<option value="' + key + '">' : '<option value="' + value + '">';
-                option += value + '</option>';
-
-                // Add it to the output
-                output.push(option);
-            });
-            this.cache._(sel).append(output.join(''));
-        },
-
-        setFeatures: function() {
-            // Set the language
-            this.setLocale();
-
-            // Set the toolbar actions
-            this.setToolbarActions();
-
-            // Set the pagination
-            this.setPaging();
-        },
-
-        setLocale: function() {
-            // Todo : map m2 locales to tabulator js locales
-            //$(this.options.targetTable).tabulator("setLocale", this.options.targetLocale);
-            this.cache._(this.options.targetTable).tabulator("setLocale", 'en-us');
-        },
-
-        setPaging: function() {
-            this.cache._(this.options.targetTable).tabulator("setPage", 1);
+            core.getData(this);
         },
 
         setToolbarActions: function() {
@@ -223,7 +95,7 @@ define([
                     actions: {
                         confirm: function(){
                             var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(optChecked);
+                            core.updateFileIndex(self, optChecked);
                         }, 
                         cancel: function(){}, 
                         always: function(){}
@@ -247,27 +119,6 @@ define([
                         console.log(error);
                     }
                 });
-            });
-        },
-
-        updateFileIndex: function(updateMode) {
-            var self = this;
-
-            // Prepare the update url
-            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode  + '&form_key=' + window.FORM_KEY;
-
-            // Trigger the update request
-            $.ajax({
-                type: "POST",
-                url: updateUrl,
-                dataType: 'json',
-                showLoader: true,
-                success: function(data) {
-                    self.getData();
-                },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
             });
         },
 

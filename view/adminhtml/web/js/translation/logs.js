@@ -42,56 +42,14 @@ define([
                 responsiveLayout: true,
                 height: "100%",
                 columns: self.getListColumns(),
-                initialSort:[
-                    {column:"id", dir:"desc"}
-                ]
+                initialSort:[{
+                    column: 'id',
+                    dir: 'desc'
+                }]
             });
 
             // Load the data into the table
-            this.getData();
-
-            // Configure the features
-            this.setFeatures();
-        },
-
-        getData: function() {
-            // Assign this to self
-            var self = this;
-            
-            $.ajax({
-                type: "POST",
-                url: self.options.dataUrl + '?form_key=' + window.FORM_KEY,
-                dataType: 'json',
-                showLoader: true,
-                success: function(data) {
-                    // Set the table data
-                    self.cache._(self.options.targetTable).tabulator("setData", data.table_data);
-                },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
-            });
-        },
-
-        setFeatures: function() {
-            // Set the language
-            this.setLocale();
-
-            // Set the toolbar actions
-            this.setToolbarActions();
-
-            // Set the pagination
-            this.setPaging();
-        },
-
-        setLocale: function() {
-            // Todo : map m2 locales to tabulator js locales
-            //$(this.options.targetTable).tabulator("setLocale", this.options.targetLocale);
-            this.cache._(this.options.targetTable).tabulator("setLocale", 'en-us');
-        },
-
-        setPaging: function() {
-            this.cache._(this.options.targetTable).tabulator("setPage", 1);
+            core.getData(this);
         },
 
         setToolbarActions: function() {
@@ -120,7 +78,7 @@ define([
                     actions: {
                         confirm: function(){
                             var optChecked = self.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(optChecked);
+                            core.updateFileIndex(self, optChecked);
                         }, 
                         cancel: function(){}, 
                         always: function(){}
@@ -140,34 +98,13 @@ define([
                             alert(data.message);
                         }
                         else {
-                            self.getData();
+                            core.getData(self);
                         }
                     },
                     error: function(request, status, error) {
                         console.log(error);
                     }
                 });   
-            });
-        },
-
-        updateFileIndex: function(updateMode) {
-            var self = this;
-
-            // Prepare the update url
-            var updateUrl = this.options.scanUrl + '?update_mode=' + updateMode  + '&form_key=' + window.FORM_KEY;
-
-            // Trigger the update request
-            $.ajax({
-                type: "POST",
-                url: updateUrl,
-                dataType: 'json',
-                showLoader: true,
-                success: function(data) {
-                    self.getData();
-                },
-                error: function(request, status, error) {
-                    console.log(error);
-                }
             });
         },
 
@@ -192,11 +129,11 @@ define([
 
         getListColumns: function() {
             return [
-                {title: "Id", field: "id", sorter: "number", visible: false},
-                {title: "File Id", field: "file_id", sorter: "string", visible: false},
-                {title: "File path", field: "file_path", sorter: "string", headerFilter:"input"},
-                {title: "Row", field: "row_id", sorter: "string", width: 100},
-                {title: "Comments", field: "comments"}
+                {title: 'Id', field: 'id', sorter: 'number', visible: false},
+                {title: 'File Id', field: 'file_id', sorter: 'string', visible: false},
+                {title: 'File path', field: 'file_path', sorter: 'string', headerFilter: 'input'},
+                {title: 'Row', field: 'row_id', sorter: 'string', width: 100},
+                {title: 'Comments', field: 'comments'}
             ];
         }
     });
