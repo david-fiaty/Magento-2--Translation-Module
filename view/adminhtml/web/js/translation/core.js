@@ -240,6 +240,95 @@ define(
                         console.log(error);
                     }
                 });
+            },
+
+            loadRowDetails: function(com, row) {
+                // Prepare the variables
+                var self = this;
+                var fileObj = row.getData();
+    
+                // Create the detail table
+                com.cache._(com.options.detailView).tabulator({
+                    pagination: 'local',
+                    paginationSize: com.options.paging,
+                    layout: 'fitColumns',
+                    responsiveLayout: true,
+                    height: '100%',
+                    columns: self.getDetailColumns(),
+                    cellEdited: function(cell) {
+                        var row = cell.getRow();
+                        self.updateEntityData(
+                            com,
+                            {
+                                fileId: fileObj.file_id,
+                                rowContent: row.getData()
+                            }
+                        );
+                    }
+                });
+    
+                // Set the file path
+                com.cache._('#translation-file-path').text(fileObj.file_path);
+    
+                // Update the data
+                this.getRowDetails(com, fileObj.file_id);
+    
+                // Move the panels
+                this.togglePanes(com, fileObj.file_id);
+            },
+
+            getDetailColumns: function() {
+                return [
+                    {title: 'Index', field: 'index', sorter: 'number', visible: false},
+                    {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input'},
+                    {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', editor: 'input'} 
+                ];
+            },
+
+            getRowDetails: function(com, fileId) {
+                // Prepare the variables
+                var fileDetailsUrl = com.options.detailViewUrl + '?action=get_data&file_id=' + fileId  + '&form_key=' + window.FORM_KEY;
+    
+                // Send the the request
+                $.ajax({
+                    type: 'POST',
+                    url: fileDetailsUrl,
+                    dataType: 'json',
+                    showLoader: true,
+                    success: function(data) {
+                        com.cache._(com.options.detailView).tabulator("setData", data);
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+
+            togglePanes: function(com, id) {
+                if (com.isListView) {
+                    // Get main table width
+                    var tableWidth = com.cache._('#translation-table-list').outerWidth() + 'px';
+    
+                    // Move main table
+                    com.cache._('#translation-table-list').animate({ left: '-50px' });
+                    com.cache._('#translation-table-list').hide();
+    
+                    // Show the details table  
+                    com.cache._('#translation-table-detail').show();
+    
+                    // Set the detail view state
+                    com.isListView = false;
+                    com.detailViewid = id;
+                } else {
+                    // Bring the panes back
+                    com.cache._('#translation-table-detail').hide();
+                    com.cache._('#translation-table-list').animate({ left: '0px' });
+                    com.cache._('#translation-table-list').show();
+    
+                    // Set the detail view state
+                    com.isListView = true;
+                    com.detailViewid = 0;
+                }
             }
         };
     }
