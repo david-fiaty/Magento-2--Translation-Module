@@ -107,12 +107,35 @@ class LogDataService
         // Process the results
         if (!empty($errors)) {
             foreach ($errors as $error) {
-                // Save the item
-                $logEntity = $this->logEntityFactory->create(); 
-                $logEntity->setData('file_id', $fileId);
-                $logEntity->setData('row_id', $rowId);
-                $logEntity->setData('comments', $error);
-                $logEntity->save();
+                // Check if the error already exists
+                $collection = $this->logEntityFactory->create()->getCollection()
+                ->addFieldToFilter('file_id', $fileId)
+                ->addFieldToFilter('row_id', $rowId);
+
+                // Create a new error or update an existing row
+                if ($collection->getSize() < 1) {
+                    $logEntity = $this->logEntityFactory->create();
+                    $logEntity->setData('file_id', $fileId);
+                    $logEntity->setData('row_id', $rowId);
+                    $logEntity->setData('comments', $error);
+                    $logEntity->save();
+                }
+                else {
+                    foreach($collection as $item)
+                    {
+                        // Load the existing row
+                        $logEntity = $this->logEntityFactory->create();
+                        $logInstance = $logEntity->load($item->getData('id'));
+
+                        // Create the new comments
+                        $newContent  = $logInstance->getData('comments') . "\n";
+                        $newContent .= $error;
+
+                        // Save the entity
+                        $logInstance->setData('comments', $newContent);
+                        $logInstance->save();
+                    }
+                }
             }
 
             return true;
