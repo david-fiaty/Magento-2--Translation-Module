@@ -5,4 +5,3 @@
 - improve the cache flushing response
 - localize the plugin
 - add default message for no results in tables?
-- check for duplicates in row error recording
