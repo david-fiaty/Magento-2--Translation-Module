@@ -66,6 +66,7 @@ class LogDataService
             // Get the item data
             $arr = $item->getData();
 
+            // Process the file
             if (!$this->helper->excludeFile($arr)) {
                 // Add the file path field
                 $fileEntity = $this->fileEntityFactory->create();
