@@ -2,8 +2,9 @@ define([
     'jquery',
     'Magento_Ui/js/modal/prompt',
     'mage/translate',
+    'Naxero_Translation/js/translation/core',
     'tabulator'
-], function($, prompt, __, tabulator) {
+], function($, prompt, __, core, tabulator) {
     'use strict';
 
     // Build the widget
