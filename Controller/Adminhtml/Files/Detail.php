@@ -78,17 +78,17 @@ class Detail extends \Magento\Backend\App\Action
             $fileId = $this->getFileId();
 
             // Load the requested item
-            $fileEntity = $this->loadFileEntity($fileId);
+            $fileInstance = $fileEntity->load($fileId);
 
             // Get data
             if ($action == 'get_data') {
-                $output = $this->getFileEntityContent($fileEntity);
+                $output = $this->getFileEntityContent($fileInstance);
             }
             else if ($action == 'update_data') {
-                $output = $this->updateFileEntityContent($fileEntity);
+                $output = $this->updateFileEntityContent($fileInstance);
             }
             else if ($action == 'save_data') {
-                $output = $this->saveFileEntityContent($fileEntity);
+                $output = $this->saveFileEntityContent($fileInstance);
             }
 
             // Return the content
@@ -100,11 +100,6 @@ class Detail extends \Magento\Backend\App\Action
 
     public function getFileId() {
         return $this->getRequest()->getParam('file_id');
-    }
-
-    public function loadFileEntity($fileId) {
-        $fileEntity = $this->fileEntityFactory->create(); 
-        return $fileEntity->load($fileId);
     }
 
     public function updateFileEntityContent($fileEntity) {
