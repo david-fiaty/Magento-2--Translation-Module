@@ -107,7 +107,7 @@ define([
                 {title: 'Index', field: 'index', sorter: 'number', visible: false},
                 {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                 {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
-                {title: 'File path', field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
+                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
                 {title: 'Created', field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: 'Updated', field: 'file_update_time', sorter: 'string', visible: false},
                 {title: 'Type', field: 'file_type', sorter: 'string', width: 100},
