@@ -217,16 +217,11 @@ class Detail extends \Magento\Backend\App\Action
         foreach ($rows as $row) {
             $line = str_getcsv($row);
             if (!$this->logDataService->hasErrors($line, $fileId, $rowId)) {
-                array_unshift($line, $rowIndex);
-                $output[] = $this->buildRow($line);
+                $output[] = $this->buildRow($line, $rowIndex);
                 $rowIndex++;
             }
             else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
-                $errorLine = [];
-                $errorLine[] = $rowIndex;
-                $errorLine[] = isset($line[0]) ? $line[0] : '';
-                $errorLine[] = isset($line[1]) ? $line[1] : '';
-                $output[] = $this->buildRow($errorLine);
+                $output[] = $this->buildErrorRow($line, $rowIndex);
                 $rowIndex++;
             }
             $rowId++;
@@ -235,10 +230,28 @@ class Detail extends \Magento\Backend\App\Action
         return $output;
     }
 
-    public function buildRow($rowDataArray) {
+    public function buildRow($rowDataArray, $rowIndex) {
+        // Add the index to the row array
+        array_unshift($rowDataArray, $rowIndex);
+
+        // Retun combined data
         return (object) array_combine(
             ['index', 'key', 'value'],
             $rowDataArray
+        );
+    }
+
+    public function buildErrorRow($rowDataArray, $rowIndex) {
+        // Build the error line
+        $errorLine = [];
+        $errorLine[] = $rowIndex;
+        $errorLine[] = isset($rowDataArray[0]) ? $rowDataArray[0] : '';
+        $errorLine[] = isset($rowDataArray[1]) ? $rowDataArray[1] : '';
+
+        // Retun combined data
+        return (object) array_combine(
+            ['index', 'key', 'value'],
+            $errorLine
         );
     }
 }

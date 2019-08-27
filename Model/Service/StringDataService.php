@@ -88,27 +88,26 @@ class StringDataService
 
                     // Skip empty and non pair values
                     if (!$this->logDataService->hasErrors($line, $arr['file_id'], $rowId)) {
-                            $output = array_merge([
-                            'index' => $rowIndex,
-                            'key' => $line[0],
-                            'value' => $line[1]
-                        ], $arr);
-
                         // Store the item as an object
-                        $this->output['table_data'][] = (object) $output;
+                        $this->output['table_data'][] = (object) $this->buildRow(
+                            $line,
+                            $rowIndex,
+                            $arr
+                        );
 
                         // Increment the index
                         $rowIndex++;
                     }
-                    else if ($this->logDataService->hasErrors($line, $arr['file_id'], $rowId) && !$this->logDataService->shoudHideRow(false)) {
-                        // Build the error line
-                        $errorLine = [];
-                        $errorLine['index'] = $rowIndex;
-                        $errorLine['key'] = isset($line[0]) ? $line[0] : '';
-                        $errorLine['value'] = isset($line[1]) ? $line[1] : '';
-                        $output = array_merge($errorLine, $arr);
+                    else if ($this->logDataService->hasErrors($line, $arr['file_id'], $rowId)
+                    && !$this->logDataService->shoudHideRow(false)) {
+                        // Store the item as an object
+                        $this->output['table_data'][] = (object) $this->buildErrorRow(
+                            $line,
+                            $rowIndex,
+                            $arr
+                        );
 
-                        // Increment the index
+                        // Increment the row index
                         $rowIndex++;
                     }
 
@@ -123,6 +122,23 @@ class StringDataService
 
         // Return the data output
         return $this->output;
+    }
+
+    public function buildRow($line, $rowIndex, $arr) {
+        return array_merge([
+            'index' => $rowIndex,
+            'key' => $line[0],
+            'value' => $line[1]
+        ], $arr);
+    }
+
+    public function buildErrorRow($line, $rowIndex, $arr) {
+        $errorLine = [];
+        $errorLine['index'] = $rowIndex;
+        $errorLine['key'] = isset($line[0]) ? $line[0] : '';
+        $errorLine['value'] = isset($line[1]) ? $line[1] : '';
+
+        return array_merge($errorLine, $arr);
     }
 
     public function prepareOutputArray() {

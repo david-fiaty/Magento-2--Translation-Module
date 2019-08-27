@@ -43,10 +43,6 @@ div#translation-file-path {
     background-color: #514943;
 }
 
-.tabulator-row .tabulator-cell{
-    height: 42px;
-}
-
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter {
     position: absolute;
     box-sizing: border-box;
