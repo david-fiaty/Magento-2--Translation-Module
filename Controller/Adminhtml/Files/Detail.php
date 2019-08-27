@@ -196,7 +196,8 @@ class Detail extends \Magento\Backend\App\Action
     }
 
     public function rowToCsv($row) {
-        $csvString = "\"" . $row['key'] . "\"," . "\"" . $row['value'] . "\"";
+        $csvString = '"' . $row['key'] 
+        . '",' . '"' . $row['value'] . '"';
 
         return $csvString;
     }
