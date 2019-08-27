@@ -1,5 +1,4 @@
 - Check the todos in code
-- add files permissions check
 - replace file_put_contents and file_get_contents by core functions
 - improve the cache flushing response
 - localize the plugin, localize js strings
