@@ -172,11 +172,11 @@ define(
                 com.cache._(com.options.targetTable).tabulator('setFilter', filters);
             },
 
-            getScannerPrompt: function(com) {
+            getScanPrompt: function(com) {
                 var self = this;
                 prompt({
                     title: __('Scan files'),
-                    content: self.getScannerPromptOptions([{
+                    content: self.getScanPromptOptions([{
                             id: "update_add",
                             name: "update_mode",
                             value: "update_add",
@@ -202,7 +202,7 @@ define(
                 });
             },
 
-            getScannerPromptOptions: function(opts) {
+            getScanPromptOptions: function(opts) {
                 var html = '';
                 html += '<form id="prompt_form" action="">';
                 html += '<div class="admin__field-control">';
