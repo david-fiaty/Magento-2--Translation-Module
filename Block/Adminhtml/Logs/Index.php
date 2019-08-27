@@ -20,7 +20,7 @@ class Index extends \Magento\Backend\Block\Template
 	public function _prepareLayout()
 	{
 	   // Set page title
-	   $this->pageConfig->getTitle()->set(__('Manage logs'));
+	   $this->pageConfig->getTitle()->set(__('Error logs'));
 
 	   return parent::_prepareLayout();
 	}
