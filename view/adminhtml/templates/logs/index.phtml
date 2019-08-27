@@ -5,10 +5,10 @@
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="update-files" name="update-files" type="button" class="action-default primary">
-							<span><?php echo __('Scan files'); ?></span>
+							<span><?= __('Scan files'); ?></span>
 						</button>
 						<button id="clear-logs" name="clear-logs" type="button" class="action-default primary">
-							<span><?php echo __('Clear logs'); ?></span>
+							<span><?= __('Clear logs'); ?></span>
 						</button>
 					</div>
 				</div>
@@ -22,13 +22,13 @@
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="button-back" name="button-back" type="button" class="action- scalable back">
-							<span><?php echo __('Back'); ?></span>
+							<span><?= __('Back'); ?></span>
 						</button>
 						<button id="download-file" name="download-file" type="button" class="action- scalable action-secondary">
-							<span><?php echo __('Download CSV'); ?></span>
+							<span><?= __('Download CSV'); ?></span>
 						</button>
 						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action-default primary">
-							<span><?php echo __('Flush cache'); ?></span>
+							<span><?= __('Flush cache'); ?></span>
 						</button>
 					</div>
 				</div>
@@ -39,4 +39,4 @@
 	</div>
 </div>
 
-<div data-mage-init='{"logsjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'logs']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>", "clearLogsUrl": "<?php echo $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>", "detailViewUrl": "<?php echo $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?php echo $block->getUrl('translation/cache/index'); ?>"}}'>
+<div data-mage-init='{"logsjs":{"targetLocale": "<?= $block->helper->getUserLanguage(); ?>", "dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'logs']); ?>", "scanUrl": "<?= $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>", "clearLogsUrl": "<?= $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>", "detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"}}'>

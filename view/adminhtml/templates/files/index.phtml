@@ -3,10 +3,10 @@
 		<div id="translation-table-toolbar">
 			<div class="admin__form-field">
 				<label class="label admin__form-field-label" for="translation-group-filter">
-					<span><?php echo __('Group'); ?></span>
+					<span><?= __('Group'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->helper->getSelect([
+					<?= $block->helper->getSelect([
 			            'id' => 'translation-group-filter',
 			            'name' => 'translation-group-filter',
 			            'class' => 'select admin__control-select'
@@ -15,10 +15,10 @@
 			</div>
 			<div class="admin__form-field">
 				<label class="label admin__form-field-label" for="translation-type-filter">
-					<span><?php echo __('Type'); ?></span>
+					<span><?= __('Type'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->helper->getSelect([
+					<?= $block->helper->getSelect([
 			            'id' => 'translation-type-filter',
 			            'name' => 'translation-type-filter',
 			            'class' => 'select admin__control-select'
@@ -27,25 +27,32 @@
 			</div>
 			<div class="admin__form-field">
 				<label class="label admin__form-field-label" for="translation-locale-filter">
-					<span><?php echo __('Locale'); ?></span>
+					<span><?= __('Locale'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?php echo $block->helper->getSelect([
+					<?= $block->helper->getSelect([
 			           'id' => 'translation-locale-filter',
 			           'name' => 'translation-locale-filter',
 			           'class' => 'select admin__control-select'
 			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
-			
+			<div class="admin__form-field">
+				<label class="label admin__form-field-label" for="translation-paging-filter">
+					<span><?= __('Pagination'); ?></span>
+				</label>
+				<div class="admin__form-field-control">
+					<input type="text" id="translation-paging-filter-1" name="translation-paging-filter" value="100">
+				</div>
+			</div>
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="update-files" name="update-files" type="button" class="action-default primary">
-							<span><?php echo __('Scan files'); ?></span>
+							<span><?= __('Scan files'); ?></span>
 						</button>
 						<button id="flush-cache-list" name="flush-cache-list" type="button" class="action-default primary">
-							<span><?php echo __('Flush cache'); ?></span>
+							<span><?= __('Flush cache'); ?></span>
 						</button>
 					</div>
 				</div>
@@ -59,13 +66,13 @@
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="button-back" name="button-back" type="button" class="action- scalable back">
-							<span><?php echo __('Back'); ?></span>
+							<span><?= __('Back'); ?></span>
 						</button>
 						<button id="download-file" name="download-file" type="button" class="action- scalable action-secondary">
-							<span><?php echo __('Download CSV'); ?></span>
+							<span><?= __('Download CSV'); ?></span>
 						</button>
 						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action-default primary">
-							<span><?php echo __('Flush cache'); ?></span>
+							<span><?= __('Flush cache'); ?></span>
 						</button>
 					</div>
 				</div>
@@ -76,4 +83,4 @@
 	</div>
 </div>
 
-<div data-mage-init='{"filesjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'files']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?php echo $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?php echo $block->getUrl('translation/cache/index'); ?>"}}'>
+<div data-mage-init='{"filesjs":{"targetLocale": "<?= $block->helper->getUserLanguage(); ?>", "dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'files']); ?>", "scanUrl": "<?= $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"}}'>
