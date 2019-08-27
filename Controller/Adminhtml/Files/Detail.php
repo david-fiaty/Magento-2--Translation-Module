@@ -182,13 +182,13 @@ class Detail extends \Magento\Backend\App\Action
         foreach ($array as $row) {
             $parts = explode(',', $row);
             if (isset($parts[0]) && isset($parts[1])) {
-                $csvString .= $parts[0] . "," . $parts[1] . "\n";
+                $csvString .= $parts[0] . ',' . $parts[1] . PHP_EOL;
             }
             else if (isset($parts[0]) && !isset($parts[1])) {
-                $csvString .= $parts[0] . "\n";
+                $csvString .= $parts[0] . PHP_EOL;
             }
             else {
-                $csvString .= $row . "\n";
+                $csvString .= $row . PHP_EOL;
             }
         }
 

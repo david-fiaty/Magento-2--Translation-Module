@@ -143,7 +143,7 @@ class LogDataService
                         $logInstance = $logEntity->load($item->getData('id'));
 
                         // Create the new comments
-                        $newContent  = $logInstance->getData('comments') . "\n";
+                        $newContent  = $logInstance->getData('comments') . PHP_EOL;
                         $newContent .= $error;
 
                         // Save the entity
