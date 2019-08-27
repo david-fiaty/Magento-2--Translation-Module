@@ -62,11 +62,6 @@ define([
                 }
             });
 
-            // Redraw on window resize
-            $(window).on('resize', function () {
-                self.cache._(self.options.targetTable).tabulator('redraw');
-            });
-
             // Load the data into the table
             core.getData(this);
 
