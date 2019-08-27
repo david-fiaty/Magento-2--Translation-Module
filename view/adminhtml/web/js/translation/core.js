@@ -271,7 +271,6 @@ define(
                     }],
                     rowFormatter:function(row) {
                         var fileObj = row.getData();
-                        console.log(fileObj.index);
                     }
                 });
     
