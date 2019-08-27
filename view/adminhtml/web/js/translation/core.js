@@ -65,7 +65,7 @@ define(
 
                         // Set the table paging
                         self.setPaging(com);
-                        
+
                         // Build options for the lists
                         self.buildFilters(com, data);
     
@@ -330,6 +330,9 @@ define(
                         // Set the table data
                         com.cache._(com.options.detailView).tabulator('setData', data.table_data);
 
+                        // Set the table paging
+                        self.setPaging(com);
+                        
                         // Handle invalid rows display
                         if (data.error_data) {
                             self.displayErrors(com, data);
