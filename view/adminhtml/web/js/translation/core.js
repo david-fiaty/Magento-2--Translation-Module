@@ -332,6 +332,10 @@ define(
 
                         // Set the table paging
                         self.setPaging(com, com.options.detailView);
+                        com.cache._('.' + PAGER_SELECTOR).on('change', function() {
+                            let selectedKey = $(this).find(':selected').val();
+                            self.setPaging(com, com.options.detailView, selectedKey);
+                        });
 
                         // Handle invalid rows display
                         if (data.error_data) {
