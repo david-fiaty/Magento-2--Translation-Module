@@ -13,5 +13,5 @@
 
 
 
-
+- check error logging with unwriteable/unreadeable files
 - add log processing to file list
