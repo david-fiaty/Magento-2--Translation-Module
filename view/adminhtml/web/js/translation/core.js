@@ -254,7 +254,7 @@ define(
                     layout: 'fitColumns',
                     responsiveLayout: true,
                     height: '100%',
-                    resizableRows:true,
+                    resizableRows: true,
                     columns: self.getDetailColumns(),
                     cellEdited: function(cell) {
                         var row = cell.getRow();
@@ -284,7 +284,7 @@ define(
 
             getDetailColumns: function() {
                 return [
-                    {title: '#', field: 'index', sorter: 'number', width: 100},
+                    {title: '#', field: 'index', sorter: 'number', width: 40},
                     {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                     {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'} 
                 ];
@@ -305,7 +305,7 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
-                        com.cache._(com.options.detailView).tabulator('setData', data);
+                        com.cache._(com.options.detailView).tabulator('setData', data.table_data);
                     },
                     error: function(request, status, error) {
                         console.log(error);
