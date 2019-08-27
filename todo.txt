@@ -6,3 +6,4 @@
 - localize the plugin, localize js strings
 - add default message for no results in tables?
 - centralize the setToobarActions code
+- improve the csv error detector
