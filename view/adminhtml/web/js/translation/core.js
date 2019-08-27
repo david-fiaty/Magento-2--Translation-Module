@@ -268,7 +268,7 @@ define(
                 });
     
                 // Set the file path
-                com.cache._('#translation-file-path').text(fileObj.file_path);
+                com.cache._(com.options.detailViewFilePath).text(fileObj.file_path);
     
                 // Update the data
                 this.getRowDetails(com, fileObj.file_id);

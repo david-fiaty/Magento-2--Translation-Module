@@ -14,6 +14,7 @@ define([
         options: {
             targetTable: '#translation-table-content',
             detailView: '#translation-table-detail-content',
+            detailViewFilePath: '#translation-file-path',
             targetLocale: '',
             dataUrl: '',
             scanUrl: '',

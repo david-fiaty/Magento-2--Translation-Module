@@ -16,6 +16,28 @@
 		</div>	
 		<div id="translation-table-content"></div>
 	</div>
+	<div id="translation-table-detail">
+		<div id="translation-detail-toolbar">
+			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+				<div class="page-actions-inner">
+					<div class="page-actions-buttons">
+						<button id="button-back" name="button-back" type="button" class="action- scalable back">
+							<span><?php echo __('Back'); ?></span>
+						</button>
+						<button id="download-file" name="download-file" type="button" class="action- scalable action-secondary">
+							<span><?php echo __('Download CSV'); ?></span>
+						</button>
+						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action-default primary">
+							<span><?php echo __('Flush cache'); ?></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div id="translation-file-path"></div>	
+		<div id="translation-table-detail-content">
+		</div>
+	</div>
 </div>
 
-<div data-mage-init='{"logsjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'logs']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>", "clearLogsUrl": "<?php echo $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>"}}'>
+<div data-mage-init='{"logsjs":{"targetLocale": "<?php echo $block->helper->getUserLanguage(); ?>", "dataUrl": "<?php echo $block->getUrl('translation/data/index', ['view' => 'logs']); ?>", "scanUrl": "<?php echo $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>", "clearLogsUrl": "<?php echo $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>"}, "detailViewUrl": "<?php echo $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?php echo $block->getUrl('translation/cache/index'); ?>"}'>

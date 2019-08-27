@@ -13,10 +13,15 @@ define([
         isListView: true,
         options: {
             targetTable: '#translation-table-content',
+            detailView: '#translation-table-detail-content',
+            detailViewFilePath: '#translation-file-path',
             targetLocale: '',
             dataUrl: '',
             scanUrl: '',
+            detailViewUrl: '',
             fileUpdateUrl: '',
+            cacheUrl: '',
+            detailViewid: 0,
             clearLogsUrl: '',
             paging: 30,
             pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -44,7 +49,10 @@ define([
                 initialSort:[{
                     column: 'id',
                     dir: 'desc'
-                }]
+                }],
+                rowClick: function(e, row) {
+                    core.loadRowDetails(self, row);
+                }
             });
 
             // Load the data into the table
@@ -56,6 +64,18 @@ define([
 
         setToolbarActions: function() {
             var self = this;
+
+            // Back button
+            this.cache._("#button-back").click(function() {
+                core.togglePanes(self, 0);
+                self.cache._(self.options.detailView).tabulator("destroy");
+            });
+
+            // Trigger download of data.csv file
+            this.cache._("#download-file").click(function() {
+                // Todo : improve file naming from metadata
+                self.cache._(self.options.detailView).tabulator("download", "csv", "trans_" + Date.now() + ".csv");
+            });
 
             // File index update
             this.cache._("#update-files").click(function() {
@@ -82,6 +102,24 @@ define([
                     }
                 });   
             });
+
+            // Flush cache
+            this.cache._("button[id^='flush-cache']").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
+                    showLoader: true,
+                    success: function(data) {
+                        var success = JSON.parse(data.success);
+                        if (!success) {
+                            alert(data.message);
+                        }
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            });    
         },
 
         getListColumns: function() {
