@@ -305,10 +305,7 @@ define(
             },
 
             togglePanes: function(com, id) {
-                if (com.isListView) {
-                    // Get main table width
-                    var tableWidth = com.cache._('#translation-table-list').outerWidth() + 'px';
-    
+                if (com.isListView) {    
                     // Move main table
                     com.cache._('#translation-table-list').animate({ left: '-50px' });
                     com.cache._('#translation-table-list').hide();

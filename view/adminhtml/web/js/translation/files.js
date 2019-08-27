@@ -72,7 +72,7 @@ define([
             
             // Back button
             this.cache._("#button-back").click(function() {
-                core.togglePanes(0);
+                core.togglePanes(self, 0);
                 self.cache._(self.options.detailView).tabulator("destroy");
             });
 
