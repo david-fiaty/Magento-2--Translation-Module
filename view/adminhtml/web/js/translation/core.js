@@ -130,7 +130,6 @@ define(
                     // Assign the events
                     $.each(fields, function(k, obj) {
                         com.cache._(obj.selector).on('change', function() {
-                            let selected = $(this).find(':selected').text();
                             let selectedKey = $(this).find(':selected').val();
                             self.updateFilters(
                                 com,
