@@ -121,7 +121,6 @@ class Index extends \Magento\Backend\App\Action
         $fileEntity = $this->fileEntityFactory->create(); 
         $fileEntity->setData('file_path', $cleanPath);
         $fileEntity->setData('file_content', file_get_contents($filePath));
-        $fileEntity->setData('file_is_active', 1);
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();

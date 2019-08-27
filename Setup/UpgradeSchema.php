@@ -35,7 +35,6 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
                 )
                 ->addColumn('file_path', Table::TYPE_TEXT, 255, ['nullable' => true, 'default' => null])
                 ->addColumn('file_content', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
-                ->addColumn('file_is_active', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Is The File Active?')
                 ->addColumn('file_creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
                 ->addColumn('file_update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
                 ->addIndex($installer->getIdxName('translation_file_index', ['file_id']), ['file_id'])

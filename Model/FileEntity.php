@@ -121,16 +121,6 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     }
 
     /**
-     * Is active
-     *
-     * @return bool|null
-     */
-    public function isActive()
-    {
-        return (bool) $this->getData(self::FILE_IS_ACTIVE);
-    }
-
-    /**
      * Set ID
      *
      * @param int $id
@@ -183,16 +173,5 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     public function setFileUpdateTime($fileUpdateTime)
     {
         return $this->setData(self::FILE_UPDATE_TIME, $fileUpdateTime);
-    }
-
-    /**
-     * Set is active
-     *
-     * @param int|bool $isActive
-     * @return \Naxero\Translation\Api\Data\FileEntityInterface
-     */
-    public function setIsActive($isActive)
-    {
-        return $this->setData(self::IS_ACTIVE, $isActive);
     }
 }

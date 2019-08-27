@@ -89,9 +89,6 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     public function _getLoadSelect($field, $value, $object)
     {
         $select = parent::_getLoadSelect($field, $value, $object);
-        if ($object->getStoreId()) {
-            $select->where('file_is_active = ?', 1)->limit(1);
-        }
 
         return $select;
     }
@@ -100,18 +97,13 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * Retrieve load select with filter by file path and activity
      *
      * @param string $filePath
-     * @param int $isActive
      * @return \Magento\Framework\DB\Select
      */
-    public function _getLoadByFilePathSelect($filePath, $isActive = null)
+    public function _getLoadByFilePathSelect($filePath)
     {
         $select = $this->getConnection()->select()->from(
             ['bp' => $this->getMainTable()]
         )->where('bp.file_path = ?', $filePath);
-
-        if (!is_null($isActive)) {
-            $select->where('bp.file_is_active = ?', $isActive);
-        }
 
         return $select;
     }
@@ -148,7 +140,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     public function checkFilePath($filePath)
     {
-        $select = $this->_getLoadByFilePathSelect($filePath, 1);
+        $select = $this->_getLoadByFilePathSelect($filePath);
         $select->reset(\Zend_Db_Select::COLUMNS)->columns('bp.file_id')->limit(1);
 
         return $this->getConnection()->fetchOne($select);

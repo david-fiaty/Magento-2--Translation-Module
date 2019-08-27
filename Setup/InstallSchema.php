@@ -32,7 +32,6 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
             )
             ->addColumn('file_path', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
             ->addColumn('file_content', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
-            ->addColumn('file_is_active', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '1'], 'Is The File Active ?')
             ->addColumn('file_creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
             ->addColumn('file_update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
             ->addColumn('file_override', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])

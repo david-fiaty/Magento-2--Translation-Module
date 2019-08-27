@@ -12,7 +12,6 @@ interface FileEntityInterface
     const FILE_CONTENT = 'file_content';
     const FILE_CREATION_TIME = 'file_creation_time';
     const FILE_UPDATE_TIME = 'file_update_time';
-    const FILE_IS_ACTIVE = 'file_is_active';
 
     /**
      * Get ID
@@ -48,13 +47,6 @@ interface FileEntityInterface
      * @return string|null
      */
     public function getFileUpdateTime();
-
-    /**
-     * Is active
-     *
-     * @return bool|null
-     */
-    public function isActive();
 
     /**
      * Set ID
@@ -95,12 +87,4 @@ interface FileEntityInterface
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
     public function setFileUpdateTime($fileUpdateTime);
-
-    /**
-     * Set is active
-     *
-     * @param int|bool $isActive
-     * @return \Naxero\Translation\Api\Data\FileEntityInterface
-     */
-    public function setIsActive($isActive);
 }
