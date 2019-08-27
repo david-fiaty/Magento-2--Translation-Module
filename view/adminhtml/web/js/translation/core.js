@@ -63,6 +63,9 @@ define(
                         // Set the table data
                         com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
+                        // Set the table paging
+                        self.setPaging(com);
+                        
                         // Build options for the lists
                         self.buildFilters(com, data);
     
@@ -71,9 +74,6 @@ define(
 
                         // Set the table locale
                         self.setLocale(com);
-
-                        // Set the table paging
-                        self.setPaging(com);
                     },
                     error: function(request, status, error) {
                         console.log(error);
