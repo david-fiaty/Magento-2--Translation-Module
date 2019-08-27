@@ -89,7 +89,7 @@ define(
             },
 
             buildFilters: function(com, data) {
-                if (com.hasOwnProperty('filters') && data.hasOwnProperty('filter_data')) {
+                if (com.filters && data.filter_data) {
                     // Create the group filter
                     this.createOptions(com, com.filters.group, data.filter_data.file_group);
         
