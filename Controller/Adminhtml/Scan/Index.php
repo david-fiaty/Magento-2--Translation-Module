@@ -148,13 +148,10 @@ class Index extends \Magento\Backend\App\Action
 
     public function isWantedFile($filePath)
     {
-        // Validate the conditions - Todo : move exclusion config settings 
-        $result = (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
-                  && (is_file($filePath))
-                  && (strpos($filePath, 'i18n') !== false)
-                  && !$this->isIndexed($filePath);          
-
-        return $result;
+        return (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
+        && (is_file($filePath))
+        && (strpos($filePath, 'i18n') !== false)
+        && !$this->isIndexed($filePath);          
     }
 
     public function isIndexed($filePath) {
