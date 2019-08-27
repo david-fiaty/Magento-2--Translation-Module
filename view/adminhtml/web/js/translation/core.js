@@ -250,8 +250,6 @@ define(
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
                     pagination: 'local',
-                    paginationSize: com.options.paging,
-                    paginationElement: '.translation-pagination',
                     layout: 'fitColumns',
                     responsiveLayout: true,
                     height: '100%',

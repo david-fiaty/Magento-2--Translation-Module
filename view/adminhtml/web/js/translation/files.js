@@ -22,8 +22,6 @@ define([
             fileUpdateUrl: '',
             cacheUrl: '',
             detailViewid: 0,
-            paging: 30,
-            pagingSize: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
         },
 
         filters: {
@@ -45,9 +43,6 @@ define([
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
                 pagination: 'local',
-                paginationSize: self.options.paging,
-                paginationSizeSelector: self.options.pagingSize,
-                paginationElement: '.translation-pagination',
                 persistentSort: true,
                 layout: 'fitColumns',
                 responsiveLayout: true,
