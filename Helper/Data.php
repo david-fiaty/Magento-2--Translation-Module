@@ -113,14 +113,31 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
 	public function getFilterSelect($attributes, $layout) {
 		// Build the select list
-		$select = $layout
-		->createBlock('Magento\Framework\View\Element\Html\Select')
-		->setData($attributes);
+		$select = $this->buildSelectList($attributes, $layout);
 
 		// Add an option
 		$select->addOption('alltx', __('--- All ---'));
 
 		return $select->getHtml();
+    }
+
+	public function getPagerSelect($attributes, $layout) {
+		// Build the select list
+		$select = $this->buildSelectList($attributes, $layout);
+
+        // Add the options
+        $values = [50, 100, 150, 200, 250, 300, 350, 400];
+        foreach ($values as $value) {
+            $select->addOption($value, $value);
+        }
+
+		return $select->getHtml();
+    }
+
+    public function buildSelectList($attributes, $layout) {
+        return $layout
+		->createBlock('Magento\Framework\View\Element\Html\Select')
+		->setData($attributes);
     }
 
     public function flushCache()

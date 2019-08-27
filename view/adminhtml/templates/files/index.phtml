@@ -31,13 +31,13 @@
 				</label>
 			</div>
 			<div class="admin__form-field">
-				<label class="label admin__form-field-label" for="translation-paging-filter-1">
+				<label class="label admin__form-field-label" for="translation-paging-filter">
 					<span><?= __('Pagination'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getFilterSelect([
-			            'id' => 'translation-type-filter',
-			            'name' => 'translation-type-filter',
+					<?= $block->helper->getPagerSelect([
+			            'id' => 'translation-paging-filter',
+			            'name' => 'translation-paging-filter',
 			            'class' => 'admin__control-select'
 			    	], $block->getLayout()); ?>	
 				</div>
