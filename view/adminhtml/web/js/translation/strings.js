@@ -105,7 +105,7 @@ define([
         getListColumns: function() {
             return [
                 {title: 'Index', field: 'index', sorter: 'number', visible: false},
-                {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input'},
+                {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                 {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
                 {title: 'File path', field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
                 {title: 'Created', field: 'file_creation_time', sorter: 'string', visible: false},

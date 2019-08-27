@@ -43,6 +43,10 @@ div#translation-file-path {
     background-color: #514943;
 }
 
+.tabulator-row .tabulator-cell{
+    height: 45px;
+}
+
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter {
     position: absolute;
     box-sizing: border-box;
@@ -65,7 +69,6 @@ div#translation-file-path {
 }
 
 .modal-popup.prompt input[type="radio"] {
-    width: 30px !important;
     display: inline !important;
 }
 
