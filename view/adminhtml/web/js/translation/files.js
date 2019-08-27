@@ -47,6 +47,7 @@ define([
                 pagination: 'local',
                 paginationSize: self.options.paging,
                 paginationSizeSelector: self.options.pagingSize,
+                paginationElement: '.translation-pagination',
                 persistentSort: true,
                 layout: 'fitColumns',
                 responsiveLayout: true,

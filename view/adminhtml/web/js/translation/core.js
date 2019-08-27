@@ -35,7 +35,7 @@ define(
             },
 
             setPaging: function(com) {
-                com.cache._(com.options.targetTable).tabulator('setPage', 1);
+                com.cache._(com.options.targetTable).tabulator('setPageSize', 200);
             },
 
             getData: function(com) {
@@ -251,6 +251,7 @@ define(
                 com.cache._(com.options.detailView).tabulator({
                     pagination: 'local',
                     paginationSize: com.options.paging,
+                    paginationElement: '.translation-pagination',
                     layout: 'fitColumns',
                     responsiveLayout: true,
                     height: '100%',

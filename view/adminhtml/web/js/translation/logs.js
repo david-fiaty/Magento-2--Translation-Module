@@ -41,6 +41,7 @@ define([
                 pagination: 'local',
                 paginationSize: self.options.paging,
                 paginationSizeSelector: self.options.pagingSize,
+                paginationElement: '.translation-pagination',
                 persistentSort: true,
                 layout: 'fitColumns',
                 responsiveLayout: true,
@@ -129,7 +130,7 @@ define([
                 {title: 'File Id', field: 'file_id', sorter: 'string', visible: false},
                 {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input', width: 400},
                 {title: 'Row Id', field: 'row_id', sorter: 'string', visible: false},
-                {title: 'Row Index', field: 'index', sorter: 'string', width: 100},
+                {title: 'Row Index', field: 'index', sorter: 'string', width: 130},
                 {title: 'Comments', field: 'comments'}
             ];
         }
