@@ -38,13 +38,13 @@ define([
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                pagination: "local",
+                pagination: 'local',
                 paginationSize: self.options.paging,
                 paginationSizeSelector: self.options.pagingSize,
                 persistentSort: true,
-                layout: "fitColumns",
+                layout: 'fitColumns',
                 responsiveLayout: true,
-                height: "100%",
+                height: '100%',
                 resizableRows:true,
                 columns: self.getListColumns(),
                 initialSort:[{
@@ -67,26 +67,26 @@ define([
             var self = this;
 
             // Back button
-            this.cache._("#button-back").click(function() {
+            this.cache._('#button-back').click(function() {
                 core.togglePanes(self, 0);
-                self.cache._(self.options.detailView).tabulator("destroy");
+                self.cache._(self.options.detailView).tabulator('destroy');
             });
 
             // Trigger download of data.csv file
-            this.cache._("#download-file").click(function() {
+            this.cache._('#download-file').click(function() {
                 // Todo : improve file naming from metadata
-                self.cache._(self.options.detailView).tabulator("download", "csv", "trans_" + Date.now() + ".csv");
+                self.cache._(self.options.detailView).tabulator('download', 'csv', 'trans_' + Date.now() + '.csv');
             });
 
             // File index update
-            this.cache._("#update-files").click(function() {
+            this.cache._('#update-files').click(function() {
                 core.getScanPrompt(self);
             });
 
             // Clear logs
-            this.cache._("#clear-logs").click(function() {
+            this.cache._('#clear-logs').click(function() {
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: self.options.clearLogsUrl + '?form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {
@@ -105,9 +105,9 @@ define([
             });
 
             // Flush cache
-            this.cache._("button[id^='flush-cache']").click(function() {
+            this.cache._('button[id^="flush-cache"]').click(function() {
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {

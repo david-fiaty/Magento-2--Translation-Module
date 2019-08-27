@@ -43,13 +43,13 @@ define([
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                pagination: "local",
+                pagination: 'local',
                 paginationSize: self.options.paging,
                 paginationSizeSelector: self.options.pagingSize,
                 persistentSort: true,
-                layout: "fitColumns",
+                layout: 'fitColumns',
                 responsiveLayout: true,
-                height: "100%",
+                height: '100%',
                 resizableRows:true,
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
@@ -79,14 +79,14 @@ define([
             var self = this;
 
             // File index update
-            this.cache._("#update-files").click(function() {
+            this.cache._('#update-files').click(function() {
                 core.getScanPrompt(self);
             });
 
             // Flush cache
-            this.cache._("button[id^='flush-cache']").click(function() {
+            this.cache._('button[id^="flush-cache"]').click(function() {
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
                     showLoader: true,
                     success: function(data) {

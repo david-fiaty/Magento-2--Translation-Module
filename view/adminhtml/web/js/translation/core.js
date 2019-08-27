@@ -30,24 +30,24 @@ define(
 
             setLocale: function(com) {
                 // Todo : map m2 locales to tabulator js locales
-                //$(this.options.targetTable).tabulator("setLocale", this.options.targetLocale);
-                com.cache._(com.options.targetTable).tabulator("setLocale", 'en-us');
+                //$(this.options.targetTable).tabulator('setLocale', this.options.targetLocale);
+                com.cache._(com.options.targetTable).tabulator('setLocale', 'en-us');
             },
 
             setPaging: function(com) {
-                com.cache._(com.options.targetTable).tabulator("setPage", 1);
+                com.cache._(com.options.targetTable).tabulator('setPage', 1);
             },
 
             getData: function(com) {
                 var self = this;
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: com.options.dataUrl + '?form_key=' + window.FORM_KEY,
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
                         // Set the table data
-                        com.cache._(com.options.targetTable).tabulator("setData", data.table_data);
+                        com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
                         // Build options for the lists
                         self.buildFilters(com, data);
@@ -75,7 +75,7 @@ define(
     
                 // Trigger the update request
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: updateUrl,
                     dataType: 'json',
                     showLoader: true,
@@ -130,8 +130,8 @@ define(
                     // Assign the events
                     $.each(fields, function(k, obj) {
                         com.cache._(obj.selector).on('change', function() {
-                            let selected = $(this).find(":selected").text();
-                            let selectedKey = $(this).find(":selected").val();
+                            let selected = $(this).find(':selected').text();
+                            let selectedKey = $(this).find(':selected').val();
                             self.updateFilters(
                                 com,
                                 { field: obj.field, type: '=', value: selectedKey }
@@ -177,16 +177,16 @@ define(
                 prompt({
                     title: __('Scan files'),
                     content: self.getScanPromptOptions([{
-                            id: "update_add",
-                            name: "update_mode",
-                            value: "update_add",
+                            id: 'update_add',
+                            name: 'update_mode',
+                            value: 'update_add',
                             label: __('Add new files'),
                             note: __('Will add only new files to the index and preserve existing content not saved to files.'),
                         },
                         {
-                            id: "update_replace",
-                            name: "update_mode",
-                            value: "update_replace",
+                            id: 'update_replace',
+                            name: 'update_mode',
+                            value: 'update_replace',
                             label: __('Replace all files'),
                             note: __('Will reload all files in the index and override existing content not saved to files.'),
                         }
@@ -231,7 +231,7 @@ define(
     
                 // Send the the request
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: fileUpdateUrl,
                     data: rowData,
                     dataType: 'json',
@@ -305,7 +305,7 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
-                        com.cache._(com.options.detailView).tabulator("setData", data);
+                        com.cache._(com.options.detailView).tabulator('setData', data);
                     },
                     error: function(request, status, error) {
                         console.log(error);
