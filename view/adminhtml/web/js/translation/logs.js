@@ -127,7 +127,7 @@ define([
             return [
                 {title: 'Id', field: 'id', sorter: 'number', visible: false},
                 {title: 'File Id', field: 'file_id', sorter: 'string', visible: false},
-                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input'},
+                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input', width: 400},
                 {title: 'Row Id', field: 'row_id', sorter: 'string', visible: false},
                 {title: 'Row Index', field: 'index', sorter: 'string', width: 100},
                 {title: 'Comments', field: 'comments'}
