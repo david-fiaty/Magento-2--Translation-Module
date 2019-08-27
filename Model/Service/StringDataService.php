@@ -61,7 +61,7 @@ class StringDataService
         $collection = $fileEntity->getCollection();
 
         // Process the files content
-        $i = 0;
+        $rowId = 0;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -71,14 +71,14 @@ class StringDataService
                 $arr = $this->buildSortingFields($arr);
 
                 // Get the content rows
-                $rows = explode("\n", $arr['file_content']);
+                $rows = explode(PHP_EOL, $arr['file_content']);
                 unset($arr['file_content']);
 
                 // Set the language field
                 $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
                 // Loop through the rows
-                $j = 1;
+                $rowIndex = 1;
                 foreach ($rows as $row) {
                     // Prepare the output array
                     $output = [];
@@ -87,9 +87,9 @@ class StringDataService
                     $line = str_getcsv($row);
 
                     // Skip empty and non pair values
-                    if (!$this->logDataService->hasErrors($line, $arr['file_id'], $j)) {
+                    if (!$this->logDataService->shoudHideRow($line, $arr['file_id'], $rowId, false)) {
                         $output = array_merge([
-                            'index' => $i,
+                            'index' => $rowIndex,
                             'key' => $line[0],
                             'value' => $line[1]
                         ], $arr);
@@ -98,11 +98,11 @@ class StringDataService
                         $this->output['table_data'][] = (object) $output;
 
                         // Increment the index
-                        $i++;
+                        $rowIndex++;
                     }
 
                     // Increment the row id
-                    $j++;
+                    $rowId++;
                 }
             }
         }

@@ -242,7 +242,7 @@ define(
                 });
             },
 
-            loadRowDetails: function(com, row) {
+            loadRowDetails: function(com, row, isLogView) {
                 // Prepare the variables
                 var self = this;
                 var fileObj = row.getData();
@@ -279,7 +279,7 @@ define(
                 com.cache._(com.options.detailViewFilePath).text(fileObj.file_path);
     
                 // Update the data
-                this.getRowDetails(com, fileObj.file_id);
+                this.getRowDetails(com, fileObj.file_id, isLogView);
     
                 // Move the panels
                 this.togglePanes(com, fileObj.file_id);
@@ -293,10 +293,14 @@ define(
                 ];
             },
 
-            getRowDetails: function(com, fileId) {
+            getRowDetails: function(com, fileId, isLogView) {
                 // Prepare the variables
-                var fileDetailsUrl = com.options.detailViewUrl + '?action=get_data&file_id=' + fileId  + '&form_key=' + window.FORM_KEY;
-    
+                var fileDetailsUrl = com.options.detailViewUrl;
+                fileDetailsUrl += '?action=get_data';
+                fileDetailsUrl += '&file_id=' + fileId;
+                fileDetailsUrl += '&form_key=' + window.FORM_KEY;
+                fileDetailsUrl += '&is_log_view=' + isLogView;
+
                 // Send the the request
                 $.ajax({
                     type: 'POST',

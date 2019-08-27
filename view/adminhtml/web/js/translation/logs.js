@@ -51,7 +51,7 @@ define([
                     dir: 'desc'
                 }],
                 rowClick: function(e, row) {
-                    core.loadRowDetails(self, row);
+                    core.loadRowDetails(self, row, true);
                 }
             });
 

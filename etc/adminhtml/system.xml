@@ -1,34 +1,39 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="naxero" translate="label" sortOrder="100">
+        <tab id="naxero" sortOrder="100">
             <label>Naxero</label>
         </tab>
-        <section id="translation"  translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="translation"  type="text" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Translation</label>
             <tab>naxero</tab>
             <resource>Naxero_Translation::config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
-                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="enable" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="exclude_core_files" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="exclude_core_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude core files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to NO, administrators will be able to edit core translation files directly. Editing core files directly is not recommended.</comment>
                 </field>
-                <field id="exclude_test_files" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="exclude_test_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude test files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to Yes, unit testing files will be excluded.</comment>
                 </field>      
-                <field id="exclude_static_files" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="exclude_static_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude static files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to Yes, static files will be excluded.</comment>
-                </field>       
+                </field>  
+                <field id="hide_invalid_rows" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide invalid CSV rows</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, invalid CSV rows will be visible only in logs viewing.</comment>
+                </field>         
             </group>
          </section>
     </system>

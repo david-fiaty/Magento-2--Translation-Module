@@ -91,6 +91,14 @@ class LogDataService
         ];
     }
 
+    public function shoudHideRow($line, $fileId, $rowId, $isLogView) {
+        $hideInvalidRows = $this->getConfig('hide_invalid_rows');
+
+        return $hideInvalidRows
+        && $this->hasErrors($line, $fileId, $rowId)
+        && !$isLogView;
+    }
+
     public function hasErrors($line, $fileId, $rowId) {
         // Prepare the error array
         $errors = [];

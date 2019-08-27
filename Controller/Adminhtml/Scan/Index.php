@@ -126,23 +126,23 @@ class Index extends \Magento\Backend\App\Action
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();
 
-        // Check for errors
+        // Get the entity data
         $arr = $fileEntity->getData();
 
         // Get the content rows
-        $rows = explode("\n", $arr['file_content']);
+        $rows = explode(PHP_EOL, $arr['file_content']);
 
         // Loop through the rows
-        $i = 1;
+        $rowId = 0;
         foreach ($rows as $row) {        
             // Get the line
             $line = str_getcsv($row);
 
             // Check errors
-            $this->logDataService->hasErrors($line, $arr['file_id'], $i);
+            $this->logDataService->hasErrors($line, $arr['file_id'], $rowId);
 
             // Increment
-            $i++;
+            $rowId++;
         }
     }
 
