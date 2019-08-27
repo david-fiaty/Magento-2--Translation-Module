@@ -196,7 +196,6 @@ class Detail extends \Magento\Backend\App\Action
     }
 
     public function rowToCsv($row) {
-        // Prepare the output
         $csvString = "\"" . $row['key'] . "\"," . "\"" . $row['value'] . "\"";
 
         return $csvString;
@@ -219,10 +218,7 @@ class Detail extends \Magento\Backend\App\Action
             $line = str_getcsv($row);
             if (!$this->logDataService->hasErrors($line, $fileId, $rowId)) {
                 array_unshift($line, $rowIndex);
-                $output[] = (object) array_combine(
-                    ['index', 'key', 'value'],
-                    $line
-                );
+                $output[] = $this->buildRow($line);
                 $rowIndex++;
             }
             else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
@@ -230,15 +226,19 @@ class Detail extends \Magento\Backend\App\Action
                 $errorLine[] = $rowIndex;
                 $errorLine[] = isset($line[0]) ? $line[0] : '';
                 $errorLine[] = isset($line[1]) ? $line[1] : '';
-                $output[] = (object) array_combine(
-                    ['index', 'key', 'value'],
-                    $errorLine
-                );
+                $output[] = $this->buildRow($errorLine);
                 $rowIndex++;
             }
             $rowId++;
         }
 
         return $output;
+    }
+
+    public function buildRow($rowDataArray) {
+        return (object) array_combine(
+            ['index', 'key', 'value'],
+            $rowDataArray
+        );
     }
 }
