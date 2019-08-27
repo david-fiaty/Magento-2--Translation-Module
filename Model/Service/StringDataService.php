@@ -87,7 +87,7 @@ class StringDataService
                     $line = str_getcsv($row);
 
                     // Skip empty and non pair values
-                    if (!$this->logDataService->hasErrors($line, $arr['file_id'], $rowId)) {
+                    if (!$this->logDataService->hasErrors($arr['file_id'], $line, $rowId)) {
                         // Store the item as an object
                         $this->output['table_data'][] = (object) $this->buildRow(
                             $line,
@@ -98,7 +98,7 @@ class StringDataService
                         // Increment the index
                         $rowIndex++;
                     }
-                    else if ($this->logDataService->hasErrors($line, $arr['file_id'], $rowId)
+                    else if ($this->logDataService->hasErrors($arr['file_id'], $line, $rowId)
                     && !$this->logDataService->shoudHideRow(false)) {
                         // Store the item as an object
                         $this->output['table_data'][] = (object) $this->buildErrorRow(

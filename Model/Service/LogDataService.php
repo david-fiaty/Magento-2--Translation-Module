@@ -100,7 +100,15 @@ class LogDataService
         return $hideInvalidRows && !$isLogView;
     }
 
-    public function hasErrors($line, $fileId, $rowId) {
+    public function isReadable($path) {
+        return is_readable($path);
+    }
+
+    public function isWritable($path) {
+        return is_writable($path);
+    }
+
+    public function hasErrors($fileId, $line, $rowId) {
         // Prepare the error array
         $errors = [];
 
@@ -116,46 +124,55 @@ class LogDataService
 
         // Check for insufficient values
         if (count($line) < 2) {
-            $errors[] = __('Incorrect Key/Value structure: less than 2 values detected');
+            $errors[] = __('Incorrect Key/Value structure: less than 2 values detected.');
         }
 
         // Process the results
         if (!empty($errors)) {
             foreach ($errors as $error) {
-                // Check if the error already exists
-                $collection = $this->logEntityFactory->create()->getCollection()
-                ->addFieldToFilter('file_id', $fileId)
-                ->addFieldToFilter('row_id', $rowId);
-
-                // Create a new error or update an existing row
-                if ($collection->getSize() < 1) {
-                    $logEntity = $this->logEntityFactory->create();
-                    $logEntity->setData('file_id', $fileId);
-                    $logEntity->setData('row_id', $rowId);
-                    $logEntity->setData('comments', $error);
-                    $logEntity->save();
-                }
-                else {
-                    foreach($collection as $item)
-                    {
-                        // Load the existing row
-                        $logEntity = $this->logEntityFactory->create();
-                        $logInstance = $logEntity->load($item->getData('id'));
-
-                        // Create the new comments
-                        $newContent  = $logInstance->getData('comments') . PHP_EOL;
-                        $newContent .= $error;
-
-                        // Save the entity
-                        $logInstance->setData('comments', $newContent);
-                        $logInstance->save();
-                    }
-                }
+                $this->createLog($error, $fileId, $rowId);
             }
 
             return true;
         }
 
         return false;
+    }
+
+    public function createLog($error, $fileId, $rowId = null) {
+        // Check if the error already exists
+        $collection = $this->logEntityFactory->create()->getCollection();
+        $collection->addFieldToFilter('file_id', $fileId);
+
+        // Add the row id if exists
+        if ($rowId) {
+            $collection->addFieldToFilter('row_id', $rowId);
+        }
+
+        // Create a new error or update an existing row
+        if ($collection->getSize() < 1) {
+            $logEntity = $this->logEntityFactory->create();
+            $logEntity->setData('file_id', $fileId);
+            $logEntity->setData('row_id', $rowId);
+            $logEntity->setData('comments', $error);
+            $logEntity->save();
+        }
+        else {
+            foreach ($collection as $item)
+            {
+                // Load the existing row
+                $logEntity = $this->logEntityFactory->create();
+                $logInstance = $logEntity->load($item->getData('id'));
+
+                // Create the new comments
+                $newContent  = $logInstance->getData('comments') . PHP_EOL;
+                $newContent .= $error;
+
+                // Save the entity
+                $logInstance->setData('comments', $newContent);
+                $logInstance->setData('row_id', $rowId);
+                $logInstance->save();
+            }
+        }
     }
 }

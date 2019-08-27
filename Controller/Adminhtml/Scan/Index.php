@@ -114,13 +114,23 @@ class Index extends \Magento\Backend\App\Action
 
     public function saveFile($filePath)
     {
+        // Initial file state
+        $fileContent = '';
+        $isReadable = $this->logDataService->isReadable($filePath);
+        $isWritable = $this->logDataService->isWritable($filePath);
+
         // Get the clean path
         $cleanPath = $this->helper->getCleanPath($filePath);
+
+        // Get the file content
+        if ($isReadable) {
+            $fileContent = file_get_contents($filePath);
+        }
 
         // Save the item
         $fileEntity = $this->fileEntityFactory->create(); 
         $fileEntity->setData('file_path', $cleanPath);
-        $fileEntity->setData('file_content', file_get_contents($filePath));
+        $fileEntity->setData('file_content', $fileContent);
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();
@@ -128,20 +138,40 @@ class Index extends \Magento\Backend\App\Action
         // Get the entity data
         $arr = $fileEntity->getData();
 
-        // Get the content rows
-        $rows = explode(PHP_EOL, $arr['file_content']);
+        // If the file is readable
+        if ($isReadable) {
+            // Get the content rows
+            $rows = explode(PHP_EOL, $arr['file_content']);
 
-        // Loop through the rows
-        $rowId = 0;
-        foreach ($rows as $row) {        
-            // Get the line
-            $line = str_getcsv($row);
+            // Loop through the rows
+            $rowId = 0;
+            foreach ($rows as $row) {        
+                // Get the line
+                $line = str_getcsv($row);
 
-            // Check errors
-            $this->logDataService->hasErrors($line, $arr['file_id'], $rowId);
+                // Check errors
+                $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
 
-            // Increment
-            $rowId++;
+                // Increment
+                $rowId++;
+            }
+        }
+        else {
+            // Create the log error
+            $this->logDataService->createLog(
+                __('The file is not readable.'),
+                $arr['file_id'],
+                $rowId = null
+            );
+        }
+
+        // Check the file is writable
+        if (!$isWritable) {
+            $this->logDataService->createLog(
+                __('The file is not writable.'),
+                $arr['file_id'],
+                $rowId = null
+            );        
         }
     }
 

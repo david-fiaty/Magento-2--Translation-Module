@@ -217,11 +217,11 @@ class Detail extends \Magento\Backend\App\Action
         $rowId = 0;
         foreach ($rows as $row) {
             $line = str_getcsv($row);
-            if (!$this->logDataService->hasErrors($line, $fileId, $rowId)) {
+            if (!$this->logDataService->hasErrors($fileId, $line, $rowId)) {
                 $output['table_data'][] = $this->buildRow($line, $rowIndex);
                 $rowIndex++;
             }
-            else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
+            else if ($this->logDataService->hasErrors($fileId, $line, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
                 $output['table_data'][] = $this->buildErrorRow($line, $rowIndex);
                 $output['error_data'][] = $rowIndex;
                 $rowIndex++;
