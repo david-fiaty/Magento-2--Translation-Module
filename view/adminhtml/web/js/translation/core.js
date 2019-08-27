@@ -288,7 +288,7 @@ define(
                 return [
                     {title: 'Index', field: 'index', sorter: 'number', width: 100},
                     {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input'},
-                    {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', editor: 'input'} 
+                    {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'} 
                 ];
             },
 
