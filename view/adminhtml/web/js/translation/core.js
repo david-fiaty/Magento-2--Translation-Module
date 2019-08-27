@@ -271,6 +271,11 @@ define(
                         dir: 'asc'
                     }]
                 });
+
+                // Redraw on window resize
+                $(window).on('resize', function () {
+                    com.cache._(com.options.detailView).tabulator('redraw');
+                });
     
                 // Set the file path
                 com.cache._(com.options.detailViewFilePath).text(fileObj.file_path);
