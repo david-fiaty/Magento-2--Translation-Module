@@ -56,7 +56,7 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
                     'Record ID'
                 )
                 ->addColumn('file_id', Table::TYPE_INTEGER, null, ['nullable' => false], 'File ID')
-                ->addColumn('row_id', Table::TYPE_INTEGER, null, ['nullable' => false], 'Row ID')
+                ->addColumn('row_id', Table::TYPE_INTEGER, null, ['nullable' => true], 'Row ID')
                 ->addColumn('comments', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
                 ->setComment('Naxero Translation Logs');
             $installer->endSetup();
