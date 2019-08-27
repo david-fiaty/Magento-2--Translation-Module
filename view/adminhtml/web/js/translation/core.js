@@ -269,10 +269,7 @@ define(
                     initialSort:[{
                         column: 'index', 
                         dir: 'asc'
-                    }],
-                    rowFormatter:function(row) {
-                        var fileObj = row.getData();
-                    }
+                    }]
                 });
     
                 // Set the file path
