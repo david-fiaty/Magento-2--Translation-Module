@@ -50,6 +50,7 @@ define([
                 layout: "fitColumns",
                 responsiveLayout: true,
                 height: "100%",
+                resizableRows:true,
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
                     var row = cell.getRow();

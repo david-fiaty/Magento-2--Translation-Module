@@ -45,6 +45,7 @@ define([
                 layout: "fitColumns",
                 responsiveLayout: true,
                 height: "100%",
+                resizableRows:true,
                 columns: self.getListColumns(),
                 initialSort:[{
                     column: 'id',
