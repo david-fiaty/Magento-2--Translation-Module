@@ -34,8 +34,9 @@ define(
                 com.cache._(com.options.targetTable).tabulator('setLocale', 'en-us');
             },
 
-            setPaging: function(com) {
-                com.cache._(com.options.targetTable).tabulator('setPageSize', 200);
+            setPaging: function(com, val) {
+                var val = val || 100;
+                com.cache._(com.options.targetTable).tabulator('setPageSize', val);
             },
 
             getData: function(com) {
@@ -117,6 +118,15 @@ define(
             },
 
             addFilterEvents: function(com) {
+                var self = this;
+
+                // Pager events
+                com.cache._('.translation-paging-filter').on('change', function() {
+                    let selectedKey = $(this).find(':selected').val();
+                    self.setPaging(com, selectedKey);
+                });
+
+                // Filters events
                 if (com.hasOwnProperty('filters')) {
                     var self = this;
 
