@@ -38,6 +38,12 @@ div#translation-file-path {
     margin-right: 15px;
 }
 
+#translation-container div.admin__form-field-label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 /* Tabulator */
 .tabulator-headers .tabulator-col-content {
     color: white;
