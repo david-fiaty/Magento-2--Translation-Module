@@ -10,3 +10,4 @@
 - add log processing to file list
 - improve parameters handling in ajax requests
 - hilight invalid rows in detail views
+- add config control to allow/disallow empty values saving
