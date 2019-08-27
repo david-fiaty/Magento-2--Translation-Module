@@ -223,6 +223,7 @@ class Detail extends \Magento\Backend\App\Action
             }
             else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
                 $output['table_data'][] = $this->buildErrorRow($line, $rowIndex);
+                $output['error_data'][] = $rowIndex;
                 $rowIndex++;
             }
             $rowId++;

@@ -284,7 +284,7 @@ define(
 
             getDetailColumns: function() {
                 return [
-                    {title: '#', field: 'index', sorter: 'number', width: 40},
+                    {title: '#', field: 'index', sorter: 'number', width: 70},
                     {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                     {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'} 
                 ];
@@ -292,6 +292,7 @@ define(
 
             getRowDetails: function(com, fileId, isLogView) {
                 // Prepare the variables
+                var self = this;
                 var fileDetailsUrl = com.options.detailViewUrl;
                 fileDetailsUrl += '?action=get_data';
                 fileDetailsUrl += '&file_id=' + fileId;
@@ -305,10 +306,29 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
+                        // Set the table data
                         com.cache._(com.options.detailView).tabulator('setData', data.table_data);
+
+                        // Handle invalid rows display
+                        if (data.error_data) {
+                            self.displayErrors(com, data);
+                        }
                     },
                     error: function(request, status, error) {
                         console.log(error);
+                    }
+                });
+            },
+
+            displayErrors: function(com, data) {
+                // Get the table rows
+                var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
+
+                // Process the error display
+                tableRows.forEach(function(row) {
+                    var rowIndex = row.getData().index;
+                    if (data.error_data.indexOf(rowIndex) != -1) {
+                        row.getElement().css({'background-color':'#FF9900'});
                     }
                 });
             },
