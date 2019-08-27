@@ -7,3 +7,4 @@
 - add default message for no results in tables?
 - centralize the setToobarActions code
 - improve the csv error detector
+- add log processing to file list
