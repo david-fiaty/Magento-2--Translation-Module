@@ -100,7 +100,7 @@ class StringDataService
                         // Increment the index
                         $rowIndex++;
                     }
-                    else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
+                    else if ($this->logDataService->hasErrors($line, $arr['file_id'], $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
                         // Build the error line
                         $errorLine = [];
                         $errorLine['index'] = $rowIndex;
