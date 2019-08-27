@@ -65,17 +65,6 @@
 	</div>
 	<div id="translation-table-detail">
 		<div id="translation-detail-toolbar">
-			<div class="admin__form-field">
-				<label class="label admin__form-field-label">
-					<span><?= __('Pagination'); ?></span>
-				</label>
-				<div class="admin__form-field-control">
-					<?= $block->helper->getPagerSelect([
-			            'name' => 'translation-paging-filter',
-			            'class' => 'admin__control-select translation-paging-filter'
-			    	], $block->getLayout()); ?>	
-				</div>
-			</div>
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
@@ -93,6 +82,17 @@
 			</div>
 		</div>	
 		<div id="translation-file-path"></div>	
+		<div class="admin__form-field">
+			<label class="label admin__form-field-label">
+				<span><?= __('Pagination'); ?></span>
+			</label>
+			<div class="admin__form-field-control">
+				<?= $block->helper->getPagerSelect([
+					'name' => 'translation-paging-filter',
+					'class' => 'admin__control-select translation-paging-filter'
+				], $block->getLayout()); ?>	
+			</div>
+		</div>
 		<div id="translation-table-detail-content"></div>
 	</div>
 </div>
