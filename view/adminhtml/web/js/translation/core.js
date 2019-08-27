@@ -38,12 +38,12 @@ define(
                 com.cache._(com.options.targetTable).tabulator('setLocale', 'en-us');
             },
 
-            setPaging: function(com, val) {
+            setPaging: function(com, targetTable, val) {
                 // Prepare the pager value
                 var val = val || $.cookie(PAGER_SELECTOR) || DEFAULT_PAGER_VALUE;
 
                 // Set the pager value
-                com.cache._(com.options.targetTable).tabulator('setPageSize', val);
+                com.cache._(targetTable).tabulator('setPageSize', val);
 
                 // Save the pager value
                 $.cookie(PAGER_SELECTOR, val);
@@ -64,7 +64,7 @@ define(
                         com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
                         // Set the table paging
-                        self.setPaging(com);
+                        self.setPaging(com, com.options.targetTable);
 
                         // Build options for the lists
                         self.buildFilters(com, data);
@@ -136,7 +136,7 @@ define(
                 // Pager events
                 com.cache._('.' + PAGER_SELECTOR).on('change', function() {
                     let selectedKey = $(this).find(':selected').val();
-                    self.setPaging(com, selectedKey);
+                    self.setPaging(com, com.options.targetTable, selectedKey);
                 });
 
                 // Filters events
@@ -331,8 +331,8 @@ define(
                         com.cache._(com.options.detailView).tabulator('setData', data.table_data);
 
                         // Set the table paging
-                        self.setPaging(com);
-                        
+                        self.setPaging(com, com.options.detailView);
+
                         // Handle invalid rows display
                         if (data.error_data) {
                             self.displayErrors(com, data);
