@@ -33,6 +33,11 @@ class Detail extends \Magento\Backend\App\Action
     protected $tree;
 
     /**
+     * @var LogDataService
+     */
+    protected $logDataService;
+
+    /**
      * Detail class constructor
      */
     public function __construct(
@@ -41,13 +46,15 @@ class Detail extends \Magento\Backend\App\Action
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\File\Csv $csvParser,
-        \Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\Data $helper,
+        \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->fileEntityFactory = $fileEntityFactory;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
-		$this->helper = $helper;
+        $this->helper = $helper;
+        $this->logDataService = $logDataService;
 
         parent::__construct($context);
     }
@@ -71,6 +78,9 @@ class Detail extends \Magento\Backend\App\Action
             // Get the controller action
             $action  = $this->getRequest()->getParam('action');
 
+            // Get the log view parameter
+            $isLogView = $this->getRequest()->getParam('is_log_view');
+
             // Get the factory
             $fileEntity = $this->fileEntityFactory->create(); 
 
@@ -82,7 +92,7 @@ class Detail extends \Magento\Backend\App\Action
 
             // Get data
             if ($action == 'get_data') {
-                $output = $this->getFileEntityContent($fileInstance);
+                $output = $this->getFileEntityContent($fileInstance, $isLogView);
             }
             else if ($action == 'update_data') {
                 $output = $this->updateFileEntityContent($fileInstance);
@@ -192,18 +202,30 @@ class Detail extends \Magento\Backend\App\Action
         return $csvString;
     }
 
-    public function getFileEntityContent($fileEntity) {
+    public function getFileEntityContent($fileEntity, $isLogView) {
+        // Prepare the output array
         $output = array(); 
 
-        $lines = explode(PHP_EOL, $fileEntity->getData('file_content'));
-        $i = 0;
-        foreach ($lines as $line) {
-            $row = str_getcsv($line);
-            if (is_array($row) && count($row) == 2) {
-                array_unshift($row , $i);
-                $output[] = (object) array_combine(['index', 'key', 'value'], $row);
-                $i++;
+        // Get the file content rows
+        $rows = explode(PHP_EOL, $fileEntity->getData('file_content'));
+
+        // Get the file id
+        $fileId = $fileEntity->getData('file_id');
+
+        // Loop through the rows
+        $rowIndex = 1;
+        $rowId = 0;
+        foreach ($rows as $row) {
+            $line = str_getcsv($row);
+            if (!$this->logDataService->shoudHideRow($line, $fileId, $rowId, $isLogView)) {
+                array_unshift($line, $rowIndex);
+                $output[] = (object) array_combine(
+                    ['index', 'key', 'value'],
+                    $line
+                );
+                $rowIndex++;
             }
+            $rowId++;
         }
 
         return $output;
