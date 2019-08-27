@@ -157,15 +157,23 @@ class StringDataService
     }
 
     public function removeDuplicateFilterValues() {
-        // Remove duplicates
-        $this->output['filter_data']['file_type'] = array_unique($this->output['filter_data']['file_type']);
-        $this->output['filter_data']['file_group'] = array_unique($this->output['filter_data']['file_group']);
-        $this->output['filter_data']['file_locale'] = array_unique($this->output['filter_data']['file_locale']);
+        // Prepare the filters array
+        $filters = [
+            'file_type',
+            'file_group',
+            'file_locale'
+        ];
 
-        // Sort fields
-        sort($this->output['filter_data']['file_type']);
-        sort($this->output['filter_data']['file_group']);
-        sort($this->output['filter_data']['file_locale']);
+        // Process the filters
+        foreach ($filters as $filter) {
+            // Remove duplicates
+            $this->output['filter_data'][$filter] = array_unique(
+                $this->output['filter_data'][$filter]
+            );
+            
+            // Sort the fields
+            sort($this->output['filter_data'][$filter]);
+        }
     }
 
     public function buildSortingFields($arr) {
