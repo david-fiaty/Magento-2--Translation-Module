@@ -264,6 +264,14 @@ define(
                                 rowContent: row.getData()
                             }
                         );
+                    },
+                    initialSort:[{
+                        column: 'index', 
+                        dir: 'asc'
+                    }],
+                    rowFormatter:function(row) {
+                        var fileObj = row.getData();
+                        console.log(fileObj.index);
                     }
                 });
     
@@ -279,7 +287,7 @@ define(
 
             getDetailColumns: function() {
                 return [
-                    {title: 'Index', field: 'index', sorter: 'number', visible: false},
+                    {title: 'Index', field: 'index', sorter: 'number'},
                     {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input'},
                     {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', editor: 'input'} 
                 ];
