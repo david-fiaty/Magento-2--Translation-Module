@@ -6,7 +6,7 @@
 					<span><?= __('Group'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
+					<?= $block->helper->getFilterSelect([
 			            'id' => 'translation-group-filter',
 			            'name' => 'translation-group-filter',
 			            'class' => 'admin__control-select'
@@ -18,7 +18,7 @@
 					<span><?= __('Type'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
+					<?= $block->helper->getFilterSelect([
 			            'id' => 'translation-type-filter',
 			            'name' => 'translation-type-filter',
 			            'class' => 'admin__control-select'
@@ -30,7 +30,7 @@
 					<span><?= __('Locale'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
+					<?= $block->helper->getFilterSelect([
 			           'id' => 'translation-locale-filter',
 			           'name' => 'translation-locale-filter',
 			           'class' => 'admin__control-select'
