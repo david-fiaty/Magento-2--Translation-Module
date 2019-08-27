@@ -2,10 +2,14 @@ define(
     [
         'jquery',
         'Magento_Ui/js/modal/prompt',
-        'mage/translate'
+        'mage/translate',
+        'mage/cookies'
     ],
     function ($, prompt, __) {
         'use strict';
+
+        const PAGER_SELECTOR = 'translation-paging-filter';
+        const DEFAULT_PAGER_VALUE = 50;
 
         return {
             initCache: function() {
@@ -35,8 +39,17 @@ define(
             },
 
             setPaging: function(com, val) {
-                var val = val || 100;
+                // Prepare the pager value
+                var val = val || $.cookie(PAGER_SELECTOR) || DEFAULT_PAGER_VALUE;
+
+                // Set the pager value
                 com.cache._(com.options.targetTable).tabulator('setPageSize', val);
+
+                // Save the pager value
+                $.cookie(PAGER_SELECTOR, val);
+
+                // Update the pager select state
+                com.cache._('.' + PAGER_SELECTOR).val(val);
             },
 
             getData: function(com) {
@@ -121,7 +134,7 @@ define(
                 var self = this;
 
                 // Pager events
-                com.cache._('.translation-paging-filter').on('change', function() {
+                com.cache._('.' + PAGER_SELECTOR).on('change', function() {
                     let selectedKey = $(this).find(':selected').val();
                     self.setPaging(com, selectedKey);
                 });
@@ -154,7 +167,7 @@ define(
                 // Get the existing filters
                 var filters = $(com.options.targetTable).tabulator('getFilters'); 
                 var found = filters.find(function(element) {
-                        return element.field == newFilter.field;
+                    return element.field == newFilter.field;
                 });
     
                 // Process the new filter
