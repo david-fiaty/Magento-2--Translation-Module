@@ -6,7 +6,7 @@
 					<span><?= __('Group'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
+					<?= $block->helper->getFilterSelect([
 			            'id' => 'translation-group-filter',
 			            'name' => 'translation-group-filter',
 			            'class' => 'admin__control-select'
@@ -18,7 +18,7 @@
 					<span><?= __('Type'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
+					<?= $block->helper->getFilterSelect([
 			            'id' => 'translation-type-filter',
 			            'name' => 'translation-type-filter',
 			            'class' => 'admin__control-select'
@@ -29,20 +29,17 @@
 				<label class="label admin__form-field-label" for="translation-locale-filter">
 					<span><?= __('Locale'); ?></span>
 				</label>
-				<div class="admin__form-field-control">
-					<?= $block->helper->getSelect([
-			           'id' => 'translation-locale-filter',
-			           'name' => 'translation-locale-filter',
-			           'class' => 'admin__control-select'
-			    	], $block->getLayout()); ?>	
-				</div>
 			</div>
 			<div class="admin__form-field">
-				<label class="label admin__form-field-label" for="translation-paging-filter">
+				<label class="label admin__form-field-label" for="translation-paging-filter-1">
 					<span><?= __('Pagination'); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<input type="text" id="translation-paging-filter-1" name="translation-paging-filter" value="100">
+					<?= $block->helper->getFilterSelect([
+			            'id' => 'translation-type-filter',
+			            'name' => 'translation-type-filter',
+			            'class' => 'admin__control-select'
+			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">

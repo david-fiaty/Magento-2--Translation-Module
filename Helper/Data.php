@@ -111,7 +111,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return strpos($path, 'pub/static') === 0;
     }
 
-	public function getSelect($attributes, $layout) {
+	public function getFilterSelect($attributes, $layout) {
 		// Build the select list
 		$select = $layout
 		->createBlock('Magento\Framework\View\Element\Html\Select')
