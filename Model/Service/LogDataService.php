@@ -70,6 +70,9 @@ class LogDataService
             $fileEntity = $this->fileEntityFactory->create();
             $fileInstance = $fileEntity->load($arr['file_id']);
 
+            // Add the row index
+            $arr['index'] = $arr['row_id'] + 1;
+
             // Process the file
             $filePath = $fileInstance->getFilePath();
             if (!$this->helper->excludeFile($filePath)) {
@@ -91,12 +94,10 @@ class LogDataService
         ];
     }
 
-    public function shoudHideRow($line, $fileId, $rowId, $isLogView) {
+    public function shoudHideRow($isLogView) {
         $hideInvalidRows = $this->helper->getConfig('hide_invalid_rows');
 
-        return $hideInvalidRows
-        && $this->hasErrors($line, $fileId, $rowId)
-        && !$isLogView;
+        return $hideInvalidRows && !$isLogView;
     }
 
     public function hasErrors($line, $fileId, $rowId) {

@@ -87,8 +87,8 @@ class StringDataService
                     $line = str_getcsv($row);
 
                     // Skip empty and non pair values
-                    if (!$this->logDataService->shoudHideRow($line, $arr['file_id'], $rowId, false)) {
-                        $output = array_merge([
+                    if (!$this->logDataService->hasErrors($line, $arr['file_id'], $rowId)) {
+                            $output = array_merge([
                             'index' => $rowIndex,
                             'key' => $line[0],
                             'value' => $line[1]
@@ -96,6 +96,17 @@ class StringDataService
 
                         // Store the item as an object
                         $this->output['table_data'][] = (object) $output;
+
+                        // Increment the index
+                        $rowIndex++;
+                    }
+                    else if ($this->logDataService->hasErrors($line, $fileId, $rowId) && !$this->logDataService->shoudHideRow($isLogView)) {
+                        // Build the error line
+                        $errorLine = [];
+                        $errorLine['index'] = $rowIndex;
+                        $errorLine['key'] = isset($line[0]) ? $line[0] : '';
+                        $errorLine['value'] = isset($line[1]) ? $line[1] : '';
+                        $output = array_merge($errorLine, $arr);
 
                         // Increment the index
                         $rowIndex++;
