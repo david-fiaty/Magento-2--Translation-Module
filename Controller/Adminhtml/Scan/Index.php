@@ -148,9 +148,9 @@ class Index extends \Magento\Backend\App\Action
 
     public function isWantedFile($filePath)
     {
-        return (pathinfo($filePath, PATHINFO_EXTENSION) == 'csv')
-        && (is_file($filePath))
-        && (strpos($filePath, 'i18n') !== false)
+        return pathinfo($filePath, PATHINFO_EXTENSION) == 'csv'
+        && is_file($filePath)
+        && strpos($filePath, 'i18n') !== false
         && !$this->isIndexed($filePath);          
     }
 
