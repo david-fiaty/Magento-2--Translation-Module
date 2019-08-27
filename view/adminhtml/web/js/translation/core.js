@@ -284,7 +284,7 @@ define(
 
             getDetailColumns: function() {
                 return [
-                    {title: 'Index', field: 'index', sorter: 'number', width: 100},
+                    {title: '#', field: 'index', sorter: 'number', width: 100},
                     {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                     {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'} 
                 ];
