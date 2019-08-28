@@ -197,9 +197,6 @@ class FileDataService
         // Set the CSV row count
         $arr['file_count'] = $this->helper->countCSVRows($fileEntity->getData('file_path'));
 
-        // Unset the content field
-        unset($arr['file_content']);
-
         // Set the language field
         $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
