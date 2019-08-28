@@ -30,6 +30,8 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 ['identity' => true, 'nullable' => false, 'primary' => true],
                 'File ID'
             )
+            ->addColumn('is_readable', Table::TYPE_BOOLEAN, 1, [], 'Boolean')
+            ->addColumn('is_writable', Table::TYPE_BOOLEAN, 1, [], 'Boolean')
             ->addColumn('file_path', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
             ->addColumn('file_content', Table::TYPE_TEXT, null, ['nullable' => true, 'default' => null])
             ->addColumn('file_creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
