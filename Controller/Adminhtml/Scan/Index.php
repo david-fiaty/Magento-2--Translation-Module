@@ -128,7 +128,9 @@ class Index extends \Magento\Backend\App\Action
         }
 
         // Save the item
-        $fileEntity = $this->fileEntityFactory->create(); 
+        $fileEntity = $this->fileEntityFactory->create();
+        $fileEntity->setData('is_readable', $isReadable);
+        $fileEntity->setData('is_writable', $isWritable);
         $fileEntity->setData('file_path', $cleanPath);
         $fileEntity->setData('file_content', $fileContent);
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
