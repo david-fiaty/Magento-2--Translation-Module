@@ -38,6 +38,11 @@ define(
                 com.cache._(com.options.targetTable).tabulator('setLocale', 'en-us');
             },
 
+            getDownloadFileName: function() {
+                var fileName = 'trans_' + Date.now() + '.csv';
+                return fileName;
+            },
+
             setPaging: function(com, targetTable, val) {
                 // Prepare the pager value
                 var val = val || $.cookie(PAGER_SELECTOR) || DEFAULT_PAGER_VALUE;
