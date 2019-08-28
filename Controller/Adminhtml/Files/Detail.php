@@ -67,49 +67,42 @@ class Detail extends \Magento\Backend\App\Action
     public function execute()
     {
         // Prepare the response instance
+        $output = [];
         $result = $this->resultJsonFactory->create();
 
         // Process the request
         if ($this->getRequest()->isAjax()) 
         {
-            // Prepare the output
-            $output = '';
-
-            // Get the controller action
+            // Get the request parameters
             $action  = $this->getRequest()->getParam('action');
-
-            // Get the log view parameter
+            $fileId = $this->getRequest()->getParam('file_id');
             $isLogView = $this->getRequest()->getParam('is_log_view');
 
-            // Get the factory
-            $fileEntity = $this->fileEntityFactory->create(); 
-
-            // Get the file id from request
-            $fileId = $this->getFileId();
-
             // Load the requested item
-            $fileInstance = $fileEntity->load($fileId);
+            $fileInstance = $this->fileEntityFactory
+                ->create()
+                ->load($fileId);
 
             // Get data
-            if ($action == 'get_data') {
-                $output = $this->getFileEntityContent($fileInstance, $isLogView);
-            }
-            else if ($action == 'update_data') {
-                $output = $this->updateFileEntityContent($fileInstance);
-            }
-            else if ($action == 'save_data') {
-                $output = $this->saveFileEntityContent($fileInstance);
-            }
+            if ($fileInstance->getId() > 0) {
+                switch ($action) {
+                    case 'get_data':
+                        $output = $this->getFileEntityContent($fileInstance, $isLogView);
+                        break;
+        
+                    case 'update_data':
+                        $output = $this->updateFileEntityContent($fileInstance);
+                        break;
 
-            // Return the content
-            return $result->setData($output);
+                    case 'save_data':
+                        $output = $this->saveFileEntityContent($fileInstance);
+                        break;
+                }
+            }
         }
 
-        return [];
-    }
-
-    public function getFileId() {
-        return $this->getRequest()->getParam('file_id');
+        // Return the content
+        return $result->setData($output);
     }
 
     public function updateFileEntityContent($fileEntity) {
@@ -117,12 +110,9 @@ class Detail extends \Magento\Backend\App\Action
         $params = $this->getRequest()->getParams();
         $newRrow = $this->rowToCsv($params['row_content']);
 
-        // Insert the new row
+        // Insert the new data
         try {
             // Get the current content
-            $fileId = $this->getFileId();
-            $fileEntity = $this->fileEntityFactory->create(); 
-            $fileEntity->load($fileId);
             $content = $fileEntity->getFileContent();
 
             // Convert the content to array
@@ -154,11 +144,6 @@ class Detail extends \Magento\Backend\App\Action
 
         // Save the data
         try {
-            // Load the file entity
-            $fileId = $this->getFileId();
-            $fileEntity = $this->fileEntityFactory->create(); 
-            $fileEntity->load($fileId);
-
             // Prepare the full file path
             $filePath = $rootPath . '/' . $fileEntity->getData('file_path');
 
