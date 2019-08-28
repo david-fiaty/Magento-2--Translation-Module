@@ -9,7 +9,3 @@
 - add config control to allow/disallow empty values saving
 - disable editability for non writable files
 - disable detail view and editability for non readable files
-
-
-
-- check error logging with unwriteable/unreadeable files
