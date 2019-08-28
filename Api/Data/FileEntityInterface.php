@@ -8,6 +8,8 @@ interface FileEntityInterface
      * Constants for keys of data array.
      */
     const FILE_ID = 'file_id';
+    const IS_READABLE = 'is_readable';
+    const IS_WRITABLE = 'is_writable';
     const FILE_PATH = 'file_path';
     const FILE_CONTENT = 'file_content';
     const FILE_CREATION_TIME = 'file_creation_time';
@@ -19,6 +21,20 @@ interface FileEntityInterface
      * @return int|null
      */
     public function getId();
+
+    /**
+     * Get is readable
+     *
+     * @return bool
+     */
+    public function getIsReadable();
+
+    /**
+     * Get is writable
+     *
+     * @return bool
+     */
+    public function getIsWritable();
 
     /**
      * Get file path
@@ -57,9 +73,25 @@ interface FileEntityInterface
     public function setId($id);
 
     /**
+     * Set is readable
+     *
+     * @param string $filePath
+     * @return bool
+     */
+    public function setIsReadable($filePath);
+
+    /**
+     * Set is writable
+     *
+     * @param string $filePath
+     * @return bool
+     */
+    public function setIsWritable($filePath);
+
+    /**
      * Set file path
      *
-     * @param string $file_path
+     * @param string $filePath
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
     public function setFilePath($filePath);
@@ -67,7 +99,7 @@ interface FileEntityInterface
     /**
      * Set file content
      *
-     * @param string $file_content
+     * @param string $fileContent
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
     public function setFileContent($fileContent);

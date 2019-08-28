@@ -5,13 +5,6 @@ namespace Naxero\Translation\Model;
 class FileEntity extends \Magento\Framework\Model\AbstractModel 
 implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\DataObject\IdentityInterface
 {
-    /**#@+
-     * Files's Statuses
-     */
-    const STATUS_ENABLED = 1;
-    const STATUS_DISABLED = 0;
-    /**#@-*/
-
     /**
      * CMS page cache tag
      */
@@ -43,23 +36,14 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      * Check if file path exists
      * return file id if file path exists
      *
-     * @param string $file_path
+     * @param string $filePath
      * @return int
      */
-    public function checkFilePath($file_path)
+    public function checkFilePath($filePath)
     {
-        return $this->_getResource()->checkFilePath($file_path);
+        return $this->_getResource()->checkFilePath($filePath);
     }
 
-    /**
-     * Prepare the file's statuses.
-     *
-     * @return array
-     */
-    public function getAvailableStatuses()
-    {
-        return [self::STATUS_DISABLED => __('Disabled'), self::STATUS_ENABLED => __('Enabled')];
-    }
     /**
      * Return unique ID(s) for each object in system
      *
@@ -78,6 +62,24 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     public function getId()
     {
         return $this->getData(self::FILE_ID);
+    }
+
+    /**
+     * Get is readable
+     *
+     * @return bool
+     */
+    public function getIsReadable() {
+        return $this->getData(self::IS_READABLE);
+    }
+
+    /**
+     * Get is writable
+     *
+     * @return bool
+     */
+    public function getIsWritable() {
+        return $this->getData(self::IS_WRITABLE);
     }
 
     /**
@@ -132,9 +134,29 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     }
 
     /**
+     * Set is readable
+     *
+     * @param bool $isReadable
+     * @return \Naxero\Translation\Api\Data\FileEntityInterface
+     */
+    public function setIsReadable($isReadable) {
+        return $this->setData(self::IS_READABLE, $isReadable);
+    }
+
+    /**
+     * Set is writable
+     *
+     * @param bool $isWritable
+     * @return \Naxero\Translation\Api\Data\FileEntityInterface
+     */
+    public function setIsWritable($isWritable) {
+        return $this->setData(self::IS_WRITABLE, $isWritable);
+    }
+
+    /**
      * Set file path
      *
-     * @param string $file_path
+     * @param string $filePath
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
     public function setFilePath($filePath)
