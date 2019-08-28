@@ -72,8 +72,24 @@ class FileDataService
                 $arr = $this->formatFileRow($arr, $item);
                 $arr = $this->buildSortingFields($arr);
 
-                // Store the item as an object
-                $this->output['table_data'][] = (object) $arr;
+                // Get the content rows
+                $rows = explode(PHP_EOL, $arr['file_content']);
+
+                // Loop through the rows
+                $rowId = 0;
+                foreach ($rows as $row) {
+                    // Get the line
+                    $line = str_getcsv($row);
+
+                    // Check the file content
+                    $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
+
+                    // Store the item as an object
+                    $this->output['table_data'][] = (object) $arr;
+
+                    // Increment the row id
+                    $rowId++;
+                }
             }
         }
 
