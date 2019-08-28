@@ -126,7 +126,7 @@ define([
                 {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input', width: 400},
                 {title: 'Row Id', field: 'row_id', sorter: 'string', visible: false},
                 {title: 'Row Index', field: 'index', sorter: 'string', width: 130},
-                {title: 'Comments', field: 'comments'}
+                {title: 'Comments', field: 'comments', formatter: 'textarea'}
             ];
         }
     });
