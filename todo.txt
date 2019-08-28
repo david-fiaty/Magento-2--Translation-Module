@@ -9,9 +9,7 @@
 - add config control to allow/disallow empty values saving
 - disable editability for non writable files
 - disable detail view and editability for non readable files
-- fix the issue with detail view paging
 
 
 
 - check error logging with unwriteable/unreadeable files
-- add log processing to file list
