@@ -108,16 +108,16 @@ define([
 
         getListColumns: function() {
             return [
-                {title: 'Id', field: 'file_id', sorter: 'number', visible: false},
-                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input'},
-                {title: 'Readable', field: 'is_readable', visible: false},
-                {title: 'Writable', field: 'is_writable', visible: false},
-                {title: 'Created', field: 'file_creation_time', sorter: 'string', visible: false},
-                {title: 'Updated', field: 'file_update_time', sorter: 'string', visible: false},
-                {title: 'Lines', field: 'file_count', sorter: 'number', width: 100},
-                {title: 'Type', field: 'file_type', sorter: 'string', width: 100},
-                {title: 'Group', field: 'file_group', sorter: 'string', width: 100},
-                {title: 'Locale', field: 'file_locale', sorter: 'string', width: 100}
+                {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
+                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input'},
+                {title: __('Readable'), field: 'is_readable', visible: false},
+                {title: __('Writable'), field: 'is_writable', visible: false},
+                {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
+                {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
+                {title: __('Lines'), field: 'file_count', sorter: 'number', width: 100},
+                {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
+                {title: __('Group'), field: 'file_group', sorter: 'string', width: 100},
+                {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
             ];
         }
     });

@@ -100,15 +100,15 @@ define([
 
         getListColumns: function() {
             return [
-                {title: '#', field: 'index', sorter: 'number', visible: false},
-                {title: 'Key', field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
-                {title: 'Value', field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
-                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
-                {title: 'Created', field: 'file_creation_time', sorter: 'string', visible: false},
-                {title: 'Updated', field: 'file_update_time', sorter: 'string', visible: false},
-                {title: 'Type', field: 'file_type', sorter: 'string', width: 100},
-                {title: 'Group', field: 'file_group', sorter: 'string', width: 100},
-                {title: 'Locale', field: 'file_locale', sorter: 'string', width: 100}
+                {title: __('#'), field: 'index', sorter: 'number', visible: false},
+                {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
+                {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
+                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
+                {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
+                {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
+                {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
+                {title: __('Group'), field: 'file_group', sorter: 'string', width: 100},
+                {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
             ];
         }
     });

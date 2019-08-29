@@ -121,12 +121,12 @@ define([
 
         getListColumns: function() {
             return [
-                {title: 'Id', field: 'id', sorter: 'number', visible: false},
-                {title: 'File Id', field: 'file_id', sorter: 'string', visible: false},
-                {title: 'Path', field: 'file_path', sorter: 'string', headerFilter: 'input', width: 400},
-                {title: 'Row Id', field: 'row_id', sorter: 'string', visible: false},
-                {title: 'Row Index', field: 'index', sorter: 'string', width: 130},
-                {title: 'Comments', field: 'comments', formatter: 'textarea'}
+                {title: __('Id'), field: 'id', sorter: 'number', visible: false},
+                {title: __('File Id'), field: 'file_id', sorter: 'string', visible: false},
+                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', width: 400},
+                {title: __('Row Id'), field: 'row_id', sorter: 'string', visible: false},
+                {title: __('Row Index'), field: 'index', sorter: 'string', width: 130},
+                {title: __('Comments'), field: 'comments', formatter: 'textarea'}
             ];
         }
     });
