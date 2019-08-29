@@ -269,10 +269,9 @@ define(
                 });
             },
 
-            loadRowDetails: function(com, row, isLogView) {
+            loadRowDetails: function(com, rowData, isLogView) {
                 // Prepare the variables
                 var self = this;
-                var fileObj = row.getData();
     
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
@@ -287,8 +286,8 @@ define(
                         self.updateEntityData(
                             com,
                             {
-                                fileId: fileObj.file_id,
-                                rowContent: row.getData()
+                                fileId: rowData.file_id,
+                                rowContent: rowData
                             }
                         );
                     },
@@ -299,13 +298,13 @@ define(
                 });
 
                 // Set the file path
-                com.cache._(com.options.detailViewFilePath).text(fileObj.file_path);
+                com.cache._(com.options.detailViewFilePath).text(rowData.file_path);
     
                 // Update the data
-                this.getRowDetails(com, fileObj.file_id, isLogView);
+                this.getRowDetails(com, rowData.file_id, isLogView);
     
                 // Move the panels
-                this.togglePanes(com, fileObj.file_id);
+                this.togglePanes(com, rowData.file_id);
             },
 
             getDetailColumns: function() {
