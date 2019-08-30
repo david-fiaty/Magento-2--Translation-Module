@@ -2,8 +2,9 @@ define([
     'jquery',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
+    'Naxero_Translation/js/translation/actions',
     'tabulator'
-], function($, __, core, tabulator) {
+], function($, __, core, actions, tabulator) {
     'use strict';
 
     // Build the widget
@@ -63,60 +64,19 @@ define([
             var self = this;
 
             // Back button
-            this.cache._('#button-back').click(function() {
-                core.togglePanes(self, 0);
-                self.cache._(self.options.detailView).tabulator('destroy');
-            });
+            actions.initBackButton(this);
 
             // Trigger download of data.csv file
-            this.cache._('#download-file').click(function() {
-                var fileName = 'trans_' + Date.now() + '.csv';
-                self.cache._(self.options.detailView).tabulator('download', 'csv', fileName);
-            });
+            actions.initDownloadButton(this);
 
             // File index update
-            this.cache._('#update-files').click(function() {
-                core.getScanPrompt(self);
-            });
+            actions.initScanButton(this);
 
             // Clear logs
-            this.cache._('#clear-logs').click(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: self.options.clearLogsUrl + '?form_key=' + window.FORM_KEY,
-                    showLoader: true,
-                    success: function(data) {
-                        var success = JSON.parse(data.success);
-                        if (!success) {
-                            alert(data.message);
-                        }
-                        else {
-                            core.getData(self);
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.log(error);
-                    }
-                });   
-            });
+            actions.initLogsButton(this);
 
             // Flush cache
-            this.cache._('button[id^="flush-cache"]').click(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
-                    showLoader: true,
-                    success: function(data) {
-                        var success = JSON.parse(data.success);
-                        if (!success) {
-                            alert(data.message);
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.log(error);
-                    }
-                });
-            });    
+            actions.initCacheButton(this);
         },
 
         getListColumns: function() {

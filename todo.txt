@@ -3,7 +3,6 @@
 - improve the cache flushing response
 - localize the plugin, localize js strings
 - add default message for no results in tables?
-- centralize the setToobarActions code
 - improve the csv error detector
 - improve parameters handling in ajax requests
 - add config control to allow/disallow empty values saving

@@ -2,8 +2,9 @@ define([
     'jquery',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
+    'Naxero_Translation/js/translation/actions',
     'tabulator'
-], function($, __, core, tabulator) {
+], function($, __, core, actions, tabulator) {
     'use strict';
 
     // Build the widget
@@ -72,30 +73,11 @@ define([
         },
 
         setToolbarActions: function() {
-            var self = this;
-
             // File index update
-            this.cache._('#update-files').click(function() {
-                core.getScanPrompt(self);
-            });
+            actions.initScanButton(this);
 
             // Flush cache
-            this.cache._('button[id^="flush-cache"]').click(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: self.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
-                    showLoader: true,
-                    success: function(data) {
-                        var success = JSON.parse(data.success);
-                        if (!success) {
-                            alert(data.message);
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.log(error);
-                    }
-                });
-            });
+            actions.initCacheButton(this);
         },
 
         getListColumns: function() {
