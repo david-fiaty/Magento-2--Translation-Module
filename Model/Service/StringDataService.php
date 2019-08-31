@@ -181,5 +181,4 @@ class StringDataService
 
         return array_merge($arr, $metadata);
     }
-
 }
