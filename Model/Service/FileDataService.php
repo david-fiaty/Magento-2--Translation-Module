@@ -128,66 +128,9 @@ class FileDataService
     }
 
     public function buildSortingFields($arr) {
-        $metadata = $this->scanPath($arr);
+        $metadata = $this->helper->scanPath($arr, $this->output);
 
         return array_merge($arr, $metadata);
-    }
-
-    public function scanPath($arr) {
-        $path = $arr['file_path'];
-
-        // Todo : detect themes in vendor folder
-        if (strpos($path, 'vendor/magento') === 0) {
-            $arr['file_type'] = __('Module');
-            $arr['file_group'] = __('Core');
-        }
-        else if (strpos($path, 'app/code') === 0) {
-            $arr['file_type'] = __('Module');
-            $arr['file_group'] = __('Community');
-        }
-        else if (strpos($path, 'dev/tests/') === 0) {
-            $arr['file_type'] = __('Test');
-            $arr['file_group'] = __('Dev');
-        }
-        else if (strpos($path, 'app/design/frontend/Magento') === 0) {
-            $arr['file_type'] = __('Theme');
-            $arr['file_group'] = __('Core');
-        }
-        else if (strpos($path, 'pub/static') === 0) {
-            $arr['file_type'] = __('Theme');
-            $arr['file_group'] = __('Static');
-        }
-        else if (strpos($path, 'lib/') === 0) {
-            $arr['file_type'] = __('Web');
-            $arr['file_group'] = __('Library');
-        }        
-        else if (strpos($path, 'app/design/frontend/') === 0
-                && strpos($path, 'app/design/frontend/Magento') === false) {
-            $arr['file_type'] = __('Theme');
-            $arr['file_group'] = __('Community');
-        }
-        else if (
-            strpos($path, 'vendor/') === 0 
-            && strpos($path, 'vendor/magento') === false
-        ) {
-            $arr['file_type'] = __('Module');
-            $arr['file_group'] = __('Vendor');
-        }
-        else {
-            $arr['file_type'] = __('Other');
-            $arr['file_group'] = __('Undefined');
-        }
-
-        // Add type filter data
-        $this->output['filter_data']['file_type'][] = $arr['file_type'];
-
-        // Add group filter data
-        $this->output['filter_data']['file_group'][] = $arr['file_group'];
-
-        // Add locale filter data
-        $this->output['filter_data']['file_locale'][] = basename($path, '.csv');
-
-        return $arr;
     }
 
     public function formatFileRow($arr, $fileEntity) {
