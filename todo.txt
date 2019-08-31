@@ -1,7 +1,7 @@
 - Check the todos in code
 - replace file_put_contents and file_get_contents by core functions
 - improve the cache flushing response
-- localize the plugin, localize js strings
+- localize the plugin
 - add default message for no results in tables?
 - improve the csv error detector
 - improve parameters handling in ajax requests
