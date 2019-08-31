@@ -10,22 +10,22 @@ class LogDataService
     /**
      * @var LogEntityFactory
      */
-    protected $logEntityFactory;    
+    public $logEntityFactory;    
 
     /**
      * @var FileEntityFactory
      */
-    protected $fileEntityFactory;  
+    public $fileEntityFactory;  
 
     /**
      * @var Array
      */
-    protected $output;
+    public $output;
 
     /**
      * @var Data
      */
-    protected $helper;
+    public $helper;
 
     /**
      * LogDataService constructor
@@ -47,6 +47,15 @@ class LogDataService
         return $this;
     }
 
+    public function getError() {
+        return [
+            __('Empty line detected.'),
+            __('Incorrect Key/Value structure: more than 2 values detected.'),
+            __('Incorrect Key/Value structure: less than 2 values detected.'),
+            __('The file is not readable.'),
+            __('The file is not writable.')
+        ];
+    }
     /**
      * Index action
      *
@@ -78,6 +87,15 @@ class LogDataService
             if (!$this->helper->excludeFile($filePath)) {
                 // Add the file path field
                 $arr['file_path'] = $filePath;
+
+                // Format the errors
+                if (!empty($arr['comments'])) {
+                    $errors = json_decode($arr['comments']);
+                    $arr['comments'] = '';
+                    foreach ($errors as $errorId) {
+                        $arr['comments'] .= $this->getError()[$errorId] . PHP_EOL;
+                    }
+                }
 
                 // Add to output
                 $this->output['table_data'][] = (object) $arr;
@@ -114,23 +132,23 @@ class LogDataService
 
         // Check for empty lines
         if (empty($line[0])) { 
-            $errors[] = __('Empty line detected.');
+            $errors[] = 0;
         }
 
         // Check for too many values
         if (count($line) > 2) {
-            $errors[] = __('Incorrect Key/Value structure: more than 2 values detected.');
+            $errors[] = 1;
         }
 
         // Check for insufficient values
         if (count($line) < 2) {
-            $errors[] = __('Incorrect Key/Value structure: less than 2 values detected.');
+            $errors[] = 2;
         }
 
         // Process the results
         if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $this->createLog($error, $fileId, $rowId);
+            foreach ($errors as $errorId) {
+                $this->createLog($errorId, $fileId, $rowId);
             }
 
             return true;
@@ -139,7 +157,7 @@ class LogDataService
         return false;
     }
 
-    public function createLog($error, $fileId, $rowId = null) {
+    public function createLog($errorId, $fileId, $rowId = null) {
         // Check if the error already exists
         $collection = $this->logEntityFactory->create()->getCollection();
         $collection->addFieldToFilter('file_id', $fileId);
@@ -154,7 +172,7 @@ class LogDataService
             $logEntity = $this->logEntityFactory->create();
             $logEntity->setData('file_id', $fileId);
             $logEntity->setData('row_id', $rowId);
-            $logEntity->setData('comments', $error);
+            $logEntity->setData('comments', json_encode([$errorId]));
             $logEntity->save();
         }
         else {
@@ -165,11 +183,13 @@ class LogDataService
                 $logInstance = $logEntity->load($item->getData('id'));
 
                 // Create the new comments
-                $newContent  = $logInstance->getData('comments') . PHP_EOL;
-                $newContent .= $error;
+                $newContent  = json_decode($logInstance->getData('comments'));
+                if (!in_array($errorId, $newContent)) {
+                    array_push($newContent, $errorId);
+                }
 
                 // Save the entity
-                $logInstance->setData('comments', $newContent);
+                $logInstance->setData('comments', json_encode($newContent));
                 $logInstance->setData('row_id', $rowId);
                 $logInstance->save();
             }

@@ -161,7 +161,7 @@ class Index extends \Magento\Backend\App\Action
         else {
             // Create the log error
             $this->logDataService->createLog(
-                __('The file is not readable.'),
+                3,
                 $arr['file_id'],
                 $rowId = null
             );
@@ -170,7 +170,7 @@ class Index extends \Magento\Backend\App\Action
         // Check the file is writable
         if (!$isWritable) {
             $this->logDataService->createLog(
-                __('The file is not writable.'),
+                4,
                 $arr['file_id'],
                 $rowId = null
             );        
