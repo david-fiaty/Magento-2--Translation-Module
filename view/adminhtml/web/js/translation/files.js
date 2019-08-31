@@ -56,8 +56,7 @@ define([
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
-                        core.loadRowDetails(self, rowData, false);
-                    }
+                    core.loadRowDetails(self, rowData, false);
                 }
             });
 

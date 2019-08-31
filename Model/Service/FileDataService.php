@@ -84,12 +84,12 @@ class FileDataService
                     // Check the file content
                     $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
 
-                    // Store the item as an object
-                    $this->output['table_data'][] = (object) $arr;
-
                     // Increment the row id
                     $rowId++;
                 }
+
+                // Store the item as an object
+                $this->output['table_data'][] = (object) $arr;
             }
         }
 
