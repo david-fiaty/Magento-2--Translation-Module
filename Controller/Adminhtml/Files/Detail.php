@@ -118,8 +118,11 @@ class Detail extends \Magento\Backend\App\Action
             // Convert the content to array
             $lines = explode(PHP_EOL, $content);
 
+            // Get the row id from index
+            $rowId = $params['row_content']['index'] - 1;
+
             // Update the row
-            $lines[$params['row_content']['index']] = $newRrow;
+            $lines[$rowId] = $newRrow;
             $newContent = $this->arrayToCsv($lines);
 
             // Save the new content to db

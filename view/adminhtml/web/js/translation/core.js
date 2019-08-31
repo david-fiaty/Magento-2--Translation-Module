@@ -252,8 +252,7 @@ define(
                 // Prepare the variables
                 var fileUpdateUrl = com.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
                 var rowData = {
-                        row_content: data.rowContent,
-                        row_id: data.rowId 
+                        row_content: data.rowContent
                     };
     
                 // Send the the request
@@ -287,7 +286,7 @@ define(
                             com,
                             {
                                 fileId: rowData.file_id,
-                                rowContent: rowData
+                                rowContent: row.getData()
                             }
                         );
                     },
