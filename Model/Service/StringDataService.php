@@ -68,7 +68,7 @@ class StringDataService
             $arr = $item->getData();
             if (!$this->helper->excludeFile($arr)) {
                 // Build the sorting fields
-                $arr = $this->buildSortingFields($arr);
+                $arr = $this->helper->buildSortingFields($arr, $this->output);
 
                 // Get the content rows
                 $rows = explode(PHP_EOL, $arr['file_content']);
@@ -117,11 +117,8 @@ class StringDataService
             }
         }
 
-        // Remove duplicate filters
-        $this->removeDuplicateFilterValues();
-
         // Return the data output
-        return $this->output;
+        return $this->helper->removeDuplicateFilterValues($this->output);
     }
 
     public function buildRow($line, $rowIndex, $arr) {
@@ -154,31 +151,5 @@ class StringDataService
                 ]
             ]
         ];
-    }
-
-    public function removeDuplicateFilterValues() {
-        // Prepare the filters array
-        $filters = [
-            'file_type',
-            'file_group',
-            'file_locale'
-        ];
-
-        // Process the filters
-        foreach ($filters as $filter) {
-            // Remove duplicates
-            $this->output['filter_data'][$filter] = array_unique(
-                $this->output['filter_data'][$filter]
-            );
-            
-            // Sort the fields
-            sort($this->output['filter_data'][$filter]);
-        }
-    }
-
-    public function buildSortingFields($arr) {
-        $metadata = $this->helper->scanPath($arr, $this->output);
-
-        return array_merge($arr, $metadata);
     }
 }

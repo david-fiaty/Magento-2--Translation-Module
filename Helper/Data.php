@@ -169,6 +169,34 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
+    public function buildSortingFields($arr, $output) {
+        $metadata = $this->helper->scanPath($arr, $output);
+
+        return array_merge($arr, $metadata);
+    }
+
+    public function removeDuplicateFilterValues($output) {
+        // Prepare the filters array
+        $filters = [
+            'file_type',
+            'file_group',
+            'file_locale'
+        ];
+
+        // Process the filters
+        foreach ($filters as $filter) {
+            // Remove duplicates
+            $output['filter_data'][$filter] = array_unique(
+                $output['filter_data'][$filter]
+            );
+            
+            // Sort the fields
+            sort($output['filter_data'][$filter]);
+        }
+
+        return $output;
+    }
+
     public function scanPath($arr, $output) {
         $path = $arr['file_path'];
 

@@ -70,7 +70,7 @@ class FileDataService
             if (!$this->helper->excludeFile($arr)) {
                 // Prepare the fields
                 $arr = $this->formatFileRow($arr, $item);
-                $arr = $this->buildSortingFields($arr);
+                $arr = $this->helper->buildSortingFields($arr, $this->output);
 
                 // Get the content rows
                 $rows = explode(PHP_EOL, $arr['file_content']);
@@ -93,11 +93,8 @@ class FileDataService
             }
         }
 
-        // Remove duplicate filters
-        $this->removeDuplicateFilterValues();
-
         // Return the data output
-        return $this->output;
+        return $this->helper->removeDuplicateFilterValues($this->output);
     }
 
     public function prepareOutputArray() {
@@ -113,24 +110,6 @@ class FileDataService
                 ]
             ]
         ];
-    }
-
-    public function removeDuplicateFilterValues() {
-        // Remove duplicates
-        $this->output['filter_data']['file_type'] = array_unique($this->output['filter_data']['file_type']);
-        $this->output['filter_data']['file_group'] = array_unique($this->output['filter_data']['file_group']);
-        $this->output['filter_data']['file_locale'] = array_unique($this->output['filter_data']['file_locale']);
-
-        // Sort fields
-        sort($this->output['filter_data']['file_type']);
-        sort($this->output['filter_data']['file_group']);
-        sort($this->output['filter_data']['file_locale']);
-    }
-
-    public function buildSortingFields($arr) {
-        $metadata = $this->helper->scanPath($arr, $this->output);
-
-        return array_merge($arr, $metadata);
     }
 
     public function formatFileRow($arr, $fileEntity) {
