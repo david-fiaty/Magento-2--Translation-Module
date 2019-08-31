@@ -170,7 +170,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     public function buildSortingFields($arr, $output) {
-        $metadata = $this->helper->scanPath($arr, $output);
+        $metadata = $this->scanPath($arr, $output);
 
         return array_merge($arr, $metadata);
     }
