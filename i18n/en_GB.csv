@@ -1,0 +1,41 @@
+"Language files","Language files"
+"Error logs","Error logs"
+"Language strings","Language strings"
+"--- All ---","--- All ---"
+Module,Module
+Core,Core
+Community,Community
+Test,Test
+Dev,Dev
+Theme,Theme
+Static,Static
+Web,Web
+Library,Library
+Vendor,Vendor
+Other,Other
+Undefined,Undefined
+First,First
+"First page","First page"
+Last,Last
+"Last page","Last page"
+Previous,Previous
+"Previous page","Previous page"
+Next,Next
+"Next page","Next page"
+"The file path is invalid.","The file path is invalid."
+Error,Error
+Active,Active
+"Empty line detected.","Empty line detected."
+"Incorrect Key/Value structure: more than 2 values detected.","Incorrect Key/Value structure: more than 2 values detected."
+"Incorrect Key/Value structure: less than 2 values detected.","Incorrect Key/Value structure: less than 2 values detected."
+"The file is not readable.","The file is not readable."
+"The file is not writable.","The file is not writable."
+Group,Group
+Type,Type
+Locale,Locale
+Pagination,Pagination
+"Scan files","Scan files"
+"Flush cache","Flush cache"
+Back,Back
+"Download CSV","Download CSV"
+"Clear logs","Clear logs"
