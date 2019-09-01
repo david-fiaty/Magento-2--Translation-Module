@@ -67,7 +67,7 @@ define(
                     showLoader: true,
                     success: function(data) {
                         // Set the table data
-                        com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
+                        self.prepareData(com, com.options.targetTable, data);
 
                         // Set the table paging
                         self.setPaging(com, com.options.targetTable);
@@ -87,6 +87,20 @@ define(
                         console.log(error);
                     }
                 });
+            },
+
+            prepareData: function(com, targetTable, data) {
+                if (data.table_data.length != 0) {
+                    com.cache._(targetTable).tabulator('setData', data.table_data);
+                }
+                else {
+                    self.setNoResults(com, targetTable);
+                }
+            },
+
+            setNoResults: function(com, targetTable) {
+                com.cache._(targetTable).find('.tabulator-table')
+                .text(__('No results found.'));
             },
 
             updateFileIndex: function(com, updateMode) {
@@ -335,7 +349,7 @@ define(
                     showLoader: true,
                     success: function(data) {
                         // Set the table data
-                        com.cache._(com.options.detailView).tabulator('setData', data.table_data);
+                        core.prepareData(com, com.options.detailView, data);
 
                         // Set the table paging
                         self.setPaging(com, com.options.detailView);
