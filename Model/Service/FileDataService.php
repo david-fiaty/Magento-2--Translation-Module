@@ -61,6 +61,8 @@ class FileDataService
         $collection = $fileEntity->getCollection();
 
         // Prepare the output array
+        $fileCount = 0;
+        $fileIndex = 1;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -72,11 +74,13 @@ class FileDataService
                 $isReadable = $this->logDataService->isReadable($arr['file_path']);
                 $isWritable = $this->logDataService->isWritable($arr['file_path']);
 
-                if ($isReadable) {
-                    // Prepare the fields
-                    $arr = $this->formatFileRow($arr, $item);
-                    $arr = $this->helper->buildSortingFields($arr, $this->output);
 
+                // Prepare the columns and filters
+                $arr = $this->formatFileRow($arr, $item, $fileIndex);
+                $arr = $this->helper->buildSortingFields($arr, $this->output);
+
+                // Process the readable state 
+                if ($isReadable) {
                     // Get the content rows
                     $rows = explode(PHP_EOL, $arr['file_content']);
 
@@ -93,10 +97,22 @@ class FileDataService
                         $rowId++;
                     }
                 }
+                else {
+                    $this->output['error_data'][] = $fileIndex;
+                }
+
+                // Process the writable state
+                if (!$isWritable) {
+                    $this->output['error_data'][] = $fileIndex;
+                }
 
                 // Store the item as an object
                 $this->output['table_data'][] = (object) $arr;
             }
+
+            // Increase the file count and index
+            $fileCount++;
+            $fileIndex++;
         }
 
         // Return the data output
@@ -118,7 +134,10 @@ class FileDataService
         ];
     }
 
-    public function formatFileRow($arr, $fileEntity) {
+    public function formatFileRow($arr, $fileEntity, $fileIndex) {
+        // Add the index
+        $arr['index'] = $fileIndex;
+
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 

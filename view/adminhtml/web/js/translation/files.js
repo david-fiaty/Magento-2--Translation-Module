@@ -89,9 +89,10 @@ define([
         getListColumns: function() {
             return [
                 {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
+                {title: __('Index'), field: 'index', sorter: 'number', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input'},
-                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 70, visible: true},
-                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 70, visible: true},
+                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
+                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
                 {title: __('Lines'), field: 'file_count', sorter: 'number', width: 100},

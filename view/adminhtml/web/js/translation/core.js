@@ -65,6 +65,7 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
+                        console.log(data);
                         // Set the table data
                         com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
@@ -79,6 +80,11 @@ define(
 
                         // Set the table locale
                         self.setLocale(com);
+
+                        // Handle invalid rows display
+                        if (data.error_data) {
+                            self.displayFileErrors(com, data);
+                        }
                     },
                     error: function(request, status, error) {
                         console.log(error);
@@ -342,7 +348,7 @@ define(
 
                         // Handle invalid rows display
                         if (data.error_data) {
-                            self.displayErrors(com, data);
+                            self.displayRowErrors(com, data);
                         }
                     },
                     error: function(request, status, error) {
@@ -351,9 +357,22 @@ define(
                 });
             },
 
-            displayErrors: function(com, data) {
+            displayRowErrors: function(com, data) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
+
+                // Process the error display
+                tableRows.forEach(function(row) {
+                    var rowIndex = row.getData().index;
+                    if (data.error_data.indexOf(rowIndex) != -1) {
+                        row.getElement().css({'background-color':'#FF9900'});
+                    }
+                });
+            },
+
+            displayFileErrors: function(com, data) {
+                // Get the table rows
+                var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
 
                 // Process the error display
                 tableRows.forEach(function(row) {
