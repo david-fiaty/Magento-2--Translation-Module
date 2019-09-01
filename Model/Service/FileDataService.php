@@ -74,7 +74,6 @@ class FileDataService
                 $isReadable = $this->logDataService->isReadable($arr['file_path']);
                 $isWritable = $this->logDataService->isWritable($arr['file_path']);
 
-
                 // Prepare the columns and filters
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
                 $arr = $this->helper->buildSortingFields($arr, $this->output);
