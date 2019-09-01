@@ -68,7 +68,9 @@ class StringDataService
             $arr = $item->getData();
             if (!$this->helper->excludeFile($arr)) {
                 // Build the sorting fields
-                $arr = $this->helper->buildSortingFields($arr, $this->output);
+                $sorting = $this->helper->buildSortFields($arr, $this->output);
+                $arr = $sorting['data'];
+                $this->output = $sorting['filters'];
 
                 // Get the content rows
                 $rows = explode(PHP_EOL, $arr['file_content']);

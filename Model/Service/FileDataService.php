@@ -76,7 +76,11 @@ class FileDataService
 
                 // Prepare the columns and filters
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
-                $arr = $this->helper->buildSortingFields($arr, $this->output);
+
+                // Build the sorting
+                $sorting = $this->helper->buildSortFields($arr, $this->output);
+                $arr = $sorting['data'];
+                $this->output = $sorting['filters'];
 
                 // Process the readable state 
                 if ($isReadable) {

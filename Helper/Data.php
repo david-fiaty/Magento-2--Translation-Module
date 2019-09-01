@@ -169,12 +169,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
-    public function buildSortingFields($arr, $output) {
-        $metadata = $this->scanPath($arr, $output);
-
-        return array_merge($arr, $metadata);
-    }
-
     public function removeDuplicateFilterValues($output) {
         // Prepare the filters array
         $filters = [
@@ -197,7 +191,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $output;
     }
 
-    public function scanPath($arr, $output) {
+    public function buildSortFields($rowData, $output) {
+        // Prepare the variables
+        $arr = $rowData;
         $path = $arr['file_path'];
 
         // Todo : detect themes in vendor folder
@@ -251,6 +247,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         // Add locale filter data
         $output['filter_data']['file_locale'][] = basename($path, '.csv');
 
-        return $arr;
+        return [
+            'data' => array_merge($arr, $rowData),
+            'filters' => $output
+        ];
     }
 }
