@@ -315,7 +315,10 @@ define(
                     resizableRows: true,
                     columns: self.getDetailColumns(),
                     cellEdited: function(cell) {
-                        self.handleRowEdit(com, cell);
+                        self.handleCellEdit(com, cell, true);
+                    },
+                    rowClick: function(e, row) {
+                        self.handleCellEdit(com, row, false);
                     },
                     initialSort:[{
                         column: 'index', 
@@ -390,8 +393,8 @@ define(
                 }
             },
 
-            handleRowEdit: function(com, cell) {
-                var row = cell.getRow();
+            handleCellEdit: function(com, item, isCell) {
+                var row = isCell ? item.getRow() : item;
                 var rowData = row.getData();
                 if (rowData.is_writable == '1') {
                     self.updateEntityData(

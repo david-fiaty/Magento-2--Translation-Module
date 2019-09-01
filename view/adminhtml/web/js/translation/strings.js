@@ -51,7 +51,7 @@ define([
                 resizableRows:true,
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
-                    self.handleRowEdit(com, cell);
+                    self.handleCellEdit(com, cell, true);
                 },
                 initialSort:[{
                     column: 'index',
