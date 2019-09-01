@@ -109,6 +109,9 @@ class FileDataService
                     $this->output['error_data'][] = $fileIndex;
                 }
 
+                // Remove uneeded file content for performance
+                unset($arr['file_content']);
+
                 // Store the item as an object
                 $this->output['table_data'][] = (object) $arr;
             }
