@@ -8,9 +8,11 @@ define(
     function ($, prompt, __) {
         'use strict';
 
+        // Define constants
         const PAGER_SELECTOR = 'translation-paging-filter';
         const DEFAULT_PAGER_VALUE = 50;
 
+        // Return the component
         return {
             initCache: function() {
                 var collection = {};
@@ -30,6 +32,10 @@ define(
                 if (typeof obj[method] === 'function') {
                     (typeof args === 'undefined') ? obj[method]() : obj[method](args);
                 }
+            },
+
+            setLocale: function(com) {
+                com.cache._(com.options.targetTable).tabulator('setLocale', 'en-gb');
             },
 
             getDownloadFileName: function() {
@@ -70,6 +76,9 @@ define(
     
                         // Add the list events
                         self.addFilterEvents(com);
+
+                        // Set the table locale
+                        self.setLocale(com);
 
                         // Handle invalid rows display
                         if (data.error_data) {

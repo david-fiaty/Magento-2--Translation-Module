@@ -6,6 +6,7 @@ define(
     function ($, core) {
         'use strict';
 
+        // Return the component
         return {
             initBackButton: function(com) {
                 com.cache._('#button-back').click(function() {
