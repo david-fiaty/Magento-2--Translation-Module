@@ -316,13 +316,19 @@ define(
                     columns: self.getDetailColumns(),
                     cellEdited: function(cell) {
                         var row = cell.getRow();
-                        self.updateEntityData(
-                            com,
-                            {
-                                fileId: rowData.file_id,
-                                rowContent: row.getData()
-                            }
-                        );
+                        var rowData = row.getData();
+                        if (rowData.is_writable == '1') {
+                            self.updateEntityData(
+                                com,
+                                {
+                                    fileId: rowData.file_id,
+                                    rowContent: rowData
+                                }
+                            );
+                        }
+                        else {
+                            alert(__('This file is not writable. Please check the file permissions.'));
+                        }
                     },
                     initialSort:[{
                         column: 'index', 

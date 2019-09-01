@@ -52,13 +52,19 @@ define([
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
                     var row = cell.getRow();
-                    core.updateEntityData(
-                        self,
-                        {
-                            fileId: row.getData().file_id,
-                            rowContent: row.getData()
-                        }
-                    );
+                    var rowData = row.getData();
+                    if (rowData.is_writable == '1') {
+                        core.updateEntityData(
+                            self,
+                            {
+                                fileId: row.getData().file_id,
+                                rowContent: row.getData()
+                            }
+                        );
+                    }
+                    else {
+                        alert(__('This file is not writable. Please check the file permissions.'));
+                    }
                 },
                 initialSort:[{
                     column: 'index',
