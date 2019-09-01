@@ -28,8 +28,9 @@ div#translation-file-path {
     max-width: 50%;
     margin-bottom: 30px;
     background-image: url('../../images/breadcrumbs.png');
-    background-position: left center;
     background-repeat: no-repeat;
+    background-position: left 2px;
+    background-size: 15px;
     height: 16px;
     text-indent: 22px;
 }
