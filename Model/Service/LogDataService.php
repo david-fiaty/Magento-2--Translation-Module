@@ -88,6 +88,10 @@ class LogDataService
                 // Add the file path field
                 $arr['file_path'] = $filePath;
 
+                // Add the read/write states
+                $arr['is_readable'] = $fileInstance->getData('is_readable');
+                $arr['is_writable'] = $fileInstance->getData('is_writable');
+
                 // Format the errors
                 if (!empty($arr['comments'])) {
                     $errors = json_decode($arr['comments']);

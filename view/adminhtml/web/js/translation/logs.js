@@ -50,7 +50,13 @@ define([
                     dir: 'desc'
                 }],
                 rowClick: function(e, row) {
-                    core.loadRowDetails(self, row, true);
+                    var rowData = row.getData();
+                    if (rowData.is_readable == '1') {
+                        core.loadRowDetails(self, rowData, false);
+                    }
+                    else {
+                        alert(__('This file is not readable. Please check the file permissions.'));
+                    }
                 }
             });
 
@@ -85,6 +91,8 @@ define([
                 {title: __('Id'), field: 'id', sorter: 'number', visible: false},
                 {title: __('File Id'), field: 'file_id', sorter: 'string', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), width: 550},
+                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
+                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 90, visible: true},
                 {title: __('Row Id'), field: 'row_id', sorter: 'string', visible: false},
                 {title: __('Row Index'), field: 'index', sorter: 'string', width: 130},
                 {title: __('Comments'), field: 'comments', formatter: 'textarea'}

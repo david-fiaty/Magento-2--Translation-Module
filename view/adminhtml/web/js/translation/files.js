@@ -57,13 +57,11 @@ define([
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
-                    console.log(rowData);
-                    console.log(rowData.is_readable == '1');
                     if (rowData.is_readable == '1') {
                         core.loadRowDetails(self, rowData, false);
                     }
                     else {
-                        alert('file is not readable');
+                        alert(__('This file is not readable. Please check the file permissions.'));
                     }
                 }
             });
