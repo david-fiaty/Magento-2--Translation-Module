@@ -185,7 +185,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $output;
     }
 
-    public function buildSortFields($rowData, $output) {
+    public function buildSorting($rowData, $output) {
         // Prepare the variables
         $arr = $rowData;
         $path = $arr['file_path'];

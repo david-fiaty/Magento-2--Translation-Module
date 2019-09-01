@@ -78,7 +78,7 @@ class FileDataService
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
 
                 // Build the sorting
-                $sorting = $this->helper->buildSortFields($arr, $this->output);
+                $sorting = $this->helper->buildSorting($arr, $this->output);
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 

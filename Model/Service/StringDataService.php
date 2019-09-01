@@ -68,7 +68,7 @@ class StringDataService
             $arr = $item->getData();
             if (!$this->helper->excludeFile($arr)) {
                 // Build the sorting fields
-                $sorting = $this->helper->buildSortFields($arr, $this->output);
+                $sorting = $this->helper->buildSorting($arr, $this->output);
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 
