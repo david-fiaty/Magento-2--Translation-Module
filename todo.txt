@@ -2,7 +2,6 @@
 - replace file_put_contents and file_get_contents by core functions
 - improve the cache flushing response
 - improve the csv error detector
-- improve parameters handling in ajax requests
 - add config control to allow/disallow empty values saving
 - disable editability for non writable files
 
