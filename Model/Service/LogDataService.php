@@ -119,11 +119,21 @@ class LogDataService
     }
 
     public function isReadable($path) {
-        return is_readable($path);
+        try {
+            return is_readable($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function isWritable($path) {
-        return is_writable($path);
+        try {
+            return is_writable($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function hasErrors($fileId, $line, $rowId) {

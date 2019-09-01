@@ -82,30 +82,8 @@ class FileDataService
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 
-                // Process the readable state 
-                if ($isReadable) {
-                    // Get the content rows
-                    $rows = explode(PHP_EOL, $arr['file_content']);
-
-                    // Loop through the rows
-                    $rowId = 0;
-                    foreach ($rows as $row) {
-                        // Get the line
-                        $line = str_getcsv($row);
-
-                        // Check the file content
-                        $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
-
-                        // Increment the row id
-                        $rowId++;
-                    }
-                }
-                else {
-                    $this->output['error_data'][] = $fileIndex;
-                }
-
-                // Process the writable state
-                if (!$isWritable) {
+                // Process the read/write state 
+                if (!$isReadable || !$isWritable) {
                     $this->output['error_data'][] = $fileIndex;
                 }
 
