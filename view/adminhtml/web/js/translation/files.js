@@ -56,13 +56,7 @@ define([
                     dir: 'desc'
                 }],
                 rowClick: function(e, row) {
-                    var rowData = row.getData();
-                    if (rowData.is_readable == '1') {
-                        core.loadRowDetails(self, rowData, false);
-                    }
-                    else {
-                        alert(__('This file is not readable. Please check the file permissions.'));
-                    }
+                    core.handleRowView(self, row);
                 }
             });
 

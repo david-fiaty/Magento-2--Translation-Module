@@ -315,20 +315,7 @@ define(
                     resizableRows: true,
                     columns: self.getDetailColumns(),
                     cellEdited: function(cell) {
-                        var row = cell.getRow();
-                        var rowData = row.getData();
-                        if (rowData.is_writable == '1') {
-                            self.updateEntityData(
-                                com,
-                                {
-                                    fileId: rowData.file_id,
-                                    rowContent: rowData
-                                }
-                            );
-                        }
-                        else {
-                            alert(__('This file is not writable. Please check the file permissions.'));
-                        }
+                        self.handleRowEdit(com, cell);
                     },
                     initialSort:[{
                         column: 'index', 
@@ -391,6 +378,33 @@ define(
                         console.log(error);
                     }
                 });
+            },
+
+            handleRowView: function(com, row) {
+                var rowData = row.getData();
+                if (rowData.is_readable == '1') {
+                    this.loadRowDetails(com, rowData, false);
+                }
+                else {
+                    alert(__('This file is not readable. Please check the file permissions.'));
+                }
+            },
+
+            handleRowEdit: function(com, cell) {
+                var row = cell.getRow();
+                var rowData = row.getData();
+                if (rowData.is_writable == '1') {
+                    self.updateEntityData(
+                        com,
+                        {
+                            fileId: rowData.file_id,
+                            rowContent: rowData
+                        }
+                    );
+                }
+                else {
+                    alert(__('This file is not writable. Please check the file permissions.'));
+                }
             },
 
             displayRowErrors: function(com, data) {
