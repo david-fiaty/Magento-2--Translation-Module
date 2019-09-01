@@ -100,7 +100,8 @@ define(
 
             setNoResults: function(com, targetTable) {
                 com.cache._(targetTable).find('.tabulator-table')
-                .text(__('No results found.'));
+                .addClass('no-results')
+                .text(__('No results found. Please try scanning for files.'));
             },
 
             updateFileIndex: function(com, updateMode) {
@@ -225,14 +226,14 @@ define(
                             name: 'update_mode',
                             value: 'update_add',
                             label: __('Add new files'),
-                            note: __('Will add only new files to the index and preserve existing content not saved to files.'),
+                            note: __('Add only new files to the index and preserve existing content not saved to files.'),
                         },
                         {
                             id: 'update_replace',
                             name: 'update_mode',
                             value: 'update_replace',
                             label: __('Replace all files'),
-                            note: __('Will reload all files in the index and override existing content not saved to files.'),
+                            note: __('Reload all files in the index and override existing content not saved to files.'),
                         }
                     ]),
                     actions: {

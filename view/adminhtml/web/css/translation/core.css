@@ -50,6 +50,15 @@ div#translation-file-path {
     font-weight: bold !important;
 }
 
+.modal-popup.prompt .prompt-message input {
+    width: 25px !important;
+}
+
+.no-results {
+    visibility: visible !important;
+    padding: 10px !important;
+}
+
 /* Tabulator */
 .tabulator-headers .tabulator-col-content {
     color: white;
