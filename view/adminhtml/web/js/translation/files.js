@@ -56,7 +56,12 @@ define([
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
-                    core.loadRowDetails(self, rowData, false);
+                    if (rowData.is_readable) {
+                        core.loadRowDetails(self, rowData, false);
+                    }
+                    else {
+                        alert('file is not readable');
+                    }
                 }
             });
 
@@ -85,8 +90,8 @@ define([
             return [
                 {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input'},
-                {title: __('Readable'), field: 'is_readable', visible: false},
-                {title: __('Writable'), field: 'is_writable', visible: false},
+                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 70, visible: true},
+                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 70, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
                 {title: __('Lines'), field: 'file_count', sorter: 'number', width: 100},
