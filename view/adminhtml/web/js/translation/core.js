@@ -10,6 +10,7 @@ define(
 
         const PAGER_SELECTOR = 'translation-paging-filter';
         const DEFAULT_PAGER_VALUE = 50;
+        const ERROR_ROW_STYLES = '{"background-color":"#FF9900"}';
 
         return {
             initCache: function() {
@@ -348,7 +349,7 @@ define(
 
                         // Handle invalid rows display
                         if (data.error_data) {
-                            self.displayRowErrors(com, data);
+                            self.displayRowErrors(com);
                         }
                     },
                     error: function(request, status, error) {
@@ -357,28 +358,27 @@ define(
                 });
             },
 
-            displayRowErrors: function(com, data) {
+            displayRowErrors: function(com) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
 
                 // Process the error display
-                tableRows.forEach(function(row) {
-                    var rowIndex = row.getData().index;
-                    if (data.error_data.indexOf(rowIndex) != -1) {
-                        row.getElement().css({'background-color':'#FF9900'});
-                    }
-                });
+                this.displayErrors(tableRows);
             },
 
-            displayFileErrors: function(com, data) {
+            displayFileErrors: function(com) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
 
                 // Process the error display
+                this.displayErrors(tableRows);
+            },
+
+            displayErrors(tableRows)  {
                 tableRows.forEach(function(row) {
                     var rowIndex = row.getData().index;
                     if (data.error_data.indexOf(rowIndex) != -1) {
-                        row.getElement().css({'background-color':'#FF9900'});
+                        row.getElement().css(ERROR_ROW_STYLES);
                     }
                 });
             },
