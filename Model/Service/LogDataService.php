@@ -84,7 +84,7 @@ class LogDataService
 
             // Process the file
             $filePath = $fileInstance->getFilePath();
-            if (!$this->helper->excludeFile($filePath)) {
+            if (!$this->helper->excludeFile($filePath) && !empty($filePath)) {
                 // Add the file path field
                 $arr['file_path'] = $filePath;
 
@@ -116,6 +116,15 @@ class LogDataService
         $hideInvalidRows = $this->helper->getConfig('hide_invalid_rows');
 
         return $hideInvalidRows && !$isLogView;
+    }
+
+    public function isFilexists($path) {
+        try {
+            return file_exists($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function isReadable($path) {

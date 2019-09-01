@@ -68,10 +68,11 @@ class FileDataService
             $arr = $item->getData();
 
             // Process the file
-            if (!$this->helper->excludeFile($arr)) {
+            if (!$this->helper->excludeFile($arr) && !empty($arr['file_path'])) {
                 // Get the permissions
                 $isReadable = $this->logDataService->isReadable($arr['file_path']);
                 $isWritable = $this->logDataService->isWritable($arr['file_path']);
+                $exists = $this->logDataService->fileExists($arr['file_path']);
 
                 // Prepare the columns and filters
                 $fileIndex = $fileCount + 1;
@@ -83,7 +84,7 @@ class FileDataService
                 $this->output = $sorting['filters'];
 
                 // Process the read/write state 
-                if (!$isReadable || !$isWritable) {
+                if (!$exists || !$isReadable || !$isWritable) {
                     $this->output['error_data'][] = $fileIndex;
                 }
 
