@@ -313,8 +313,8 @@ define(
             getDetailColumns: function() {
                 return [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70},
-                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
-                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'} 
+                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea'},
+                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'} 
                 ];
             },
 
