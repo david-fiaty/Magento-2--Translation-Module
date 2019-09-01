@@ -57,7 +57,8 @@ define([
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
-                    if (rowData.is_readable) {
+                    console.log(rowData);
+                    if (rowData.is_readable == 1) {
                         core.loadRowDetails(self, rowData, false);
                     }
                     else {

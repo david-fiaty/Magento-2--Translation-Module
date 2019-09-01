@@ -27,6 +27,11 @@ div#translation-file-path {
     word-break: break-all;
     max-width: 50%;
     margin-bottom: 30px;
+    background-image: url('../../images/breadcrumbs.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    height: 16px;
+    text-indent: 22px;
 }
 
 #translation-container fieldset.admin__form-field {
