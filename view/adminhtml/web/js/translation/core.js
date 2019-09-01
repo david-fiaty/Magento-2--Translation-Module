@@ -66,7 +66,6 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
-                        console.log(data);
                         // Set the table data
                         com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
@@ -349,7 +348,7 @@ define(
 
                         // Handle invalid rows display
                         if (data.error_data) {
-                            self.displayRowErrors(com);
+                            self.displayRowErrors(com, data);
                         }
                     },
                     error: function(request, status, error) {
@@ -358,23 +357,23 @@ define(
                 });
             },
 
-            displayRowErrors: function(com) {
+            displayRowErrors: function(com, data) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
 
                 // Process the error display
-                this.displayErrors(tableRows);
+                this.displayErrors(tableRows, data);
             },
 
-            displayFileErrors: function(com) {
+            displayFileErrors: function(com, data) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
 
                 // Process the error display
-                this.displayErrors(tableRows);
+                this.displayErrors(tableRows, data);
             },
 
-            displayErrors(tableRows)  {
+            displayErrors(tableRows, data)  {
                 tableRows.forEach(function(row) {
                     var rowIndex = row.getData().index;
                     if (data.error_data.indexOf(rowIndex) != -1) {

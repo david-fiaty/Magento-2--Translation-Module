@@ -90,12 +90,12 @@ define([
             return [
                 {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
                 {title: __('Index'), field: 'index', sorter: 'number', visible: false},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input'},
+                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', width: 500},
                 {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
                 {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
-                {title: __('Lines'), field: 'file_count', sorter: 'number', width: 100},
+                {title: __('Lines'), field: 'file_count', sorter: 'number', width: 85},
                 {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
                 {title: __('Group'), field: 'file_group', sorter: 'string', width: 100},
                 {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
