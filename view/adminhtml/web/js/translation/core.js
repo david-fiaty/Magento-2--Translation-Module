@@ -150,7 +150,7 @@ define(
                 });
 
                 // Filters events
-                if (com.hasOwnProperty('filters')) {
+                if (com.filters) {
                     var self = this;
 
                     // Prepare the fields
