@@ -62,6 +62,10 @@ div#translation-file-path {
     font-weight: normal;
 }
 
+.tabulator-header-filter input {
+    border: none !important;
+}
+
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
     height: 25px;
 }
