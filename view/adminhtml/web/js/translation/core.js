@@ -279,6 +279,7 @@ define(
     
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
+                    langs: JSON.parse(self.options.localeData),
                     pagination: 'local',
                     layout: 'fitColumns',
                     responsiveLayout: true,

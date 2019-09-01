@@ -63,11 +63,11 @@
 
 <div data-mage-init='{
 	"logsjs": {
-		"targetLocale": "<?= $block->helper->getUserLanguage(); ?>",
 		"dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'logs']); ?>",
 		"scanUrl": "<?= $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>",
 		"clearLogsUrl": "<?= $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>",
 		"detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>",
-		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"
+		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>",
+		"localeData": "<?= $block->helper->getTableLocaleData(); ?>"
 	}
 }'>

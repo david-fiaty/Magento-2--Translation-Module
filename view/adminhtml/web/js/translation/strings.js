@@ -15,7 +15,7 @@ define([
         options: {
             targetTable: '#translation-table-content',
             detailView: '#translation-table-detail-content',
-            targetLocale: '',
+            localeData: {},
             dataUrl: '',
             scanUrl: '',
             detailViewUrl: '',
@@ -42,6 +42,7 @@ define([
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
+                langs: JSON.parse(self.options.localeData),
                 pagination: 'local',
                 persistentSort: true,
                 layout: 'fitColumns',

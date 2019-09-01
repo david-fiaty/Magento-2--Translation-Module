@@ -59,12 +59,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->cacheFrontendPool = $cacheFrontendPool;
 	}
 
-	public function getUserLanguage() {
-        $locale = $this->adminSession->getUser()->getData()['interface_locale'];
-		$userLanguage = str_replace('_', '-', $locale);
-		return strtolower($userLanguage);
-	}
-
 	public function getCleanPath($filePath) {
         // Return the clean path
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
@@ -251,5 +245,39 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             'data' => array_merge($arr, $rowData),
             'filters' => $output
         ];
+    }
+
+	public function getUserLanguage() {
+        // Get the user language
+        $locale = $this->adminSession->getUser()->getData()['interface_locale'];
+
+        // Format the string for js tables
+        $userLanguage = str_replace('_', '-', $locale);
+        $userLanguage = strtolower($userLanguage);
+
+		return $userLanguage;
+    }
+    
+    public function getTableLocaleData() {
+        // Get the user language
+        $userLanguage = $this->getUserLanguage();
+
+        // Format the locale data
+        $localeData = [
+            $userLanguage => [
+                'pagination' => [
+                    'first' => __('First'),
+                    'first_title' => __('First page'),
+                    'last' => __('Last'),
+                    'last_title' => __('Last page'),
+                    'prev' => __('Previous'),
+                    'prev_title' => __('Previous page'),
+                    'next' => __('Next'),
+                    'next_title' => __('Next page')
+                ]
+            ]
+        ];
+
+        return addslashes(json_encode($localeData));
     }
 }
