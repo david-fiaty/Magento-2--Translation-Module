@@ -10,7 +10,6 @@ define(
 
         const PAGER_SELECTOR = 'translation-paging-filter';
         const DEFAULT_PAGER_VALUE = 50;
-        const ERROR_ROW_STYLES = '{"background-color":"#FF9900"}';
 
         return {
             initCache: function() {
@@ -66,6 +65,7 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     success: function(data) {
+                        console.log(data);
                         // Set the table data
                         com.cache._(com.options.targetTable).tabulator('setData', data.table_data);
 
@@ -377,7 +377,7 @@ define(
                 tableRows.forEach(function(row) {
                     var rowIndex = row.getData().index;
                     if (data.error_data.indexOf(rowIndex) != -1) {
-                        row.getElement().css(ERROR_ROW_STYLES);
+                        row.getElement().css({'background-color':'#FF9900'});
                     }
                 });
             },
