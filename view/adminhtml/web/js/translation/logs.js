@@ -37,7 +37,7 @@ define([
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                langs: JSON.parse(self.options.localeData),
+                langs: core.getLocaleData(self),
                 pagination: 'local',
                 persistentSort: true,
                 layout: 'fitColumns',
