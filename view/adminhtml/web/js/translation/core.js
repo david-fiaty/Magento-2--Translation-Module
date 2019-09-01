@@ -367,7 +367,7 @@ define(
                     data: requestData,
                     success: function(data) {
                         // Set the table data
-                        core.prepareData(com, com.options.detailView, data);
+                        self.prepareData(com, com.options.detailView, data);
 
                         // Set the table paging
                         self.setPaging(com, com.options.detailView);
