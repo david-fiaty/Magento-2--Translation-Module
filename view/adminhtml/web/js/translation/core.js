@@ -94,7 +94,7 @@ define(
                     com.cache._(targetTable).tabulator('setData', data.table_data);
                 }
                 else {
-                    self.setNoResults(com, targetTable);
+                    this.setNoResults(com, targetTable);
                 }
             },
 
