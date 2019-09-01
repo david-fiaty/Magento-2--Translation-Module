@@ -116,6 +116,7 @@ class Index extends \Magento\Backend\App\Action
     {
         // Initial file state
         $fileContent = '';
+        $rowsCount = 0;
         $isReadable = $this->logDataService->isReadable($filePath);
         $isWritable = $this->logDataService->isWritable($filePath);
 
@@ -125,6 +126,7 @@ class Index extends \Magento\Backend\App\Action
         // Get the file content
         if ($isReadable) {
             $fileContent = file_get_contents($filePath);
+            $rowsCount = $this->helper->countCsvRows($filePath);
         }
 
         // Save the item
@@ -133,7 +135,7 @@ class Index extends \Magento\Backend\App\Action
         $fileEntity->setData('is_writable', $isWritable);
         $fileEntity->setData('file_path', $cleanPath);
         $fileEntity->setData('file_content', $fileContent);
-        $fileEntity->setData('rows_count', $this->helper->countCsvRows($filePath));
+        $fileEntity->setData('rows_count', $rowsCount);
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();
