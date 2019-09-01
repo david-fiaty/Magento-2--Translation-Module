@@ -34,10 +34,6 @@ define(
                 }
             },
 
-            setLocale: function(com) {
-                com.cache._(com.options.targetTable).tabulator('setLocale', 'en-gb');
-            },
-
             getDownloadFileName: function() {
                 var fileName = 'trans_' + Date.now() + '.csv';
                 return fileName;
@@ -81,9 +77,6 @@ define(
     
                         // Add the list events
                         self.addFilterEvents(com);
-
-                        // Set the table locale
-                        self.setLocale(com);
 
                         // Handle invalid rows display
                         if (data.error_data) {
