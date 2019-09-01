@@ -12,6 +12,7 @@ interface FileEntityInterface
     const IS_WRITABLE = 'is_writable';
     const FILE_PATH = 'file_path';
     const FILE_CONTENT = 'file_content';
+    const ROWS_COUNT = 'rows_count';
     const FILE_CREATION_TIME = 'file_creation_time';
     const FILE_UPDATE_TIME = 'file_update_time';
 
@@ -49,6 +50,13 @@ interface FileEntityInterface
      * @return string|null
      */
     public function getFileContent();
+
+    /**
+     * Get rows count
+     *
+     * @return int|null
+     */
+    public function getRowsCount();
 
     /**
      * Get creation time
@@ -103,6 +111,14 @@ interface FileEntityInterface
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
     public function setFileContent($fileContent);
+
+    /**
+     * Set rows count
+     *
+     * @param string $rowsCount
+     * @return \Naxero\Translation\Api\Data\FileEntityInterface
+     */
+    public function setRowsCount($rowsCount);
 
     /**
      * Set creation time

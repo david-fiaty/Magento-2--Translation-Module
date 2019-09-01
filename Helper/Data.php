@@ -64,7 +64,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
 
-    public function countCSVRows($csvPath) {
+    public function countCsvRows($csvPath) {
         // Parse the string
         $csvData = $this->csvParser->getData($csvPath);
 

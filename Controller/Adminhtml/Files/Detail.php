@@ -127,6 +127,7 @@ class Detail extends \Magento\Backend\App\Action
 
             // Save the new content to db
             $fileEntity->setFileContent($newContent);
+            $fileEntity->setRowsCount(count($lines));
             $fileEntity->save();
 
             // Update the CSV file

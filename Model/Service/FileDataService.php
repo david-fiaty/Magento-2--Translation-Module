@@ -131,9 +131,6 @@ class FileDataService
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 
-        // Set the CSV row count
-        $arr['file_count'] = $this->helper->countCSVRows($fileEntity->getData('file_path'));
-
         // Set the language field
         $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 

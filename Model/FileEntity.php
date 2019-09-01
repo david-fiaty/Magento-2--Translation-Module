@@ -103,6 +103,16 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     }
 
     /**
+     * Get rows count
+     *
+     * @return int|null
+     */
+    public function getRowsCount()
+    {
+        return $this->getData(self::ROWS_COUNT);
+    }
+
+    /**
      * Get file creation time
      *
      * @return string|null
@@ -173,6 +183,17 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     public function setFileContent($fileContent)
     {
         return $this->setData(self::FILE_CONTENT, $fileContent);
+    }
+
+    /**
+     * Set rows count
+     *
+     * @param string $rowsCount
+     * @return \Naxero\Translation\Api\Data\FileEntityInterface
+     */
+    public function setRowsCount($rowsCount)
+    {
+        return $this->setData(self::ROWS_COUNT, $rowsCount);
     }
 
     /**

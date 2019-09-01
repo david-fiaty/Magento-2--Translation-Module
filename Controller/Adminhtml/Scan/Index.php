@@ -133,6 +133,7 @@ class Index extends \Magento\Backend\App\Action
         $fileEntity->setData('is_writable', $isWritable);
         $fileEntity->setData('file_path', $cleanPath);
         $fileEntity->setData('file_content', $fileContent);
+        $fileEntity->setData('rows_count', $this->helper->countCsvRows());
         $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
         $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
         $fileEntity->save();
