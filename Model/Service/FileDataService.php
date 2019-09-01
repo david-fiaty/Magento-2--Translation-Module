@@ -62,7 +62,6 @@ class FileDataService
 
         // Prepare the output array
         $fileCount = 0;
-        $fileIndex = 1;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -75,6 +74,7 @@ class FileDataService
                 $isWritable = $this->logDataService->isWritable($arr['file_path']);
 
                 // Prepare the columns and filters
+                $fileIndex = $fileCount + 1;
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
 
                 // Build the sorting
@@ -118,7 +118,6 @@ class FileDataService
 
             // Increase the file count and index
             $fileCount++;
-            $fileIndex++;
         }
 
         // Return the data output
