@@ -68,24 +68,30 @@ class FileDataService
 
             // Process the file
             if (!$this->helper->excludeFile($arr)) {
-                // Prepare the fields
-                $arr = $this->formatFileRow($arr, $item);
-                $arr = $this->helper->buildSortingFields($arr, $this->output);
+                // Get the permissions
+                $isReadable = $this->logDataService->isReadable($arr['file_path']);
+                $isWritable = $this->logDataService->isWritable($arr['file_path']);
 
-                // Get the content rows
-                $rows = explode(PHP_EOL, $arr['file_content']);
+                if ($isReadable) {
+                    // Prepare the fields
+                    $arr = $this->formatFileRow($arr, $item);
+                    $arr = $this->helper->buildSortingFields($arr, $this->output);
 
-                // Loop through the rows
-                $rowId = 0;
-                foreach ($rows as $row) {
-                    // Get the line
-                    $line = str_getcsv($row);
+                    // Get the content rows
+                    $rows = explode(PHP_EOL, $arr['file_content']);
 
-                    // Check the file content
-                    $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
+                    // Loop through the rows
+                    $rowId = 0;
+                    foreach ($rows as $row) {
+                        // Get the line
+                        $line = str_getcsv($row);
 
-                    // Increment the row id
-                    $rowId++;
+                        // Check the file content
+                        $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
+
+                        // Increment the row id
+                        $rowId++;
+                    }
                 }
 
                 // Store the item as an object
