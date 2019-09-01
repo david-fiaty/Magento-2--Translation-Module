@@ -52,11 +52,12 @@ define([
                 resizableRows:true,
                 columns: self.getListColumns(),
                 initialSort:[{
-                    column: 'file_count', 
+                    column: 'rows_count', 
                     dir: 'desc'
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
+                    console.log(rowData);
                     if (rowData.is_readable == '1') {
                         core.loadRowDetails(self, rowData, false);
                     }
@@ -95,7 +96,7 @@ define([
                 {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 90, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
-                {title: __('Rows'), field: 'file_count', sorter: 'number', width: 85},
+                {title: __('Rows'), field: 'rows_count', sorter: 'number', width: 85},
                 {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
                 {title: __('Group'), field: 'file_group', sorter: 'string', width: 100},
                 {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
