@@ -268,10 +268,9 @@ define(
                 });
             },
 
-            loadRowDetails: function(com, row, isLogView) {
+            loadRowDetails: function(com, rowData, isLogView) {
                 // Prepare the variables
                 var self = this;
-                var rowData = row.getData();
     
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
