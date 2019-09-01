@@ -97,4 +97,12 @@
 	</div>
 </div>
 
-<div data-mage-init='{"filesjs":{"targetLocale": "<?= $block->helper->getUserLanguage(); ?>", "dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'files']); ?>", "scanUrl": "<?= $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"}}'>
+<div data-mage-init='{
+	"filesjs": {
+		"targetLocale": "<?= $block->helper->getUserLanguage(); ?>",
+		"dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'files']); ?>",
+		"scanUrl": "<?= $block->getUrl('translation/scan/index'); ?>",
+		"detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>",
+		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"
+	}
+}'>

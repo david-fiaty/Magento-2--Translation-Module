@@ -65,4 +65,12 @@
 	</div>
 </div>
 
-<div data-mage-init='{"stringsjs":{"targetLocale": "<?= $block->helper->getUserLanguage(); ?>", "dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'strings']); ?>", "scanUrl": "<?= $block->getUrl('translation/scan/index'); ?>", "detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>", "cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"}}'>
+<div data-mage-init='{
+	"stringsjs": {
+		"targetLocale": "<?= $block->helper->getUserLanguage(); ?>",
+		"dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'strings']); ?>",
+		"scanUrl": "<?= $block->getUrl('translation/scan/index'); ?>",
+		"detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>",
+		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>"
+	}
+}'>
