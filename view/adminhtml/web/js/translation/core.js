@@ -60,11 +60,19 @@ define(
 
             getData: function(com) {
                 var self = this;
+
+                // Prepare the data
+                var requestData = {
+                    form_key: window.FORM_KEY
+                };
+
+                // Send the request
                 $.ajax({
                     type: 'POST',
-                    url: com.options.dataUrl + '?form_key=' + window.FORM_KEY,
+                    url: com.options.dataUrl,
                     dataType: 'json',
                     showLoader: true,
+                    data: requestData,
                     success: function(data) {
                         // Set the table data
                         self.prepareData(com, com.options.targetTable, data);
@@ -90,32 +98,36 @@ define(
             },
 
             prepareData: function(com, targetTable, data) {
+                var noResultsRow = com.cache._(targetTable).find('.tabulator-table');
                 if (data.table_data.length != 0) {
+                    noResultsRow.removeClass('no-results');
                     com.cache._(targetTable).tabulator('setData', data.table_data);
                 }
                 else {
-                    this.setNoResults(com, targetTable);
+                    noResultsRow.addClass('no-results')
+                    .text(__('No results found. Please try scanning for files.'));
                 }
-            },
-
-            setNoResults: function(com, targetTable) {
-                com.cache._(targetTable).find('.tabulator-table')
-                .addClass('no-results')
-                .text(__('No results found. Please try scanning for files.'));
             },
 
             updateFileIndex: function(com, updateMode) {
                 var self = this;
     
                 // Prepare the update url
-                var updateUrl = com.options.scanUrl + '?update_mode=' + updateMode  + '&form_key=' + window.FORM_KEY;
+                var updateUrl = com.options.scanUrl;
     
-                // Trigger the update request
+                // Prepare the data
+                var requestData = {
+                    update_mode: updateMode,
+                    form_key: window.FORM_KEY
+                };
+
+                // Send the request
                 $.ajax({
                     type: 'POST',
                     url: updateUrl,
                     dataType: 'json',
                     showLoader: true,
+                    data: requestData,
                     success: function(data) {
                         self.getData(com);
                     },
@@ -269,15 +281,18 @@ define(
             updateEntityData: function(com, data) {
                 // Prepare the variables
                 var fileUpdateUrl = com.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
-                var rowData = {
-                        row_content: data.rowContent
+                var requestData = {
+                        row_content: data.rowContent,
+                        action: 'update_data',
+                        file_id: data.fileId,
+                        form_key: window.FORM_KEY
                     };
     
                 // Send the the request
                 $.ajax({
                     type: 'POST',
                     url: fileUpdateUrl,
-                    data: rowData,
+                    data: requestData,
                     dataType: 'json',
                     success: function(res) {},
                     error: function(request, status, error) {
@@ -336,18 +351,20 @@ define(
             getRowDetails: function(com, fileId, isLogView) {
                 // Prepare the variables
                 var self = this;
-                var fileDetailsUrl = com.options.detailViewUrl;
-                fileDetailsUrl += '?action=get_data';
-                fileDetailsUrl += '&file_id=' + fileId;
-                fileDetailsUrl += '&form_key=' + window.FORM_KEY;
-                fileDetailsUrl += '&is_log_view=' + isLogView;
+                var requestData = {
+                    action: 'get_data',
+                    file_id: fileId,
+                    form_key: window.FORM_KEY,
+                    is_log_view: isLogView
+                };
 
                 // Send the the request
                 $.ajax({
                     type: 'POST',
-                    url: fileDetailsUrl,
+                    url: com.options.detailViewUrl,
                     dataType: 'json',
                     showLoader: true,
+                    data: requestData,
                     success: function(data) {
                         // Set the table data
                         core.prepareData(com, com.options.detailView, data);

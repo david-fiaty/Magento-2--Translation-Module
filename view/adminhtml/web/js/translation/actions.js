@@ -33,10 +33,18 @@ define(
 
             initCacheButton: function(com) {
                 com.cache._('button[id^="flush-cache"]').click(function() {
+                    // Prepare the data
+                    var requestData = {
+                        action: 'flush_cache',
+                        form_key: window.FORM_KEY
+                    };
+
+                    // Send the request
                     $.ajax({
                         type: 'POST',
-                        url: com.options.cacheUrl + '?action=flush_cache&form_key=' + window.FORM_KEY,
+                        url: com.options.cacheUrl,
                         showLoader: true,
+                        data: requestData,
                         success: function(data) {
                             var success = JSON.parse(data.success);
                             if (!success) {
@@ -52,10 +60,17 @@ define(
 
             initLogsButton: function(com) {
                 com.cache._('#clear-logs').click(function() {
+                    // Prepare the data
+                    var requestData = {
+                        form_key: window.FORM_KEY
+                    };
+
+                    // Send the request
                     $.ajax({
                         type: 'POST',
-                        url: com.options.clearLogsUrl + '?form_key=' + window.FORM_KEY,
+                        url: com.options.clearLogsUrl,
                         showLoader: true,
+                        data: requestData,
                         success: function(data) {
                             var success = JSON.parse(data.success);
                             if (!success) {
