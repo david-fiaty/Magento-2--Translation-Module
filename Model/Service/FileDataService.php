@@ -64,16 +64,11 @@ class FileDataService
         $fileCount = 0;
         foreach ($collection as $item)
         {
-            // Get the item data
+            // Get the item data as array
             $arr = $item->getData();
 
             // Process the file
             if (!$this->helper->excludeFile($arr) && !empty($arr['file_path'])) {
-                // Get the permissions
-                $isReadable = $this->logDataService->isReadable($arr['file_path']);
-                $isWritable = $this->logDataService->isWritable($arr['file_path']);
-                $exists = $this->logDataService->fileExists($arr['file_path']);
-
                 // Prepare the columns and filters
                 $fileIndex = $fileCount + 1;
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
@@ -83,9 +78,20 @@ class FileDataService
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 
-                // Process the read/write state 
-                if (!$exists || !$isReadable || !$isWritable) {
-                    $this->output['error_data'][] = $fileIndex;
+                // Check if the file exists
+                $fileExists = $this->logDataService->fileExists($arr['file_path']);
+                if ($fileExists) {
+                    // Get the permissions
+                    $isReadable = $this->logDataService->isReadable($arr['file_path']);
+                    $isWritable = $this->logDataService->isWritable($arr['file_path']);
+
+                    // Process the read/write state 
+                    if (!$isReadable || !$isWritable) {
+                        $this->output['error_data'][] = $fileIndex;
+                    }
+                }
+                else {
+                    $this->output['error_data'][] = $fileIndex;  
                 }
 
                 // Remove uneeded file content for performance

@@ -118,7 +118,7 @@ class LogDataService
         return $hideInvalidRows && !$isLogView;
     }
 
-    public function isFilexists($path) {
+    public function fileExists($path) {
         try {
             return file_exists($path);
         }
