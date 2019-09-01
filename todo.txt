@@ -2,7 +2,6 @@
 - replace file_put_contents and file_get_contents by core functions
 - improve the cache flushing response
 - improve the csv error detector
-- add config control to allow/disallow empty values saving
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
