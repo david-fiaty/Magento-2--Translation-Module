@@ -62,7 +62,7 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Index action
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return \Magento\Framework\Controller\Result\JsonFactory
      */
     public function execute()
     {
@@ -105,6 +105,9 @@ class Detail extends \Magento\Backend\App\Action
         return $result->setData($output);
     }
 
+    /**
+     * Update a file entity content in database.
+     */
     public function updateFileEntityContent($fileEntity) {
         // Prepare the new content
         $params = $this->getRequest()->getParams();
@@ -142,6 +145,9 @@ class Detail extends \Magento\Backend\App\Action
         return false;
     }
 
+    /**
+     * Save a file content in the file system.
+     */
     public function saveFileEntityContent($fileEntity) {
         // Get the root path
         $rootPath = $this->tree->getRoot();
@@ -163,6 +169,9 @@ class Detail extends \Magento\Backend\App\Action
         return false;
     }
 
+    /**
+     * Convert an array to CSV format.
+     */
     public function arrayToCsv($array) {
         // Prepare the output
         $csvString = '';
@@ -184,6 +193,9 @@ class Detail extends \Magento\Backend\App\Action
         return $csvString;
     }
 
+    /**
+     * Convert a row to CSV format.
+     */
     public function rowToCsv($row) {
         $csvString = '"' . $row['key'] 
         . '",' . '"' . $row['value'] . '"';
