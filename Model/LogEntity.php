@@ -13,14 +13,14 @@ implements \Naxero\Translation\Api\Data\LogEntityInterface, \Magento\Framework\D
     /**
      * @var string
      */
-    protected $_cacheTag = 'log_entity';
+    public $_cacheTag = 'log_entity';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix = 'log_entity';
+    public $_eventPrefix = 'log_entity';
 
     /**
      * Initialize resource model

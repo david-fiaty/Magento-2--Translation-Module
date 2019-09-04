@@ -10,17 +10,17 @@ class Index extends \Magento\Backend\App\Action
 	/**
      * @var PageFactory
      */
-    protected $resultPageFactory;
+    public $resultPageFactory;
 
 	/**
      * @var JsonFactory
      */
-    protected $resultJsonFactory;
+    public $resultJsonFactory;
 
     /**
      * @var LogEntityFactory
      */
-    protected $logEntityFactory; 
+    public $logEntityFactory; 
 
     /**
      * Index class constructor

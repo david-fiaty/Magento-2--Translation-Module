@@ -11,32 +11,32 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var Csv
      */
-    protected $csvParser;
+    public $csvParser;
 
     /**
      * @var Session
      */
-    protected $adminSession;
+    public $adminSession;
 
     /**
      * @var DirectoryList
      */
-    protected $tree;
+    public $tree;
 
     /**
      * @var ScopeConfigInterface
      */
-    protected $scopeConfig;
+    public $scopeConfig;
 
     /**
      * @var TypeListInterface
      */
-    protected $cacheTypeList;
+    public $cacheTypeList;
 
     /**
      * @var Pool
      */
-    protected $cacheFrontendPool;
+    public $cacheFrontendPool;
 
 	/**
      * @param \Magento\Framework\App\Helper\Context $context

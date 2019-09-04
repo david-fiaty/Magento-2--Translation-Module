@@ -10,32 +10,32 @@ class Detail extends \Magento\Backend\App\Action
 	/**
      * @var JsonFactory
      */
-    protected $resultJsonFactory;
+    public $resultJsonFactory;
 
     /**
      * @var FileEntityFactory
      */
-    protected $fileEntityFactory;    
+    public $fileEntityFactory;    
 
     /**
      * @var Csv
      */
-    protected $csvParser;
+    public $csvParser;
 
     /**
      * @var Data
      */
-	protected $helper;
+	public $helper;
 
     /**
      * @var DirectoryList
      */
-    protected $tree;
+    public $tree;
 
     /**
      * @var LogDataService
      */
-    protected $logDataService;
+    public $logDataService;
 
     /**
      * Detail class constructor

@@ -12,37 +12,37 @@ class Config extends \Magento\Framework\DataObject
 	/**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    public $storeManager;
 
 	/**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface 
      */
-    protected $scopeConfig;
+    public $scopeConfig;
 
 	/**
      * @var \Magento\Framework\App\Config\ValueInterface
      */
-    protected $backendModel;
+    public $backendModel;
 
 	/**
      * @var \Magento\Framework\DB\Transaction
      */
-    protected $transaction;
+    public $transaction;
 
 	/**
      * @var \Magento\Framework\App\Config\ValueFactory
      */
-    protected $configValueFactory;
+    public $configValueFactory;
 
 	/**
      * @var int $storeId
      */
-    protected $storeId;
+    public $storeId;
 
 	/**
      * @var string $storeCode
      */
-    protected $storeCode;
+    public $storeCode;
 
 	/**
      * Config class constructor

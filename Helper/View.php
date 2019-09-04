@@ -10,17 +10,17 @@ class View extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var FileDataService
      */
-    protected $fileDataService; 
+    public $fileDataService; 
 
     /**
      * @var StringDataService
      */
-    protected $stringDataService;
+    public $stringDataService;
 
     /**
      * @var LogDataService
      */
-    protected $logDataService;
+    public $logDataService;
 
 	/**
      * @param \Magento\Framework\App\Helper\Context $context

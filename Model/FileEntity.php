@@ -13,14 +13,14 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
     /**
      * @var string
      */
-    protected $_cacheTag = 'file_entity';
+    public $_cacheTag = 'file_entity';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix = 'file_entity';
+    public $_eventPrefix = 'file_entity';
 
     /**
      * Initialize resource model

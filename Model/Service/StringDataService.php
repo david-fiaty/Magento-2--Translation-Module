@@ -10,22 +10,22 @@ class StringDataService
     /**
      * @var FileEntityFactory
      */
-    protected $fileEntityFactory;    
+    public $fileEntityFactory;    
 
     /**
      * @var Array
      */
-    protected $output;
+    public $output;
 
     /**
      * @var Data
      */
-    protected $helper;
+    public $helper;
 
     /**
      * @var LogDataService
      */
-    protected $logDataService;
+    public $logDataService;
 
     /**
      * StringDataService constructor
