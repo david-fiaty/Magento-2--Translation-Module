@@ -39,7 +39,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public $cacheFrontendPool;
 
 	/**
-     * @param \Magento\Framework\App\Helper\Context $context
+     * Data class constructor
      */
 	public function __construct(
 		\Magento\Framework\App\Helper\Context $context,
@@ -59,11 +59,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->cacheFrontendPool = $cacheFrontendPool;
 	}
 
+    /**
+     * Get the clean path for a file path.
+     */
 	public function getCleanPath($filePath) {
         // Return the clean path
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
 
+    /**
+     * Count the rows in a CSV file.
+     */
     public function countCsvRows($csvPath) {
         // Parse the string
         $csvData = $this->csvParser->getData($csvPath);
@@ -72,6 +78,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return count($csvData);
     }
 
+    /**
+     * Get a module config parameter.
+     */
     public function getConfig($value) {
         return $this->scopeConfig->getValue(
             'translation/general/' . $value,
@@ -79,6 +88,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
+    /**
+     * Explude a file from display.
+     */
     public function excludeFile($item) {
         $path = is_array($item) ? $item['file_path'] : $item;
         $excludeTestFiles = $this->getConfig('exclude_test_files');
@@ -90,6 +102,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         || ($excludeStaticFiles && $this->isStaticFile($path));
     }
 
+    /**
+     * Count the rows in a CSV file.
+     */
     public function isTestFile($path) {
         return strpos($path, 'dev/tests/') === 0;
     }

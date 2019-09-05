@@ -62,7 +62,7 @@ class Index extends \Magento\Backend\App\Action
     /**
      * Index action
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return \Magento\Framework\Controller\Result\JsonFactory
      */
     public function execute()
     {
@@ -105,6 +105,9 @@ class Index extends \Magento\Backend\App\Action
         return $result->setData($output);
     }
 
+    /**
+     * Clear the file records in database.
+     */
     public function clearTableData() {
         $fileEntity = $this->fileEntityFactory->create(); 
         $connection = $fileEntity->getCollection()->getConnection();
@@ -112,6 +115,9 @@ class Index extends \Magento\Backend\App\Action
         $connection->truncateTable($tableName);
     }
 
+    /**
+     * Save a file record in database.
+     */
     public function saveFile($filePath)
     {
         // Initial file state
@@ -180,6 +186,9 @@ class Index extends \Magento\Backend\App\Action
         }
     }
 
+    /**
+     * Check if a file is valid for indexing in database.
+     */
     public function isWantedFile($filePath)
     {
         return pathinfo($filePath, PATHINFO_EXTENSION) == 'csv'
@@ -188,6 +197,9 @@ class Index extends \Magento\Backend\App\Action
         && !$this->isIndexed($filePath);          
     }
 
+    /**
+     * Check if a file is already indexed in database.
+     */
     public function isIndexed($filePath) {
         // Get the update mode
         $update_mode = $this->getRequest()->getParam('update_mode');

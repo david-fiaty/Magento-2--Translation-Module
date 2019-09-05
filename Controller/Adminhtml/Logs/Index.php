@@ -65,6 +65,9 @@ class Index extends \Magento\Backend\App\Action
         return $this->getData();
     }
 
+    /**
+     * Clear the log records in database.
+     */
     public function clearLogs() {
         // Prepare the output array
         $output = ['success' => 'true'];
@@ -85,6 +88,9 @@ class Index extends \Magento\Backend\App\Action
         return $this->resultJsonFactory->create()->setData($output);
     }
 
+    /**
+     * Send the logs data for display.
+     */
     public function getData() {
         return $this->resultPageFactory->create();
     }

@@ -203,6 +203,9 @@ class Detail extends \Magento\Backend\App\Action
         return $csvString;
     }
 
+    /**
+     * Get a file content from database.
+     */
     public function getFileEntityContent($fileEntity, $isLogView) {
         // Prepare the output array
         $output = array(); 
@@ -233,6 +236,9 @@ class Detail extends \Magento\Backend\App\Action
         return $output;
     }
 
+    /**
+     * Prepare a file row content for display.
+     */
     public function buildRow($rowDataArray, $rowIndex) {
         // Add the index to the row array
         array_unshift($rowDataArray, $rowIndex);
@@ -244,6 +250,9 @@ class Detail extends \Magento\Backend\App\Action
         );
     }
 
+    /**
+     * Prepare a file content row error for display.
+     */
     public function buildErrorRow($rowDataArray, $rowIndex) {
         // Build the error line
         $errorLine = [];
