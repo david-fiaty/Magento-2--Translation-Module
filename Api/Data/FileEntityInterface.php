@@ -6,11 +6,11 @@
  * PHP version 7
  *
  * @category  Magento2
- * @package   Naxero.com
+ * @package   Naxero
  * @author    Platforms Development Team <contact@naxero.com>
- * @copyright 2010-2020 Naxero.com
+ * @copyright Naxero.com
  * @license   https://opensource.org/licenses/mit-license.html MIT License
- * @link      https://naxero.com/
+ * @link      https://www.naxero.com
  */
 
 namespace Naxero\Translation\Api\Data;
