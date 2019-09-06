@@ -1,4 +1,17 @@
 <?php
+/**
+ * Naxero.com
+ * Professional ecommerce integrations for Magento
+ *
+ * PHP version 7
+ *
+ * @category  Magento2
+ * @package   Naxero.com
+ * @author    Platforms Development Team <contact@naxero.com>
+ * @copyright 2010-2020 Naxero.com
+ * @license   https://opensource.org/licenses/mit-license.html MIT License
+ * @link      https://naxero.com/
+ */
 
 namespace Naxero\Translation\Api\Data;
 
