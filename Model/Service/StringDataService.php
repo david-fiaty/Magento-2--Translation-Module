@@ -93,13 +93,15 @@ class StringDataService
                 $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
                 // Loop through the rows
-                $rowIndex = 1;
                 foreach ($rows as $row) {
                     // Prepare the output array
                     $output = [];
 
                     // Get the line
                     $line = str_getcsv($row);
+
+                    // Prepare the row index
+                    $rowIndex = $rowId + 1;
 
                     // Skip empty and non pair values
                     if (!$this->logDataService->hasErrors($arr['file_id'], $line, $rowId)) {
@@ -109,9 +111,6 @@ class StringDataService
                             $rowIndex,
                             $arr
                         );
-
-                        // Increment the index
-                        $rowIndex++;
                     }
                     else if ($this->logDataService->hasErrors($arr['file_id'], $line, $rowId)
                     && !$this->logDataService->shoudHideRow(false)) {
@@ -124,9 +123,6 @@ class StringDataService
 
                         // Store the error reference
                         $this->output['error_data'][] = $rowIndex;  
-
-                        // Increment the row index
-                        $rowIndex++;
                     }
 
                     // Increment the row id

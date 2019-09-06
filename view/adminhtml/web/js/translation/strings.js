@@ -90,10 +90,12 @@
 
         getListColumns: function() {
             return [
-                {title: __('#'), field: 'index', sorter: 'number', visible: false},
+                {title: __('#'), field: 'index', sorter: 'number', visible: true, width: 70},
                 {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
                 {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
+                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
+                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 90, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
                 {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
