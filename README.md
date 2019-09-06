@@ -49,6 +49,8 @@ For more information on the Magento 2 modules installation process, please have 
 ## Configuration
 Once the Checkout.com extension for Magento 2 installed, go to **Stores > Configuration > Naxero > Translation** to see the configuration and customization options available. 
 
+The follwin parameters are availale in the module configuration:
+
 Dedicated technical support is available to all Merchants using the Naxero Translation Module for Magento 2 via the GitHub repositories or directly by email at contact@naxero.com. Naxero.com does not provide support for third party plugins or any alterations made to the official Naxero.com plugins.
 
 **DISCLAIMER**
