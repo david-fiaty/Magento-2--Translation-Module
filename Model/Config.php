@@ -66,7 +66,7 @@ class Config extends \Magento\Framework\DataObject
 	}
 	
 	/**
-	 * Function for getting Config value of current store
+	 * Function for getting config value of current store
      * @param string $path,
      */
 	public function getCurrentStoreConfigValue($path){
@@ -74,7 +74,7 @@ class Config extends \Magento\Framework\DataObject
 	}
 	
 	/**
-	 * Function for setting Config value of current store
+	 * Function for setting config value of current store
      * @param string $path,
 	 * @param string $value,
      */

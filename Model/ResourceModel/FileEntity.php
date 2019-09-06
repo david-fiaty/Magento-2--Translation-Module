@@ -28,7 +28,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Initialize resource model
+     * Initialize resource model.
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Process file data before saving
+     * Process file data before saving.
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return $this
@@ -62,7 +62,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Load an object using 'file_path' field if there's no field specified
+     * Load an object using 'file_path' field if there's no field specified.
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param mixed $value
@@ -79,7 +79,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Retrieve select object for load object data
+     * Retrieve select object for load object data.
      *
      * @param string $field
      * @param mixed $value
@@ -94,7 +94,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Retrieve load select with filter by file path and activity
+     * Retrieve load select with filter by file path and activity.
      *
      * @param string $filePath
      * @return \Magento\Framework\DB\Select
@@ -109,7 +109,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     *  Check whether file ath key is numeric
+     *  Check whether a file path is numeric.
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return bool
@@ -120,8 +120,8 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     *  Check whether file path is valid
-     *  Should be a regular expression checking only the string
+     *  Check whether file path is valid.
+     *  Should be a regular expression checking only the string.
      * 
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return bool
@@ -132,8 +132,8 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Check if file path exists in db
-     * return file id if file path exists
+     * Check if file path exists in db.
+     * return file id if file path exists.
      *
      * @param string $filePath
      * @return int

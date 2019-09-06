@@ -40,6 +40,9 @@ class StringDataService
         $this->logDataService = $logDataService;
     }
 
+    /**
+     * Initilaise the class instance.
+     */
     public function init() {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
@@ -68,7 +71,7 @@ class StringDataService
             $arr = $item->getData();
             if (!$this->helper->excludeFile($arr)) {
                 // Build the sorting fields
-                $sorting = $this->helper->buildSorting($arr, $this->output);
+                $sorting = $this->helper->buildFilters($arr, $this->output);
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 
@@ -123,6 +126,9 @@ class StringDataService
         return $this->helper->removeDuplicateFilterValues($this->output);
     }
 
+    /**
+     * Format a CSV file row for display.
+     */
     public function buildRow($line, $rowIndex, $arr) {
         return array_merge([
             'index' => $rowIndex,
@@ -131,6 +137,9 @@ class StringDataService
         ], $arr);
     }
 
+    /**
+     * Format a CSV file error row for display.
+     */
     public function buildErrorRow($line, $rowIndex, $arr) {
         $errorLine = [];
         $errorLine['index'] = $rowIndex;
@@ -140,6 +149,9 @@ class StringDataService
         return array_merge($errorLine, $arr);
     }
 
+    /**
+     * Prepare the JS table data structure.
+     */
     public function prepareOutputArray() {
         return [
             'table_data' => [],

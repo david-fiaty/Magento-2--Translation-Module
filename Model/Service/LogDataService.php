@@ -40,6 +40,9 @@ class LogDataService
         $this->helper = $helper;
     }
 
+    /**
+     * Initilaise the class instance.
+     */
     public function init() {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
@@ -110,18 +113,27 @@ class LogDataService
         return $this->output;
     }
 
+    /**
+     * Prepare the JS table data structure.
+     */
     public function prepareOutputArray() {
         return [
             'table_data' => []
         ];
     }
 
+    /**
+     * Checks if a row should be hidden.
+     */
     public function shoudHideRow($isLogView) {
         $hideInvalidRows = $this->helper->getConfig('hide_invalid_rows');
 
         return $hideInvalidRows && !$isLogView;
     }
 
+    /**
+     * Check if a file exists.
+     */
     public function fileExists($path) {
         try {
             return file_exists($path);
@@ -131,6 +143,9 @@ class LogDataService
         }
     }
 
+    /**
+     * Check if a file is readable.
+     */
     public function isReadable($path) {
         try {
             return is_readable($path);
@@ -140,6 +155,9 @@ class LogDataService
         }
     }
 
+    /**
+     * Check if a file is writable.
+     */
     public function isWritable($path) {
         try {
             return is_writable($path);
@@ -149,6 +167,9 @@ class LogDataService
         }
     }
 
+    /**
+     * Check if a file has errors.
+     */
     public function hasErrors($fileId, $line, $rowId) {
         // Prepare the error array
         $errors = [];
@@ -180,6 +201,9 @@ class LogDataService
         return false;
     }
 
+    /**
+     * Create an error log record.
+     */
     public function createLog($errorId, $fileId, $rowId = null) {
         // Check if the error already exists
         $collection = $this->logEntityFactory->create()->getCollection();

@@ -37,6 +37,9 @@ class View extends \Magento\Framework\App\Helper\AbstractHelper
         $this->logDataService = $logDataService;
 	}
 
+    /**
+     * Provide data for a JS table.
+     */
     public function render($view) {
         // Prepare the output
         $output = [];

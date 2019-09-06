@@ -22,7 +22,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Initialize resource model
+     * Initialize the resource model.
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Process file data before saving
+     * Process file data before saving.
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return $this
@@ -44,7 +44,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-     * Load an object
+     * Load an object instance.
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param mixed $value
@@ -57,7 +57,7 @@ class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
     
     /**
-     * Retrieve select object for load object data
+     * Retrieve select object for load object data.
      *
      * @param string $field
      * @param mixed $value

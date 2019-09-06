@@ -109,6 +109,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return strpos($path, 'dev/tests/') === 0;
     }
 
+    /**
+     * Check if a file is part of the core.
+     */
     public function isCoreFile($path) {
         return strpos($path, 'dev/tests/') === 0
         || strpos($path, 'vendor/magento') === 0
@@ -116,10 +119,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         || strpos($path, 'app/design/frontend/Magento') === 0;
     }
 
+    /**
+     * Check if a file is statically generated.
+     */
     public function isStaticFile($path) {
         return strpos($path, 'pub/static') === 0;
     }
 
+    /**
+     * Generate the select list filters.
+     */
 	public function getFilterSelect($attributes, $layout) {
 		// Build the select list
 		$select = $this->buildSelectList($attributes, $layout);
@@ -130,6 +139,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 		return $select->getHtml();
     }
 
+    /**
+     * Generate the pager select list options.
+     */
 	public function getPagerSelect($attributes, $layout) {
 		// Build the select list
 		$select = $this->buildSelectList($attributes, $layout);
@@ -143,12 +155,18 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 		return $select->getHtml();
     }
 
+    /**
+     * Generate a base select list.
+     */
     public function buildSelectList($attributes, $layout) {
         return $layout
 		->createBlock('Magento\Framework\View\Element\Html\Select')
 		->setData($attributes);
     }
 
+    /**
+     * Flush the Magento cache.
+     */
     public function flushCache()
     {
         // Types list
@@ -178,6 +196,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
+    /**
+     * Remove duplicated values in filters.
+     */
     public function removeDuplicateFilterValues($output) {
         // Prepare the filters array
         $filters = [
@@ -200,7 +221,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $output;
     }
 
-    public function buildSorting($rowData, $output) {
+    /**
+     * Generate the list filter options.
+     */
+    public function buildFilters($rowData, $output) {
         // Prepare the variables
         $arr = $rowData;
         $path = $arr['file_path'];
@@ -262,6 +286,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         ];
     }
 
+    /**
+     * Get the user locale.
+     */
 	public function getUserLanguage() {
         // Get the user language
         $locale = $this->adminSession->getUser()->getData()['interface_locale'];
@@ -273,6 +300,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 		return $userLanguage;
     }
     
+    /**
+     * Get the target langauge for a JS table.
+     */
     public function getTableLocaleData() {
         // Get the user language
         $userLanguage = $this->getUserLanguage();

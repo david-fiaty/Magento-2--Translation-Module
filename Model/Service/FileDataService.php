@@ -40,6 +40,9 @@ class FileDataService
         $this->logDataService = $logDataService;
     }
 
+    /**
+     * Initilaise the class instance.
+     */
     public function init() {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
@@ -74,7 +77,7 @@ class FileDataService
                 $arr = $this->formatFileRow($arr, $item, $fileIndex);
 
                 // Build the sorting
-                $sorting = $this->helper->buildSorting($arr, $this->output);
+                $sorting = $this->helper->buildFilters($arr, $this->output);
                 $arr = $sorting['data'];
                 $this->output = $sorting['filters'];
 
@@ -109,6 +112,9 @@ class FileDataService
         return $this->helper->removeDuplicateFilterValues($this->output);
     }
 
+    /**
+     * Prepare the JS table data structure.
+     */
     public function prepareOutputArray() {
         return [
             'table_data' => [],
@@ -124,6 +130,9 @@ class FileDataService
         ];
     }
 
+    /**
+     * Format a file row data for display.
+     */
     public function formatFileRow($arr, $fileEntity, $fileIndex) {
         // Add the index
         $arr['index'] = $fileIndex;
