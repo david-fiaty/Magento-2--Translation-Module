@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
 /**
  * Naxero.com
@@ -14,7 +15,6 @@
  */
 -->
 
-<?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
     <menu>
     	<add id="Naxero_Translation::manage_translations" dependsOnConfig="translation/general/enable" title="Translation" module="Naxero_Translation" parent="Magento_Backend::content" resource="Naxero_Translation::manage_translations" />
