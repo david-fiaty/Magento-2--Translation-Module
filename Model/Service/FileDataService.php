@@ -111,7 +111,7 @@ class FileDataService
                 unset($arr['file_content']);
 
                 // Store the item as an object
-                if (!$this->logDataService->shoudHideRow($isLogViewfalse)) {
+                if (!$this->logDataService->shoudHideRow(false)) {
                     $this->output['table_data'][] = (object) $arr;
                 }
             }
