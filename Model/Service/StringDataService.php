@@ -122,6 +122,9 @@ class StringDataService
                             $arr
                         );
 
+                        // Store the error reference
+                        $this->output['error_data'][] = $rowIndex;  
+
                         // Increment the row index
                         $rowIndex++;
                     }
