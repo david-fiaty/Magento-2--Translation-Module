@@ -110,15 +110,12 @@ class FileDataService
                 // Remove uneeded file content for performance
                 unset($arr['file_content']);
 
-                // Process the row
-                if (!$this->logDataService->shoudHideRow(false)) {
-                    // Store the item as an object
-                    $this->output['table_data'][] = (object) $arr;
-
-                    // Increase the file count and index
-                    $fileCount++;
-                }
+                // Store the item as an object
+                $this->output['table_data'][] = (object) $arr;
             }
+
+            // Increase the file count and index
+            $fileCount++;
         }
 
         // Return the data output
