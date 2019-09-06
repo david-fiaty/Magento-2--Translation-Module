@@ -131,7 +131,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Check if a file is static.
+     * Check if a file is statically generated.
      */
     public function isStaticFile($path) {
         return strpos($path, 'pub/static') === 0;
