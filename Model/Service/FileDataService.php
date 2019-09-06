@@ -111,7 +111,9 @@ class FileDataService
                 unset($arr['file_content']);
 
                 // Store the item as an object
-                $this->output['table_data'][] = (object) $arr;
+                if (!$this->logDataService->shoudHideRow($isLogViewfalse)) {
+                    $this->output['table_data'][] = (object) $arr;
+                }
             }
 
             // Increase the file count and index
