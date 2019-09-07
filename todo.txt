@@ -4,7 +4,6 @@
 - improve the csv error detector
 - enable highlighting in logs details display
 - check acl.xml file
-- handle read/write state in strings view
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
