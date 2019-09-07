@@ -134,7 +134,7 @@ define(
                 // Prepare the html
                 var className = 'translation-rows-count';
                 var html = '<div class="' + className + '">';
-                html += __('Rows') + ':&nbsp;<span>' + rowsCount + '</span>&nbsp;';
+                html += __('Rows') + ':&nbsp;<span>' + rowsCount + '</span>';
                 html += '&nbsp;-&nbsp;';
                 html += __('Errors') + ':&nbsp;<span class="err">' + errorsCount + '</span>&nbsp;';
                 html += '</div>';
