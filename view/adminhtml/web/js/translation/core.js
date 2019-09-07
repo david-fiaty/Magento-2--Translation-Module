@@ -294,14 +294,14 @@ define(
                             name: 'update_mode',
                             value: 'update_add',
                             label: __('Add new files'),
-                            note: __('Add only new files to the index and preserve existing content not saved to files.'),
+                            note: __('Add only new files to the index and preserve existing indexed content.'),
                         },
                         {
                             id: 'update_replace',
                             name: 'update_mode',
                             value: 'update_replace',
                             label: __('Reload all files'),
-                            note: __('Reload all files in the index and override existing content not saved to files.'),
+                            note: __('Clear the indexed content and reload all files into the index.'),
                         }
                     ]),
                     actions: {
