@@ -114,9 +114,10 @@ define(
                 // Prepare variables
                 var noResultsRow = com.cache._(targetTable).find('.tabulator-table');
                 var rowsCount = data.table_data.length;
+                var errorsCount = (data.error_data) ? data.error_data.length : 0;
 
                 // Set the rows count header
-                this.setRowsCount(com, targetTable, rowsCount);
+                this.setRowsCount(com, targetTable, rowsCount, errorsCount);
 
                 // Handle the no results state
                 if (rowsCount != 0) {
@@ -129,27 +130,27 @@ define(
                 }
             },
 
-            setRowsCount: function(com, targetTable, rowsCount) {
+            setRowsCount: function(com, targetTable, rowsCount, errorsCount) {
                 // Prepare the html
-                var html = '<div class="translation-rows-count">';
-                html += '<span>' + rowsCount + '</span>';
-                html += '&nbsp;';
-                html += __('rows found');
+                var className = 'translation-rows-count';
+                var html = '<div class="' + className + '">';
+                html += '<span>' + rowsCount + '</span>&nbsp;' + __('Row(s)');
+                html += '&nbsp;-&nbsp;';
+                html += '<span>' + errorsCount + '</span>&nbsp;' + __('Error(s)');
                 html += '</div>';
 
                 // Remove the previous count
                 com.cache._(targetTable)
-                .find('.translation-rows-count')
+                .find('.' + className)
                 .remove();
 
                 // Insert the new count
                 com.cache._(targetTable).prepend(html);
             },
 
-            updateFileIndex: function(com, updateMode) {
+            updateFileIndex: function(com, updateMode) {    
+                // Prepare the variables
                 var self = this;
-    
-                // Prepare the update url
                 var updateUrl = com.options.scanUrl;
     
                 // Prepare the data
