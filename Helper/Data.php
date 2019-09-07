@@ -255,7 +255,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $arr = $rowData;
         $path = $arr['file_path'];
 
-        // Todo : detect themes in vendor folder
+        // Test the file paths
         if (strpos($path, 'vendor/magento') === 0) {
             $arr['file_type'] = __('Module');
             $arr['file_group'] = __('Core');
