@@ -102,6 +102,7 @@
 
         getListColumns: function() {
             return [
+                {title: __('#'), field: 'index', sorter: 'number', visible: true, width: 70},
                 {title: __('Id'), field: 'id', sorter: 'number', visible: false},
                 {title: __('File Id'), field: 'file_id', sorter: 'string', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), width: 550},
