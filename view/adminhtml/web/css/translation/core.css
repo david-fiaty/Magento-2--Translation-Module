@@ -20,6 +20,11 @@
 #translation-table-content,
 #translation-table-detail-content {
     top: 30px;
+    border: none !important;
+}
+
+.translation-rows-count {
+    margin-bottom: 5px;
 }
 
 #ranslation-table-list {
