@@ -38,16 +38,23 @@ class FileDataService
     public $logDataService;
 
     /**
+     * @var LogEntityFactory
+     */
+    public $logEntityFactory;
+
+    /**
      * FileDataService constructor
      */
     public function __construct(
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Naxero\Translation\Helper\Data $helper,
-        \Naxero\Translation\Model\Service\LogDataService $logDataService
+        \Naxero\Translation\Model\Service\LogDataService $logDataService,
+        \Naxero\Translation\Model\LogEntityFactory $logEntityFactory
     ) {
         $this->fileEntityFactory = $fileEntityFactory;
         $this->helper = $helper;
         $this->logDataService = $logDataService;
+        $this->logEntityFactory = $logEntityFactory;
     }
 
     /**
@@ -153,6 +160,24 @@ class FileDataService
         // Set the language field
         $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
+        // Add the errors column
+        $arr['errors'] = $this->getFileErrorCount($fileEntity);
+
         return $arr;
     }	
+
+    /**
+     * Count the error rows in a file.
+     */
+    function getFileErrorCount($fileEntity) {
+        // Get the file id
+        $fileId = $fileEntity->getId();
+
+        // Load the collection
+        $collection = $this->logEntityFactory->create()->getCollection();
+        $collection->addFieldToFilter('file_id', $fileId);
+
+        // Return the count
+        return $collection->getSize();
+    }
 }

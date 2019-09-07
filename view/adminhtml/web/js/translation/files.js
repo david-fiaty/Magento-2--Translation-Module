@@ -105,6 +105,7 @@
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
                 {title: __('Rows'), field: 'rows_count', sorter: 'number', width: 85},
+                {title: __('Errors'), field: 'errors', sorter: 'number', width: 85},
                 {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
                 {title: __('Group'), field: 'file_group', sorter: 'string', width: 100},
                 {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
