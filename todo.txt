@@ -1,4 +1,3 @@
-- replace file_put_contents and file_get_contents by core functions
 - improve the csv error detector
 - check acl.xml file
 
