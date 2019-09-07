@@ -33,6 +33,11 @@ class Detail extends \Magento\Backend\App\Action
     public $csvParser;
 
     /**
+     * @var File
+     */
+    public $fileDriver;
+
+    /**
      * @var Data
      */
 	public $helper;
@@ -56,6 +61,7 @@ class Detail extends \Magento\Backend\App\Action
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\File\Csv $csvParser,
+        \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Naxero\Translation\Helper\Data $helper,
         \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
@@ -63,6 +69,7 @@ class Detail extends \Magento\Backend\App\Action
         $this->fileEntityFactory = $fileEntityFactory;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
+        $this->fileDriver = $fileDriver;
         $this->helper = $helper;
         $this->logDataService = $logDataService;
 
@@ -168,9 +175,10 @@ class Detail extends \Magento\Backend\App\Action
             $filePath = $rootPath . DIRECTORY_SEPARATOR . $fileEntity->getData('file_path');
 
             // Save the file
-            file_put_contents($filePath, $fileEntity->getData('file_content'));
-
-            return true;
+            return $this->fileDriver->filePutContents(
+                $filePath,
+                $fileEntity->getData('file_content')
+            );
         }
         catch (\Exception $e) {
             throw new LocalizedException(__($e->getMessage()));

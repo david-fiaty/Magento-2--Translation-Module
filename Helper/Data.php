@@ -25,6 +25,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public $csvParser;
 
     /**
+     * @var File
+     */
+    public $fileDriver;
+
+    /**
      * @var Session
      */
     public $adminSession;
@@ -62,6 +67,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Backend\Model\Auth\Session $adminSession,
 		\Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\File\Csv $csvParser,
+        \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
@@ -71,6 +77,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->adminSession = $adminSession;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
+        $this->fileDriver = $fileDriver;
         $this->scopeConfig = $scopeConfig;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
@@ -340,7 +347,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $regPath = $moduleDir . DIRECTORY_SEPARATOR . 'registration.php';
             $fullRegPath = $this->getFullPath($regPath);
             if ($this->fileExists($fullRegPath) && $this->isReadable($fullRegPath)) {
-                $fileContent = file_get_contents($fullRegPath);
+                $fileContent = $this->fileDriver->fileGetContents($fullRegPath);
                 return strpos($fileContent, 'ComponentRegistrar::THEME');
             }
 

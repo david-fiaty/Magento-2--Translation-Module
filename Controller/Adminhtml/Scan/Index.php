@@ -28,6 +28,11 @@ class Index extends \Magento\Backend\App\Action
     public $tree;
 
     /**
+     * @var File
+     */
+    public $fileDriver;
+    
+    /**
      * @var Data
      */
     public $helper;
@@ -59,6 +64,7 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
+        \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Naxero\Translation\Helper\Data $helper,
         \Naxero\Translation\Helper\View $viewHelper,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
@@ -67,6 +73,7 @@ class Index extends \Magento\Backend\App\Action
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
+        $this->fileDriver = $fileDriver;
         $this->helper = $helper;
         $this->viewHelper = $viewHelper;
         $this->fileEntityFactory = $fileEntityFactory;
@@ -94,11 +101,6 @@ class Index extends \Magento\Backend\App\Action
         {
             // Get the update mode
             $update_mode = $this->getRequest()->getParam('update_mode');
-
-            $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/update.log');
-            $logger = new \Zend\Log\Logger();
-            $logger->addWriter($writer);
-            $logger->info(print_r($update_mode, 1));
 
             // Get the view mode
             $view = $this->getRequest()->getParam('view');
@@ -160,7 +162,7 @@ class Index extends \Magento\Backend\App\Action
 
         // Get the file content
         if ($isReadable) {
-            $fileContent = file_get_contents($filePath);
+            $fileContent = $this->fileDriver->fileGetContents($filePath);
             $rowsCount = $this->helper->countCsvRows($filePath);
         }
 
