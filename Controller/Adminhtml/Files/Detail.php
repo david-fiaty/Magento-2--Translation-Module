@@ -235,18 +235,16 @@ class Detail extends \Magento\Backend\App\Action
         $fileId = $fileEntity->getData('file_id');
 
         // Loop through the rows
-        $rowIndex = 1;
         $rowId = 0;
         foreach ($rows as $row) {
             $line = str_getcsv($row);
+            $rowIndex = $rowId + 1;
             if (!$this->logDataService->hasErrors($fileId, $line, $rowId)) {
                 $output['table_data'][] = $this->buildRow($line, $rowIndex);
-                $rowIndex++;
             }
             else {
                 $output['table_data'][] = $this->buildErrorRow($line, $rowIndex);
                 $output['error_data'][] = $rowIndex;
-                $rowIndex++;
             }
             $rowId++;
         }
