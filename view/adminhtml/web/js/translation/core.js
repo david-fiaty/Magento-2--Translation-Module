@@ -73,9 +73,8 @@ define(
             },
 
             getData: function(com) {
+                // Prepare the variables
                 var self = this;
-
-                // Prepare the data
                 var requestData = {
                     form_key: window.FORM_KEY
                 };
@@ -112,8 +111,15 @@ define(
             },
 
             prepareData: function(com, targetTable, data) {
+                // Prepare variables
                 var noResultsRow = com.cache._(targetTable).find('.tabulator-table');
-                if (data.table_data.length != 0) {
+                var rowsCount = data.table_data.length;
+
+                // Set the rows count header
+                this.setRowsCount(com, rowsCount);
+
+                // Handle the no results state
+                if (rowsCount != 0) {
                     noResultsRow.removeClass('no-results');
                     com.cache._(targetTable).tabulator('setData', data.table_data);
                 }
@@ -121,6 +127,23 @@ define(
                     noResultsRow.addClass('no-results')
                     .text(__('No results found. Please try scanning for files.'));
                 }
+            },
+
+            setRowsCount: function(com, rowsCount) {
+                // Prepare the html
+                var html = '<div class="translation-rows-count">';
+                html += '<span>' + rowsCount + '</span>';
+                html += '&nbsp;';
+                html += __('rows found.');
+                html += '</div>';
+
+                // Remove the previous count
+                com.cache._('#translation-table-content')
+                .find('.translation-rows-count')
+                .remove();
+
+                // Insert the new count
+                com.cache._('#translation-table-content').prepend(html);
             },
 
             updateFileIndex: function(com, updateMode) {
