@@ -402,7 +402,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function fileExists($path) {
         try {
-            return file_exists($path);
+            return $this->fileDriver->isExists($path)
+            && $this->fileDriver->isFile($path);
         }
         catch (\Exception $e) {
             return false;
@@ -414,7 +415,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function isReadable($path) {
         try {
-            return is_readable($path);
+            return $this->fileDriver->isFile($path)
+            && $this->fileDriver->isReadable($path);
         }
         catch (\Exception $e) {
             return false;
@@ -426,7 +428,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function isWritable($path) {
         try {
-            return is_writable($path);
+            return $this->fileDriver->isFile($path)
+            && $this->fileDriver->isWritable($path);
         }
         catch (\Exception $e) {
             return false;
