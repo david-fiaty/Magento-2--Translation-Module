@@ -136,7 +136,7 @@ define(
                 var html = '<div class="' + className + '">';
                 html += __('Rows') + ':&nbsp;<span>' + rowsCount + '</span>&nbsp;';
                 html += '&nbsp;-&nbsp;';
-                html += __('Errors') + ':&nbsp;<span>' + errorsCount + '</span>&nbsp;';
+                html += __('Errors') + ':&nbsp;<span class="err">' + errorsCount + '</span>&nbsp;';
                 html += '</div>';
 
                 // Remove the previous count
