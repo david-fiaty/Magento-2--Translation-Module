@@ -112,7 +112,8 @@ define(
 
             prepareData: function(com, targetTable, data) {
                 // Prepare variables
-                var noResultsRow = com.cache._(targetTable).find('.tabulator-table');
+                var noResultsClassName = 'no-results';
+                var containerClassName = 'tabulator-table';
                 var rowsCount = data.table_data.length;
                 var errorsCount = (data.error_data) ? data.error_data.length : 0;
 
@@ -121,12 +122,22 @@ define(
 
                 // Handle the no results state
                 if (rowsCount != 0) {
-                    noResultsRow.removeClass('no-results');
+                    // Remove the no results div
+                    com.cache._(targetTable)
+                    .find('.' + containerClassName +' .' + noResultsClassName)
+                    .remove();
+
+                    // Set the table data
                     com.cache._(targetTable).tabulator('setData', data.table_data);
                 }
                 else {
-                    noResultsRow.addClass('no-results')
-                    .text(__('No results found. Please try scanning for files.'));
+                    // Prepare the no results HTML
+                    var html = '<div class="'+ noResultsClassName +'">';
+                    html += __('No results found. Please try scanning for files.');
+                    html += '</div>';
+
+                    // Prepend the HTML
+                    com.cache._(targetTable).find('.' + containerClassName).prepend(html);
                 }
             },
 
