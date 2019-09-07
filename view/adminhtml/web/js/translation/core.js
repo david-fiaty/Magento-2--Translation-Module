@@ -211,7 +211,7 @@ define(
                 var self = this;
 
                 // Pager events
-                com.cache._('.' + PAGER_SELECTOR).on('change', function() {
+                com.cache._('.' + PAGER_SELECTOR).off().on('change', function() {
                     let selectedKey = $(this).find(':selected').val();
                     self.setPaging(com, com.options.targetTable, selectedKey);
                 });
@@ -229,11 +229,11 @@ define(
         
                     // Assign the events
                     $.each(fields, function(k, obj) {
-                        com.cache._(obj.selector).on('change', function() {
+                        com.cache._(obj.selector).off().on('change', function() {
                             let selectedKey = $(this).find(':selected').val();
                             self.updateFilters(
                                 com,
-                                { field: obj.field, type: '=', value: selectedKey }
+                                {field: obj.field, type: '=', value: selectedKey}
                             );
                         });
                     });

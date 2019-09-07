@@ -23,14 +23,14 @@ define(
         // Return the component
         return {
             initBackButton: function(com) {
-                com.cache._('#button-back').click(function() {
+                com.cache._('#button-back').off().on('click', function() {
                     core.togglePanes(com, 0);
                     com.cache._(com.options.detailView).tabulator('destroy');
                 });
             },
 
             initDownloadButton: function(com) {
-                com.cache._('#download-file').click(function() {
+                com.cache._('#download-file').off().on('click', function() {
                     com.cache._(com.options.detailView).tabulator(
                         'download',
                         'csv',
@@ -40,13 +40,13 @@ define(
             },
 
             initScanButton: function(com) {
-                com.cache._('#update-files').click(function() {
+                com.cache._('#update-files').off().on('click', function() {
                     core.getScanPrompt(com);
                 });
             },
 
             initCacheButton: function(com) {
-                com.cache._('button[id^="flush-cache"]').click(function() {
+                com.cache._('button[id^="flush-cache"]').off().on('click', function() {
                     // Prepare the data
                     var requestData = {
                         action: 'flush_cache',
@@ -73,7 +73,7 @@ define(
             },
 
             initLogsButton: function(com) {
-                com.cache._('#clear-logs').click(function() {
+                com.cache._('#clear-logs').off().on('click', function() {
                     // Prepare the data
                     var requestData = {
                         form_key: window.FORM_KEY
