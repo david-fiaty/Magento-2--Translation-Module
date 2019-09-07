@@ -99,8 +99,8 @@
             return [
                 {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...')},
-                {title: __('Read'), field: 'is_readable', sorter: 'boolean', formatter:'tickCross', width: 85, visible: true},
-                {title: __('Write'), field: 'is_writable', sorter: 'boolean', formatter:'tickCross', width: 90, visible: true},
+                {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: true},
+                {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: true},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
                 {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
                 {title: __('Rows'), field: 'rows_count', sorter: 'number', width: 85},
