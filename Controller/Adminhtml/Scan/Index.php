@@ -133,8 +133,8 @@ class Index extends \Magento\Backend\App\Action
         // Initial file state
         $fileContent = '';
         $rowsCount = 0;
-        $isReadable = $this->logDataService->isReadable($filePath);
-        $isWritable = $this->logDataService->isWritable($filePath);
+        $isReadable = $this->helper->isReadable($filePath);
+        $isWritable = $this->helper->isWritable($filePath);
 
         // Get the clean path
         $cleanPath = $this->helper->getCleanPath($filePath);

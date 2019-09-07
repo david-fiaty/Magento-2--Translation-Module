@@ -92,11 +92,11 @@ class FileDataService
                 $this->output = $sorting['filters'];
 
                 // Check if the file exists
-                $fileExists = $this->logDataService->fileExists($arr['file_path']);
+                $fileExists = $this->helper->fileExists($arr['file_path']);
                 if ($fileExists) {
                     // Get the permissions
-                    $isReadable = $this->logDataService->isReadable($arr['file_path']);
-                    $isWritable = $this->logDataService->isWritable($arr['file_path']);
+                    $isReadable = $this->helper->isReadable($arr['file_path']);
+                    $isWritable = $this->helper->isWritable($arr['file_path']);
 
                     // Process the read/write state 
                     if (!$isReadable || !$isWritable) {

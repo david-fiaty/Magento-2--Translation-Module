@@ -200,7 +200,8 @@ define(
                     // Add it to the output
                     output.push(option);
                 });
-                com.cache._(sel).append(output.join(''));
+                com.cache._(sel).children('option:not(:first)').remove()
+                .append(output.join(''));
             },
 
             addFilterEvents: function(com) {

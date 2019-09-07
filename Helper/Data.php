@@ -255,12 +255,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $arr = $rowData;
         $path = $arr['file_path'];
 
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
-$logger = new \Zend\Log\Logger();
-$logger->addWriter($writer);
-$logger->info(print_r($arr['file_path'], 1));
-
-
         // Todo : detect themes in vendor folder
         if (strpos($path, 'vendor/magento') === 0) {
             $arr['file_type'] = __('Module');
@@ -298,8 +292,14 @@ $logger->info(print_r($arr['file_path'], 1));
             strpos($path, 'vendor/') === 0 
             && strpos($path, 'vendor/magento') === false
         ) {
-            $arr['file_type'] = __('Module');
-            $arr['file_group'] = __('Vendor');
+            if ($this->isVendorTheme($path)) {
+                $arr['file_type'] = __('Module');
+                $arr['file_group'] = __('Vendor');
+            }
+            else {
+                $arr['file_type'] = __('Theme');
+                $arr['file_group'] = __('Vendor');             
+            }
         }
         else {
             $arr['file_type'] = __('Other');
@@ -319,6 +319,35 @@ $logger->info(print_r($arr['file_path'], 1));
             'data' => array_merge($arr, $rowData),
             'filters' => $output
         ];
+    }
+
+    /**
+     * Check if a module is vendor theme.
+     */
+	public function isVendorTheme($path) {
+        // File path to array
+        $members = explode(DIRECTORY_SEPARATOR, $path);
+
+        // Remove the file name
+        if (is_array($members) && !empty($members)) {
+            array_pop($members);
+
+            // Remove the i18n folder name
+            array_pop($members);
+
+            // Get the registration path
+            $moduleDir = join(DIRECTORY_SEPARATOR, $members);
+            $regPath = $moduleDir . DIRECTORY_SEPARATOR . 'registration.php';
+            $fullRegPath = $this->getFullPath($regPath);
+            if ($this->fileExists($fullRegPath) && $this->isReadable($fullRegPath)) {
+                $fileContent = file_get_contents($fullRegPath);
+                return strpos($fileContent, 'ComponentRegistrar::THEME');
+            }
+
+            return false;
+        }
+
+        return false;
     }
 
     /**
@@ -359,5 +388,41 @@ $logger->info(print_r($arr['file_path'], 1));
         ];
 
         return addslashes(json_encode($localeData));
+    }
+
+    /**
+     * Check if a file exists.
+     */
+    public function fileExists($path) {
+        try {
+            return file_exists($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if a file is readable.
+     */
+    public function isReadable($path) {
+        try {
+            return is_readable($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if a file is writable.
+     */
+    public function isWritable($path) {
+        try {
+            return is_writable($path);
+        }
+        catch (\Exception $e) {
+            return false;
+        }
     }
 }

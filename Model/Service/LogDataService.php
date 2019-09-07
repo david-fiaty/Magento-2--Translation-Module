@@ -140,42 +140,6 @@ class LogDataService
     }
 
     /**
-     * Check if a file exists.
-     */
-    public function fileExists($path) {
-        try {
-            return file_exists($path);
-        }
-        catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if a file is readable.
-     */
-    public function isReadable($path) {
-        try {
-            return is_readable($path);
-        }
-        catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if a file is writable.
-     */
-    public function isWritable($path) {
-        try {
-            return is_writable($path);
-        }
-        catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    /**
      * Check if a file has errors.
      */
     public function hasErrors($fileId, $line, $rowId) {
