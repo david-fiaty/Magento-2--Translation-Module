@@ -1,6 +1,7 @@
 - replace file_put_contents and file_get_contents by core functions
 - improve the csv error detector
 - check acl.xml file
+- fix row id number in detail logs views
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
