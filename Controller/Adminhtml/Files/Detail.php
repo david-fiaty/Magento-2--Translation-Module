@@ -165,7 +165,7 @@ class Detail extends \Magento\Backend\App\Action
         // Save the data
         try {
             // Prepare the full file path
-            $filePath = $rootPath . '/' . $fileEntity->getData('file_path');
+            $filePath = $rootPath . DIRECTORY_SEPARATOR . $fileEntity->getData('file_path');
 
             // Save the file
             file_put_contents($filePath, $fileEntity->getData('file_content'));

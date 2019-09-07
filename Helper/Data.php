@@ -82,7 +82,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
 	public function getCleanPath($filePath) {
         // Return the clean path
-        return str_replace($this->tree->getRoot() . '/', '', $filePath);
+        return str_replace($this->tree->getRoot() . DIRECTORY_SEPARATOR, '', $filePath);
 	}
 
     /**
@@ -90,7 +90,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
 	public function getFullPath($cleanPath) {
         // Return the full path
-        return $this->dir->getRoot() . '/' . $cleanPath;
+        return $this->dir->getRoot() . DIRECTORY_SEPARATOR . $cleanPath;
     }
     
     /**
