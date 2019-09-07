@@ -1,6 +1,5 @@
 - Check the todos in code
 - replace file_put_contents and file_get_contents by core functions
-- improve the cache flushing response
 - improve the csv error detector
 - check acl.xml file
 
