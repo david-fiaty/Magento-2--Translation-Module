@@ -112,8 +112,7 @@ class StringDataService
                             $arr
                         );
                     }
-                    else if ($this->logDataService->hasErrors($arr['file_id'], $line, $rowId)
-                    && !$this->logDataService->shoudHideRow(false)) {
+                    else {
                         // Store the item as an object
                         $this->output['table_data'][] = (object) $this->buildErrorRow(
                             $line,

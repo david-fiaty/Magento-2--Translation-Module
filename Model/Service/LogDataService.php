@@ -140,15 +140,6 @@ class LogDataService
     }
 
     /**
-     * Checks if a row should be hidden.
-     */
-    public function shoudHideRow($isLogView) {
-        $hideInvalidRows = $this->helper->getConfig('hide_invalid_rows');
-
-        return $hideInvalidRows && !$isLogView;
-    }
-
-    /**
      * Check if a file exists.
      */
     public function fileExists($path) {

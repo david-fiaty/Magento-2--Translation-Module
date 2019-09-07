@@ -44,12 +44,7 @@
                     <label>Exclude static files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to Yes, static files will be excluded.</comment>
-                </field>  
-                <field id="hide_invalid_rows" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Hide invalid CSV rows</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If set to Yes, invalid CSV rows will be visible only in logs viewing.</comment>
-                </field>         
+                </field>        
             </group>
          </section>
     </system>
