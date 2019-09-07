@@ -43,6 +43,11 @@ class Index extends \Magento\Backend\App\Action
     public $fileEntityFactory;
 
     /**
+     * @var LoEntityFactory
+     */
+    public $logEntityFactory;
+
+    /**
      * @var LogDataService
      */
     public $logDataService;
@@ -57,6 +62,7 @@ class Index extends \Magento\Backend\App\Action
         \Naxero\Translation\Helper\Data $helper,
         \Naxero\Translation\Helper\View $viewHelper,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
+        \Naxero\Translation\Model\LogEntityFactory $logEntityFactory,
         \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
@@ -64,6 +70,7 @@ class Index extends \Magento\Backend\App\Action
         $this->helper = $helper;
         $this->viewHelper = $viewHelper;
         $this->fileEntityFactory = $fileEntityFactory;
+        $this->logEntityFactory = $logEntityFactory;
         $this->logDataService = $logDataService;
         
         parent::__construct($context);
@@ -87,6 +94,11 @@ class Index extends \Magento\Backend\App\Action
         {
             // Get the update mode
             $update_mode = $this->getRequest()->getParam('update_mode');
+
+            $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/update.log');
+            $logger = new \Zend\Log\Logger();
+            $logger->addWriter($writer);
+            $logger->info(print_r($update_mode, 1));
 
             // Get the view mode
             $view = $this->getRequest()->getParam('view');
@@ -119,9 +131,16 @@ class Index extends \Magento\Backend\App\Action
      * Clear the file records in database.
      */
     public function clearTableData() {
+        // Clear the files index
         $fileEntity = $this->fileEntityFactory->create(); 
         $connection = $fileEntity->getCollection()->getConnection();
         $tableName  = $fileEntity->getCollection()->getMainTable();
+        $connection->truncateTable($tableName);
+
+        // Clear the logs index
+        $logEntity = $this->logEntityFactory->create(); 
+        $connection = $logEntity->getCollection()->getConnection();
+        $tableName  = $logEntity->getCollection()->getMainTable();
         $connection->truncateTable($tableName);
     }
 
