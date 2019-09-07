@@ -344,14 +344,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
             // Get the registration path
             $moduleDir = join(DIRECTORY_SEPARATOR, $members);
-            $regPath = $moduleDir . DIRECTORY_SEPARATOR . 'registration.php';
+            $regPath = $moduleDir . DIRECTORY_SEPARATOR . 'theme.xml';
             $fullRegPath = $this->getFullPath($regPath);
-            if ($this->fileExists($fullRegPath) && $this->isReadable($fullRegPath)) {
-                $fileContent = $this->fileDriver->fileGetContents($fullRegPath);
-                return strpos($fileContent, 'ComponentRegistrar::THEME');
-            }
 
-            return false;
+            return $this->fileExists($fullRegPath)
+            && $this->isReadable($fullRegPath);
         }
 
         return false;
