@@ -112,10 +112,10 @@ class FileDataService
 
                 // Store the item as an object
                 $this->output['table_data'][] = (object) $arr;
-            }
 
-            // Increase the file count and index
-            $fileCount++;
+                // Increase the file count and index
+                $fileCount++;
+            }
         }
 
         // Return the data output

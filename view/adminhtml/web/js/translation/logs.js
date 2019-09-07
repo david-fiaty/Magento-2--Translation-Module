@@ -108,7 +108,7 @@
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), width: 550},
                 {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
                 {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
-                {title: __('Row Id'), field: 'row_id', sorter: 'number', width: 90},
+                {title: __('Row Id'), field: 'row_id', sorter: 'number', width: 100},
                 {title: __('Comments'), field: 'comments', formatter: 'textarea'}
             ];
         }

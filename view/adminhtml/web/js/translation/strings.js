@@ -91,9 +91,9 @@
         getListColumns: function() {
             return [
                 {title: __('#'), field: 'index', sorter: 'number', width: 70},
-                {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', formatter: 'textarea'},
-                {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', formatter: 'textarea', editor: 'input'},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter:'input', width: 200},
+                {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea'},
+                {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), width: 200},
                 {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
                 {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
                 {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},

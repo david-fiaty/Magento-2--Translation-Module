@@ -120,6 +120,7 @@ class LogDataService
 
                 // Add to output
                 $this->output['table_data'][] = (object) $arr;
+                $this->output['error_data'][] = (object) $arr;
 
                 // Increment the file count
                 $fileCount++;
