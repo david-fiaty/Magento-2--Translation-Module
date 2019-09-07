@@ -163,7 +163,7 @@ class Index extends \Magento\Backend\App\Action
         // Get the file content
         if ($isReadable) {
             $fileContent = $this->fileDriver->fileGetContents($filePath);
-            $rowsCount = $this->helper->countCsvRows($filePath);
+            $rowsCount = $this->helper->countCsvRows($fileContent);
         }
 
         // Save the item

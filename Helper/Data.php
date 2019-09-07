@@ -103,12 +103,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Count the rows in a CSV file.
      */
-    public function countCsvRows($csvPath) {
+    public function countCsvRows($csvString) {
         // Parse the string
-        $csvData = $this->csvParser->getData($csvPath);
+        $csvArray = explode(PHP_EOL, $csvString);
 
-        // Return the row count
-        return count($csvData);
+        // Return the rows count
+        return count($csvArray);
     }
 
     /**
@@ -343,7 +343,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             array_pop($members);
 
             // Get the registration path
-            $moduleDir = join(DIRECTORY_SEPARATOR, $members);
+            $moduleDir = implode(DIRECTORY_SEPARATOR, $members);
             $regPath = $moduleDir . DIRECTORY_SEPARATOR . 'theme.xml';
             $fullRegPath = $this->getFullPath($regPath);
 
