@@ -113,20 +113,23 @@ define(
             prepareData: function(com, targetTable, data) {
                 // Prepare variables
                 var noResultsClassName = 'no-results';
-                var containerClassName = 'tabulator-table';
+                var containerClassName = 'tabulator-tableHolder';
                 var rowsCount = data.table_data.length;
                 var errorsCount = (data.error_data) ? data.error_data.length : 0;
 
                 // Set the rows count header
                 this.setRowsCount(com, targetTable, rowsCount, errorsCount);
 
+                // Remove the no results div if exists
+                com.cache._(targetTable)
+                .find('.' + containerClassName + ' .' + noResultsClassName)
+                .remove();
+
+                // Clear the table data
+                com.cache._(targetTable).tabulator('clearData');
+
                 // Handle the no results state
                 if (rowsCount != 0) {
-                    // Remove the no results div
-                    com.cache._(targetTable)
-                    .find('.' + containerClassName +' .' + noResultsClassName)
-                    .remove();
-
                     // Set the table data
                     com.cache._(targetTable).tabulator('setData', data.table_data);
                 }
@@ -297,7 +300,7 @@ define(
                             id: 'update_replace',
                             name: 'update_mode',
                             value: 'update_replace',
-                            label: __('Replace all files'),
+                            label: __('Reload all files'),
                             note: __('Reload all files in the index and override existing content not saved to files.'),
                         }
                     ]),

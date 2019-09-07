@@ -82,8 +82,6 @@
         },
 
         setToolbarActions: function() {
-            var self = this;
-
             // Back button
             actions.initBackButton(this);
 
