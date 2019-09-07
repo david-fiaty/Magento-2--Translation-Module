@@ -116,7 +116,7 @@ define(
                 var rowsCount = data.table_data.length;
 
                 // Set the rows count header
-                this.setRowsCount(com, rowsCount);
+                this.setRowsCount(com, targetTable, rowsCount);
 
                 // Handle the no results state
                 if (rowsCount != 0) {
@@ -129,21 +129,21 @@ define(
                 }
             },
 
-            setRowsCount: function(com, rowsCount) {
+            setRowsCount: function(com, targetTable, rowsCount) {
                 // Prepare the html
                 var html = '<div class="translation-rows-count">';
                 html += '<span>' + rowsCount + '</span>';
                 html += '&nbsp;';
-                html += __('rows found.');
+                html += __('rows found');
                 html += '</div>';
 
                 // Remove the previous count
-                com.cache._('#translation-table-content')
+                com.cache._(targetTable)
                 .find('.translation-rows-count')
                 .remove();
 
                 // Insert the new count
-                com.cache._('#translation-table-content').prepend(html);
+                com.cache._(targetTable).prepend(html);
             },
 
             updateFileIndex: function(com, updateMode) {
