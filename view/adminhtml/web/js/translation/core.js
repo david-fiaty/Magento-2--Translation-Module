@@ -192,6 +192,7 @@ define(
             },
 
             createOptions: function(com, sel, arr) {
+                // Prepare the options
                 var output = [];
                 $.each(arr, function(key, value) {
                     // Create the option
@@ -200,8 +201,10 @@ define(
                     // Add it to the output
                     output.push(option);
                 });
-                com.cache._(sel).children('option:not(:first)').remove()
-                .append(output.join(''));
+
+                // Append the options
+                com.cache._(sel).children('option:not(:first)').remove();
+                com.cache._(sel).append(output.join(''));
             },
 
             addFilterEvents: function(com) {
