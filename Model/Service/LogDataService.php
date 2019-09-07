@@ -83,6 +83,7 @@ class LogDataService
         $collection = $logEntity->getCollection();
 
         // Process the logs
+        $fileCount = 0;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -98,6 +99,9 @@ class LogDataService
             // Process the file
             $filePath = $fileInstance->getFilePath();
             if (!$this->helper->excludeFile($filePath) && !empty($filePath)) {
+                // Add the file index field
+                $arr['index'] = $fileCount + 1;
+
                 // Add the file path field
                 $arr['file_path'] = $filePath;
 
@@ -116,6 +120,9 @@ class LogDataService
 
                 // Add to output
                 $this->output['table_data'][] = (object) $arr;
+
+                // Increment the file count
+                $fileCount++;
             }
         }
 

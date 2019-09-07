@@ -69,7 +69,7 @@
                 },
                 initialSort:[{
                     column: 'index',
-                    dir: 'desc'
+                    dir: 'asc'
                 }]
             });
 

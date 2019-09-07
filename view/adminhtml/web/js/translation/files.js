@@ -66,8 +66,8 @@
                 resizableRows: true,
                 columns: self.getListColumns(),
                 initialSort:[{
-                    column: 'rows_count', 
-                    dir: 'desc'
+                    column: 'index', 
+                    dir: 'asc'
                 }],
                 rowClick: function(e, row) {
                     core.handleRowView(self, row);

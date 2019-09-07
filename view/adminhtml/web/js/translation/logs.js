@@ -60,8 +60,8 @@
                 resizableRows:true,
                 columns: self.getListColumns(),
                 initialSort:[{
-                    column: 'id',
-                    dir: 'desc'
+                    column: 'index',
+                    dir: 'asc'
                 }],
                 rowClick: function(e, row) {
                     var rowData = row.getData();
