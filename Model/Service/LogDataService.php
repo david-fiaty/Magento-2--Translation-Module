@@ -93,14 +93,14 @@ class LogDataService
             $fileEntity = $this->fileEntityFactory->create();
             $fileInstance = $fileEntity->load($arr['file_id']);
 
-            // Add the row index
-            $arr['index'] = $arr['row_id'] + 1;
-
             // Process the file
             $filePath = $fileInstance->getFilePath();
             if (!$this->helper->excludeFile($filePath) && !empty($filePath)) {
                 // Add the file index field
                 $arr['index'] = $fileCount + 1;
+
+                // Update the row id for display
+                $arr['row_id'] = $arr['row_id'] + 1;
 
                 // Add the file path field
                 $arr['file_path'] = $filePath;
