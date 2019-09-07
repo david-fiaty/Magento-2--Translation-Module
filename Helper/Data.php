@@ -48,6 +48,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var Pool
      */
     public $cacheFrontendPool;
+    
+    /**
+     * @var DirectoryList
+     */
+    public $dir;
 
 	/**
      * Data class constructor
@@ -59,7 +64,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\File\Csv $csvParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
-        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
+        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
+        \Magento\Framework\Filesystem\DirectoryList $dir
 	) {
 		parent::__construct($context);
         $this->adminSession = $adminSession;
@@ -68,6 +74,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->scopeConfig = $scopeConfig;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
+        $this->dir = $dir;
 	}
 
     /**
@@ -78,6 +85,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return str_replace($this->tree->getRoot() . '/', '', $filePath);
 	}
 
+    /**
+     * Get the full path from a clean path.
+     */
+	public function getFullPath($cleanPath) {
+        // Return the full path
+        return $this->dir->getRoot() . '/' . $cleanPath;
+    }
+    
     /**
      * Count the rows in a CSV file.
      */
@@ -239,6 +254,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         // Prepare the variables
         $arr = $rowData;
         $path = $arr['file_path'];
+
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
+$logger = new \Zend\Log\Logger();
+$logger->addWriter($writer);
+$logger->info(print_r($arr['file_path'], 1));
+
 
         // Todo : detect themes in vendor folder
         if (strpos($path, 'vendor/magento') === 0) {
