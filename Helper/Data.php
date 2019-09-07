@@ -253,7 +253,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $arr['file_type'] = __('Test');
             $arr['file_group'] = __('Dev');
         }
-        else if (strpos($path, 'app/design/frontend/Magento') === 0) {
+        else if (strpos($path, 'app/design/frontend/Magento') === 0
+        || strpos($path, 'app/design/adminhtml/Magento') === 0) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Core');
         }
@@ -265,8 +266,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $arr['file_type'] = __('Web');
             $arr['file_group'] = __('Library');
         }        
-        else if (strpos($path, 'app/design/frontend/') === 0
-                && strpos($path, 'app/design/frontend/Magento') === false) {
+        else if ((strpos($path, 'app/design/frontend/') === 0
+                && strpos($path, 'app/design/frontend/Magento') === false)
+                || (strpos($path, 'app/design/adminhtml/') === 0
+                && strpos($path, 'app/design/adminhtml/Magento') === false)) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Community');
         }
