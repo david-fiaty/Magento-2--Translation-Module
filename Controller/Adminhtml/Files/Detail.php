@@ -15,6 +15,8 @@
 
 namespace Naxero\Translation\Controller\Adminhtml\Files;
 
+use Magento\Framework\Exception\LocalizedException;
+
 class Detail extends \Magento\Backend\App\Action
 {
 	/**
@@ -178,9 +180,9 @@ class Detail extends \Magento\Backend\App\Action
             $filePath = $rootPath . DIRECTORY_SEPARATOR . $fileEntity->getData('file_path');
 
             // Save the file
-            return $this->fileDriver->filePutContents(
+            return $this->csvParser->saveData(
                 $filePath,
-                $fileEntity->getData('file_content')
+                json_decode($fileEntity->getData('file_content'))
             );
         }
         catch (\Exception $e) {
@@ -188,30 +190,6 @@ class Detail extends \Magento\Backend\App\Action
         }
 
         return false;
-    }
-
-    /**
-     * Convert an array to CSV format.
-     */
-    public function arrayToCsv($array) {
-        // Prepare the output
-        $csvString = '';
-
-        // Array to CSV
-        foreach ($array as $row) {
-            $parts = explode(',', $row);
-            if (isset($parts[0]) && isset($parts[1])) {
-                $csvString .= $parts[0] . ',' . $parts[1] . PHP_EOL;
-            }
-            else if (isset($parts[0]) && !isset($parts[1])) {
-                $csvString .= $parts[0] . PHP_EOL;
-            }
-            else {
-                $csvString .= $row . PHP_EOL;
-            }
-        }
-
-        return $csvString;
     }
 
     /**
@@ -276,7 +254,7 @@ class Detail extends \Magento\Backend\App\Action
         $errorLine[] = isset($rowDataArray[1]) ? $rowDataArray[1] : '';
 
         // Add the file id
-        $rowDataArray['file_id'] = $fileEntity->getData('file_id');
+        $errorLine['file_id'] = $fileEntity->getData('file_id');
 
         // Add the read/write state
         $errorLine['is_readable'] = $fileEntity->getData('is_readable');
