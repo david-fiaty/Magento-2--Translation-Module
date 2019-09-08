@@ -248,7 +248,7 @@ $logger->info(print_r($params['row_content'], 1));
                 $output['table_data'][] = $this->buildRow($line, $rowIndex, $fileEntity);
             }
             else {
-                $output['table_data'][] = $this->buildErrorRow($line, $rowIndex);
+                $output['table_data'][] = $this->buildErrorRow($line, $rowIndex, $fileEntity);
                 $output['error_data'][] = $rowIndex;
             }
             $rowId++;
@@ -278,16 +278,20 @@ $logger->info(print_r($params['row_content'], 1));
     /**
      * Prepare a file content row error for display.
      */
-    public function buildErrorRow($rowDataArray, $rowIndex) {
+    public function buildErrorRow($rowDataArray, $rowIndex, $fileEntity) {
         // Build the error line
         $errorLine = [];
         $errorLine[] = $rowIndex;
         $errorLine[] = isset($rowDataArray[0]) ? $rowDataArray[0] : '';
         $errorLine[] = isset($rowDataArray[1]) ? $rowDataArray[1] : '';
 
+        // Add the read/write state
+        $errorLine['is_readable'] = $fileEntity->getData('is_readable');
+        $errorLine['is_writable'] = $fileEntity->getData('is_writable');
+
         // Retun combined data
         return (object) array_combine(
-            ['index', 'key', 'value'],
+            ['index', 'key', 'value', 'is_readable', 'is_writable'],
             $errorLine
         );
     }
