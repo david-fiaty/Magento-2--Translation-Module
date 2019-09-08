@@ -289,11 +289,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             && strpos($path, 'vendor/magento') === false
         ) {
             if ($this->isVendorTheme($path)) {
-                $arr['file_type'] = __('Module');
+                $arr['file_type'] = __('Theme');
                 $arr['file_group'] = __('Vendor');
             }
             else {
-                $arr['file_type'] = __('Theme');
+                $arr['file_type'] = __('Module');
                 $arr['file_group'] = __('Vendor');             
             }
         }
