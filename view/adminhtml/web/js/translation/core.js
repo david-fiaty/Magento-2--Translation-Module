@@ -397,6 +397,7 @@ define(
                     {title: __('#'), field: 'index', sorter: 'number', width: 70},
                     {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea'},
                     {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
                     {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
                     {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
                 ];

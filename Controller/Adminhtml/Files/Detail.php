@@ -128,12 +128,10 @@ class Detail extends \Magento\Backend\App\Action
     public function updateFileEntityContent($fileEntity) {
         // Prepare the new content
         $params = $this->getRequest()->getParams();
-        $newRrow = $this->rowToCsv($params['row_content']);
-
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/row.log');
-$logger = new \Zend\Log\Logger();
-$logger->addWriter($writer);
-$logger->info(print_r($params['row_content'], 1));
+        $newRrow = [
+            $params['row_content']['key'],
+            $params['row_content']['value']
+        ];
 
         // Insert the new data
         try {
@@ -141,14 +139,14 @@ $logger->info(print_r($params['row_content'], 1));
             $content = $fileEntity->getFileContent();
 
             // Convert the content to array
-            $lines = explode(PHP_EOL, $content);
+            $lines = json_decode($content);
 
             // Get the row id from index
             $rowId = $params['row_content']['index'] - 1;
 
             // Update the row
             $lines[$rowId] = $newRrow;
-            $newContent = $this->arrayToCsv($lines);
+            $newContent = json_encode($lines);
 
             // Save the new content to db
             $fileEntity->setFileContent($newContent);
@@ -217,16 +215,6 @@ $logger->info(print_r($params['row_content'], 1));
     }
 
     /**
-     * Convert a row to CSV format.
-     */
-    public function rowToCsv($row) {
-        $csvString = '"' . $row['key'] 
-        . '",' . '"' . $row['value'] . '"';
-
-        return $csvString;
-    }
-
-    /**
      * Get a file content from database.
      */
     public function getFileEntityContent($fileEntity, $isLogView) {
@@ -234,7 +222,7 @@ $logger->info(print_r($params['row_content'], 1));
         $output = array(); 
 
         // Get the file content rows
-        $rows = explode(PHP_EOL, $fileEntity->getData('file_content'));
+        $rows = json_decode($fileEntity->getData('file_content'));
 
         // Get the file id
         $fileId = $fileEntity->getData('file_id');
@@ -242,13 +230,12 @@ $logger->info(print_r($params['row_content'], 1));
         // Loop through the rows
         $rowId = 0;
         foreach ($rows as $row) {
-            $line = str_getcsv($row);
             $rowIndex = $rowId + 1;
-            if (!$this->logDataService->hasErrors($fileId, $line, $rowId)) {
-                $output['table_data'][] = $this->buildRow($line, $rowIndex, $fileEntity);
+            if (!$this->logDataService->hasErrors($fileId, $row, $rowId)) {
+                $output['table_data'][] = $this->buildRow($row, $rowIndex, $fileEntity);
             }
             else {
-                $output['table_data'][] = $this->buildErrorRow($line, $rowIndex, $fileEntity);
+                $output['table_data'][] = $this->buildErrorRow($row, $rowIndex, $fileEntity);
                 $output['error_data'][] = $rowIndex;
             }
             $rowId++;
@@ -264,13 +251,16 @@ $logger->info(print_r($params['row_content'], 1));
         // Add the index to the row array
         array_unshift($rowDataArray, $rowIndex);
 
+        // Add the file id
+        $rowDataArray['file_id'] = $fileEntity->getData('file_id');
+
         // Add the read/write state
         $rowDataArray['is_readable'] = $fileEntity->getData('is_readable');
         $rowDataArray['is_writable'] = $fileEntity->getData('is_writable');
 
         // Retun combined data
         return (object) array_combine(
-            ['index', 'key', 'value', 'is_readable', 'is_writable'],
+            $this->getColumns(),
             $rowDataArray
         );
     }
@@ -285,14 +275,31 @@ $logger->info(print_r($params['row_content'], 1));
         $errorLine[] = isset($rowDataArray[0]) ? $rowDataArray[0] : '';
         $errorLine[] = isset($rowDataArray[1]) ? $rowDataArray[1] : '';
 
+        // Add the file id
+        $rowDataArray['file_id'] = $fileEntity->getData('file_id');
+
         // Add the read/write state
         $errorLine['is_readable'] = $fileEntity->getData('is_readable');
         $errorLine['is_writable'] = $fileEntity->getData('is_writable');
 
         // Retun combined data
         return (object) array_combine(
-            ['index', 'key', 'value', 'is_readable', 'is_writable'],
+            $this->getColumns(),
             $errorLine
         );
+    }
+
+    /**
+     * Get the detail table columns.
+     */
+    public function getColumns() {
+        return [
+            'index',
+            'key',
+            'value',
+            'file_id',
+            'is_readable',
+            'is_writable'
+        ];
     }
 }

@@ -31,6 +31,11 @@ class Index extends \Magento\Backend\App\Action
      * @var File
      */
     public $fileDriver;
+
+    /**
+     * @var Csv
+     */
+    public $csvParser;
     
     /**
      * @var Data
@@ -65,6 +70,7 @@ class Index extends \Magento\Backend\App\Action
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\Filesystem\Driver\File $fileDriver,
+        \Magento\Framework\File\Csv $csvParser,
         \Naxero\Translation\Helper\Data $helper,
         \Naxero\Translation\Helper\View $viewHelper,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
@@ -74,6 +80,7 @@ class Index extends \Magento\Backend\App\Action
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
         $this->fileDriver = $fileDriver;
+        $this->csvParser = $csvParser;
         $this->helper = $helper;
         $this->viewHelper = $viewHelper;
         $this->fileEntityFactory = $fileEntityFactory;
@@ -162,8 +169,9 @@ class Index extends \Magento\Backend\App\Action
 
         // Get the file content
         if ($isReadable) {
-            $fileContent = $this->fileDriver->fileGetContents($filePath);
-            $rowsCount = $this->helper->countCsvRows($fileContent);
+            $fileContentArray = $this->csvParser->getData($filePath);
+            $fileContent = json_encode($fileContentArray);
+            $rowsCount = count($fileContentArray);
         }
 
         // Save the item
@@ -183,16 +191,13 @@ class Index extends \Magento\Backend\App\Action
         // If the file is readable
         if ($isReadable) {
             // Get the content rows
-            $rows = explode(PHP_EOL, $arr['file_content']);
+            $rows = json_decode($arr['file_content']);
 
             // Loop through the rows
             $rowId = 0;
             foreach ($rows as $row) {        
-                // Get the line
-                $line = str_getcsv($row);
-
                 // Check errors
-                $this->logDataService->hasErrors($arr['file_id'], $line, $rowId);
+                $this->logDataService->hasErrors($arr['file_id'], $row, $rowId);
 
                 // Increment
                 $rowId++;

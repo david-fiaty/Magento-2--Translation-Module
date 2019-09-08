@@ -99,17 +99,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         // Return the full path
         return $this->dir->getRoot() . DIRECTORY_SEPARATOR . $cleanPath;
     }
-    
-    /**
-     * Count the rows in a CSV file.
-     */
-    public function countCsvRows($csvString) {
-        // Parse the string
-        $csvArray = explode(PHP_EOL, $csvString);
-
-        // Return the rows count
-        return count($csvArray);
-    }
 
     /**
      * Get a module config parameter.

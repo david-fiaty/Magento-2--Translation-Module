@@ -86,46 +86,45 @@ class StringDataService
                 $this->output = $sorting['filters'];
 
                 // Get the content rows
-                $rows = explode(PHP_EOL, $arr['file_content']);
+                $rows = json_decode($arr['file_content']);
                 unset($arr['file_content']);
 
                 // Set the language field
                 $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
                 // Loop through the rows
-                foreach ($rows as $row) {
-                    // Prepare the output array
-                    $output = [];
+                if (!empty($rows)) {
+                    foreach ($rows as $row) {
+                        // Prepare the output array
+                        $output = [];
 
-                    // Get the line
-                    $line = str_getcsv($row);
+                        // Prepare the row index
+                        $rowIndex = $rowId + 1;
 
-                    // Prepare the row index
-                    $rowIndex = $rowId + 1;
+                        // Skip empty and non pair values
+                        if (!$this->logDataService->hasErrors($arr['file_id'], $row, $rowId)) {
+                            // Store the item as an object
+                            $this->output['table_data'][] = (object) $this->buildRow(
+                                $row,
+                                $rowIndex,
+                                $arr
+                            );
+                        }
+                        else {
+                            // Store the item as an object
+                            $this->output['table_data'][] = (object) $this->buildErrorRow(
+                                $row,
+                                $rowIndex,
+                                $arr
+                            );
 
-                    // Skip empty and non pair values
-                    if (!$this->logDataService->hasErrors($arr['file_id'], $line, $rowId)) {
-                        // Store the item as an object
-                        $this->output['table_data'][] = (object) $this->buildRow(
-                            $line,
-                            $rowIndex,
-                            $arr
-                        );
+                            // Store the error reference
+                            $this->output['error_data'][] = $rowIndex;  
+                        }
+
+                        // Increment the row id
+                        $rowId++;
                     }
-                    else {
-                        // Store the item as an object
-                        $this->output['table_data'][] = (object) $this->buildErrorRow(
-                            $line,
-                            $rowIndex,
-                            $arr
-                        );
-
-                        // Store the error reference
-                        $this->output['error_data'][] = $rowIndex;  
-                    }
-
-                    // Increment the row id
-                    $rowId++;
                 }
             }
         }
