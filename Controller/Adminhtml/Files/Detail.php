@@ -130,6 +130,11 @@ class Detail extends \Magento\Backend\App\Action
         $params = $this->getRequest()->getParams();
         $newRrow = $this->rowToCsv($params['row_content']);
 
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/row.log');
+$logger = new \Zend\Log\Logger();
+$logger->addWriter($writer);
+$logger->info(print_r($params['row_content'], 1));
+
         // Insert the new data
         try {
             // Get the current content
@@ -240,7 +245,7 @@ class Detail extends \Magento\Backend\App\Action
             $line = str_getcsv($row);
             $rowIndex = $rowId + 1;
             if (!$this->logDataService->hasErrors($fileId, $line, $rowId)) {
-                $output['table_data'][] = $this->buildRow($line, $rowIndex);
+                $output['table_data'][] = $this->buildRow($line, $rowIndex, $fileEntity);
             }
             else {
                 $output['table_data'][] = $this->buildErrorRow($line, $rowIndex);
@@ -255,13 +260,17 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Prepare a file row content for display.
      */
-    public function buildRow($rowDataArray, $rowIndex) {
+    public function buildRow($rowDataArray, $rowIndex, $fileEntity) {
         // Add the index to the row array
         array_unshift($rowDataArray, $rowIndex);
 
+        // Add the read/write state
+        $rowDataArray['is_readable'] = $fileEntity->getData('is_readable');
+        $rowDataArray['is_writable'] = $fileEntity->getData('is_writable');
+
         // Retun combined data
         return (object) array_combine(
-            ['index', 'key', 'value'],
+            ['index', 'key', 'value', 'is_readable', 'is_writable'],
             $rowDataArray
         );
     }

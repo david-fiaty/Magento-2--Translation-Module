@@ -396,7 +396,9 @@ define(
                 return [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70},
                     {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea'},
-                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'} 
+                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
+                    {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
                 ];
             },
 
@@ -453,7 +455,7 @@ define(
                 var row = isCell ? item.getRow() : item;
                 var rowData = row.getData();
                 if (rowData.is_writable == '1') {
-                    self.updateEntityData(
+                    this.updateEntityData(
                         com,
                         {
                             fileId: rowData.file_id,
