@@ -63,8 +63,9 @@ class LogDataService
     public function getError() {
         return [
             __('Empty line detected.'),
-            __('Incorrect Key/Value structure: more than 2 values detected.'),
-            __('Incorrect Key/Value structure: less than 2 values detected.'),
+            __('Empty key detected.'),
+            __('Empty value detected.'),
+            __('Incorrect Key/Value structure.'),
             __('The file is not readable.'),
             __('The file is not writable.')
         ];
@@ -147,18 +148,23 @@ class LogDataService
         $errors = [];
 
         // Check for empty lines
-        if (empty($line[0])) { 
+        if (empty($line[0]) && empty($line[1])) { 
             $errors[] = 0;
         }
 
-        // Check for too many values
-        if (count($line) > 2) {
+        // Check for empty key
+        if (empty($line[0]) && !empty($line[1])) { 
             $errors[] = 1;
         }
 
-        // Check for insufficient values
-        if (!empty($line[0]) && count($line) < 2) {
+        // Check for empty value
+        if (!empty($line[0]) && empty($line[1])) { 
             $errors[] = 2;
+        }
+
+        // Check for too many values
+        if (count($line) > 2 || (!empty($line[0]) && count($line) < 2)) {
+            $errors[] = 3;
         }
 
         // Process the results

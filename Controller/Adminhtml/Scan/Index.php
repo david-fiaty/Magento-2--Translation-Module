@@ -206,7 +206,7 @@ class Index extends \Magento\Backend\App\Action
         else {
             // Create the log error
             $this->logDataService->createLog(
-                3,
+                4,
                 $arr['file_id'],
                 $rowId = null
             );
@@ -215,7 +215,7 @@ class Index extends \Magento\Backend\App\Action
         // Check the file is writable
         if (!$isWritable) {
             $this->logDataService->createLog(
-                4,
+                5,
                 $arr['file_id'],
                 $rowId = null
             );        
