@@ -1,5 +1,6 @@
 - check acl.xml file
 - add new file creation feature
+- add new row to file feature
 - add import file feature
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
