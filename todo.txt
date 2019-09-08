@@ -1,4 +1,3 @@
-- improve the csv error detector
 - check acl.xml file
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
