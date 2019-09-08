@@ -157,7 +157,7 @@ class LogDataService
         }
 
         // Check for insufficient values
-        if (count($line) < 2) {
+        if (!empty($line[0]) && count($line) < 2) {
             $errors[] = 2;
         }
 
