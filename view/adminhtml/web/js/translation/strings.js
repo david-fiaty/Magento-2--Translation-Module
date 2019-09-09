@@ -65,7 +65,7 @@
                 resizableRows:true,
                 columns: self.getListColumns(),
                 cellEdited: function(cell) {
-                    self.handleCellEdit(com, cell, true);
+                    core.handleCellEdit(self, cell, true);
                 },
                 initialSort:[{
                     column: 'index',
