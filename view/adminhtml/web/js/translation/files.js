@@ -66,7 +66,7 @@
                 resizableRows: true,
                 columns: self.getListColumns(),
                 initialSort:[{
-                    column: 'index', 
+                    column: 'file_id', 
                     dir: 'asc'
                 }],
                 rowClick: function(e, row) {
@@ -97,7 +97,6 @@
 
         getListColumns: function() {
             return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70},
                 {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...')},
                 {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},

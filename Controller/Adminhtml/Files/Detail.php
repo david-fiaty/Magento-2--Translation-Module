@@ -147,6 +147,11 @@ class Detail extends \Magento\Backend\App\Action
             $rowId = $params['row_content']['index'] - 1;
 
             // Update the row
+            $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
+            $logger = new \Zend\Log\Logger();
+            $logger->addWriter($writer);
+            $logger->info(print_r($params['row_content']['index'], 1));
+
             $lines[$rowId] = $newRrow;
             $newContent = json_encode($lines);
 
