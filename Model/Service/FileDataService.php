@@ -81,7 +81,6 @@ class FileDataService
         $collection = $fileEntity->getCollection();
 
         // Prepare the output array
-        $fileCount = 0;
         foreach ($collection as $item)
         {
             // Get the item data as array
@@ -118,9 +117,6 @@ class FileDataService
 
                 // Store the item as an object
                 $this->output['table_data'][] = (object) $arr;
-
-                // Increment the file count
-                $fileCount++;
             }
         }
 

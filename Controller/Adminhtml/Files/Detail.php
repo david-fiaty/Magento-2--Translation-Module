@@ -143,14 +143,8 @@ class Detail extends \Magento\Backend\App\Action
             // Convert the content to array
             $lines = json_decode($content);
 
-            // Get the row id from index
-            $rowId = $params['row_content']['index'] - 1;
-
-            // Update the row
-            $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
-            $logger = new \Zend\Log\Logger();
-            $logger->addWriter($writer);
-            $logger->info(print_r($params['row_content']['index'], 1));
+            // Get the row id
+            $rowId = $params['row_content']['row_id'];
 
             $lines[$rowId] = $newRrow;
             $newContent = json_encode($lines);
@@ -213,13 +207,12 @@ class Detail extends \Magento\Backend\App\Action
         // Loop through the rows
         $rowId = 0;
         foreach ($rows as $row) {
-            $rowIndex = $rowId + 1;
             if (!$this->logDataService->hasErrors($fileId, $row, $rowId)) {
-                $output['table_data'][] = $this->buildRow($row, $rowIndex, $fileEntity);
+                $output['table_data'][] = $this->buildRow($row, $rowId, $fileEntity);
             }
             else {
-                $output['table_data'][] = $this->buildErrorRow($row, $rowIndex, $fileEntity);
-                $output['error_data'][] = $rowIndex;
+                $output['table_data'][] = $this->buildErrorRow($row, $rowId, $fileEntity);
+                $output['error_data'][] = $rowId;
             }
             $rowId++;
         }
@@ -230,12 +223,10 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Prepare a file row content for display.
      */
-    public function buildRow($rowDataArray, $rowIndex, $fileEntity) {
-        // Add the index to the row array
-        array_unshift($rowDataArray, $rowIndex);
-
-        // Add the file id
+    public function buildRow($rowDataArray, $rowId, $fileEntity) {
+        // Add the file and row id
         $rowDataArray['file_id'] = $fileEntity->getData('file_id');
+        $rowDataArray['row_id'] = $rowId;
 
         // Add the read/write state
         $rowDataArray['is_readable'] = $fileEntity->getData('is_readable');
@@ -251,15 +242,15 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Prepare a file content row error for display.
      */
-    public function buildErrorRow($rowDataArray, $rowIndex, $fileEntity) {
+    public function buildErrorRow($rowDataArray, $rowId, $fileEntity) {
         // Build the error line
         $errorLine = [];
-        $errorLine[] = $rowIndex;
         $errorLine[] = isset($rowDataArray[0]) ? $rowDataArray[0] : '';
         $errorLine[] = isset($rowDataArray[1]) ? $rowDataArray[1] : '';
 
-        // Add the file id
-        $errorLine['file_id'] = $fileEntity->getData('file_id');
+        // Add the file and row id
+        $rowDataArray['file_id'] = $fileEntity->getData('file_id');
+        $rowDataArray['row_id'] = $rowId;
 
         // Add the read/write state
         $errorLine['is_readable'] = $fileEntity->getData('is_readable');
@@ -277,10 +268,10 @@ class Detail extends \Magento\Backend\App\Action
      */
     public function getColumns() {
         return [
-            'index',
             'key',
             'value',
             'file_id',
+            'row_id',
             'is_readable',
             'is_writable'
         ];

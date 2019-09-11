@@ -377,7 +377,7 @@ define(
                         self.handleCellEdit(com, row, false);
                     },
                     initialSort:[{
-                        column: 'index', 
+                        column: 'key', 
                         dir: 'asc'
                     }]
                 });
@@ -394,7 +394,7 @@ define(
 
             getDetailColumns: function() {
                 return [
-                    {title: __('#'), field: 'index', sorter: 'number', width: 70},
+                    {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
                     {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
                     {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
                     {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
@@ -485,10 +485,12 @@ define(
                 this.displayErrors(tableRows, data);
             },
 
-            displayErrors(tableRows, data)  {
+            displayErrors(tableRows, data, isDetailView)  {
+                var isDetailView = isDetailView || false;
+                var fieldName = (isDetailView) ? 'row_id' : 'file_id';
                 tableRows.forEach(function(row) {
-                    var rowIndex = row.getData().index;
-                    if (data.error_data.indexOf(rowIndex) != -1) {
+                    var rowId = row.getData()[fieldName];
+                    if (data.error_data.indexOf(rowId) != -1) {
                         row.getElement().css({'background-color':'#FF9900'});
                     }
                 });
