@@ -66,7 +66,7 @@
                 resizableRows: true,
                 columns: self.getListColumns(),
                 initialSort:[{
-                    column: 'file_id', 
+                    column: 'file_path', 
                     dir: 'asc'
                 }],
                 rowClick: function(e, row) {
