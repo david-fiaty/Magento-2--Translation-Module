@@ -81,6 +81,7 @@ class FileDataService
         $collection = $fileEntity->getCollection();
 
         // Prepare the output array
+        $fileCount = 0;
         foreach ($collection as $item)
         {
             // Get the item data as array
@@ -89,7 +90,8 @@ class FileDataService
             // Process the file
             if (!$this->helper->excludeFile($arr) && !empty($arr['file_path'])) {
                 // Prepare the columns and filters
-                $arr = $this->formatFileRow($arr, $item);
+                $fileIndex = $fileCount + 1;
+                $arr = $this->formatFileRow($arr, $item, $fileIndex);
 
                 // Build the sorting
                 $sorting = $this->helper->buildFilters($arr, $this->output);
@@ -105,11 +107,11 @@ class FileDataService
 
                     // Process the read/write state 
                     if (!$isReadable || !$isWritable) {
-                        $this->output['error_data'][] = $arr['file_id'];
+                        $this->output['error_data'][] = $fileIndex;
                     }
                 }
                 else {
-                    $this->output['error_data'][] = $arr['file_id'];  
+                    $this->output['error_data'][] = $fileIndex;  
                 }
 
                 // Remove uneeded file content for performance
@@ -117,6 +119,9 @@ class FileDataService
 
                 // Store the item as an object
                 $this->output['table_data'][] = (object) $arr;
+
+                // Increase the file count and index
+                $fileCount++;
             }
         }
 
@@ -145,7 +150,10 @@ class FileDataService
     /**
      * Format a file row data for display.
      */
-    public function formatFileRow($arr, $fileEntity) {
+    public function formatFileRow($arr, $fileEntity, $fileIndex) {
+        // Add the index
+        $arr['index'] = $fileIndex;
+
         // Cast the id field to integer
         $arr['file_id'] = (int) $arr['file_id'];
 
