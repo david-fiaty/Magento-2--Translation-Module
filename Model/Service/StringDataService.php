@@ -74,7 +74,7 @@ class StringDataService
         $collection = $fileEntity->getCollection();
 
         // Process the files content
-        $rowId = 0;
+        $rowCount = 0;
         foreach ($collection as $item)
         {
             // Get the item data
@@ -94,18 +94,20 @@ class StringDataService
 
                 // Loop through the rows
                 if (!empty($rows)) {
+                    $rowId = 0;
                     foreach ($rows as $row) {
                         // Prepare the output array
                         $output = [];
 
                         // Prepare the row index
-                        $rowIndex = $rowId + 1;
+                        $rowIndex = $rowCount + 1;
 
                         // Skip empty and non pair values
                         if (!$this->logDataService->hasErrors($arr['file_id'], $row, $rowId)) {
                             // Store the item as an object
                             $this->output['table_data'][] = (object) $this->buildRow(
                                 $row,
+                                $rowId,
                                 $rowIndex,
                                 $arr
                             );
@@ -114,6 +116,7 @@ class StringDataService
                             // Store the item as an object
                             $this->output['table_data'][] = (object) $this->buildErrorRow(
                                 $row,
+                                $rowId,
                                 $rowIndex,
                                 $arr
                             );
@@ -123,7 +126,7 @@ class StringDataService
                         }
 
                         // Increment the row id
-                        $rowId++;
+                        $rowCount++;
                     }
                 }
             }
@@ -136,9 +139,10 @@ class StringDataService
     /**
      * Format a CSV file row for display.
      */
-    public function buildRow($line, $rowIndex, $arr) {
+    public function buildRow($line, $rowId, $rowIndex, $arr) {
         return array_merge([
             'index' => $rowIndex,
+            'row_id' => $rowId,
             'key' => $line[0],
             'value' => $line[1]
         ], $arr);
@@ -147,9 +151,10 @@ class StringDataService
     /**
      * Format a CSV file error row for display.
      */
-    public function buildErrorRow($line, $rowIndex, $arr) {
+    public function buildErrorRow($line, $rowId, $rowIndex, $arr) {
         $errorLine = [];
         $errorLine['index'] = $rowIndex;
+        $errorLine['row_id'] = $rowId;
         $errorLine['key'] = isset($line[0]) ? $line[0] : '';
         $errorLine['value'] = isset($line[1]) ? $line[1] : '';
 

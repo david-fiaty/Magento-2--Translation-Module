@@ -90,7 +90,8 @@
 
         getListColumns: function() {
             return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70},
+                {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
+                {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
                 {title: __('Key'), field: 'key', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
                 {title: __('Value'), field: 'value', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
                 {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter:'input', headerFilterPlaceholder: __('Search...'), width: 200},
