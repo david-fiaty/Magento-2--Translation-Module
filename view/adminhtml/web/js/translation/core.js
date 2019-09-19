@@ -285,6 +285,36 @@ define(
                 com.cache._(com.options.targetTable).tabulator('setFilter', filters);
             },
 
+            getNewFilePrompt: function(com) {
+                var self = this;
+                prompt({
+                    title: __('New translation file'),
+                    content: self.getScanPromptOptions([{
+                            id: 'update_add',
+                            name: 'update_mode',
+                            value: 'update_add',
+                            label: __('Add new files'),
+                            note: __('Add only new files to the index and preserve existing indexed content.'),
+                        },
+                        {
+                            id: 'update_replace',
+                            name: 'update_mode',
+                            value: 'update_replace',
+                            label: __('Reload all files'),
+                            note: __('Clear the indexed content and reload all files into the index.'),
+                        }
+                    ]),
+                    actions: {
+                        confirm: function() {
+                            var optChecked = com.cache._('input[name=update_mode]:checked').val();
+                            self.updateFileIndex(com, optChecked);
+                        }, 
+                        cancel: function(){}, 
+                        always: function(){}
+                    }
+                });
+            },
+
             getScanPrompt: function(com) {
                 var self = this;
                 prompt({

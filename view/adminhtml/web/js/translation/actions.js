@@ -22,6 +22,12 @@ define(
 
         // Return the component
         return {
+            initNewFileButton: function(com) {
+                com.cache._('#new-file').off().on('click', function() {
+                    core.getNewFilePrompt(com);
+                });
+            },
+
             initBackButton: function(com) {
                 com.cache._('#button-back').off().on('click', function() {
                     core.togglePanes(com, 0);

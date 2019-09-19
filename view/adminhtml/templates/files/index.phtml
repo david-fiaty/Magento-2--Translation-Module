@@ -69,10 +69,13 @@
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
+						<button id="new-file" name="new-file" type="button" class="action-default primary">
+							<span><?= __('New file'); ?></span>
+						</button>
 						<button id="update-files" name="update-files" type="button" class="action-default primary">
 							<span><?= __('Scan files'); ?></span>
 						</button>
-						<button id="flush-cache-list" name="flush-cache-list" type="button" class="action-default primary">
+						<button id="flush-cache-list" name="flush-cache-list" type="button" class="action- scalable action-secondary">
 							<span><?= __('Flush cache'); ?></span>
 						</button>
 					</div>
@@ -89,10 +92,10 @@
 						<button id="button-back" name="button-back" type="button" class="action- scalable back">
 							<span><?= __('Back'); ?></span>
 						</button>
-						<button id="download-file" name="download-file" type="button" class="action- scalable action-secondary">
+						<button id="download-file" name="download-file" type="button" class="action- scalable action-primary">
 							<span><?= __('Download CSV'); ?></span>
 						</button>
-						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action-default primary">
+						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action- scalable action-secondary">
 							<span><?= __('Flush cache'); ?></span>
 						</button>
 					</div>
