@@ -16,9 +16,11 @@ define(
     [
         'jquery',
         'Magento_Ui/js/modal/prompt',
+        'Naxero_Translation/js/translation/core',
+        'mage/translate',
         'jquery/ui'
     ],
-    function ($, prompt) {
+    function ($, prompt, core, __) {
         'use strict';
 
         // Return the component
@@ -86,7 +88,7 @@ define(
                     actions: {
                         confirm: function() {
                             var optChecked = com.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(com, optChecked);
+                            core.updateFileIndex(com, optChecked);
                         }, 
                         cancel: function(){}, 
                         always: function(){}
