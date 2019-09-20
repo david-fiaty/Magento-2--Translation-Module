@@ -15,16 +15,17 @@
 define(
     [
         'jquery',
-        'Naxero_Translation/js/translation/core'
+        'Naxero_Translation/js/translation/core',
+        'Naxero_Translation/js/translation/prompt',
     ],
-    function ($, core) {
+    function ($, core, prompt) {
         'use strict';
 
         // Return the component
         return {
             initNewFileButton: function(com) {
                 com.cache._('#new-file').off().on('click', function() {
-                    core.getNewFilePrompt(com);
+                    prompt.newFile(com);
                 });
             },
 
@@ -47,7 +48,7 @@ define(
 
             initScanButton: function(com) {
                 com.cache._('#update-files').off().on('click', function() {
-                    core.getScanPrompt(com);
+                    prompt.newScan(com);
                 });
             },
 

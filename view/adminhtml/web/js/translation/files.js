@@ -93,6 +93,9 @@
 
             // Flush cache
             actions.initCacheButton(this);
+
+            // New file
+            actions.initNewFileButton(this);
         },
 
         getListColumns: function() {

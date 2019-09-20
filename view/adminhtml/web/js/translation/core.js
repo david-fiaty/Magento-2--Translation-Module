@@ -15,11 +15,10 @@
 define(
     [
         'jquery',
-        'Magento_Ui/js/modal/prompt',
         'mage/translate',
         'mage/cookies'
     ],
-    function ($, prompt, __) {
+    function ($, __) {
         'use strict';
 
         // Define constants
@@ -283,85 +282,6 @@ define(
                 // Clear filters and set the new one
                 com.cache._(com.options.targetTable).tabulator('clearFilter');
                 com.cache._(com.options.targetTable).tabulator('setFilter', filters);
-            },
-
-            getNewFilePrompt: function(com) {
-                var self = this;
-                prompt({
-                    title: __('New translation file'),
-                    content: self.getScanPromptOptions([{
-                            id: 'update_add',
-                            name: 'update_mode',
-                            value: 'update_add',
-                            label: __('Add new files'),
-                            note: __('Add only new files to the index and preserve existing indexed content.'),
-                        },
-                        {
-                            id: 'update_replace',
-                            name: 'update_mode',
-                            value: 'update_replace',
-                            label: __('Reload all files'),
-                            note: __('Clear the indexed content and reload all files into the index.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function() {
-                            var optChecked = com.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(com, optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
-            },
-
-            getScanPrompt: function(com) {
-                var self = this;
-                prompt({
-                    title: __('Scan files'),
-                    content: self.getScanPromptOptions([{
-                            id: 'update_add',
-                            name: 'update_mode',
-                            value: 'update_add',
-                            label: __('Add new files'),
-                            note: __('Add only new files to the index and preserve existing indexed content.'),
-                        },
-                        {
-                            id: 'update_replace',
-                            name: 'update_mode',
-                            value: 'update_replace',
-                            label: __('Reload all files'),
-                            note: __('Clear the indexed content and reload all files into the index.'),
-                        }
-                    ]),
-                    actions: {
-                        confirm: function() {
-                            var optChecked = com.cache._('input[name=update_mode]:checked').val();
-                            self.updateFileIndex(com, optChecked);
-                        }, 
-                        cancel: function(){}, 
-                        always: function(){}
-                    }
-                });
-            },
-
-            getScanPromptOptions: function(opts) {
-                var html = '';
-                html += '<form id="prompt_form" action="">';
-                html += '<div class="admin__field-control">';
-                for (var i = 0; i < opts.length; i++) {
-                    html += '<div class="class="admin__field admin__field-option">';
-                    html += '<input type="radio" id="' + opts[i].id + '" name="' + opts[i].name + '" value="' + opts[i].value + '">';
-                    html += '<label class="admin__field-label" for="' + opts[i].id + '"><span>' + opts[i].label + '</span></label>';
-                    html += '</div>';
-                    html += '<div class="admin__field-note">';
-                    html += '<span>' + opts[i].note + '</span>';
-                    html += '</div>';
-                }
-                html += '</div>';
-                html += '</form>';
-    
-                return html;
             },
 
             updateEntityData: function(com, data) {
