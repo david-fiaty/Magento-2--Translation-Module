@@ -161,10 +161,31 @@ define(
                 com.cache._(targetTable).prepend(html);
             },
 
+            createFile: function(com, params) {
+                // Prepare the data
+                var self = this;
+                var requestData = params;
+                requestData.form_key = window.FORM_KEY;
+
+                // Send the request
+                $.ajax({
+                    type: 'POST',
+                    url: com.options.newFileUrl,
+                    dataType: 'json',
+                    showLoader: true,
+                    data: requestData,
+                    success: function(data) {
+                        self.updateFileIndex(com, 'update_add');
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+
             updateFileIndex: function(com, updateMode) {    
                 // Prepare the variables
                 var self = this;
-                var updateUrl = com.options.scanUrl;
     
                 // Prepare the data
                 var requestData = {
@@ -175,7 +196,7 @@ define(
                 // Send the request
                 $.ajax({
                     type: 'POST',
-                    url: updateUrl,
+                    url: com.options.scanUrl,
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,

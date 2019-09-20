@@ -47,17 +47,25 @@ define(
                             content: data.html,
                             actions: {
                                 confirm: function() {
-                                    // AJAX code to create the file
+                                    core.createFile(
+                                        com,
+                                        {
+                                            file_path: com.cache._('#new_file_path').val(),
+                                            file_name: com.cache._('#new_file_name').val()
+                                        }
+                                    );
                                 }, 
                                 cancel: function(){}, 
                                 always: function(){}
                             }
                         });
 
-                        // Prepare the autocomplete fields data
+                        // Prepare the autocomplete fields variables
                         var filePathList = [];
                         var fileNameList = [];
                         var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
+
+                        // Build the autocomplete data
                         tableRows.forEach(function(row) {
                             // Prepare the variables
                             var filePath = row.getData().file_path;
