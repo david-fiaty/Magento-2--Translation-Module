@@ -4,8 +4,8 @@
 - add import file feature
 - add error sorting ability to detail views
 - add error filtering ability to list views
-- find why "add to cart" string not showing in lists
-- find why naxero/trandlation strings not updated
+
+- add field validation checks to prompts with ok button enabled only if valid
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
