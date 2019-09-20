@@ -27,5 +27,6 @@
         tabulator: {
             deps: ['jquery', 'jquery/ui']
         }
-    }
+    },
+    urlArgs: "bust=" + (new Date()).getTime()
 };
