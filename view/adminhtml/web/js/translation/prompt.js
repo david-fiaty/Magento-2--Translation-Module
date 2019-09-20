@@ -37,7 +37,7 @@ define(
                 html += '<input type="text" id="new_file_path" name="new_file_path" class="admin__control-text">';
                 html += '</div>';
                 html += '<div class="admin__field-note">';
-                html += '<span>' + __('Select a path for the new file to be created') + '</span>';
+                html += '<span>' + __('Select a path for the new file to be created. Start typing for suggestions.') + '</span>';
                 html += '</div>';
                 html += '</div>';
 
@@ -48,7 +48,7 @@ define(
                 html += '<input type="text" id="new_file_name" name="new_file_name" class="admin__control-text">';
                 html += '</div>';
                 html += '<div class="admin__field-note">';
-                html += '<span>' + __('Select a file name for the new file to be created') + '</span>';
+                html += '<span>' + __('Select a file name for the new file to be created. Start typing for suggestions.') + '</span>';
                 html += '</div>';
                 html += '</div>';
                 html += '</form>';
