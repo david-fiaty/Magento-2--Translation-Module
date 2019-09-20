@@ -79,7 +79,7 @@ div#translation-file-path {
     font-weight: bold !important;
 }
 
-.modal-popup.prompt .prompt-message input {
+.modal-popup.prompt .prompt-message input[type="radio"] {
     width: 25px !important;
 }
 
@@ -135,3 +135,19 @@ div#translation-file-path {
 .modal-popup.prompt .admin__field-note {
     margin-bottom: 25px !important;
 }
+
+/* Autocomplete fields */
+.modal-popup.prompt span.ui-helper-hidden-accessible {
+    display: none !important;
+}
+
+ul.ui-autocomplete {
+    background-color: white;
+    list-style-type: none;
+    max-width: 700px !important;
+}
+
+ul.ui-autocomplete li {
+    padding: 5px 5px 5px 10px;
+}
+

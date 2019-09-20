@@ -33,8 +33,8 @@ define(
                 html += '<form id="prompt_form" action="">';
                 html += '<div class="admin__field-control">';
                 html += '<div class="class="admin__field admin__field-option">';
-                html += '<label class="admin__field-label" for="new_file_path"><span>' + __('New file path') + '</span></label>';
-                html += '<input type="text" id="new_file_path" name="new_file_path" value="">';
+                html += '<label class="admin__field-label" for="new_file_path"><span>' + __('File path') + '</span></label>';
+                html += '<input type="text" id="new_file_path" name="new_file_path" class="admin__control-text">';
                 html += '</div>';
                 html += '<div class="admin__field-note">';
                 html += '<span>' + __('Select a path for the new file to be created') + '</span>';
@@ -44,8 +44,8 @@ define(
                 // File name field
                 html += '<div class="admin__field-control">';
                 html += '<div class="class="admin__field admin__field-option">';
-                html += '<label class="admin__field-label" for="new_file_name"><span>' + __('New file name') + '</span></label>';
-                html += '<input type="text" id="new_file_name" name="new_file_name" value="">';
+                html += '<label class="admin__field-label" for="new_file_name"><span>' + __('File name') + '</span></label>';
+                html += '<input type="text" id="new_file_name" name="new_file_name" class="admin__control-text">';
                 html += '</div>';
                 html += '<div class="admin__field-note">';
                 html += '<span>' + __('Select a file name for the new file to be created') + '</span>';
@@ -53,6 +53,7 @@ define(
                 html += '</div>';
                 html += '</form>';
                 
+                // Trigger the prompt
                 prompt({
                     title: __('New translation file'),
                     content: html,
@@ -63,6 +64,38 @@ define(
                         cancel: function(){}, 
                         always: function(){}
                     }
+                });
+                
+                // Prepare the autocomplete fields data
+                var filePathList = [];
+                var fileNameList = [];
+                var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
+                tableRows.forEach(function(row) {
+                    // Prepare the variables
+                    var filePath = row.getData().file_path;
+                    var pathArray = filePath.split('/');
+                    var fileName = pathArray[pathArray.length - 1];
+                    var cleanFilePath = filePath.replace(fileName, '');
+
+                    // Add the file path
+                    if (filePathList.indexOf(cleanFilePath) == -1) {
+                        filePathList.push(cleanFilePath);
+                    }
+            
+                    // Add the file name
+                    if (fileNameList.indexOf(fileName) == -1) {
+                        fileNameList.push(fileName);
+                    }
+                });
+
+                // Initialize the file path field
+                com.cache._('#new_file_path').autocomplete({
+                    source: filePathList
+                });
+
+                // Initialize the file name field
+                com.cache._('#new_file_name').autocomplete({
+                    source: fileNameList
                 });
             },
 
