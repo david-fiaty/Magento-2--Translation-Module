@@ -4,8 +4,12 @@
 - add import file feature
 - add error sorting ability to detail views
 - add error filtering ability to list views
+- improve autocomplete styling
 
 - add field validation checks to prompts with ok button enabled only if valid
+- add the new file controller builder
+- add data import feature to existing files
+- add data import feature to new file
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
