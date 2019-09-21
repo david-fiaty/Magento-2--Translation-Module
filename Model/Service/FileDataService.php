@@ -185,15 +185,22 @@ class FileDataService
      * Save a file entity.
      */
     function saveFileEntity($data) {
-        // Get a file entity instance
-        $fileEntity = $this->fileEntityFactory->create();
+        try {
+            // Get a file entity instance
+            $fileEntity = $this->fileEntityFactory->create();
 
-        // Set the fields values
-        foreach ($data as $key => $value) {
-            $fileEntity->setData($key, $value);
+            // Set the fields values
+            foreach ($data as $key => $value) {
+                $fileEntity->setData($key, $value);
+            }
+
+            // Save the entity
+            $fileEntity->save();
+
+            return true;
         }
-
-        // Save the entity
-        $fileEntity->save();
+        catch (\Exception $e) {
+            return false;
+        }
     }
 }
