@@ -209,17 +209,19 @@ class Detail extends \Magento\Backend\App\Action
         $fileId = $fileEntity->getData('file_id');
 
         // Loop through the rows
-        $rowId = 0;
-        foreach ($rows as $row) {
-            $rowIndex = $rowId + 1;
-            if (!$this->logDataService->hasErrors($fileId, $row, $rowId)) {
-                $output['table_data'][] = $this->buildRow($row, $rowId, $rowIndex, $fileEntity);
+        if (!empty($rows)) {
+            $rowId = 0;
+            foreach ($rows as $row) {
+                $rowIndex = $rowId + 1;
+                if (!$this->logDataService->hasErrors($fileId, $row, $rowId)) {
+                    $output['table_data'][] = $this->buildRow($row, $rowId, $rowIndex, $fileEntity);
+                }
+                else {
+                    $output['table_data'][] = $this->buildErrorRow($row, $rowId, $rowIndex, $fileEntity);
+                    $output['error_data'][] = $rowIndex;
+                }
+                $rowId++;
             }
-            else {
-                $output['table_data'][] = $this->buildErrorRow($row, $rowId, $rowIndex, $fileEntity);
-                $output['error_data'][] = $rowIndex;
-            }
-            $rowId++;
         }
 
         return $output;
