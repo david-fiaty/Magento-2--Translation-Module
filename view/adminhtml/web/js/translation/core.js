@@ -330,7 +330,6 @@ define(
 
             deleteRow: function(com, data) {
                 // Prepare the variables
-                var self = this;
                 var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
                         action: 'delete_row',
@@ -345,9 +344,7 @@ define(
                     url: fileUpdateUrl,
                     data: requestData,
                     dataType: 'json',
-                    success: function(res) {
-                        self.getRowDetails(com, data.fileId, false);
-                    },
+                    success: function(res) {},
                     error: function(request, status, error) {
                         console.log(error);
                     }
@@ -422,6 +419,9 @@ define(
                                     rowId: rowData.row_id
                                 }
                             );
+
+                            // Delete the row in table
+                            row.delete();
                         }
                     }
                 ];
