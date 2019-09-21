@@ -38,7 +38,7 @@
             detailViewUrl: '',
             fileUpdateUrl: '',
             cacheUrl: '',
-            detailViewid: 0,
+            detailViewId: 0,
         },
 
         filters: {
@@ -98,6 +98,9 @@
 
             // New file
             actions.initNewFileButton(this);
+
+            // New row
+            actions.initNewRowButton(this);
         },
 
         getListColumns: function() {

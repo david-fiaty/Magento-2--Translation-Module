@@ -17,8 +17,9 @@ define(
         'jquery',
         'Naxero_Translation/js/translation/core',
         'Naxero_Translation/js/translation/prompt',
+        'mage/translate'
     ],
-    function ($, core, prompt) {
+    function ($, core, prompt, __) {
         'use strict';
 
         // Return the component
@@ -29,10 +30,49 @@ define(
                 });
             },
 
+            initNewRowButton: function(com) {
+                com.cache._('#add-row').off().on('click', function() {
+                    // Remove the no results message if exists
+                    com.cache._('.no-results').remove();
+
+                    // Get the existing table data
+                    var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
+
+                    // Prepare the new row data
+                    var rowId = tableRows.length;
+                    var newRowData = {
+                        file_id: com.detailViewId.toString(),
+                        index: rowId + 1,
+                        is_readable: 1,
+                        is_writable: 1,
+                        row_id: rowId,
+                        key: __('key...'),
+                        value: __('value...')
+                    };
+
+                    // Add the new row
+                    com.cache._(com.options.detailView).tabulator(
+                        'addRow',
+                        newRowData,
+                        true
+                    );
+
+                    // Update the file
+                    core.updateEntityData(
+                        com,
+                        {
+                            fileId: com.detailViewId.toString(),
+                            rowContent: newRowData
+                        }
+                    );                    
+                });
+            },
+
             initBackButton: function(com) {
                 com.cache._('#button-back').off().on('click', function() {
                     core.togglePanes(com, 0);
                     com.cache._(com.options.detailView).tabulator('destroy');
+                    core.getData(com);
                 });
             },
 

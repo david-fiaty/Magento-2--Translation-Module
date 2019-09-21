@@ -314,6 +314,8 @@ define(
                         file_id: data.fileId,
                         form_key: window.FORM_KEY
                     };
+
+                    console.log(requestData);
     
                 // Send the the request
                 $.ajax({
@@ -393,8 +395,6 @@ define(
                     showLoader: true,
                     data: requestData,
                     success: function(data) {
-                        console.log(data);
-
                         // Set the table data
                         self.prepareData(com, com.options.detailView, data);
 
@@ -479,7 +479,7 @@ define(
     
                     // Set the detail view state
                     com.isListView = false;
-                    com.detailViewid = fileId;
+                    com.detailViewId = fileId;
                 } else {
                     // Bring the panes back
                     com.cache._('#translation-table-detail').hide();
@@ -488,7 +488,7 @@ define(
     
                     // Set the detail view state
                     com.isListView = true;
-                    com.detailViewid = 0;
+                    com.detailViewId = 0;
                 }
             }
         };

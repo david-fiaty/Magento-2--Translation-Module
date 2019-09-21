@@ -36,7 +36,7 @@
             detailViewUrl: '',
             fileUpdateUrl: '',
             cacheUrl: '',
-            detailViewid: 0,
+            detailViewId: 0,
             clearLogsUrl: '',
         },
 
