@@ -144,7 +144,7 @@ class Detail extends \Magento\Backend\App\Action
 
             // Delete the row
             unset($lines[$rowId]);
-            
+
             // Reset the indexes
             $lines = array_values($lines);
 

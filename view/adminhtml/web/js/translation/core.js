@@ -330,6 +330,7 @@ define(
 
             deleteRow: function(com, data) {
                 // Prepare the variables
+                var self = this;
                 var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
                         action: 'delete_row',
@@ -338,13 +339,15 @@ define(
                         form_key: window.FORM_KEY
                     };
     
-                // Send the the request
+                // Send the request
                 $.ajax({
                     type: 'POST',
                     url: fileUpdateUrl,
                     data: requestData,
                     dataType: 'json',
-                    success: function(res) {},
+                    success: function(res) {
+                        self.getRowDetails(com, data.fileId, false);
+                    },
                     error: function(request, status, error) {
                         console.log(error);
                     }
@@ -419,12 +422,6 @@ define(
                                     rowId: rowData.row_id
                                 }
                             );
-
-                            // Delete the row in table
-                            row.delete();
-
-                            // Refresh the data
-                            self.getRowDetails(com, rowData.file_id, false);
                         }
                     }
                 ];
