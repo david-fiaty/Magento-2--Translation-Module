@@ -23,14 +23,21 @@ class Create extends \Magento\Backend\App\Action
     public $resultJsonFactory;
 
     /**
+     * @var Data
+     */
+    public $helper;
+    
+    /**
      * Create class constructor
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+		\Naxero\Translation\Helper\Data $helper
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
+		$this->helper = $helper;
     }
 
     /**
@@ -47,12 +54,36 @@ class Create extends \Magento\Backend\App\Action
         // Process the request
         if ($this->getRequest()->isAjax()) 
         {
-            // Get the request parameters
-            $filePath  = $this->getRequest()->getParam('file_path');
-            $fileName = $this->getRequest()->getParam('file_name');
+            // Build the new file path
+            $newFilePath = $this->getNewFilePath();
+
+            // Handle the file creation
+            if ($newFilePath) {
+                $output = $this->helper->createFile($newFilePath);
+            }
         }
 
         // Return the response
         return $result->setData($output);
+    }
+
+    /**
+     * Build the new file path.
+     */
+    public function getNewFilePath()
+    {
+        // Get the request parameters
+        $filePath  = $this->getRequest()->getParam('file_path');
+        $fileName = $this->getRequest()->getParam('file_name');
+
+        // Get the file extension
+        $fileExtension = explode('.', $fileName);
+
+        // Build the path
+        if (is_dir($filePath) && $fileExtension[1] == 'csv') {
+            return $filePath . $fileName;
+        }
+
+        return null;
     }
 }

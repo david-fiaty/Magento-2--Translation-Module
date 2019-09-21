@@ -175,7 +175,7 @@ define(
                     showLoader: true,
                     data: requestData,
                     success: function(data) {
-                        self.updateFileIndex(com, 'update_add');
+                        self.getData(com);
                     },
                     error: function(request, status, error) {
                         console.log(error);

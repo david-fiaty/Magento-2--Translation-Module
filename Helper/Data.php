@@ -421,4 +421,25 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             return false;
         }
     }
+
+    /**
+     * Create a new file.
+     */
+    function createFile($filePath) {
+        try {
+            // Try to create a file
+            $result = $this->fileDriver->filePutContents(
+                $filePath,
+                ''
+            );
+
+            // Return a message
+            return $result
+            ? __('The file has been created.')
+            : __('There was an error creating the file.');
+        }
+        catch (\Exception $e) {
+            return __($e->getMessage());
+        }
+    }
 }
