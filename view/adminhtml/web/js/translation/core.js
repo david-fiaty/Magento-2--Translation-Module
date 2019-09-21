@@ -307,7 +307,7 @@ define(
 
             updateEntityData: function(com, data) {
                 // Prepare the variables
-                var fileUpdateUrl = com.options.detailViewUrl + '?action=update_data&file_id=' + data.fileId + '&form_key=' + window.FORM_KEY;
+                var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
                         row_content: data.rowContent,
                         action: 'update_data',
