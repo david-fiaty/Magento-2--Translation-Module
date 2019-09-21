@@ -85,7 +85,7 @@ class Create extends \Magento\Backend\App\Action
                 ]);
 
                 // Build the response message
-                return ($result1 && $result2)
+                $output = ($result1 && $result2)
                 ? __('The file has been created.')
                 : __('There was an error creating the file.');
             }

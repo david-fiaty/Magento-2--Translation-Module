@@ -197,7 +197,7 @@ class FileDataService
             // Save the entity
             $fileEntity->save();
 
-            return true;
+            return $fileEntity;
         }
         catch (\Exception $e) {
             return false;

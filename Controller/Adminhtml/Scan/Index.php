@@ -182,7 +182,7 @@ class Index extends \Magento\Backend\App\Action
         }
 
         // Save the item
-        $this->fileDataService->saveFileEntity([
+        $fileEntity = $this->fileDataService->saveFileEntity([
             'is_readable' => $isReadable,
             'is_writable' => $isWritable,
             'file_path' => $cleanPath,
