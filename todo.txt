@@ -1,5 +1,4 @@
 - check acl.xml file
-- add new file creation feature
 - add new row to file feature
 - add import file feature
 - add error sorting ability to detail views
