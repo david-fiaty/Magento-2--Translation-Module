@@ -1,7 +1,7 @@
 - check acl.xml file
-- add import file feature
 - add error sorting ability to detail views
 - add error filtering ability to list views
+
 - improve autocomplete styling
 - improve the new file creation error message handling
 - add row and file deletion feature with config param
