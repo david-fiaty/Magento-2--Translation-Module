@@ -5,6 +5,7 @@
 - add error sorting ability to detail views
 - add error filtering ability to list views
 - improve autocomplete styling
+- improve the new file creation error message handling
 
 - add field validation checks to prompts with ok button enabled only if valid
 - add the new file controller builder
