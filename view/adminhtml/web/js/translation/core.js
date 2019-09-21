@@ -314,8 +314,6 @@ define(
                         file_id: data.fileId,
                         form_key: window.FORM_KEY
                     };
-
-                    console.log(requestData);
     
                 // Send the the request
                 $.ajax({
