@@ -468,7 +468,7 @@ define(
                 });
             },
 
-            togglePanes: function(com, id) {
+            togglePanes: function(com, fileId) {
                 if (com.isListView) {    
                     // Move main table
                     com.cache._('#translation-table-list').animate({ left: '-50px' });
@@ -479,7 +479,7 @@ define(
     
                     // Set the detail view state
                     com.isListView = false;
-                    com.detailViewid = id;
+                    com.detailViewid = fileId;
                 } else {
                     // Bring the panes back
                     com.cache._('#translation-table-detail').hide();
