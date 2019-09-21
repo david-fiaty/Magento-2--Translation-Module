@@ -101,6 +101,9 @@
 
             // New row
             actions.initNewRowButton(this);
+
+            // Import Data
+            actions.initImportDataButton(this);
         },
 
         getListColumns: function() {

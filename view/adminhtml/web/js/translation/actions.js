@@ -30,6 +30,12 @@ define(
                 });
             },
 
+            initImportDataButton: function(com) {
+                com.cache._('#import-data').off().on('click', function() {
+                    prompt.importData(com);
+                });
+            },
+
             initNewRowButton: function(com) {
                 com.cache._('#add-row').off().on('click', function() {
                     // Remove the no results message if exists

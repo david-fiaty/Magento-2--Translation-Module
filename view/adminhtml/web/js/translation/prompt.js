@@ -26,6 +26,39 @@ define(
 
         // Return the component
         return {
+            importData: function(com) {
+                // Prepare the data
+                var requestData = {
+                    block_type: 'prompt',
+                    template_name: 'import-data',
+                    form_key: window.FORM_KEY
+                };
+
+                // Send the request
+                $.ajax({
+                    type: 'POST',
+                    url: com.options.promptUrl,
+                    showLoader: true,
+                    data: requestData,
+                    success: function(data) {
+                        // Trigger the prompt
+                        prompt({
+                            title: __('Import translation data'),
+                            content: data.html,
+                            actions: {
+                                confirm: function() {
+                                }, 
+                                cancel: function() {}, 
+                                always: function() {}
+                            }
+                        });
+                    },
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+
             newFile: function(com) {
                 // Prepare the data
                 var requestData = {
