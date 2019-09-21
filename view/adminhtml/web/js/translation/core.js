@@ -330,7 +330,6 @@ define(
 
             deleteRow: function(com, data) {
                 // Prepare the variables
-                var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
                         action: 'delete_row',
                         file_id: data.fileId,
@@ -341,7 +340,28 @@ define(
                 // Send the request
                 $.ajax({
                     type: 'POST',
-                    url: fileUpdateUrl,
+                    url: com.options.detailViewUrl,
+                    data: requestData,
+                    dataType: 'json',
+                    success: function(res) {},
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+
+            importFile: function(com, fileData) {
+                // Prepare the variables
+                var requestData = {
+                    action: 'import_file',
+                    form_key: window.FORM_KEY,
+                    file_data: fileData
+                };
+
+                // Send the request
+                $.ajax({
+                    type: 'POST',
+                    url: com.options.detailViewUrl,
                     data: requestData,
                     dataType: 'json',
                     success: function(res) {},

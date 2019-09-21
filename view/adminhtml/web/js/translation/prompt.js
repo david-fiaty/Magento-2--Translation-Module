@@ -47,6 +47,15 @@ define(
                             content: data.html,
                             actions: {
                                 confirm: function() {
+                                    // Prepare the form data
+                                    var fileData = new FormData();
+                                    fileData.append(
+                                        'data',
+                                        com.cache._('#new_file_import').prop('files')[0]
+                                    );
+
+                                    // Trigger the import request
+                                    core.importFile(com, fileData); 
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}
