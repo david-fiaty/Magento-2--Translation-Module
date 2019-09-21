@@ -55,8 +55,10 @@ define(
                                         }
                                     );
                                 }, 
-                                cancel: function(){}, 
-                                always: function(){}
+                                cancel: function() {
+                                    window.location.reload(false);  
+                                }, 
+                                always: function() {}
                             }
                         });
 
