@@ -5,6 +5,7 @@
 - add error filtering ability to list views
 - improve autocomplete styling
 - improve the new file creation error message handling
+- add row and file deletion feature with config param
 
 - add field validation checks to prompts with ok button enabled only if valid
 - add the new file controller builder
