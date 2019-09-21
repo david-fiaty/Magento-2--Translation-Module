@@ -53,7 +53,7 @@ class Index extends \Magento\Backend\App\Action
     public $fileEntityFactory;
 
     /**
-     * @var LoEntityFactory
+     * @var LogEntityFactory
      */
     public $logEntityFactory;
 
@@ -61,6 +61,11 @@ class Index extends \Magento\Backend\App\Action
      * @var LogDataService
      */
     public $logDataService;
+
+    /**
+     * @var FileDataService
+     */
+    public $fileDataService;
 
     /**
      * Index class constructor
@@ -75,7 +80,8 @@ class Index extends \Magento\Backend\App\Action
         \Naxero\Translation\Helper\View $viewHelper,
         \Naxero\Translation\Model\FileEntityFactory $fileEntityFactory,
         \Naxero\Translation\Model\LogEntityFactory $logEntityFactory,
-        \Naxero\Translation\Model\Service\LogDataService $logDataService
+        \Naxero\Translation\Model\Service\LogDataService $logDataService,
+        \Naxero\Translation\Model\Service\FileDataService $fileDataService
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->tree = $tree;
@@ -86,6 +92,7 @@ class Index extends \Magento\Backend\App\Action
         $this->fileEntityFactory = $fileEntityFactory;
         $this->logEntityFactory = $logEntityFactory;
         $this->logDataService = $logDataService;
+        $this->fileDataService = $fileDataService;
         
         parent::__construct($context);
     }
@@ -175,15 +182,15 @@ class Index extends \Magento\Backend\App\Action
         }
 
         // Save the item
-        $fileEntity = $this->fileEntityFactory->create();
-        $fileEntity->setData('is_readable', $isReadable);
-        $fileEntity->setData('is_writable', $isWritable);
-        $fileEntity->setData('file_path', $cleanPath);
-        $fileEntity->setData('file_content', $fileContent);
-        $fileEntity->setData('rows_count', $rowsCount);
-        $fileEntity->setData('file_creation_time', date("Y-m-d H:i:s"));
-        $fileEntity->setData('file_update_time', date("Y-m-d H:i:s"));
-        $fileEntity->save();
+        $this->fileDataService->saveFileEntity([
+            'is_readable' => $isReadable,
+            'is_writable' => $isWritable,
+            'file_path' => $cleanPath,
+            'file_content' => $fileContent,
+            'rows_count' => $rowsCount,
+            'file_creation_time' => date("Y-m-d H:i:s"),
+            'file_update_time' => date("Y-m-d H:i:s")
+        ]);
 
         // Get the entity data
         $arr = $fileEntity->getData();

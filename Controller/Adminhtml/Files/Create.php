@@ -28,16 +28,24 @@ class Create extends \Magento\Backend\App\Action
     public $helper;
     
     /**
+     * @var FileDataService
+     */
+    public $fileDataService;
+
+    /**
      * Create class constructor
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-		\Naxero\Translation\Helper\Data $helper
+        \Naxero\Translation\Helper\Data $helper,
+        \Naxero\Translation\Model\Service\FileDataService $fileDataService
     ) {
         parent::__construct($context);
+
         $this->resultJsonFactory = $resultJsonFactory;
-		$this->helper = $helper;
+        $this->helper = $helper;
+        $this->fileDataService = $fileDataService;
     }
 
     /**
@@ -59,7 +67,24 @@ class Create extends \Magento\Backend\App\Action
 
             // Handle the file creation
             if ($newFilePath) {
-                $output = $this->helper->createFile($newFilePath);
+                // Create the file
+                $result1 = $this->helper->createFile($newFilePath);
+
+                // Save the file entity
+                $result2 = $this->fileDataService->saveFileEntity([
+                    'is_readable' => true,
+                    'is_writable' => true,
+                    'file_path' => $cleanPath,
+                    'file_content' => '',
+                    'rows_count' => 0,
+                    'file_creation_time' => date("Y-m-d H:i:s"),
+                    'file_update_time' => date("Y-m-d H:i:s")
+                ]);
+
+                // Build the response message
+                return ($result1 && $result2)
+                ? __('The file has been created.')
+                : __('There was an error creating the file.');
             }
         }
 
