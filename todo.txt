@@ -1,5 +1,4 @@
 - check acl.xml file
-- add new row to file feature
 - add import file feature
 - add error sorting ability to detail views
 - add error filtering ability to list views
@@ -8,7 +7,6 @@
 - add row and file deletion feature with config param
 
 - add field validation checks to prompts with ok button enabled only if valid
-- add the new file controller builder
 - add data import feature to existing files
 - add data import feature to new file
 - check the core strings override from module approach
