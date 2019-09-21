@@ -70,6 +70,9 @@ class Create extends \Magento\Backend\App\Action
                 // Create the file
                 $result1 = $this->helper->createFile($newFilePath);
 
+                // Get the clean path
+                $cleanPath = $this->helper->getCleanPath($newFilePath);
+
                 // Save the file entity
                 $result2 = $this->fileDataService->saveFileEntity([
                     'is_readable' => true,
