@@ -116,12 +116,56 @@ class Detail extends \Magento\Backend\App\Action
                     case 'save_data':
                         $output = $this->saveFileEntityContent($fileInstance);
                         break;
+
+                    case 'delete_row':
+                        $output = $this->deleteFileEntityRow($fileInstance);
+                        break;
                 }
             }
         }
 
         // Return the content
         return $result->setData($output);
+    }
+
+    /**
+     * Delete a file entity row in database.
+     */
+    public function deleteFileEntityRow($fileEntity) {
+        try {
+            // Prepare the row data
+            $rowId = $this->getRequest()->getParam('row_id');
+
+            // Get the current content
+            $content = $fileEntity->getFileContent();
+
+            // Convert the content to array
+            $lines = json_decode($content);
+
+            // Delete the row
+            unset($lines[$rowId]);
+            
+            // Reset the indexes
+            $lines = array_values($lines);
+
+            // Encode the new content
+            $newContent = json_encode($lines);
+
+            // Save the new content to db
+            $fileEntity->setFileContent($newContent);
+            $fileEntity->setRowsCount(count($lines));
+            $fileEntity->save();
+
+            // Update the CSV file
+            $this->saveFileEntityContent($fileEntity);
+
+            return true;
+        }
+        catch (\Exception $e) {
+            throw new LocalizedException(__($e->getMessage()));
+        }
+
+        return false;
     }
 
     /**

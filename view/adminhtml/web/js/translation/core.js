@@ -328,6 +328,29 @@ define(
                 });
             },
 
+            deleteRow: function(com, data) {
+                // Prepare the variables
+                var fileUpdateUrl = com.options.detailViewUrl;
+                var requestData = {
+                        action: 'delete_row',
+                        file_id: data.fileId,
+                        row_id: data.rowId,
+                        form_key: window.FORM_KEY
+                    };
+    
+                // Send the the request
+                $.ajax({
+                    type: 'POST',
+                    url: fileUpdateUrl,
+                    data: requestData,
+                    dataType: 'json',
+                    success: function(res) {},
+                    error: function(request, status, error) {
+                        console.log(error);
+                    }
+                });
+            },
+
             loadRowDetails: function(com, rowData, isLogView) {
                 // Prepare the variables
                 var self = this;
@@ -340,7 +363,7 @@ define(
                     responsiveLayout: true,
                     height: '100%',
                     resizableRows: true,
-                    columns: self.getDetailColumns(),
+                    columns: self.getDetailColumns(com),
                     cellEdited: function(cell) {
                         self.handleCellEdit(com, cell, true);
                     },
@@ -363,7 +386,8 @@ define(
                 this.togglePanes(com, rowData.file_id);
             },
 
-            getDetailColumns: function() {
+            getDetailColumns: function(com) {
+                var self = this;
                 return [
                     {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
@@ -371,7 +395,38 @@ define(
                     {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
                     {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
                     {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
-                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'}
+                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {
+                        title: '',
+                        field: 'delete',
+                        width: 10,
+                        headerSort: false,
+                        formatter: function(cell, formatterParams, onRendered) {
+                            return '&ominus;';
+                        }, 
+                        cellClick: function(e, cell) {
+                            // Get the row
+                            var row = cell.getRow();
+
+                            // Get the row data
+                            var rowData = row.getData();
+
+                            // Delete the row in file
+                            self.deleteRow(
+                                com,
+                                {
+                                    fileId: rowData.file_id,
+                                    rowId: rowData.row_id
+                                }
+                            );
+
+                            // Delete the row in table
+                            row.delete();
+
+                            // Refresh the data
+                            self.getRowDetails(com, rowData.file_id, false);
+                        }
+                    }
                 ];
             },
 
