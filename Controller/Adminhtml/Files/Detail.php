@@ -197,7 +197,10 @@ class Detail extends \Magento\Backend\App\Action
      */
     public function getFileEntityContent($fileEntity, $isLogView) {
         // Prepare the output array
-        $output = array(); 
+        $output = [
+            'table_data' => [],
+            'error_data' => []
+        ]; 
 
         // Get the file content rows
         $rows = json_decode($fileEntity->getData('file_content'));

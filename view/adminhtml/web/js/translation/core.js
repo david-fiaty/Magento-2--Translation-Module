@@ -135,7 +135,7 @@ define(
                 else {
                     // Prepare the no results HTML
                     var html = '<div class="'+ noResultsClassName +'">';
-                    html += __('No results found. Please try scanning for files.');
+                    html += __('No results found.');
                     html += '</div>';
 
                     // Prepend the HTML
