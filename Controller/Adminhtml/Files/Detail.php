@@ -110,82 +110,91 @@ class Detail extends \Magento\Backend\App\Action
         $output = [];
         $result = $this->resultJsonFactory->create();
 
-        // Set the file destination
-        $destinationPath = $this->moduleReader->getModuleDir(
-            '',
-            'Naxero_Translation'
-        ) . DIRECTORY_SEPARATOR . 'Model' . DIRECTORY_SEPARATOR . 'Upload';
-
         // Process the request
-        if ($this->getRequest()->isAjax()) 
-        {
+        //if ($this->getRequest()->isAjax()) 
+        //{
             // Get the request parameters
             $action  = $this->getRequest()->getParam('action');
-            $fileId = $this->getRequest()->getParam('file_id');
             $isLogView = $this->getRequest()->getParam('is_log_view');
-
-            // Load the requested item
-            if ((int) $fileId > 0) {
-                $fileInstance = $this->fileEntityFactory
-                    ->create()
-                    ->load($fileId);
-            }
 
             // Get data
             switch ($action) {
                 case 'get_data':
-                    $output = $this->getFileEntityContent($fileInstance, $isLogView);
+                    $output = $this->getFileEntityContent($isLogView);
                     break;
     
                 case 'update_data':
-                    $output = $this->updateFileEntityContent($fileInstance);
+                    $output = $this->updateFileEntityContent();
                     break;
 
                 case 'save_data':
-                    $output = $this->saveFileEntityContent($fileInstance);
+                    $output = $this->saveFileEntityContent();
                     break;
 
                 case 'delete_row':
-                    $output = $this->deleteFileEntityRow($fileInstance);
+                    $output = $this->deleteFileEntityRow();
                     break;
 
-                case 'import_file':
+                case 'import_data':
                     $output = $this->importFileData();
                     break;
             }
-        }
+        //}
 
         // Return the content
         return $result->setData($output);
     }
 
     /**
+     * Get a file instance.
+     */
+    public function getFileInstance() {
+        // Get the file id
+        $fileId = $this->getRequest()->getParam('file_id');
+
+        // Load the requested item
+        if ((int) $fileId > 0) {
+            return $this->fileEntityFactory
+                ->create()
+                ->load($fileId);
+        }   
+
+        return null;
+    }
+
+    /**
      * Import file data.
      */
-    public function importFileData($fileEntity) {
+    public function importFileData() {
         try {
+            // Set the file destination
+            $destinationPath = $this->moduleReader->getModuleDir(
+                '',
+                'Naxero_Translation'
+            ) . DIRECTORY_SEPARATOR . 'Model' . DIRECTORY_SEPARATOR . 'Upload';
+
             // Get the uploader
-            $uploader = $this->uploaderFactory->create(['fileId' => 'filex'])
+            $uploader = $this->uploaderFactory->create(['fileId' => 'new_file_import'])
                 ->setAllowCreateFolders(true)
                 ->setAllowedExtensions(['csv']);
 
             // Save the file
-            if (!$uploader->save($destinationPath)) {
-                throw new Magento\Framework\Exception\LocalizedException(
-                    __('File cannot be saved to path: $1', $destinationPath)
-                );
-            }
+            return $uploader->save($destinationPath);
  
         } catch (\Exception $e) {
-            return false;
+            echo $e->getMessage();
+            exit();
         }
     }
 
     /**
      * Delete a file entity row in database.
      */
-    public function deleteFileEntityRow($fileEntity) {
+    public function deleteFileEntityRow() {
         try {
+            // Get the file entity instance
+            $fileEntity = $this->getFileInstance();
+
             // Prepare the row data
             $rowId = $this->getRequest()->getParam('row_id');
 
@@ -224,7 +233,10 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Update a file entity content in database.
      */
-    public function updateFileEntityContent($fileEntity) {
+    public function updateFileEntityContent() {
+        // Get the file entity instance
+        $fileEntity = $this->getFileInstance();
+
         // Prepare the new content
         $params = $this->getRequest()->getParams();
         $newRrow = [
@@ -267,7 +279,10 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Save a file content in the file system.
      */
-    public function saveFileEntityContent($fileEntity) {
+    public function saveFileEntityContent() {
+        // Get the file entity instance
+        $fileEntity = $this->getFileInstance();
+
         // Get the root path
         $rootPath = $this->tree->getRoot();
 
@@ -292,7 +307,10 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Get a file content from database.
      */
-    public function getFileEntityContent($fileEntity, $isLogView) {
+    public function getFileEntityContent($isLogView) {
+        // Get the file entity instance
+        $fileEntity = $this->getFileInstance();
+
         // Prepare the output array
         $output = [
             'table_data' => [],

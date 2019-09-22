@@ -48,10 +48,19 @@ define(
                             actions: {
                                 confirm: function() {
                                     // Prepare the form data
-                                    var fileData = com.cache._('#new_file_import')[0].files[0];
+                                    var fileData = $('#new_file_import')[0].files[0];
+                                    $('#new_file_import').val('');
 
                                     // Trigger the import request
                                     core.importFile(com, fileData, com.detailViewId); 
+                            
+                                    /*
+                                    var requestUrl = com.options.detailViewUrl;
+                                    requestUrl += '?isAjax=true&action=import_data';
+                                    requestUrl += '&form_key=' + window.FORM_KEY;
+                                    com.cache._('#prompt_form').attr('action', requestUrl);
+                                    com.cache._('#prompt_form').submit();
+                                    */
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}

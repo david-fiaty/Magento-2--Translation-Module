@@ -353,11 +353,12 @@ define(
             importFile: function(com, fileData, fileId) {
                 // Prepare the request data
                 var requestData = new FormData();
-                requestData.append('file_data', fileData);
+                requestData.append('new_file_import', fileData);
 
                 // Prepare the request Url
                 var requestUrl = com.options.detailViewUrl;
-                requestUrl += '?isAjax=true&form_key=' + window.FORM_KEY;
+                requestUrl += '?isAjax=true&action=import_data';
+                requestUrl += '&form_key=' + window.FORM_KEY;
         
                 // Send the request
                 $.ajax({
