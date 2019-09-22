@@ -88,14 +88,12 @@ define(
                                     core.createFile(
                                         com,
                                         {
-                                            file_path: com.cache._('#new_file_path').val(),
-                                            file_name: com.cache._('#new_file_name').val()
+                                            file_path: $('#new_file_path').val(),
+                                            file_name: $('#new_file_name').val()
                                         }
                                     );
                                 }, 
-                                cancel: function() {
-                                    window.location.reload(false);  
-                                }, 
+                                cancel: function() {}, 
                                 always: function() {}
                             }
                         });
@@ -125,12 +123,12 @@ define(
                         });
 
                         // Initialize the file path field
-                        com.cache._('#new_file_path').autocomplete({
+                        $('#new_file_path').autocomplete({
                             source: filePathList
                         });
 
                         // Initialize the file name field
-                        com.cache._('#new_file_name').autocomplete({
+                        $('#new_file_name').autocomplete({
                             source: fileNameList
                         });
                     },
