@@ -7,8 +7,6 @@
 - add row and file deletion feature with config param
 
 - add field validation checks to prompts with ok button enabled only if valid
-- add data import feature to existing files
-- add data import feature to new file
 - check the core strings override from module approach
 
 - fix csv row deletion sometimes failing
