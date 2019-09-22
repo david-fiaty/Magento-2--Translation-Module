@@ -53,14 +53,6 @@ define(
 
                                     // Trigger the import request
                                     core.importFile(com, fileData, com.detailViewId); 
-                            
-                                    /*
-                                    var requestUrl = com.options.detailViewUrl;
-                                    requestUrl += '?isAjax=true&action=import_data';
-                                    requestUrl += '&form_key=' + window.FORM_KEY;
-                                    com.cache._('#prompt_form').attr('action', requestUrl);
-                                    com.cache._('#prompt_form').submit();
-                                    */
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}
