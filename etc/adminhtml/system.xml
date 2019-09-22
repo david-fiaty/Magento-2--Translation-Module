@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Naxero.com
+ * Professional ecommerce integrations for Magento
+ *
+ * PHP version 7
+ *
+ * @category  Magento2
+ * @package   Naxero
+ * @author    Platforms Development Team <contact@naxero.com>
+ * @copyright Naxero.com
+ * @license   https://opensource.org/licenses/mit-license.html MIT License
+ * @link      https://www.naxero.com
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="naxero">
+            <label>Naxero</label>
+        </tab>
+        <section id="translation"  type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Translation</label>
+            <tab>naxero</tab>
+            <resource>Naxero_Translation::config</resource>
+            <group id="general" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enable" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="exclude_core_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude core files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to NO, administrators will be able to edit core translation files directly. Editing core files directly is not recommended.</comment>
+                </field>
+                <field id="exclude_test_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude test files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, unit testing files will be excluded.</comment>
+                </field>      
+                <field id="exclude_static_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude static files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, static files will be excluded.</comment>
+                </field>        
+            </group>
+         </section>
+    </system>
+</config>
