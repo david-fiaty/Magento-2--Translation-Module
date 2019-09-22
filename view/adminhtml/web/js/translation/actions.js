@@ -62,6 +62,9 @@ define(
                         newRowData,
                         true
                     );
+                    
+                    // Set the sort
+                    com.cache._(com.options.detailView).tabulator('setSort', "row_id", "desc");
 
                     // Update the file
                     core.updateEntityData(
