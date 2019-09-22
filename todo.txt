@@ -1,16 +1,18 @@
-- check acl.xml file
+FEATURES
 - add error sorting ability to detail views
 - add error filtering ability to list views
-
-- improve autocomplete styling
-- improve the new file creation error message handling
-- add row and file deletion feature with config param
-
-- add field validation checks to prompts with ok button enabled only if valid
+- add acl.xml permissions for actions
+- add file deletion feature
 - check the core strings override from module approach
 
+TODO
+- improve autocomplete styling
+- improve error messages handling
+- link row and file deletion to config param
+- add field validation checks to prompts with ok button enabled only if valid
+
+BUGS
 - fix csv row deletion sometimes failing
-- add error check to file import
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
