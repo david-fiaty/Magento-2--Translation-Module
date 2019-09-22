@@ -111,8 +111,8 @@ class Detail extends \Magento\Backend\App\Action
         $result = $this->resultJsonFactory->create();
 
         // Process the request
-        //if ($this->getRequest()->isAjax()) 
-        //{
+        if ($this->getRequest()->isAjax()) 
+        {
             // Get the request parameters
             $action  = $this->getRequest()->getParam('action');
             $isLogView = $this->getRequest()->getParam('is_log_view');
@@ -139,7 +139,7 @@ class Detail extends \Magento\Backend\App\Action
                     $output = $this->importFileData();
                     break;
             }
-        //}
+        }
 
         // Return the content
         return $result->setData($output);
