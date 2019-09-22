@@ -48,14 +48,10 @@ define(
                             actions: {
                                 confirm: function() {
                                     // Prepare the form data
-                                    var fileData = new FormData();
-                                    fileData.append(
-                                        'data',
-                                        com.cache._('#new_file_import').prop('files')[0]
-                                    );
+                                    var fileData = com.cache._('#new_file_import')[0].files[0];
 
                                     // Trigger the import request
-                                    core.importFile(com, fileData); 
+                                    core.importFile(com, fileData, com.detailViewId); 
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}

@@ -350,20 +350,22 @@ define(
                 });
             },
 
-            importFile: function(com, fileData) {
-                // Prepare the variables
-                var requestData = {
-                    action: 'import_file',
-                    form_key: window.FORM_KEY,
-                    file_data: fileData
-                };
+            importFile: function(com, fileData, fileId) {
+                // Prepare the request data
+                var requestData = new FormData();
+                requestData.append('file_data', fileData);
 
+                // Prepare the request Url
+                var requestUrl = com.options.detailViewUrl;
+                requestUrl += '?isAjax=true&form_key=' + window.FORM_KEY;
+        
                 // Send the request
                 $.ajax({
                     type: 'POST',
-                    url: com.options.detailViewUrl,
+                    url: requestUrl,
                     data: requestData,
-                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
                     success: function(res) {},
                     error: function(request, status, error) {
                         console.log(error);

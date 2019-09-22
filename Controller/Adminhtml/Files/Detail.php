@@ -40,6 +40,21 @@ class Detail extends \Magento\Backend\App\Action
     public $fileDriver;
 
     /**
+     * @var Filesystem
+     */
+    public $fileSystem;
+ 
+    /**
+     * @var UploaderFactory
+     */
+    public $uploaderFactory;
+
+    /**
+     * @var Reader
+     */
+    public $moduleReader;
+
+    /**
      * @var Data
      */
 	public $helper;
@@ -65,6 +80,9 @@ class Detail extends \Magento\Backend\App\Action
         \Magento\Framework\File\Csv $csvParser,
         \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Naxero\Translation\Helper\Data $helper,
+        \Magento\Framework\Filesystem $fileSystem,
+        \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory,
+        \Magento\Framework\Module\Dir\Reader $moduleReader,
         \Naxero\Translation\Model\Service\LogDataService $logDataService
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
@@ -73,6 +91,9 @@ class Detail extends \Magento\Backend\App\Action
         $this->csvParser = $csvParser;
         $this->fileDriver = $fileDriver;
         $this->helper = $helper;
+        $this->fileSystem = $fileSystem;
+        $this->uploaderFactory = $uploaderFactory;
+        $this->moduleReader = $moduleReader;
         $this->logDataService = $logDataService;
 
         parent::__construct($context);
@@ -89,6 +110,12 @@ class Detail extends \Magento\Backend\App\Action
         $output = [];
         $result = $this->resultJsonFactory->create();
 
+        // Set the file destination
+        $destinationPath = $this->moduleReader->getModuleDir(
+            '',
+            'Naxero_Translation'
+        ) . DIRECTORY_SEPARATOR . 'Model' . DIRECTORY_SEPARATOR . 'Upload';
+
         // Process the request
         if ($this->getRequest()->isAjax()) 
         {
@@ -98,34 +125,60 @@ class Detail extends \Magento\Backend\App\Action
             $isLogView = $this->getRequest()->getParam('is_log_view');
 
             // Load the requested item
-            $fileInstance = $this->fileEntityFactory
-                ->create()
-                ->load($fileId);
+            if ((int) $fileId > 0) {
+                $fileInstance = $this->fileEntityFactory
+                    ->create()
+                    ->load($fileId);
+            }
 
             // Get data
-            if ($fileInstance->getId() > 0) {
-                switch ($action) {
-                    case 'get_data':
-                        $output = $this->getFileEntityContent($fileInstance, $isLogView);
-                        break;
-        
-                    case 'update_data':
-                        $output = $this->updateFileEntityContent($fileInstance);
-                        break;
+            switch ($action) {
+                case 'get_data':
+                    $output = $this->getFileEntityContent($fileInstance, $isLogView);
+                    break;
+    
+                case 'update_data':
+                    $output = $this->updateFileEntityContent($fileInstance);
+                    break;
 
-                    case 'save_data':
-                        $output = $this->saveFileEntityContent($fileInstance);
-                        break;
+                case 'save_data':
+                    $output = $this->saveFileEntityContent($fileInstance);
+                    break;
 
-                    case 'delete_row':
-                        $output = $this->deleteFileEntityRow($fileInstance);
-                        break;
-                }
+                case 'delete_row':
+                    $output = $this->deleteFileEntityRow($fileInstance);
+                    break;
+
+                case 'import_file':
+                    $output = $this->importFileData();
+                    break;
             }
         }
 
         // Return the content
         return $result->setData($output);
+    }
+
+    /**
+     * Import file data.
+     */
+    public function importFileData($fileEntity) {
+        try {
+            // Get the uploader
+            $uploader = $this->uploaderFactory->create(['fileId' => 'filex'])
+                ->setAllowCreateFolders(true)
+                ->setAllowedExtensions(['csv']);
+
+            // Save the file
+            if (!$uploader->save($destinationPath)) {
+                throw new Magento\Framework\Exception\LocalizedException(
+                    __('File cannot be saved to path: $1', $destinationPath)
+                );
+            }
+ 
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
