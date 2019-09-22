@@ -78,7 +78,7 @@ class Create extends \Magento\Backend\App\Action
                     'is_readable' => true,
                     'is_writable' => true,
                     'file_path' => $cleanPath,
-                    'file_content' => '',
+                    'file_content' => json_encode([]),
                     'rows_count' => 0,
                     'file_creation_time' => date("Y-m-d H:i:s"),
                     'file_update_time' => date("Y-m-d H:i:s")

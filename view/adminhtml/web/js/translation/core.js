@@ -354,12 +354,13 @@ define(
 
             importFile: function(com, fileData, fileId) {
                 // Prepare the request data
+                var self = this;
                 var requestData = new FormData();
                 requestData.append('new_file_import', fileData);
 
                 // Prepare the request Url
                 var requestUrl = com.options.detailViewUrl;
-                requestUrl += '?isAjax=true&action=import_data';
+                requestUrl += '?isAjax=true&action=import_data&file_id=' + fileId;
                 requestUrl += '&form_key=' + window.FORM_KEY;
         
                 // Send the request
@@ -370,7 +371,11 @@ define(
                     contentType: false,
                     processData: false,
                     showLoader: true,
-                    success: function(res) {},
+                    success: function(data) {
+                        if (JSON.parse(data.success) === true) {
+                            self.getRowDetails(com, fileId, false);
+                        }
+                    },
                     error: function(request, status, error) {
                         console.log(error);
                     }

@@ -108,7 +108,6 @@ class Detail extends \Magento\Backend\App\Action
     {
         // Prepare the response instance
         $output = [];
-        $result = $this->resultJsonFactory->create();
 
         // Process the request
         if ($this->getRequest()->isAjax()) 
@@ -142,7 +141,7 @@ class Detail extends \Magento\Backend\App\Action
         }
 
         // Return the content
-        return $result->setData($output);
+        return $this->resultJsonFactory->create()->setData($output);
     }
 
     /**
@@ -178,12 +177,42 @@ class Detail extends \Magento\Backend\App\Action
                 ->setAllowCreateFolders(true)
                 ->setAllowedExtensions(['csv']);
 
-            // Save the file
-            return $uploader->save($destinationPath);
- 
+            // Save the uploaded file
+            $fileName = uniqid() . '.csv';
+            $uploader->save($destinationPath, $fileName);
+
+            // Get the file entity instance
+            $fileEntity = $this->getFileInstance();
+
+            // Get the current content
+            $content = $fileEntity->getFileContent();
+
+            // Convert the content to array
+            $lines = json_decode($content);
+
+            // Get the uploaded content
+            $uploadedFilePath = $destinationPath . DIRECTORY_SEPARATOR . $fileName;
+            $uploadedLines = $this->csvParser->getData($uploadedFilePath);
+
+            // Merge and encode the new content
+            $newLines = array_merge($lines, $uploadedLines);
+            $newContent = json_encode($newLines);
+
+            // Save the new content to db
+            $fileEntity->setFileContent($newContent);
+            $fileEntity->setRowsCount(count($newLines));
+            $fileEntity->save();
+
+            // Update the CSV file
+            $this->saveFileEntityContent($fileEntity);
+
+            // Delete the uploaded file
+            $this->fileDriver->deleteFile($uploadedFilePath);
+
+            return ['success' => true];
+
         } catch (\Exception $e) {
-            echo $e->getMessage();
-            exit();
+            return false;
         }
     }
 
@@ -224,10 +253,8 @@ class Detail extends \Magento\Backend\App\Action
             return true;
         }
         catch (\Exception $e) {
-            throw new LocalizedException(__($e->getMessage()));
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -270,10 +297,8 @@ class Detail extends \Magento\Backend\App\Action
             return true;
         }
         catch (\Exception $e) {
-            throw new LocalizedException(__($e->getMessage()));
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -298,10 +323,8 @@ class Detail extends \Magento\Backend\App\Action
             );
         }
         catch (\Exception $e) {
-            throw new LocalizedException(__($e->getMessage()));
+            return false;
         }
-
-        return false;
     }
 
     /**
