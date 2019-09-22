@@ -49,7 +49,6 @@ define(
                                 confirm: function() {
                                     // Prepare the form data
                                     var fileData = $('#new_file_import')[0].files[0];
-                                    $('#new_file_import').val('');
 
                                     // Trigger the import request
                                     core.importFile(com, fileData, com.detailViewId); 
