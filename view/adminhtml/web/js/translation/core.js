@@ -321,6 +321,7 @@ define(
                     url: fileUpdateUrl,
                     data: requestData,
                     dataType: 'json',
+                    showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
                         console.log(error);
@@ -343,6 +344,7 @@ define(
                     url: com.options.detailViewUrl,
                     data: requestData,
                     dataType: 'json',
+                    showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
                         console.log(error);
@@ -367,6 +369,7 @@ define(
                     data: requestData,
                     contentType: false,
                     processData: false,
+                    showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
                         console.log(error);
