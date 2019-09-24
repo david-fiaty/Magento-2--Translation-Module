@@ -47,6 +47,26 @@ define(
                 }
             },
 
+            /**
+             * Show a message.
+             */
+            showMessage: function (com, type, message) {
+                this.clearMessages(com);
+                var messageContainer = com.cache._('#translation-container').find('.message');
+                messageContainer.addClass('message-' + type + ' ' + type);
+                messageContainer.append('<div>' + __(message) + '</div>');
+                messageContainer.show();
+            },
+
+            /**
+             * Clear all messages.
+             */
+            clearMessages: function (com) {
+                var messageContainer = com.cache._('#translation-container').find('.message');
+                messageContainer.hide();
+                messageContainer.empty();
+            },
+
             getDownloadFileName: function() {
                 var fileName = 'trans_' + Date.now() + '.csv';
                 return fileName;
