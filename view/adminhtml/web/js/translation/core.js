@@ -52,19 +52,18 @@ define(
              */
             showMessage: function (com, type, message) {
                 this.clearMessages(com);
-                var messageContainer = com.cache._('#translation-container').find('.message');
-                messageContainer.addClass('message-' + type + ' ' + type);
-                messageContainer.append('<div>' + __(message) + '</div>');
-                messageContainer.show();
+                var messageHtml = $('<div class="message"></div>');
+                messageHtml.addClass('message-' + type + ' ' + type);
+                messageHtml.append('<div>' + __(message) + '</div>');
+                messageHtml.insertBefore('.tabulator-header');
+                messageHtml.show();
             },
 
             /**
              * Clear all messages.
              */
             clearMessages: function (com) {
-                var messageContainer = com.cache._('#translation-container').find('.message');
-                messageContainer.hide();
-                messageContainer.empty();
+                com.cache._('.message').hide().empty();
             },
 
             getDownloadFileName: function() {
@@ -122,6 +121,8 @@ define(
                         if (data.error_data) {
                             self.displayFileErrors(com, data);
                         }
+
+                        self.showMessage(com, 'error', 'This is a test error');
                     },
                     error: function(request, status, error) {
                         console.log(error);
