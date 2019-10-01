@@ -63,7 +63,7 @@ define(
              * Clear all messages.
              */
             clearMessages: function (com) {
-                com.cache._('.message').hide().empty();
+                com.cache._('.message').hide().remove();
             },
 
             getDownloadFileName: function() {
