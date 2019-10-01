@@ -121,8 +121,6 @@ define(
                         if (data.error_data) {
                             self.displayFileErrors(com, data);
                         }
-
-                        self.showMessage(com, 'error', 'This is a test error');
                     },
                     error: function(request, status, error) {
                         console.log(error);
