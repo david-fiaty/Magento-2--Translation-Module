@@ -116,13 +116,12 @@ define(
                         showLoader: true,
                         data: requestData,
                         success: function(data) {
-                            var success = JSON.parse(data.success);
-                            if (!success) {
-                                alert(data.message);
-                            }
+                            var data = JSON.parse(data.success);
+                            var msgType = data.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, data.message)
                         },
                         error: function(request, status, error) {
-                            console.log(error);
+                            core.showMessage(com, 'error', error)
                         }
                     });
                 });   
