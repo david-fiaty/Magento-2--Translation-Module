@@ -50,7 +50,7 @@ class Index extends \Magento\Backend\App\Action
     {
         // Prepare the output array
         $output = [
-            'success' => 'true',
+            'success' => true,
             'message' => __('The cache has been cleared successfully.')
         ];
 
