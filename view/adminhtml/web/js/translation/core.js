@@ -193,11 +193,14 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        var msgType = data.success ? 'success' : 'error';
+                        core.showMessage(com, msgType, data.message);
                         self.getData(com);
                     },
                     error: function(request, status, error) {
-                        console.log(error);
+                        core.showMessage(com, 'error', error);
                     }
                 });
             },

@@ -55,9 +55,11 @@ class Create extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        // Prepare the response instance
-        $output = [];
-        $result = $this->resultJsonFactory->create();
+        // Prepare the output array
+        $output = [
+            'success' => false,
+            'message' => __('There was an error creating the file.')
+        ];
 
         // Process the request
         if ($this->getRequest()->isAjax()) 
@@ -85,14 +87,17 @@ class Create extends \Magento\Backend\App\Action
                 ]);
 
                 // Build the response message
-                $output = ($result1 && $result2)
-                ? __('The file has been created.')
-                : __('There was an error creating the file.');
+                if ($result1 || $result2) {
+                    $output = [
+                        'success' => true,
+                        'message' => __('The file has been created successfully.')
+                    ];
+                }
             }
         }
 
         // Return the response
-        return $result->setData($output);
+        return $this->resultJsonFactory->create()->setData($output);
     }
 
     /**
