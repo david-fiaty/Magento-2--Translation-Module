@@ -115,13 +115,13 @@ define(
                         url: com.options.cacheUrl,
                         showLoader: true,
                         data: requestData,
-                        success: function(data) {
-                            var data = JSON.parse(data.success);
+                        success: function(response) {
+                            var data = JSON.parse(response);
                             var msgType = data.success ? 'success' : 'error';
-                            core.showMessage(com, msgType, data.message)
+                            core.showMessage(com, msgType, data.message);
                         },
                         error: function(request, status, error) {
-                            core.showMessage(com, 'error', error)
+                            core.showMessage(com, 'error', error);
                         }
                     });
                 });   
@@ -140,17 +140,14 @@ define(
                         url: com.options.clearLogsUrl,
                         showLoader: true,
                         data: requestData,
-                        success: function(data) {
-                            var success = JSON.parse(data.success);
-                            if (!success) {
-                                alert(data.message);
-                            }
-                            else {
-                                core.getData(com);
-                            }
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            var msgType = data.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, data.message);
+                            core.getData(com);
                         },
                         error: function(request, status, error) {
-                            console.log(error);
+                            core.showMessage(com, 'error', error);
                         }
                     });   
                 });
