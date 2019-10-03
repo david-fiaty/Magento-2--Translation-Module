@@ -126,7 +126,7 @@ class Index extends \Magento\Backend\App\Action
 
             // Scan the files
             $rdi = new \RecursiveDirectoryIterator($rootPath);
-            foreach(new \RecursiveIteratorIterator($rdi) as $filePath)
+            foreach (new \RecursiveIteratorIterator($rdi) as $filePath)
             {
                 if ($this->isWantedFile($filePath)) {
                     $this->saveFile($filePath);
