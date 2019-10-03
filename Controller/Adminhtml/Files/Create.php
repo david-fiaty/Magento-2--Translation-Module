@@ -69,28 +69,36 @@ class Create extends \Magento\Backend\App\Action
 
             // Handle the file creation
             if ($newFilePath) {
-                // Create the file
-                $result1 = $this->helper->createFile($newFilePath);
+                try {
+                    // Create the file
+                    $result1 = $this->helper->createFile($newFilePath);
 
-                // Get the clean path
-                $cleanPath = $this->helper->getCleanPath($newFilePath);
+                    // Get the clean path
+                    $cleanPath = $this->helper->getCleanPath($newFilePath);
 
-                // Save the file entity
-                $result2 = $this->fileDataService->saveFileEntity([
-                    'is_readable' => true,
-                    'is_writable' => true,
-                    'file_path' => $cleanPath,
-                    'file_content' => json_encode([]),
-                    'rows_count' => 0,
-                    'file_creation_time' => date("Y-m-d H:i:s"),
-                    'file_update_time' => date("Y-m-d H:i:s")
-                ]);
+                    // Save the file entity
+                    $result2 = $this->fileDataService->saveFileEntity([
+                        'is_readable' => true,
+                        'is_writable' => true,
+                        'file_path' => $cleanPath,
+                        'file_content' => json_encode([]),
+                        'rows_count' => 0,
+                        'file_creation_time' => date("Y-m-d H:i:s"),
+                        'file_update_time' => date("Y-m-d H:i:s")
+                    ]);
 
-                // Build the response message
-                if ($result1 || $result2) {
+                    // Build the response message
+                    if ($result1 || $result2) {
+                        $output = [
+                            'success' => true,
+                            'message' => __('The file has been created successfully.')
+                        ];
+                    }
+                }
+                catch(\Exception $e) {
                     $output = [
-                        'success' => true,
-                        'message' => __('The file has been created successfully.')
+                        'success' => false,
+                        'message' => __($e->getMessage())
                     ];
                 }
             }

@@ -105,9 +105,6 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         // Prepare the output
-        $result = $this->resultJsonFactory->create();
-
-        // Prepare the output
         $output = [];
 
         // Loop through the directory tree
@@ -140,7 +137,7 @@ class Index extends \Magento\Backend\App\Action
             $output = $this->viewHelper->render($view);
         }
 
-        return $result->setData($output);
+        return $this->resultJsonFactory->create()->setData($output);
     }
 
     /**
