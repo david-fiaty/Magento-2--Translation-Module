@@ -362,7 +362,7 @@ define(
                     {
                         title: '',
                         field: 'delete',
-                        width: 10,
+                        width: 50,
                         headerSort: false,
                         formatter: function(cell, formatterParams, onRendered) {
                             return '&ominus;';
