@@ -17,8 +17,9 @@
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'Naxero_Translation/js/translation/actions',
+    'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, tabulator) {
+], function($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -66,7 +67,7 @@
                 responsiveLayout: true,
                 height: '100%',
                 resizableRows: true,
-                columns: self.getListColumns(),
+                columns: columns.getFilesList(),
                 initialSort:[{
                     column: 'index', 
                     dir: 'asc'
@@ -104,23 +105,6 @@
 
             // Import Data
             actions.initImportDataButton(this);
-        },
-
-        getListColumns: function() {
-            return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...')},
-                {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
-                {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
-                {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
-                {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
-                {title: __('Rows'), field: 'rows_count', sorter: 'number', width: 85},
-                {title: __('Errors'), field: 'errors', sorter: 'number', width: 100},
-                {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
-                {title: __('Group'), field: 'file_group', sorter: 'string', width: 100, visible: false},
-                {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
-            ];
         }
     });
 

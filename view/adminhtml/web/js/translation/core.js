@@ -16,10 +16,11 @@ define(
     [
         'jquery',
         'Naxero_Translation/js/translation/filters',
+        'Naxero_Translation/js/translation/columns',
         'mage/translate',
         'mage/cookies'
     ],
-    function ($, filters, __) {
+    function ($, filters, columns, __) {
         'use strict';
 
         // Define constants
@@ -89,6 +90,47 @@ define(
 
                 // Update the pager select state
                 com.cache._('.' + PAGER_SELECTOR).val(val);
+            },
+
+            getDetailColumns: function(com) {
+                var self = this;
+                return [
+                    {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
+                    {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
+                    {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
+                    {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
+                    {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
+                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {
+                        title: '',
+                        field: 'delete',
+                        width: 50,
+                        headerSort: false,
+                        formatter: function(cell, formatterParams, onRendered) {
+                            return '&ominus;';
+                        }, 
+                        cellClick: function(e, cell) {
+                            // Get the row
+                            var row = cell.getRow();
+
+                            // Get the row data
+                            var rowData = row.getData();
+
+                            // Delete the row in file
+                            self.deleteRow(
+                                com,
+                                {
+                                    fileId: rowData.file_id,
+                                    rowId: rowData.row_id
+                                }
+                            );
+
+                            // Delete the row in table
+                            row.delete();
+                        }
+                    }
+                ];
             },
 
             getData: function(com) {
@@ -347,47 +389,6 @@ define(
     
                 // Move the panels
                 this.togglePanes(com, rowData.file_id);
-            },
-
-            getDetailColumns: function(com) {
-                var self = this;
-                return [
-                    {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
-                    {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                    {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
-                    {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
-                    {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
-                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
-                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
-                    {
-                        title: '',
-                        field: 'delete',
-                        width: 50,
-                        headerSort: false,
-                        formatter: function(cell, formatterParams, onRendered) {
-                            return '&ominus;';
-                        }, 
-                        cellClick: function(e, cell) {
-                            // Get the row
-                            var row = cell.getRow();
-
-                            // Get the row data
-                            var rowData = row.getData();
-
-                            // Delete the row in file
-                            self.deleteRow(
-                                com,
-                                {
-                                    fileId: rowData.file_id,
-                                    rowId: rowData.row_id
-                                }
-                            );
-
-                            // Delete the row in table
-                            row.delete();
-                        }
-                    }
-                ];
             },
 
             getRowDetails: function(com, fileId, isLogView) {

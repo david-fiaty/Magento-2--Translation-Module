@@ -17,8 +17,9 @@
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'Naxero_Translation/js/translation/actions',
+    'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, tabulator) {
+], function($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -58,7 +59,7 @@
                 responsiveLayout: true,
                 height: '100%',
                 resizableRows:true,
-                columns: self.getListColumns(),
+                columns: columns.getLogsList(),
                 initialSort:[{
                     column: 'index',
                     dir: 'asc'
@@ -96,19 +97,6 @@
 
             // Flush cache
             actions.initCacheButton(this);
-        },
-
-        getListColumns: function() {
-            return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                {title: __('Id'), field: 'id', sorter: 'number', visible: false},
-                {title: __('File Id'), field: 'file_id', sorter: 'string', visible: false},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), width: 550},
-                {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
-                {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
-                {title: __('Row Id'), field: 'row_id', sorter: 'number', width: 100},
-                {title: __('Comments'), field: 'comments', formatter: 'textarea'}
-            ];
         }
     });
 
