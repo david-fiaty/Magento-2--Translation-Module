@@ -123,7 +123,7 @@ define(
                         }
                     },
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
@@ -195,11 +195,11 @@ define(
                     data: requestData,
                     success: function(response) {
                         var msgType = response.success ? 'success' : 'error';
-                        core.showMessage(com, msgType, response.message);
+                        self.showMessage(com, msgType, response.message);
                         self.getData(com);
                     },
                     error: function(request, status, error) {
-                        core.showMessage(com, 'error', error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
@@ -330,6 +330,7 @@ define(
 
             updateEntityData: function(com, data) {
                 // Prepare the variables
+                var self = this;
                 var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
                         row_content: data.rowContent,
@@ -347,13 +348,14 @@ define(
                     showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
             deleteRow: function(com, data) {
                 // Prepare the variables
+                var self = this;
                 var requestData = {
                         action: 'delete_row',
                         file_id: data.fileId,
@@ -370,7 +372,7 @@ define(
                     showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
@@ -394,13 +396,13 @@ define(
                     contentType: false,
                     processData: false,
                     showLoader: true,
-                    success: function(data) {
-                        if (JSON.parse(data.success) === true) {
-                            self.getRowDetails(com, fileId, false);
-                        }
+                    success: function(response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
+                        self.getRowDetails(com, fileId, false);
                     },
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
@@ -515,7 +517,7 @@ define(
                         }
                     },
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },

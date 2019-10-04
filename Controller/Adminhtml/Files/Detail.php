@@ -165,6 +165,12 @@ class Detail extends \Magento\Backend\App\Action
      * Import file data.
      */
     public function importFileData() {
+        // Prepare the output array
+        $output = [
+            'success' => true,
+            'message' => __('The file has been imported successfully.')
+        ];
+
         try {
             // Set the file destination
             $destinationPath = $this->moduleReader->getModuleDir(
@@ -209,11 +215,14 @@ class Detail extends \Magento\Backend\App\Action
             // Delete the uploaded file
             $this->fileDriver->deleteFile($uploadedFilePath);
 
-            return ['success' => true];
-
         } catch (\Exception $e) {
-            return false;
+            $output = [
+                'success' => false,
+                'message' => __('There was an error importing the file.')
+            ];
         }
+
+        return $output;
     }
 
     /**
