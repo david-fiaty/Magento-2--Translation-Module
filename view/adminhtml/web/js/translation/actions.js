@@ -73,7 +73,10 @@ define(
                             fileId: com.detailViewId.toString(),
                             rowContent: newRowData
                         }
-                    );                    
+                    );
+                    
+                    // Set the view edited state
+                    com.rowsCountEdited = true;
                 });
             },
 
@@ -81,7 +84,10 @@ define(
                 com.cache._('#button-back').off().on('click', function() {
                     core.togglePanes(com, 0);
                     com.cache._(com.options.detailView).tabulator('destroy');
-                    core.getData(com);
+                    if (com.rowsCountEdited) {
+                        core.getData(com);
+                        com.rowsCountEdited = false;                      
+                    }
                 });
             },
 

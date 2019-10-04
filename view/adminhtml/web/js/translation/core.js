@@ -345,7 +345,6 @@ define(
                     url: fileUpdateUrl,
                     data: requestData,
                     dataType: 'json',
-                    showLoader: true,
                     success: function(res) {},
                     error: function(request, status, error) {
                         self.showMessage(com, 'error', error);
@@ -375,6 +374,9 @@ define(
                         self.showMessage(com, 'error', error);
                     }
                 });
+
+                // Set the view edited state
+                com.rowsCountEdited = true;
             },
 
             importFile: function(com, fileData, fileId) {
