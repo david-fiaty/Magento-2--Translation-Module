@@ -116,9 +116,8 @@ define(
                         showLoader: true,
                         data: requestData,
                         success: function(response) {
-                            var data = JSON.parse(response);
-                            var msgType = data.success ? 'success' : 'error';
-                            core.showMessage(com, msgType, data.message);
+                            var msgType = response.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, response.message);
                         },
                         error: function(request, status, error) {
                             core.showMessage(com, 'error', error);
@@ -141,9 +140,8 @@ define(
                         showLoader: true,
                         data: requestData,
                         success: function(response) {
-                            var data = JSON.parse(response);
-                            var msgType = data.success ? 'success' : 'error';
-                            core.showMessage(com, msgType, data.message);
+                            var msgType = response.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, response.message);
                             core.getData(com);
                         },
                         error: function(request, status, error) {
