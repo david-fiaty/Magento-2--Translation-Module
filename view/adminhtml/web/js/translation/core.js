@@ -194,9 +194,8 @@ define(
                     showLoader: true,
                     data: requestData,
                     success: function(response) {
-                        var data = JSON.parse(response);
-                        var msgType = data.success ? 'success' : 'error';
-                        core.showMessage(com, msgType, data.message);
+                        var msgType = response.success ? 'success' : 'error';
+                        core.showMessage(com, msgType, response.message);
                         self.getData(com);
                     },
                     error: function(request, status, error) {
@@ -222,7 +221,9 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function(response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
                         self.getData(com);
                     },
                     error: function(request, status, error) {

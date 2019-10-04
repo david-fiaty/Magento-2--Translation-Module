@@ -104,37 +104,45 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        // Prepare the output
-        $output = [];
+        // Prepare the output array
+        $output = [
+            'success' => true,
+            'message' => __('The index was updated successfully.')
+        ];
 
         // Loop through the directory tree
         if ($this->getRequest()->isAjax()) 
         {
-            // Get the update mode
-            $update_mode = $this->getRequest()->getParam('update_mode');
+            try {
+                // Get the update mode
+                $update_mode = $this->getRequest()->getParam('update_mode');
 
-            // Get the view mode
-            $view = $this->getRequest()->getParam('view');
+                // Get the view mode
+                $view = $this->getRequest()->getParam('view');
 
-            // Clear the table data
-            if ($update_mode == 'update_replace') {
-                $this->clearTableData();
-            }
+                // Clear the table data
+                if ($update_mode == 'update_replace') {
+                    $this->clearTableData();
+                }
 
-            // Get the root directory
-            $rootPath = $this->tree->getRoot();
+                // Get the root directory
+                $rootPath = $this->tree->getRoot();
 
-            // Scan the files
-            $rdi = new \RecursiveDirectoryIterator($rootPath);
-            foreach (new \RecursiveIteratorIterator($rdi) as $filePath)
-            {
-                if ($this->isWantedFile($filePath)) {
-                    $this->saveFile($filePath);
+                // Scan the files
+                $rdi = new \RecursiveDirectoryIterator($rootPath);
+                foreach (new \RecursiveIteratorIterator($rdi) as $filePath)
+                {
+                    if ($this->isWantedFile($filePath)) {
+                        $this->saveFile($filePath);
+                    }
                 }
             }
-
-            // Get the output
-            $output = $this->viewHelper->render($view);
+            catch (\Exception $e) {
+                $output = [
+                    'success' => false,
+                    'message' => __($e->getMessage())
+                ];
+            }
         }
 
         return $this->resultJsonFactory->create()->setData($output);
