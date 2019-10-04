@@ -6,7 +6,6 @@ FEATURES
 
 TODO
 - improve autocomplete styling
-- improve error messages handling
 - link row and file deletion to config param
 - add field validation checks to prompts with ok button enabled only if valid
 
