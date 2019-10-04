@@ -227,7 +227,7 @@ define(
                         self.getData(com);
                     },
                     error: function(request, status, error) {
-                        console.log(error);
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
