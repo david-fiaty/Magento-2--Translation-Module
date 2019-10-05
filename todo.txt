@@ -1,8 +1,6 @@
 FEATURES
 - check the core strings override from module approach
 
-TODO
-- add field validation checks to prompts with ok button enabled only if valid
 
 BUGS
 - fix csv row deletion sometimes failing
