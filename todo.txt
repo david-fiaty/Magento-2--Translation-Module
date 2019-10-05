@@ -1,5 +1,4 @@
 FEATURES
-- add error filtering ability to list and detail views
 - add acl.xml permissions for actions
 - check the core strings override from module approach
 
