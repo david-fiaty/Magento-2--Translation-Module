@@ -138,12 +138,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         // Load the config file content
         $fileContentArray = $this->xmlParser
         ->load($filePath)
-        ->xmlToArray()['config']['_value']['default']['translation']['general'];
+        ->xmlToArray()['config']['_value']['default']['translation'];
 
         // Get the config values
         $output = [];
-        foreach ($fileContentArray as $key => $value) {
-            $output[$key] = $this->getConfig($key);
+        foreach ($fileContentArray as $group => $fields) {
+            foreach ($fields as $key => $value) {
+                $output[$key] = $this->getConfig($key);
+            }
         }
 
         return $output;

@@ -25,11 +25,24 @@
             <tab>naxero</tab>
             <resource>Naxero_Translation::config</resource>
             <group id="general" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>General Configuration</label>
+                <label>General settings</label>
                 <field id="enable" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+                </field>    
+                <field id="allow_file_deletion" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow file deletion</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, direct CSV file deletion will be allowed.</comment>
+                </field>       
+                <field id="allow_file_creation" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow file creation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, direct CSV file creation will be allowed.</comment>
+                </field>      
+            </group>
+            <group id="core_files" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Core files settings</label>
                 <field id="exclude_core_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude core files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -51,26 +64,22 @@
                         <field id="exclude_core_files">0</field>
                     </depends>
                 </field>
-                <field id="exclude_test_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Exclude test files</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If set to Yes, unit testing files will be excluded.</comment>
-                </field>      
+            </group>
+            <group id="static_files" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Static files settings</label>
                 <field id="exclude_static_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude static files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to Yes, static files will be excluded.</comment>
-                </field>        
-                <field id="allow_file_deletion" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Allow file deletion</label>
+                </field>
+            </group>
+            <group id="test_files" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Test files settings</label>
+                <field id="exclude_test_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude test files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If set to Yes, direct CSV file deletion will be allowed.</comment>
-                </field>       
-                <field id="allow_file_creation" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Allow file creation</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If set to Yes, direct CSV file creation will be allowed.</comment>
-                </field>      
+                    <comment>If set to Yes, unit testing files will be excluded.</comment>
+                </field>  
             </group>
          </section>
     </system>
