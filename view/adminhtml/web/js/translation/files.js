@@ -81,7 +81,17 @@
 
                     // Handle the click cases
                     if (clickedField == 'delete') {
-                        core.deleteFile(self, rowData);                        
+                        // Check core file deletion
+                        if (self.options.settings.allow_core_files_deletion == '0' && rowData.is_core) {
+                            alert(__('Deletion of core files is not allowed.'));
+                        }
+                        else {
+                            // Delete the file
+                            core.deleteFile(self, rowData);
+
+                            // Delete the row in table
+                            row.delete();
+                        }
                     }
                     else {
                         core.handleRowView(self, row);

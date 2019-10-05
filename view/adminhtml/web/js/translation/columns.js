@@ -50,25 +50,6 @@ define(
                             headerSort: false,
                             formatter: function(cell, formatterParams, onRendered) {
                                 return '&ominus;';
-                            }, 
-                            cellClick: function(e, cell) {
-                                // Get the row
-                                var row = cell.getRow();
-    
-                                // Get the row data
-                                var rowData = row.getData();
-    
-                                // Check core file deletion
-                                if (com.options.settings.allow_core_files_deletion == '0' && rowData.is_core) {
-                                    alert('not allowed');
-                                    return;
-                                }
-
-                                // Delete the file
-                                core.deleteFile(com, rowData.file_id);
-    
-                                // Delete the row in table
-                                row.delete();
                             }
                         }
                     );
