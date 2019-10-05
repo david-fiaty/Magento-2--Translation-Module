@@ -21,6 +21,8 @@
             <general>
                 <enable>1</enable>
                 <exclude_core_files>0</exclude_core_files>
+                <allow_core_files_edition>0</allow_core_files_edition>
+                <allow_core_files_deletion>0</allow_core_files_deletion>
                 <exclude_test_files>1</exclude_test_files>
                 <exclude_static_files>1</exclude_static_files>
                 <allow_file_deletion>1</allow_file_deletion>

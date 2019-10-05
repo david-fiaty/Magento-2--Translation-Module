@@ -35,6 +35,22 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to NO, administrators will be able to edit core translation files directly. Editing core files directly is not recommended.</comment>
                 </field>
+                <field id="allow_core_files_edition" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow core files edition</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Direct modification of core files is not recommended.</comment>
+                    <depends>
+                        <field id="exclude_core_files">0</field>
+                    </depends>
+                </field>
+                <field id="allow_core_files_deletion" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow core files deletion</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Deletion of core files is not recommended.</comment>
+                    <depends>
+                        <field id="exclude_core_files">0</field>
+                    </depends>
+                </field>
                 <field id="exclude_test_files" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Exclude test files</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

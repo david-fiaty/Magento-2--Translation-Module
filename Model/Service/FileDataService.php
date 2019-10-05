@@ -163,6 +163,12 @@ class FileDataService
         // Add the errors column
         $arr['errors'] = $this->getFileErrorCount($fileEntity);
 
+        // Add the errors column
+        $arr['errors'] = $this->getFileErrorCount($fileEntity);
+
+        // Add the is_core column
+        $arr['is_core'] = $this->helper->isCoreFile($arr['file_path']);
+
         return $arr;
     }	
 
