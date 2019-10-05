@@ -55,7 +55,18 @@ define(
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}
+                            },
+                            opened: function() {
+                                $('button.action-accept').prop('disabled', true);
                             }
+                        });
+
+                        // Add the validation checks
+                        $('#new_file_import').on('change', function() {
+                            var val = $(this).val().replace(' ', '');
+                            val.length == 0
+                            ? $('button.action-accept').prop('disabled', true)
+                            : $('button.action-accept').prop('disabled', false);
                         });
                     },
                     error: function(request, status, error) {
@@ -66,6 +77,7 @@ define(
 
             newFile: function(com) {
                 // Prepare the data
+                var self = this;
                 var requestData = {
                     block_type: 'prompt',
                     template_name: 'new-file',
@@ -95,6 +107,9 @@ define(
                                 }, 
                                 cancel: function() {}, 
                                 always: function() {}
+                            },
+                            opened: function() {
+                                $('button.action-accept').prop('disabled', true);
                             }
                         });
 
@@ -122,29 +137,48 @@ define(
                             }
                         });
 
-                        // Initialize the file path field
-                        $('#new_file_path').autocomplete({
-                            source: filePathList,
-                            open: function(event, ui) {
-                                $(this).autocomplete("widget").css({
-                                    "width": ($(this).width() + "px")
-                                });
-                            }
-                        });
-
-                        // Initialize the file name field
-                        $('#new_file_name').autocomplete({
-                            source: fileNameList,
-                            open: function(event, ui) {
-                                $(this).autocomplete("widget").css({
-                                    "width": ($(this).width() + "px")
-                                });
-                            }
-                        });
+                        // Initialize the autocomplete fields
+                        self.initAutocompleteFields([
+                            {id: 'new_file_path', source: filePathList},
+                            {id: 'new_file_name', source: fileNameList}
+                        ]);
                     },
                     error: function(request, status, error) {
                         console.log(error);
                     }
+                });
+            },
+
+            initAutocompleteFields: function(fieldsArray) {
+                // Initialise the widgets
+                fieldsArray.forEach(function(field) {
+                    $('#' + field.id).autocomplete({
+                        source: field.source,
+                        open: function(event, ui) {
+                            $(this).autocomplete('widget').css({
+                                'width': ($(this).width() + 'px')
+                            });
+                        }
+                    });
+
+                    // Add the validation checks
+                    $('#' + field.id).on('input', function() {
+                        // Prepare the variables
+                        var isEmpty = 0;
+
+                        // Loop through the fields
+                        $('input[name^="new_file_"]').each(function(i) {
+                            var val = $(this).val().replace(' ', '');
+                            if (val.length === 0) {
+                                isEmpty++;
+                            }
+                        });
+
+                        // Set the confirmation button state
+                        isEmpty == 0
+                        ? $('button.action-accept').prop('disabled', false)
+                        : $('button.action-accept').prop('disabled', true);
+                    });
                 });
             },
 
