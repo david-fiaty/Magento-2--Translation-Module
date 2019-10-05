@@ -40,6 +40,7 @@
             fileUpdateUrl: '',
             cacheUrl: '',
             detailViewId: 0,
+            settings: {}
         },
 
         filters: {

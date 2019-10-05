@@ -23,7 +23,8 @@ define(
         // Return the component
         return {
             getFilesList: function(com) {
-                return [
+                // Prepare the base columns
+                var output = [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
                     {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
                     {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...')},
@@ -35,30 +36,39 @@ define(
                     {title: __('Errors'), field: 'errors', sorter: 'number', width: 100},
                     {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
                     {title: __('Group'), field: 'file_group', sorter: 'string', width: 100, visible: false},
-                    {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100},
-                    {
-                        title: '',
-                        field: 'delete',
-                        width: 50,
-                        headerSort: false,
-                        formatter: function(cell, formatterParams, onRendered) {
-                            return '&ominus;';
-                        }, 
-                        cellClick: function(e, cell) {
-                            // Get the row
-                            var row = cell.getRow();
-
-                            // Get the row data
-                            var rowData = row.getData();
-
-                            // Delete the file
-                            core.deleteFile(com, rowData.file_id);
-
-                            // Delete the row in table
-                            row.delete();
-                        }
-                    }
+                    {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
                 ];
+
+                // Add the delete column
+                if (com.options.settings.allow_file_deletion == '1') {
+                    output.push(
+                        {
+                            title: '',
+                            field: 'delete',
+                            width: 50,
+                            headerSort: false,
+                            formatter: function(cell, formatterParams, onRendered) {
+                                return '&ominus;';
+                            }, 
+                            cellClick: function(e, cell) {
+                                // Get the row
+                                var row = cell.getRow();
+    
+                                // Get the row data
+                                var rowData = row.getData();
+    
+                                // Delete the file
+                                core.deleteFile(com, rowData.file_id);
+    
+                                // Delete the row in table
+                                row.delete();
+                            }
+                        }
+                    );
+                }
+
+                // Return the array
+                return output;
             },
 
             getLogsList: function() {

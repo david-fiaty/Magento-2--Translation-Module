@@ -45,6 +45,16 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to Yes, static files will be excluded.</comment>
                 </field>        
+                <field id="allow_file_deletion" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow file deletion</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, direct CSV file deletion will be allowed.</comment>
+                </field>       
+                <field id="allow_file_creation" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow file creation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If set to Yes, direct CSV file creation will be allowed.</comment>
+                </field>      
             </group>
          </section>
     </system>

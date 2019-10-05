@@ -16,6 +16,7 @@
 namespace Naxero\Translation\Helper;
 
 use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\Module\Dir;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -45,6 +46,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public $scopeConfig;
 
     /**
+     * @var Parser
+     */
+    public $xmlParser;
+
+    /**
+     * @var Dir
+     */
+    public $moduleDirReader;
+
+    /**
      * @var TypeListInterface
      */
     public $cacheTypeList;
@@ -69,6 +80,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\File\Csv $csvParser,
         \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\Xml\Parser $xmlParser,
+        \Magento\Framework\Module\Dir\Reader $moduleDirReader,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
         \Magento\Framework\Filesystem\DirectoryList $dir
@@ -79,6 +92,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->csvParser = $csvParser;
         $this->fileDriver = $fileDriver;
         $this->scopeConfig = $scopeConfig;
+        $this->xmlParser = $xmlParser;
+        $this->moduleDirReader = $moduleDirReader;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
         $this->dir = $dir;
@@ -108,6 +123,30 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             'translation/general/' . $value,
             ScopeInterface::SCOPE_STORE
         );
+    }
+
+    /**
+     * Get all module config parameters.
+     */
+    public function getConfigValues() {
+        // Get the config file path
+        $filePath = $this->moduleDirReader->getModuleDir(
+            Dir::MODULE_ETC_DIR,
+            'Naxero_Translation'
+        ) . '/config.xml';
+
+        // Load the config file content
+        $fileContentArray = $this->xmlParser
+        ->load($filePath)
+        ->xmlToArray()['config']['_value']['default']['translation']['general'];
+
+        // Get the config values
+        $output = [];
+        foreach ($fileContentArray as $key => $value) {
+            $output[$key] = $this->getConfig($key);
+        }
+
+        return $output;
     }
 
     /**
