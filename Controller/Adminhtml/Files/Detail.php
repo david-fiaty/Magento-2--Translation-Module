@@ -441,6 +441,9 @@ class Detail extends \Magento\Backend\App\Action
         $rowDataArray['is_readable'] = $fileEntity->getData('is_readable');
         $rowDataArray['is_writable'] = $fileEntity->getData('is_writable');
 
+        // Add the error state
+        $rowDataArray['is_error'] = 0;
+
         // Retun combined data
         return (object) array_combine(
             $this->getColumns(),
@@ -466,6 +469,9 @@ class Detail extends \Magento\Backend\App\Action
         $errorLine['is_readable'] = $fileEntity->getData('is_readable');
         $errorLine['is_writable'] = $fileEntity->getData('is_writable');
 
+        // Add the error state
+        $errorLine['is_error'] = 1;
+
         // Retun combined data
         return (object) array_combine(
             $this->getColumns(),
@@ -484,7 +490,8 @@ class Detail extends \Magento\Backend\App\Action
             'row_id',
             'file_id',
             'is_readable',
-            'is_writable'
+            'is_writable',
+            'is_error'
         ];
     }
 }

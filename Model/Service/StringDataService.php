@@ -143,6 +143,7 @@ class StringDataService
         return array_merge([
             'index' => $rowIndex,
             'row_id' => $rowId,
+            'is_error' => 0,
             'key' => $line[0],
             'value' => $line[1]
         ], $arr);
@@ -155,6 +156,7 @@ class StringDataService
         $errorLine = [];
         $errorLine['index'] = $rowIndex;
         $errorLine['row_id'] = $rowId;
+        $errorLine['is_error'] = 1;
         $errorLine['key'] = isset($line[0]) ? $line[0] : '';
         $errorLine['value'] = isset($line[1]) ? $line[1] : '';
 

@@ -71,6 +71,13 @@ $settings = $block->helper->getConfigValues();
 			    	], $block->getLayout()); ?>	
 				</div>
 			</div>
+			<br><br>
+			<div class="admin__field admin__field-option">
+				<input id="filter_file_errors" name="filter_file_errors" type="checkbox" class="admin__control-checkbox">
+				<label class="admin__field-label" for="filter_file_errors">
+					<?= __('Show errors only'); ?>                            
+				</label>
+			</div>
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
@@ -127,6 +134,14 @@ $settings = $block->helper->getConfigValues();
 				], $block->getLayout()); ?>	
 			</div>
 		</div>
+		<br><br>
+		<div class="admin__field admin__field-option">
+            <input id="filter_detail_errors" name="filter_detail_errors" type="checkbox" class="admin__control-checkbox">
+			<label class="admin__field-label" for="filter_detail_errors">
+				<?= __('Show errors only'); ?>                            
+			</label>
+        </div>
+
 		<div id="translation-table-detail-content"></div>
 	</div>
 </div>

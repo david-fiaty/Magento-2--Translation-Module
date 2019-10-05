@@ -65,13 +65,46 @@ define(
                     $.each(fields, function(k, obj) {
                         com.cache._(obj.selector).off().on('change', function() {
                             let selectedKey = $(this).find(':selected').val();
-                            self.updateFilters(
+                            self.update(
                                 com,
                                 {field: obj.field, type: '=', value: selectedKey}
                             );
                         });
                     });
                 }
+
+                // Detail errors filter
+                com.cache._('#filter_detail_errors').off().on('click', function() {
+                    if (com.cache._(this).is(':checked')) {
+                        var filter = [{field: 'is_error', type: '=', value: '1'}];
+                        com.cache._(com.options.detailView).tabulator('setFilter', filter);
+                    }
+                    else {
+                        com.cache._(com.options.detailView).tabulator('clearFilter');         
+                    }
+                });
+
+                // Files errors filter
+                com.cache._('#filter_file_errors').off().on('click', function() {
+                    if (com.cache._(this).is(':checked')) {
+                        var filter = [{field: 'errors', type: '>', value: 0}];
+                        com.cache._(com.options.targetTable).tabulator('setFilter', filter);
+                    }
+                    else {
+                        com.cache._(com.options.targetTable).tabulator('clearFilter');         
+                    }
+                });
+
+                // Strings errors filter
+                com.cache._('#filter_string_errors').off().on('click', function() {
+                    if (com.cache._(this).is(':checked')) {
+                        var filter = [{field: 'is_error', type: '=', value: '1'}];
+                        com.cache._(com.options.targetTable).tabulator('setFilter', filter);
+                    }
+                    else {
+                        com.cache._(com.options.targetTable).tabulator('clearFilter');         
+                    }
+                });
             },
 
             createOptions: function(com, sel, arr) {

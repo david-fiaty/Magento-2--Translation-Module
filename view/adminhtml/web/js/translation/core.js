@@ -98,6 +98,7 @@ define(
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
                     {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
                     {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
+                    {title: __('Is error'), field: 'is_error', sorter: 'number', width: 90, visible: false},
                     {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
                     {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
                     {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},

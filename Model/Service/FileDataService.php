@@ -161,10 +161,7 @@ class FileDataService
         $arr['file_locale'] =  basename($arr['file_path'], '.csv');
 
         // Add the errors column
-        $arr['errors'] = $this->getFileErrorCount($fileEntity);
-
-        // Add the errors column
-        $arr['errors'] = $this->getFileErrorCount($fileEntity);
+        $arr['errors'] = (int) $this->getFileErrorCount($fileEntity);
 
         // Add the is_core column
         $arr['is_core'] = $this->helper->isCoreFile($arr['file_path']);
