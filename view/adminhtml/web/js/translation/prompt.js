@@ -124,12 +124,22 @@ define(
 
                         // Initialize the file path field
                         $('#new_file_path').autocomplete({
-                            source: filePathList
+                            source: filePathList,
+                            open: function(event, ui) {
+                                $(this).autocomplete("widget").css({
+                                    "width": ($(this).width() + "px")
+                                });
+                            }
                         });
 
                         // Initialize the file name field
                         $('#new_file_name').autocomplete({
-                            source: fileNameList
+                            source: fileNameList,
+                            open: function(event, ui) {
+                                $(this).autocomplete("widget").css({
+                                    "width": ($(this).width() + "px")
+                                });
+                            }
                         });
                     },
                     error: function(request, status, error) {
