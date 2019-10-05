@@ -93,6 +93,18 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
+     * Delete the object
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return $this
+     * @throws \Exception
+     */
+    public function delete(\Magento\Framework\Model\AbstractModel $object)
+    {
+        return parent::delete($object);
+    }
+
+    /**
      * Retrieve select object for load object data.
      *
      * @param string $field

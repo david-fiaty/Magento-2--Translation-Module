@@ -134,6 +134,10 @@ class Detail extends \Magento\Backend\App\Action
                     $output = $this->deleteFileEntityRow();
                     break;
 
+                case 'delete_file':
+                    $output = $this->deleteCsvFile();
+                    break;
+
                 case 'import_data':
                     $output = $this->importFileData();
                     break;
@@ -150,6 +154,11 @@ class Detail extends \Magento\Backend\App\Action
     public function getFileInstance() {
         // Get the file id
         $fileId = $this->getRequest()->getParam('file_id');
+
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/0.log');
+        $logger = new \Zend\Log\Logger();
+        $logger->addWriter($writer);
+        $logger->info(print_r($fileId, 1));
 
         // Load the requested item
         if ((int) $fileId > 0) {
@@ -219,6 +228,49 @@ class Detail extends \Magento\Backend\App\Action
             $output = [
                 'success' => false,
                 'message' => __('There was an error importing the file.')
+            ];
+        }
+
+        return $output;
+    }
+
+    /**
+     * Delete a CSV file.
+     */
+    public function deleteCsvFile() {
+        // Prepare the output array
+        $output = [
+            'success' => false,
+            'message' => __('There was an error deleting the file.')
+        ];
+
+        try {
+            // Get the root path
+            $rootPath = $this->tree->getRoot();
+
+            // Get the file entity instance
+            $fileEntity = $this->getFileInstance();
+            if ($fileEntity) {
+                // Prepare the full file path
+                $filePath = $rootPath . DIRECTORY_SEPARATOR
+                . $fileEntity->getData('file_path');
+
+                // Delete the file on the server
+                $this->fileDriver->deleteFile($filePath);
+
+                // Delete the file entity in database
+                $fileEntity->delete();
+
+                $output = [
+                    'success' => true,
+                    'message' => __('The file has been deleted successfully.')
+                ];
+            }
+        }
+        catch (\Exception $e) {
+            $output = [
+                'success' => false,
+                'message' => __($e->getMessage())
             ];
         }
 

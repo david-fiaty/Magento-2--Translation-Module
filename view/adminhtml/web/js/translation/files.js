@@ -67,13 +67,24 @@
                 responsiveLayout: true,
                 height: '100%',
                 resizableRows: true,
-                columns: columns.getFilesList(),
+                columns: columns.getFilesList(self),
                 initialSort:[{
                     column: 'index', 
                     dir: 'asc'
                 }],
-                rowClick: function(e, row) {
-                    core.handleRowView(self, row);
+                cellClick: function(e, cell) {
+                    // Prepare the variables
+                    var clickedField = cell.getColumn().getField();
+                    var row = cell.getRow();
+                    var rowData = row.getData();
+
+                    // Handle the click cases
+                    if (clickedField == 'delete') {
+                        core.deleteFile(self, rowData);                        
+                    }
+                    else {
+                        core.handleRowView(self, row);
+                    }
                 }
             });
 

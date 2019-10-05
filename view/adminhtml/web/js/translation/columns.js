@@ -14,14 +14,15 @@
 
 define(
     [
+        'Naxero_Translation/js/translation/core',
         'mage/translate',
     ],
-    function (__) {
+    function (core, __) {
         'use strict';
 
         // Return the component
         return {
-            getFilesList: function() {
+            getFilesList: function(com) {
                 return [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
                     {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
@@ -34,7 +35,29 @@ define(
                     {title: __('Errors'), field: 'errors', sorter: 'number', width: 100},
                     {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
                     {title: __('Group'), field: 'file_group', sorter: 'string', width: 100, visible: false},
-                    {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
+                    {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100},
+                    {
+                        title: '',
+                        field: 'delete',
+                        width: 50,
+                        headerSort: false,
+                        formatter: function(cell, formatterParams, onRendered) {
+                            return '&ominus;';
+                        }, 
+                        cellClick: function(e, cell) {
+                            // Get the row
+                            var row = cell.getRow();
+
+                            // Get the row data
+                            var rowData = row.getData();
+
+                            // Delete the file
+                            core.deleteFile(com, rowData.file_id);
+
+                            // Delete the row in table
+                            row.delete();
+                        }
+                    }
                 ];
             },
 

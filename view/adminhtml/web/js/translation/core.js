@@ -16,11 +16,10 @@ define(
     [
         'jquery',
         'Naxero_Translation/js/translation/filters',
-        'Naxero_Translation/js/translation/columns',
         'mage/translate',
         'mage/cookies'
     ],
-    function ($, filters, columns, __) {
+    function ($, filters, __) {
         'use strict';
 
         // Define constants
@@ -324,6 +323,32 @@ define(
 
                 // Set the view edited state
                 com.rowsCountEdited = true;
+            },
+
+            deleteFile: function(com, rowData) {
+                // Prepare the variables
+                var self = this;
+                var requestData = {
+                    action: 'delete_file',
+                    file_id: rowData.file_id,
+                    form_key: window.FORM_KEY
+                };
+    
+                // Send the request
+                $.ajax({
+                    type: 'POST',
+                    url: com.options.detailViewUrl,
+                    data: requestData,
+                    dataType: 'json',
+                    showLoader: true,
+                    success: function(response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
+                    },
+                    error: function(request, status, error) {
+                        self.showMessage(com, 'error', error);
+                    }
+                });
             },
 
             importFile: function(com, fileData, fileId) {
