@@ -4,8 +4,6 @@ FEATURES
 - check the core strings override from module approach
 
 TODO
-- improve autocomplete styling
-- link row and file deletion to config param
 - add field validation checks to prompts with ok button enabled only if valid
 
 BUGS
