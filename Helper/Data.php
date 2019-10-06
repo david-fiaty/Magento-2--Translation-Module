@@ -209,8 +209,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 		// Build the select list
 		$select = $this->buildSelectList($attributes, $layout);
 
-        // Add the options
+        // Prepare the values
         $values = [50, 100, 150, 200, 250, 300, 350, 400];
+
+        // Add the options
         foreach ($values as $value) {
             $select->addOption($value, $value);
         }
