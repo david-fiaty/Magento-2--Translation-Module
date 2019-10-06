@@ -1,7 +1,3 @@
-FEATURES
-- check the core strings override from module approach
-
-
 BUGS
 - fix csv row deletion sometimes failing
 
