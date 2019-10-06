@@ -123,8 +123,7 @@ class Create extends \Magento\Backend\App\Action
         }
 
         // Fix the file extension if needed
-        $fileExtension = explode('.', $fileName);
-        if ($fileExtension[1] != 'csv') {
+        if (substr($fileName, -4) != '.csv') {
             $fileName .= '.csv';
         }
 

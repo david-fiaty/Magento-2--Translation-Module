@@ -155,11 +155,6 @@ class Detail extends \Magento\Backend\App\Action
         // Get the file id
         $fileId = $this->getRequest()->getParam('file_id');
 
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/0.log');
-        $logger = new \Zend\Log\Logger();
-        $logger->addWriter($writer);
-        $logger->info(print_r($fileId, 1));
-
         // Load the requested item
         if ((int) $fileId > 0) {
             return $this->fileEntityFactory
