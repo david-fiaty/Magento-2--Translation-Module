@@ -117,14 +117,17 @@ class Create extends \Magento\Backend\App\Action
         $filePath  = $this->getRequest()->getParam('file_path');
         $fileName = $this->getRequest()->getParam('file_name');
 
-        // Get the file extension
-        $fileExtension = explode('.', $fileName);
-
-        // Build the path
-        if (is_dir($filePath) && $fileExtension[1] == 'csv') {
-            return $filePath . $fileName;
+        // Fix the trailing slash if needed
+        if (substr($filePath, -1) != DIRECTORY_SEPARATOR) {
+            $filePath .= DIRECTORY_SEPARATOR;
         }
 
-        return null;
+        // Fix the file extension if needed
+        $fileExtension = explode('.', $fileName);
+        if ($fileExtension[1] != 'csv') {
+            $fileName .= '.csv';
+        }
+
+        return $filePath . $fileName;
     }
 }

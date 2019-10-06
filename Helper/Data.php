@@ -83,8 +83,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\Xml\Parser $xmlParser,
         \Magento\Framework\Module\Dir\Reader $moduleDirReader,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
-        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
-        \Magento\Framework\Filesystem\DirectoryList $dir
+        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
 	) {
 		parent::__construct($context);
         $this->adminSession = $adminSession;
@@ -96,7 +95,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->moduleDirReader = $moduleDirReader;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
-        $this->dir = $dir;
 	}
 
     /**
@@ -112,7 +110,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
 	public function getFullPath($cleanPath) {
         // Return the full path
-        return $this->dir->getRoot() . DIRECTORY_SEPARATOR . $cleanPath;
+        return $this->tree->getRoot() . DIRECTORY_SEPARATOR . $cleanPath;
     }
 
     /**
@@ -470,6 +468,22 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     function createFile($filePath) {
         try {
+            // Get all directories in path
+            $dirs = explode(DIRECTORY_SEPARATOR, $filePath);
+
+            // Remove the file name
+            array_pop($dirs);
+
+            // Build the directory path
+            $dirPath =  $this->tree->getRoot() . DIRECTORY_SEPARATOR 
+            . implode(
+                DIRECTORY_SEPARATOR,
+                $dirs
+            );
+
+            // Create all directories
+            $this->fileDriver->createDirectory($dirPath);
+
             // Try to create a file
             return $this->fileDriver->filePutContents(
                 $filePath,
