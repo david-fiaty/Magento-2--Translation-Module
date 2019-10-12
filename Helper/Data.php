@@ -472,7 +472,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Create a new file.
      */
-    function createFile($filePath)
+    public function createFile($filePath)
     {
         try {
             // Get all directories in path

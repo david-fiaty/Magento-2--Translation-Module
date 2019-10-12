@@ -173,7 +173,7 @@ class FileDataService
     /**
      * Count the error rows in a file.
      */
-    function getFileErrorCount($fileEntity)
+    public function getFileErrorCount($fileEntity)
     {
         // Get the file id
         $fileId = $fileEntity->getId();
@@ -189,7 +189,7 @@ class FileDataService
     /**
      * Save a file entity.
      */
-    function saveFileEntity($data)
+    public function saveFileEntity($data)
     {
         try {
             // Get a file entity instance

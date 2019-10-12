@@ -15,10 +15,11 @@
 
 namespace Naxero\Translation\Model\ResourceModel;
 
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 /**
  * Log entity mysql resource
  */
-class LogEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class LogEntity extends AbstractDb
 {
     /**
      * Construct
