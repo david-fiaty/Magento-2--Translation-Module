@@ -1,6 +1,16 @@
 "Language files","Language files"
 "Error logs","Error logs"
 "Language strings","Language strings"
+"The cache has been cleared successfully.","The cache has been cleared successfully."
+"This request is not allowed. Please check your code and server settings.","This request is not allowed. Please check your code and server settings."
+"There was an error creating the file.","There was an error creating the file."
+"The file has been created successfully.","The file has been created successfully."
+"The file has been imported successfully.","The file has been imported successfully."
+"There was an error importing the file.","There was an error importing the file."
+"There was an error deleting the file.","There was an error deleting the file."
+"The file has been deleted successfully.","The file has been deleted successfully."
+"The logs have been cleared successfully.","The logs have been cleared successfully."
+"The index was updated successfully.","The index was updated successfully."
 "--- All ---","--- All ---"
 Module,Module
 Core,Core
@@ -26,16 +36,32 @@ Next,Next
 Error,Error
 Active,Active
 "Empty line detected.","Empty line detected."
-"Incorrect Key/Value structure: more than 2 values detected.","Incorrect Key/Value structure: more than 2 values detected."
-"Incorrect Key/Value structure: less than 2 values detected.","Incorrect Key/Value structure: less than 2 values detected."
+"Empty key detected.","Empty key detected."
+"Empty value detected.","Empty value detected."
+"Incorrect Key/Value structure.","Incorrect Key/Value structure."
 "The file is not readable.","The file is not readable."
 "The file is not writable.","The file is not writable."
 Group,Group
 Type,Type
 Locale,Locale
 Pagination,Pagination
+"Show errors only","Show errors only"
+"New file","New file"
 "Scan files","Scan files"
 "Flush cache","Flush cache"
 Back,Back
-"Download CSV","Download CSV"
+"Add row","Add row"
+"Import data","Import data"
+"Download file","Download file"
 "Clear logs","Clear logs"
+"Download CSV","Download CSV"
+"Select a CSV file","Select a CSV file"
+"Select the file to import.","Select the file to import."
+"File path","File path"
+"Select a path for the new file to be created. Start typing for suggestions.","Select a path for the new file to be created. Start typing for suggestions."
+"File name","File name"
+"Select a file name for the new file to be created. Start typing for suggestions.","Select a file name for the new file to be created. Start typing for suggestions."
+"Add new files","Add new files"
+"Add only new files to the index and preserve existing indexed content.","Add only new files to the index and preserve existing indexed content."
+"Reload all files","Reload all files"
+"Clear the indexed content and reload all files into the index.","Clear the indexed content and reload all files into the index."
