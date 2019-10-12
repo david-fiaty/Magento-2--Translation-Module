@@ -19,7 +19,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var JsonFactory
      */
     public $resultJsonFactory;
@@ -54,8 +54,7 @@ class Index extends \Magento\Backend\App\Action
         $output = [];
 
         // Process the request
-        if ($this->getRequest()->isAjax()) 
-        {
+        if ($this->getRequest()->isAjax()) {
             // Get the view mode
             $view = $this->getRequest()->getParam('view');
 

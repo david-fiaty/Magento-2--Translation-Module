@@ -19,7 +19,7 @@
     'Naxero_Translation/js/translation/actions',
     'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, columns, tabulator) {
+], function ($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -41,12 +41,12 @@
             clearLogsUrl: '',
         },
 
-        _create: function() {
+        _create: function () {
             this.cache = new core.initCache();
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             // Assign this to self
             var self = this;
 
@@ -64,12 +64,11 @@
                     column: 'index',
                     dir: 'asc'
                 }],
-                rowClick: function(e, row) {
+                rowClick: function (e, row) {
                     var rowData = row.getData();
                     if (rowData.is_readable == '1') {
                         core.loadRowDetails(self, rowData, false);
-                    }
-                    else {
+                    } else {
                         alert(__('This file is not readable. Please check the file permissions.'));
                     }
                 }
@@ -82,7 +81,7 @@
             this.setToolbarActions();
         },
 
-        setToolbarActions: function() {
+        setToolbarActions: function () {
             // Back button
             actions.initBackButton(this);
 

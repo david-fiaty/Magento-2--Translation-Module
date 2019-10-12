@@ -148,7 +148,7 @@ class FileEntity extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      *  Check whether file path is valid.
      *  Should be a regular expression checking only the string.
-     * 
+     *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @return bool
      */

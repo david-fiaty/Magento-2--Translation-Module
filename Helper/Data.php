@@ -70,22 +70,22 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public $dir;
 
-	/**
+    /**
      * Data class constructor
      */
-	public function __construct(
-		\Magento\Framework\App\Helper\Context $context,
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
         \Magento\Backend\Model\Auth\Session $adminSession,
-		\Magento\Framework\Filesystem\DirectoryList $tree,
+        \Magento\Framework\Filesystem\DirectoryList $tree,
         \Magento\Framework\File\Csv $csvParser,
         \Magento\Framework\Filesystem\Driver\File $fileDriver,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Xml\Parser $xmlParser,
         \Magento\Framework\Module\Dir\Reader $moduleDirReader,
-        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList, 
+        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
-	) {
-		parent::__construct($context);
+    ) {
+        parent::__construct($context);
         $this->adminSession = $adminSession;
         $this->tree = $tree;
         $this->csvParser = $csvParser;
@@ -95,20 +95,22 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->moduleDirReader = $moduleDirReader;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
-	}
+    }
 
     /**
      * Get the clean path for a file path.
      */
-	public function getCleanPath($filePath) {
+    public function getCleanPath($filePath)
+    {
         // Return the clean path
         return str_replace($this->tree->getRoot() . DIRECTORY_SEPARATOR, '', $filePath);
-	}
+    }
 
     /**
      * Get the full path from a clean path.
      */
-	public function getFullPath($cleanPath) {
+    public function getFullPath($cleanPath)
+    {
         // Return the full path
         return $this->tree->getRoot() . DIRECTORY_SEPARATOR . $cleanPath;
     }
@@ -116,7 +118,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Get a module config parameter.
      */
-    public function getConfig($value) {
+    public function getConfig($value)
+    {
         return $this->scopeConfig->getValue(
             'translation/general/' . $value,
             ScopeInterface::SCOPE_STORE
@@ -126,7 +129,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Get all module config parameters.
      */
-    public function getConfigValues() {
+    public function getConfigValues()
+    {
         // Get the config file path
         $filePath = $this->moduleDirReader->getModuleDir(
             Dir::MODULE_ETC_DIR,
@@ -152,7 +156,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Explude a file from display.
      */
-    public function excludeFile($item) {
+    public function excludeFile($item)
+    {
         $path = is_array($item) ? $item['file_path'] : $item;
         $excludeTestFiles = $this->getConfig('exclude_test_files');
         $excludeCoreFiles = $this->getConfig('exclude_core_files');
@@ -166,14 +171,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Count the rows in a CSV file.
      */
-    public function isTestFile($path) {
+    public function isTestFile($path)
+    {
         return strpos($path, 'dev/tests/') === 0;
     }
 
     /**
      * Check if a file is part of the core.
      */
-    public function isCoreFile($path) {
+    public function isCoreFile($path)
+    {
         return strpos($path, 'dev/tests/') === 0
         || strpos($path, 'vendor/magento') === 0
         || strpos($path, 'lib/') === 0
@@ -183,29 +190,32 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if a file is statically generated.
      */
-    public function isStaticFile($path) {
+    public function isStaticFile($path)
+    {
         return strpos($path, 'pub/static') === 0;
     }
 
     /**
      * Generate the select list filters.
      */
-	public function getFilterSelect($attributes, $layout) {
-		// Build the select list
-		$select = $this->buildSelectList($attributes, $layout);
+    public function getFilterSelect($attributes, $layout)
+    {
+        // Build the select list
+        $select = $this->buildSelectList($attributes, $layout);
 
-		// Add an option
-		$select->addOption('alltx', __('--- All ---'));
+        // Add an option
+        $select->addOption('alltx', __('--- All ---'));
 
-		return $select->getHtml();
+        return $select->getHtml();
     }
 
     /**
      * Generate the pager select list options.
      */
-	public function getPagerSelect($attributes, $layout) {
-		// Build the select list
-		$select = $this->buildSelectList($attributes, $layout);
+    public function getPagerSelect($attributes, $layout)
+    {
+        // Build the select list
+        $select = $this->buildSelectList($attributes, $layout);
 
         // Prepare the values
         $values = [50, 100, 150, 200, 250, 300, 350, 400];
@@ -215,16 +225,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             $select->addOption($value, $value);
         }
 
-		return $select->getHtml();
+        return $select->getHtml();
     }
 
     /**
      * Generate a base select list.
      */
-    public function buildSelectList($attributes, $layout) {
+    public function buildSelectList($attributes, $layout)
+    {
         return $layout
-		->createBlock('Magento\Framework\View\Element\Html\Select')
-		->setData($attributes);
+        ->createBlock('Magento\Framework\View\Element\Html\Select')
+        ->setData($attributes);
     }
 
     /**
@@ -262,7 +273,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Remove duplicated values in filters.
      */
-    public function removeDuplicateFilterValues($output) {
+    public function removeDuplicateFilterValues($output)
+    {
         // Prepare the filters array
         $filters = [
             'file_type',
@@ -287,7 +299,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Generate the list filter options.
      */
-    public function buildFilters($rowData, $output) {
+    public function buildFilters($rowData, $output)
+    {
         // Prepare the variables
         $arr = $rowData;
         $path = $arr['file_path'];
@@ -296,49 +309,39 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         if (strpos($path, 'vendor/magento') === 0) {
             $arr['file_type'] = __('Module');
             $arr['file_group'] = __('Core');
-        }
-        else if (strpos($path, 'app/code') === 0) {
+        } elseif (strpos($path, 'app/code') === 0) {
             $arr['file_type'] = __('Module');
             $arr['file_group'] = __('Community');
-        }
-        else if (strpos($path, 'dev/tests/') === 0) {
+        } elseif (strpos($path, 'dev/tests/') === 0) {
             $arr['file_type'] = __('Test');
             $arr['file_group'] = __('Dev');
-        }
-        else if (strpos($path, 'app/design/frontend/Magento') === 0
+        } elseif (strpos($path, 'app/design/frontend/Magento') === 0
         || strpos($path, 'app/design/adminhtml/Magento') === 0) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Core');
-        }
-        else if (strpos($path, 'pub/static') === 0) {
+        } elseif (strpos($path, 'pub/static') === 0) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Static');
-        }
-        else if (strpos($path, 'lib/') === 0) {
+        } elseif (strpos($path, 'lib/') === 0) {
             $arr['file_type'] = __('Web');
             $arr['file_group'] = __('Library');
-        }        
-        else if ((strpos($path, 'app/design/frontend/') === 0
+        } elseif ((strpos($path, 'app/design/frontend/') === 0
                 && strpos($path, 'app/design/frontend/Magento') === false)
                 || (strpos($path, 'app/design/adminhtml/') === 0
                 && strpos($path, 'app/design/adminhtml/Magento') === false)) {
             $arr['file_type'] = __('Theme');
             $arr['file_group'] = __('Community');
-        }
-        else if (
-            strpos($path, 'vendor/') === 0 
+        } elseif (strpos($path, 'vendor/') === 0
             && strpos($path, 'vendor/magento') === false
         ) {
             if ($this->isVendorTheme($path)) {
                 $arr['file_type'] = __('Theme');
                 $arr['file_group'] = __('Vendor');
-            }
-            else {
+            } else {
                 $arr['file_type'] = __('Module');
-                $arr['file_group'] = __('Vendor');             
+                $arr['file_group'] = __('Vendor');
             }
-        }
-        else {
+        } else {
             $arr['file_type'] = __('Other');
             $arr['file_group'] = __('Undefined');
         }
@@ -361,7 +364,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if a module is vendor theme.
      */
-	public function isVendorTheme($path) {
+    public function isVendorTheme($path)
+    {
         // File path to array
         $members = explode(DIRECTORY_SEPARATOR, $path);
 
@@ -387,7 +391,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Get the user locale.
      */
-	public function getUserLanguage() {
+    public function getUserLanguage()
+    {
         // Get the user language
         $locale = $this->adminSession->getUser()->getData()['interface_locale'];
 
@@ -395,13 +400,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $userLanguage = str_replace('_', '-', $locale);
         $userLanguage = strtolower($userLanguage);
 
-		return $userLanguage;
+        return $userLanguage;
     }
     
     /**
      * Get the target langauge for a JS table.
      */
-    public function getTableLocaleData() {
+    public function getTableLocaleData()
+    {
         // Get the user language
         $userLanguage = $this->getUserLanguage();
 
@@ -427,12 +433,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if a file exists.
      */
-    public function fileExists($path) {
+    public function fileExists($path)
+    {
         try {
             return $this->fileDriver->isExists($path)
             && $this->fileDriver->isFile($path);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -440,12 +446,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if a file is readable.
      */
-    public function isReadable($path) {
+    public function isReadable($path)
+    {
         try {
             return $this->fileDriver->isFile($path)
             && $this->fileDriver->isReadable($path);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -453,12 +459,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if a file is writable.
      */
-    public function isWritable($path) {
+    public function isWritable($path)
+    {
         try {
             return $this->fileDriver->isFile($path)
             && $this->fileDriver->isWritable($path);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -466,7 +472,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Create a new file.
      */
-    function createFile($filePath) {
+    function createFile($filePath)
+    {
         try {
             // Get all directories in path
             $dirs = explode(DIRECTORY_SEPARATOR, $filePath);
@@ -475,7 +482,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             array_pop($dirs);
 
             // Build the directory path
-            $dirPath =  $this->tree->getRoot() . DIRECTORY_SEPARATOR 
+            $dirPath =  $this->tree->getRoot() . DIRECTORY_SEPARATOR
             . implode(
                 DIRECTORY_SEPARATOR,
                 $dirs
@@ -489,8 +496,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 $filePath,
                 ''
             );
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return __($e->getMessage());
         }
     }

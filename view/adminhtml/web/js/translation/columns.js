@@ -22,7 +22,7 @@ define(
 
         // Return the component
         return {
-            getFilesList: function(com) {
+            getFilesList: function (com) {
                 // Prepare the base columns
                 var output = [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
@@ -48,7 +48,7 @@ define(
                             field: 'delete',
                             width: 50,
                             headerSort: false,
-                            formatter: function(cell, formatterParams, onRendered) {
+                            formatter: function (cell, formatterParams, onRendered) {
                                 return '&ominus;';
                             }
                         }
@@ -59,7 +59,7 @@ define(
                 return output;
             },
 
-            getLogsList: function() {
+            getLogsList: function () {
                 return [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
                     {title: __('Id'), field: 'id', sorter: 'number', visible: false},
@@ -72,7 +72,7 @@ define(
                 ];
             },
 
-            getStringsList: function() {
+            getStringsList: function () {
                 return [
                     {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
                     {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},

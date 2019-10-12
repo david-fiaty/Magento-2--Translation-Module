@@ -19,7 +19,7 @@
     'Naxero_Translation/js/translation/actions',
     'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, columns, tabulator) {
+], function ($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -50,12 +50,12 @@
             status: '#translation-status-filter'
         },
 
-        _create: function() {
+        _create: function () {
             this.cache = new core.initCache();
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             // Assign this to self
             var self = this;
 
@@ -70,10 +70,10 @@
                 resizableRows: true,
                 columns: columns.getFilesList(self),
                 initialSort:[{
-                    column: 'index', 
+                    column: 'index',
                     dir: 'asc'
                 }],
-                cellClick: function(e, cell) {
+                cellClick: function (e, cell) {
                     // Prepare the variables
                     var clickedField = cell.getColumn().getField();
                     var row = cell.getRow();
@@ -84,16 +84,14 @@
                         // Check core file deletion
                         if (self.options.settings.allow_core_files_deletion == '0' && rowData.is_core) {
                             alert(__('Deletion of core files is not allowed.'));
-                        }
-                        else {
+                        } else {
                             // Delete the file
                             core.deleteFile(self, rowData);
 
                             // Delete the row in table
                             row.delete();
                         }
-                    }
-                    else {
+                    } else {
                         core.handleRowView(self, row);
                     }
                 }
@@ -106,7 +104,7 @@
             this.setToolbarActions();
         },
 
-        setToolbarActions: function() {   
+        setToolbarActions: function () {
             // Back button
             actions.initBackButton(this);
 

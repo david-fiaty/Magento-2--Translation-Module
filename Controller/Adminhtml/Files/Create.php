@@ -17,7 +17,7 @@ namespace Naxero\Translation\Controller\Adminhtml\Files;
 
 class Create extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var JsonFactory
      */
     public $resultJsonFactory;
@@ -62,8 +62,7 @@ class Create extends \Magento\Backend\App\Action
         ];
 
         // Process the request
-        if ($this->getRequest()->isAjax()) 
-        {
+        if ($this->getRequest()->isAjax()) {
             // Build the new file path
             $newFilePath = $this->getNewFilePath();
 
@@ -94,8 +93,7 @@ class Create extends \Magento\Backend\App\Action
                             'message' => __('The file has been created successfully.')
                         ];
                     }
-                }
-                catch(\Exception $e) {
+                } catch (\Exception $e) {
                     $output = [
                         'success' => false,
                         'message' => __($e->getMessage())

@@ -19,7 +19,7 @@
     'Naxero_Translation/js/translation/actions',
     'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, columns, tabulator) {
+], function ($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -46,12 +46,12 @@
             status: '#translation-status-filter'
         },
 
-        _create: function() {
+        _create: function () {
             this.cache = new core.initCache();
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             // Assign this to self
             var self = this;
 
@@ -65,7 +65,7 @@
                 height: '100%',
                 resizableRows:true,
                 columns: columns.getStringsList(),
-                cellEdited: function(cell) {
+                cellEdited: function (cell) {
                     core.handleCellEdit(self, cell, true);
                 },
                 initialSort:[{
@@ -81,7 +81,7 @@
             this.setToolbarActions();
         },
 
-        setToolbarActions: function() {
+        setToolbarActions: function () {
             // File index update
             actions.initScanButton(this);
 

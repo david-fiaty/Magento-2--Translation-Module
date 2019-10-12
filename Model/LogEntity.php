@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Naxero.com
  * Professional ecommerce integrations for Magento
@@ -15,8 +15,7 @@
 
 namespace Naxero\Translation\Model;
 
-class LogEntity extends \Magento\Framework\Model\AbstractModel 
-implements \Naxero\Translation\Api\Data\LogEntityInterface, \Magento\Framework\DataObject\IdentityInterface
+class LogEntity extends \Magento\Framework\Model\AbstractModel implements \Naxero\Translation\Api\Data\LogEntityInterface, \Magento\Framework\DataObject\IdentityInterface
 {
     /**
      * CMS page cache tag

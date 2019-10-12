@@ -25,7 +25,7 @@ define(
         // Return the component
         return {
 
-            build: function(com, data) {
+            build: function (com, data) {
                 if (com.filters && data.filter_data) {
                     // Create the group filter
                     this.createOptions(com, com.filters.group, data.filter_data.file_group);
@@ -41,11 +41,11 @@ define(
                 }
             },
 
-            addEvents: function(com) {
+            addEvents: function (com) {
                 var self = this;
 
                 // Pager events
-                com.cache._('.' + PAGER_SELECTOR).off().on('change', function() {
+                com.cache._('.' + PAGER_SELECTOR).off().on('change', function () {
                     let selectedKey = $(this).find(':selected').val();
                     core.setPaging(com, com.options.targetTable, selectedKey);
                 });
@@ -62,8 +62,8 @@ define(
                     ];
         
                     // Assign the events
-                    $.each(fields, function(k, obj) {
-                        com.cache._(obj.selector).off().on('change', function() {
+                    $.each(fields, function (k, obj) {
+                        com.cache._(obj.selector).off().on('change', function () {
                             let selectedKey = $(this).find(':selected').val();
                             self.update(
                                 com,
@@ -74,43 +74,40 @@ define(
                 }
 
                 // Detail errors filter
-                com.cache._('#filter_detail_errors').off().on('click', function() {
+                com.cache._('#filter_detail_errors').off().on('click', function () {
                     if (com.cache._(this).is(':checked')) {
                         var filter = [{field: 'is_error', type: '=', value: '1'}];
                         com.cache._(com.options.detailView).tabulator('setFilter', filter);
-                    }
-                    else {
-                        com.cache._(com.options.detailView).tabulator('clearFilter');         
+                    } else {
+                        com.cache._(com.options.detailView).tabulator('clearFilter');
                     }
                 });
 
                 // Files errors filter
-                com.cache._('#filter_file_errors').off().on('click', function() {
+                com.cache._('#filter_file_errors').off().on('click', function () {
                     if (com.cache._(this).is(':checked')) {
                         var filter = [{field: 'errors', type: '>', value: 0}];
                         com.cache._(com.options.targetTable).tabulator('setFilter', filter);
-                    }
-                    else {
-                        com.cache._(com.options.targetTable).tabulator('clearFilter');         
+                    } else {
+                        com.cache._(com.options.targetTable).tabulator('clearFilter');
                     }
                 });
 
                 // Strings errors filter
-                com.cache._('#filter_string_errors').off().on('click', function() {
+                com.cache._('#filter_string_errors').off().on('click', function () {
                     if (com.cache._(this).is(':checked')) {
                         var filter = [{field: 'is_error', type: '=', value: '1'}];
                         com.cache._(com.options.targetTable).tabulator('setFilter', filter);
-                    }
-                    else {
-                        com.cache._(com.options.targetTable).tabulator('clearFilter');         
+                    } else {
+                        com.cache._(com.options.targetTable).tabulator('clearFilter');
                     }
                 });
             },
 
-            createOptions: function(com, sel, arr) {
+            createOptions: function (com, sel, arr) {
                 // Prepare the options
                 var output = [];
-                $.each(arr, function(key, value) {
+                $.each(arr, function (key, value) {
                     // Create the option
                     var option = '<option value="' + value + '">' + value + '</option>';
     
@@ -123,10 +120,10 @@ define(
                 com.cache._(sel).append(output.join(''));
             },
 
-            update: function(com, newFilter) {
+            update: function (com, newFilter) {
                 // Get the existing filters
-                var filters = $(com.options.targetTable).tabulator('getFilters'); 
-                var found = filters.find(function(element) {
+                var filters = $(com.options.targetTable).tabulator('getFilters');
+                var found = filters.find(function (element) {
                     return element.field == newFilter.field;
                 });
     
@@ -138,14 +135,12 @@ define(
                         if (filters[i].field == newFilter.field) {
                             if (newFilter.value === 'alltx') {
                                 filters.splice(i, 1);
-                            } 
-                            else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
+                            } else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
                                 filters[i] = newFilter;
                             }
-                        } 
-                        else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
+                        } else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
                             filters.push(newFilter);
-                        }                    
+                        }
                     }
                 }
     

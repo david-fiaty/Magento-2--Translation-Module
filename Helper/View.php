@@ -20,7 +20,7 @@ class View extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var FileDataService
      */
-    public $fileDataService; 
+    public $fileDataService;
 
     /**
      * @var StringDataService
@@ -32,25 +32,26 @@ class View extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public $logDataService;
 
-	/**
+    /**
      * @param \Magento\Framework\App\Helper\Context $context
      */
-	public function __construct(
-		\Magento\Framework\App\Helper\Context $context,
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
         \Naxero\Translation\Model\Service\FileDataService $fileDataService,
         \Naxero\Translation\Model\Service\StringDataService $stringDataService,
         \Naxero\Translation\Model\Service\LogDataService $logDataService
-	) {
-		parent::__construct($context);
+    ) {
+        parent::__construct($context);
         $this->fileDataService = $fileDataService;
         $this->stringDataService = $stringDataService;
         $this->logDataService = $logDataService;
-	}
+    }
 
     /**
      * Provide data for a JS table.
      */
-    public function render($view) {
+    public function render($view)
+    {
         // Prepare the output
         $output = [];
 

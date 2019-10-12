@@ -20,12 +20,12 @@ class LogDataService
     /**
      * @var LogEntityFactory
      */
-    public $logEntityFactory;    
+    public $logEntityFactory;
 
     /**
      * @var FileEntityFactory
      */
-    public $fileEntityFactory;  
+    public $fileEntityFactory;
 
     /**
      * @var Array
@@ -53,14 +53,16 @@ class LogDataService
     /**
      * Initilaise the class instance.
      */
-    public function init() {
+    public function init()
+    {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
 
         return $this;
     }
 
-    public function getError() {
+    public function getError()
+    {
         return [
             __('Empty line detected.'),
             __('Empty key detected.'),
@@ -78,15 +80,14 @@ class LogDataService
     public function getList()
     {
         // Get the factory
-        $logEntity = $this->logEntityFactory->create(); 
+        $logEntity = $this->logEntityFactory->create();
 
         // Create the collection
         $collection = $logEntity->getCollection();
 
         // Process the logs
         $fileCount = 0;
-        foreach ($collection as $item)
-        {
+        foreach ($collection as $item) {
             // Get the item data
             $arr = $item->getData();
             
@@ -134,7 +135,8 @@ class LogDataService
     /**
      * Prepare the JS table data structure.
      */
-    public function prepareOutputArray() {
+    public function prepareOutputArray()
+    {
         return [
             'table_data' => []
         ];
@@ -143,22 +145,23 @@ class LogDataService
     /**
      * Check if a file has errors.
      */
-    public function hasErrors($fileId, $line, $rowId) {
+    public function hasErrors($fileId, $line, $rowId)
+    {
         // Prepare the error array
         $errors = [];
 
         // Check for empty lines
-        if (empty($line[0]) && empty($line[1])) { 
+        if (empty($line[0]) && empty($line[1])) {
             $errors[] = 0;
         }
 
         // Check for empty key
-        if (empty($line[0]) && !empty($line[1])) { 
+        if (empty($line[0]) && !empty($line[1])) {
             $errors[] = 1;
         }
 
         // Check for empty value
-        if (!empty($line[0]) && empty($line[1])) { 
+        if (!empty($line[0]) && empty($line[1])) {
             $errors[] = 2;
         }
 
@@ -182,7 +185,8 @@ class LogDataService
     /**
      * Create an error log record.
      */
-    public function createLog($errorId, $fileId, $rowId = null) {
+    public function createLog($errorId, $fileId, $rowId = null)
+    {
         // Check if the error already exists
         $collection = $this->logEntityFactory->create()->getCollection();
         $collection->addFieldToFilter('file_id', $fileId);
@@ -199,10 +203,8 @@ class LogDataService
             $logEntity->setData('row_id', $rowId);
             $logEntity->setData('comments', json_encode([$errorId]));
             $logEntity->save();
-        }
-        else {
-            foreach ($collection as $item)
-            {
+        } else {
+            foreach ($collection as $item) {
                 // Load the existing row
                 $logEntity = $this->logEntityFactory->create();
                 $logInstance = $logEntity->load($item->getData('id'));
