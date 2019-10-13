@@ -18,9 +18,7 @@ namespace Naxero\Translation\Model;
 use Naxero\Translation\Api\Data\FileEntityInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 
-class FileEntity
-extends \Magento\Framework\Model\AbstractModel
-implements FileEntityInterface, IdentityInterface
+class FileEntity extends \Magento\Framework\Model\AbstractModel implements FileEntityInterface, IdentityInterface
 {
     /**
      * CMS page cache tag
