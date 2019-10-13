@@ -45,18 +45,6 @@ class FileEntity extends \Magento\Framework\Model\AbstractModel implements \Naxe
     }
 
     /**
-     * Check if file path exists
-     * return file id if file path exists
-     *
-     * @param string $filePath
-     * @return int
-     */
-    public function checkFilePath($filePath)
-    {
-        return $this->_getResource()->checkFilePath($filePath);
-    }
-
-    /**
      * Return unique ID(s) for each object in system
      *
      * @return array
