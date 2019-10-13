@@ -1,5 +1,7 @@
 BUGS
 - fix csv row deletion sometimes failing
+- fix scan files promp in strings view
+
 - add minified js and css files
 - apply psr2 and meqp standards
 
