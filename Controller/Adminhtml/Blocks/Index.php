@@ -15,6 +15,8 @@
 
 namespace Naxero\Translation\Controller\Adminhtml\Blocks;
 
+use Naxero\Translation\Block\Adminhtml\Prompt\Form as PromptForm;
+
 class Index extends \Magento\Backend\App\Action
 {
     /**
@@ -75,8 +77,9 @@ class Index extends \Magento\Backend\App\Action
         $templateName = $this->getRequest()->getParam('template_name');
 
         // Build the block class path
-        $blockClassPath  = 'Naxero\\Translation\\Block\\Adminhtml';
-        $blockClassPath .= '\\' . ucfirst($blockType) . '\\Form';
+        if ($blockType == 'prompt') {
+            $blockClassPath  = \Naxero\Translation\Block\Adminhtml\Prompt\Form::class;
+        }
 
         // Build the block template path
         $blockTemplatePath  = 'Naxero_Translation::';
@@ -87,5 +90,17 @@ class Index extends \Magento\Backend\App\Action
         ->createBlock($blockClassPath)
         ->setTemplate($blockTemplatePath)
         ->toHtml();
+    }
+
+    /**
+     * Get a block type class
+     */
+    public function getBlockClass($blockType)
+    {
+        switch($blockType) {
+            case 'prompt':
+                return PromptForm::class;
+                break;
+        }
     }
 }

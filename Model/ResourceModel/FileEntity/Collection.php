@@ -30,8 +30,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     public function _construct()
     {
         $this->_init(
-            'Naxero\Translation\Model\FileEntity',
-            'Naxero\Translation\Model\ResourceModel\FileEntity'
+            \Naxero\Translation\Model\FileEntity::class,
+            \Naxero\Translation\Model\ResourceModel\FileEntity::class
         );
     }
 }

@@ -17,20 +17,5 @@ namespace Naxero\Translation\Block\Adminhtml\Prompt;
 
 class Form extends \Magento\Backend\Block\Template
 {
-    /**
-     * Index class constructor.
-     */
-    public function __construct(
-        \Magento\Backend\Block\Template\Context $context
-    ) {
-        parent::__construct($context);
-    }
 
-    /**
-     * Prepare the block layout.
-     */
-    public function _prepareLayout()
-    {
-        return parent::_prepareLayout();
-    }
 }
