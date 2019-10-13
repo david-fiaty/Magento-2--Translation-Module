@@ -17,9 +17,9 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
     <menu>
-    	<add id="Naxero_Translation::translations_manage" dependsOnConfig="translation/general/enable" title="Translation" module="Naxero_Translation" parent="Magento_Backend::content" resource="Naxero_Translation::translations_manage" />
-        <add id="Naxero_Translation::translations_filesindex" title="Language files" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/files/index" parent="Naxero_Translation::translations_manage" resource="Naxero_Translation::translations_filesindex"/>
-        <add id="Naxero_Translation::translations_stringsindex" title="Language strings" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/strings/index" parent="Naxero_Translation::translations_manage" resource="Naxero_Translation::translations_stringsindex"/>
-        <add id="Naxero_Translation::translations_logsindex" title="Error logs" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/logs/index" parent="Naxero_Translation::translations_manage" resource="Naxero_Translation::translations_logsindex"/>
+    	<add id="Naxero_Translation::manage" dependsOnConfig="translation/general/enable" title="Translation" module="Naxero_Translation" parent="Magento_Backend::content" resource="Naxero_Translation::manage" />
+        <add id="Naxero_Translation::filesindex" title="Language files" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/files/index" parent="Naxero_Translation::manage" resource="Naxero_Translation::filesindex"/>
+        <add id="Naxero_Translation::stringsindex" title="Language strings" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/strings/index" parent="Naxero_Translation::manage" resource="Naxero_Translation::stringsindex"/>
+        <add id="Naxero_Translation::logsindex" title="Error logs" module="Naxero_Translation" dependsOnModule="Naxero_Translation" action="translation/logs/index" parent="Naxero_Translation::manage" resource="Naxero_Translation::logsindex"/>
     </menu>
 </config>
