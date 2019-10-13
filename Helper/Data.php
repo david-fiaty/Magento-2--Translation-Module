@@ -413,9 +413,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getPathInfo($path, $key = null)
     {
+        // Get the path information
         $pathInfo = $this->fileIo->getPathInfo($path);
 
-        return  ($key) ? $pathInfo[$key] : $pathInfo;
+        // Return the expexted response
+        if ($key) {
+            return isset($pathInfo[$key]) ? $pathInfo[$key] : null;
+        }
+
+        return $pathInfo;
     }
 
     /**
