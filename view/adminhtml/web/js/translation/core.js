@@ -53,12 +53,24 @@ define(
              * Show a message.
              */
             showMessage: function (com, type, message) {
-                this.clearMessages(com);
+                // Prepare the variables
+                var self = this;
                 var messageHtml = $('<div class="message"></div>');
+
+                // Clear any existing message
+                this.clearMessages(com);
+
+                // Build the message to display
                 messageHtml.addClass('message-' + type + ' ' + type);
                 messageHtml.append('<div>' + __(message) + '</div>');
                 messageHtml.insertBefore('.tabulator-header');
-                messageHtml.show();
+                messageHtml.show(400, function() {
+                    var displayed = $(this);
+                    setTimeout(function() {
+                        displayed.hide('slow');
+                        self.clearMessages(com);
+                    }, 5000);
+                });
             },
 
             /**
