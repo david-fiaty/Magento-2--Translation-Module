@@ -22,10 +22,10 @@
 					<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->escapeHtml($block->helper->getPagerSelect([
+					<?= /* @noEscape */ $block->helper->getPagerSelect([
 			            'name' => 'translation-paging-filter',
 			            'class' => 'admin__control-select translation-paging-filter'
-			    	], $block->getLayout())); ?>	
+			    	], $block->getLayout()); ?>	
 				</div>
 			</div>	
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
@@ -67,10 +67,10 @@
 				<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 			</label>
 			<div class="admin__form-field-control">
-				<?= $block->escapeHtml($block->helper->getPagerSelect([
+				<?= /* @noEscape */ $block->helper->getPagerSelect([
 					'name' => 'translation-paging-filter',
 					'class' => 'admin__control-select translation-paging-filter'
-				], $block->getLayout())); ?>	
+				], $block->getLayout()); ?>	
 			</div>
 		</div>
 		<div id="translation-table-detail-content"></div>

@@ -3,7 +3,6 @@ BUGS
 - fix scan files promp in strings view
 
 - add minified js and css files
-- apply psr2 and meqp standards
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
