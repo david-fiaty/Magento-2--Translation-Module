@@ -16,6 +16,7 @@
 namespace Naxero\Translation\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
 /**
  * Log entity mysql resource
  */
