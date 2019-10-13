@@ -15,7 +15,12 @@
 
 namespace Naxero\Translation\Model;
 
-class FileEntity extends \Magento\Framework\Model\AbstractModel implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\DataObject\IdentityInterface
+use Naxero\Translation\Api\Data\FileEntityInterface;
+use Magento\Framework\DataObject\IdentityInterface;
+
+class FileEntity
+extends \Magento\Framework\Model\AbstractModel
+implements FileEntityInterface, IdentityInterface
 {
     /**
      * CMS page cache tag
@@ -41,7 +46,9 @@ class FileEntity extends \Magento\Framework\Model\AbstractModel implements \Naxe
      */
     public function _construct()
     {
-        $this->_init('Naxero\Translation\Model\ResourceModel\FileEntity');
+        $this->_init(
+            \Naxero\Translation\Model\ResourceModel\FileEntity::class
+        );
     }
 
     /**

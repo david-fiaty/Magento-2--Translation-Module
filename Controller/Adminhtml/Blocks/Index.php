@@ -100,7 +100,6 @@ class Index extends \Magento\Backend\App\Action
         switch($blockType) {
             case 'prompt':
                 return PromptForm::class;
-                break;
         }
     }
 }

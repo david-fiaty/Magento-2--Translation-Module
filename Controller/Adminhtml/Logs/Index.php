@@ -62,11 +62,9 @@ class Index extends \Magento\Backend\App\Action
             switch ($action) {
                 case 'clear_logs':
                     return $this->clearLogs();
-                    break;
 
                 default:
                     return $this->getData();
-                    break;
             }
         }
 

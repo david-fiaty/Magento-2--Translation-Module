@@ -448,7 +448,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             ]
         ];
 
-        return json_encode($localeData);
+        return $localeData;
     }
 
     /**

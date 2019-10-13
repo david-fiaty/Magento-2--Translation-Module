@@ -22,11 +22,11 @@
 					<span><?= $block->escapeHtml(__('Type')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getFilterSelect([
+					<?= $block->escapeHtml($block->helper->getFilterSelect([
 			            'id' => 'translation-type-filter',
 			            'name' => 'translation-type-filter',
 			            'class' => 'admin__control-select'
-			    	], $block->getLayout()); ?>	
+			    	], $block->getLayout())); ?>	
 				</div>
 			</div>
 			<div class="admin__form-field">
@@ -34,11 +34,11 @@
 					<span><?= $block->escapeHtml(__('Locale')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getFilterSelect([
+					<?= $block->escapeHtml($block->helper->getFilterSelect([
 			           'id' => 'translation-locale-filter',
 			           'name' => 'translation-locale-filter',
 			           'class' => 'admin__control-select'
-			    	], $block->getLayout()); ?>	
+			    	], $block->getLayout())); ?>	
 				</div>
 			</div>
 			<div class="admin__form-field">
@@ -46,10 +46,10 @@
 					<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getPagerSelect([
+					<?= $block->escapeHtml($block->helper->getPagerSelect([
 			            'name' => 'translation-paging-filter',
 			            'class' => 'admin__control-select translation-paging-filter'
-			    	], $block->getLayout()); ?>	
+			    	], $block->getLayout())); ?>	
 				</div>
 			</div>
 			<br><br>
@@ -82,6 +82,6 @@
 		"scanUrl": "<?= $block->escapeUrl($block->getUrl('translation/scan/index')); ?>",
 		"detailViewUrl": "<?= $block->escapeUrl($block->getUrl('translation/files/detail')); ?>",
 		"cacheUrl": "<?= $block->escapeUrl($block->getUrl('translation/cache/index')); ?>",
-		"localeData": <?= $block->helper->getTableLocaleData(); ?>
+		"localeData": <?= /* @noEscape */ json_encode($block->helper->getTableLocaleData()); ?>
 	}
 }'>

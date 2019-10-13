@@ -22,10 +22,10 @@
 					<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getPagerSelect([
+					<?= $block->escapeHtml($block->helper->getPagerSelect([
 			            'name' => 'translation-paging-filter',
 			            'class' => 'admin__control-select translation-paging-filter'
-			    	], $block->getLayout()); ?>	
+			    	], $block->getLayout())); ?>	
 				</div>
 			</div>	
 			<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
@@ -67,10 +67,10 @@
 				<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 			</label>
 			<div class="admin__form-field-control">
-				<?= $block->helper->getPagerSelect([
+				<?= $block->escapeHtml($block->helper->getPagerSelect([
 					'name' => 'translation-paging-filter',
 					'class' => 'admin__control-select translation-paging-filter'
-				], $block->getLayout()); ?>	
+				], $block->getLayout())); ?>	
 			</div>
 		</div>
 		<div id="translation-table-detail-content"></div>
@@ -84,6 +84,6 @@
 		"clearLogsUrl": "<?= $block->escapeUrl($block->getUrl('translation/logs/index', ['action' => 'clear_logs'])); ?>",
 		"detailViewUrl": "<?= $block->escapeUrl($block->getUrl('translation/files/detail')); ?>",
 		"cacheUrl": "<?= $block->escapeUrl($block->getUrl('translation/cache/index')); ?>",
-		"localeData": <?= $block->helper->getTableLocaleData(); ?>
+		"localeData": <?= /* @noEscape */ json_encode($block->helper->getTableLocaleData()); ?>
 	}
 }'>
