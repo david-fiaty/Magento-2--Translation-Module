@@ -1,8 +1,6 @@
 BUGS
 - fix csv row deletion sometimes failing
-- fix scan files promp in strings view
-
-- add minified js and css files
+- remove cache buster in requirejs
 
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
