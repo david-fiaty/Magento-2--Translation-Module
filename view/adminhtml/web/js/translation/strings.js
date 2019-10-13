@@ -33,6 +33,7 @@
             localeData: {},
             dataUrl: '',
             scanUrl: '',
+            promptUrl: '',
             detailViewUrl: '',
             fileUpdateUrl: '',
             cacheUrl: '',
