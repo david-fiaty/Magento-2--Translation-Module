@@ -159,8 +159,11 @@ class FileDataService
         $arr['file_id'] = (int) $arr['file_id'];
 
         // Set the language field
-        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
-
+        $arr['file_locale'] = $this->helper->getPathInfo(
+            $arr['file_path'],
+            'filename'
+        );
+        
         // Add the errors column
         $arr['errors'] = (int) $this->getFileErrorCount($fileEntity);
 

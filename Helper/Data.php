@@ -64,11 +64,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var Pool
      */
     public $cacheFrontendPool;
-    
+
     /**
-     * @var DirectoryList
+     * @var File
      */
-    public $dir;
+    public $fileIo;
 
     /**
      * Data class constructor
@@ -83,7 +83,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\Xml\Parser $xmlParser,
         \Magento\Framework\Module\Dir\Reader $moduleDirReader,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
-        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
+        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
+        \Magento\Framework\Filesystem\Io\File $fileIo
     ) {
         parent::__construct($context);
         $this->adminSession = $adminSession;
@@ -95,6 +96,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->moduleDirReader = $moduleDirReader;
         $this->cacheTypeList = $cacheTypeList;
         $this->cacheFrontendPool = $cacheFrontendPool;
+        $this->fileIo = $fileIo;
     }
 
     /**
@@ -234,7 +236,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function buildSelectList($attributes, $layout)
     {
         return $layout
-        ->createBlock('Magento\Framework\View\Element\Html\Select')
+        ->createBlock(\Magento\Framework\View\Element\Html\Select::class)
         ->setData($attributes);
     }
 
@@ -353,7 +355,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $output['filter_data']['file_group'][] = $arr['file_group'];
 
         // Add locale filter data
-        $output['filter_data']['file_locale'][] = basename($path, '.csv');
+        $output['filter_data']['file_locale'][] = $this->getPathInfo(
+            $path,
+            'filename'
+        );
 
         return [
             'data' => array_merge($arr, $rowData),
@@ -404,6 +409,16 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
     
     /**
+     * Get path information.
+     */
+    public function getPathInfo($path, $key = null)
+    {
+        $pathInfo = $this->fileIo->getPathInfo($path);
+
+        return  ($key) ? $pathInfo[$key] : $pathInfo;
+    }
+
+    /**
      * Get the target langauge for a JS table.
      */
     public function getTableLocaleData()
@@ -427,7 +442,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             ]
         ];
 
-        return addslashes(json_encode($localeData));
+        return json_encode($localeData);
     }
 
     /**

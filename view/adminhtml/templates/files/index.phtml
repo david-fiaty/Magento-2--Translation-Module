@@ -154,7 +154,7 @@ $settings = $block->helper->getConfigValues();
         "cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>",
         "promptUrl": "<?= $block->getUrl('translation/blocks/index'); ?>",
         "newFileUrl": "<?= $block->getUrl('translation/files/create'); ?>",
-        "localeData": "<?= $block->helper->getTableLocaleData(); ?>",
+        "localeData": <?= $block->helper->getTableLocaleData(); ?>,
         "settings": <?= json_encode($settings); ?>
     }
 }'>

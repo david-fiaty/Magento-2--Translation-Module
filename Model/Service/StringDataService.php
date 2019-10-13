@@ -90,8 +90,11 @@ class StringDataService
                 unset($arr['file_content']);
 
                 // Set the language field
-                $arr['file_locale'] =  basename($arr['file_path'], '.csv');
-
+                $arr['file_locale'] = $this->helper->getPathInfo(
+                    $arr['file_path'],
+                    'filename'
+                );
+                
                 // Loop through the rows
                 if (!empty($rows)) {
                     $rowId = 0;

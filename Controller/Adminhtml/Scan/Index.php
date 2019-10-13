@@ -36,7 +36,7 @@ class Index extends \Magento\Backend\App\Action
      * @var Csv
      */
     public $csvParser;
-    
+
     /**
      * @var Data
      */
@@ -236,7 +236,10 @@ class Index extends \Magento\Backend\App\Action
      */
     public function isWantedFile($filePath)
     {
-        return pathinfo($filePath, PATHINFO_EXTENSION) == 'csv'
+        // Get the file extension
+        $extension = $this->helper->getPathInfo($filePath, 'extension');
+
+        return $extension == 'csv'
         && is_file($filePath)
         && strpos($filePath, 'i18n') !== false
         && !$this->isIndexed($filePath);

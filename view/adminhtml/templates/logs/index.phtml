@@ -84,6 +84,6 @@
 		"clearLogsUrl": "<?= $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>",
 		"detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>",
 		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>",
-		"localeData": "<?= $block->helper->getTableLocaleData(); ?>"
+		"localeData": <?= $block->helper->getTableLocaleData(); ?>
 	}
 }'>
