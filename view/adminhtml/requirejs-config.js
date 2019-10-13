@@ -21,7 +21,7 @@
             }
         },
         paths: {
-            tabulator: 'Naxero_Translation/js/tabulator/tabulator.min'
+            tabulator: 'Naxero_Translation/js/tabulator/tabulator'
         },
         shim: {
             tabulator: {

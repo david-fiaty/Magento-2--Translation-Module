@@ -17,7 +17,7 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Naxero_Translation::css/tabulator/tabulator_semantic-ui.min.css" />
+        <css src="Naxero_Translation::css/tabulator/tabulator_semantic-ui.css" />
         <css src="Naxero_Translation::css/translation/core.css" />
    </head>
     <body>		

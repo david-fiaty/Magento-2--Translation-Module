@@ -12,7 +12,7 @@
  * @link      https://www.naxero.com
  */
 
- define([
+define([
     'jquery',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
