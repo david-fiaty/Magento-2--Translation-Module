@@ -17,8 +17,9 @@ namespace Naxero\Translation\Model;
 
 use Naxero\Translation\Api\Data\LogEntityInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Model\AbstractModel;
 
-class LogEntity extends \Magento\Framework\Model\AbstractModel implements LogEntityInterface, IdentityInterface
+class LogEntity extends AbstractModel implements LogEntityInterface, IdentityInterface
 {
     /**
      * CMS page cache tag
