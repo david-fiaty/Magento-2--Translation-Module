@@ -73,11 +73,6 @@ define(
                 return fileName;
             },
 
-            getLocaleData: function (com) {
-                var data = com.options.localeData.replace(new RegExp("\\\\", "g"), "");
-                return JSON.parse(data);
-            },
-
             setPaging: function (com, targetTable, val) {
                 // Prepare the pager value
                 var val = val || $.cookie(PAGER_SELECTOR) || DEFAULT_PAGER_VALUE;
@@ -388,7 +383,7 @@ define(
     
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
-                    langs: self.getLocaleData(com),
+                    langs: com.options.localeData,
                     pagination: 'local',
                     layout: 'fitColumns',
                     responsiveLayout: true,

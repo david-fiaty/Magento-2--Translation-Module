@@ -57,7 +57,7 @@
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                langs: core.getLocaleData(self),
+                langs: self.options.localeData,
                 pagination: 'local',
                 persistentSort: true,
                 layout: 'fitColumns',
