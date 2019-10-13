@@ -240,7 +240,7 @@ class Index extends \Magento\Backend\App\Action
         $extension = $this->helper->getPathInfo($filePath, 'extension');
 
         return $extension == 'csv'
-        && is_file($filePath)
+        && $this->helper->fileExists($filePath)
         && strpos($filePath, 'i18n') !== false
         && !$this->isIndexed($filePath);
     }
