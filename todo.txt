@@ -5,3 +5,4 @@ BUGS
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_US.csv
 bin/magento i18n:collect-phrases app/code/Naxero/Translation/ -o app/code/Naxero/Translation/i18n/en_GB.csv
 
+review the insall and upgrade schemas: index, table exists test, close setup, varchar 255...
