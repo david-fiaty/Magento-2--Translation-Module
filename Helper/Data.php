@@ -51,7 +51,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public $xmlParser;
 
     /**
-     * @var Dir
+     * @var Reader
      */
     public $moduleDirReader;
 
