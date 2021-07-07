@@ -19,7 +19,7 @@ use Magento\Framework\Exception\LocalizedException;
 
 class Detail extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var JsonFactory
      */
     public $resultJsonFactory;
@@ -27,7 +27,7 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * @var FileEntityFactory
      */
-    public $fileEntityFactory;    
+    public $fileEntityFactory;
 
     /**
      * @var Csv
@@ -57,7 +57,7 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * @var Data
      */
-	public $helper;
+    public $helper;
 
     /**
      * @var DirectoryList
@@ -110,8 +110,7 @@ class Detail extends \Magento\Backend\App\Action
         $output = [];
 
         // Process the request
-        if ($this->getRequest()->isAjax()) 
-        {
+        if ($this->getRequest()->isAjax()) {
             // Get the request parameters
             $action  = $this->getRequest()->getParam('action');
             $isLogView = $this->getRequest()->getParam('is_log_view');
@@ -134,6 +133,10 @@ class Detail extends \Magento\Backend\App\Action
                     $output = $this->deleteFileEntityRow();
                     break;
 
+                case 'delete_file':
+                    $output = $this->deleteCsvFile();
+                    break;
+
                 case 'import_data':
                     $output = $this->importFileData();
                     break;
@@ -147,7 +150,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Get a file instance.
      */
-    public function getFileInstance() {
+    public function getFileInstance()
+    {
         // Get the file id
         $fileId = $this->getRequest()->getParam('file_id');
 
@@ -156,7 +160,7 @@ class Detail extends \Magento\Backend\App\Action
             return $this->fileEntityFactory
                 ->create()
                 ->load($fileId);
-        }   
+        }
 
         return null;
     }
@@ -164,7 +168,14 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Import file data.
      */
-    public function importFileData() {
+    public function importFileData()
+    {
+        // Prepare the output array
+        $output = [
+            'success' => true,
+            'message' => __('The file has been imported successfully.')
+        ];
+
         try {
             // Set the file destination
             $destinationPath = $this->moduleReader->getModuleDir(
@@ -208,18 +219,64 @@ class Detail extends \Magento\Backend\App\Action
 
             // Delete the uploaded file
             $this->fileDriver->deleteFile($uploadedFilePath);
-
-            return ['success' => true];
-
         } catch (\Exception $e) {
-            return false;
+            $output = [
+                'success' => false,
+                'message' => __('There was an error importing the file.')
+            ];
         }
+
+        return $output;
+    }
+
+    /**
+     * Delete a CSV file.
+     */
+    public function deleteCsvFile()
+    {
+        // Prepare the output array
+        $output = [
+            'success' => false,
+            'message' => __('There was an error deleting the file.')
+        ];
+
+        try {
+            // Get the root path
+            $rootPath = $this->tree->getRoot();
+
+            // Get the file entity instance
+            $fileEntity = $this->getFileInstance();
+            if ($fileEntity) {
+                // Prepare the full file path
+                $filePath = $rootPath . DIRECTORY_SEPARATOR
+                . $fileEntity->getData('file_path');
+
+                // Delete the file on the server
+                $this->fileDriver->deleteFile($filePath);
+
+                // Delete the file entity in database
+                $fileEntity->delete();
+
+                $output = [
+                    'success' => true,
+                    'message' => __('The file has been deleted successfully.')
+                ];
+            }
+        } catch (\Exception $e) {
+            $output = [
+                'success' => false,
+                'message' => __($e->getMessage())
+            ];
+        }
+
+        return $output;
     }
 
     /**
      * Delete a file entity row in database.
      */
-    public function deleteFileEntityRow() {
+    public function deleteFileEntityRow()
+    {
         try {
             // Get the file entity instance
             $fileEntity = $this->getFileInstance();
@@ -251,8 +308,7 @@ class Detail extends \Magento\Backend\App\Action
             $this->saveFileEntityContent($fileEntity);
 
             return true;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -260,7 +316,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Update a file entity content in database.
      */
-    public function updateFileEntityContent() {
+    public function updateFileEntityContent()
+    {
         // Get the file entity instance
         $fileEntity = $this->getFileInstance();
 
@@ -295,8 +352,7 @@ class Detail extends \Magento\Backend\App\Action
             $this->saveFileEntityContent($fileEntity);
 
             return true;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -304,7 +360,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Save a file content in the file system.
      */
-    public function saveFileEntityContent() {
+    public function saveFileEntityContent()
+    {
         // Get the file entity instance
         $fileEntity = $this->getFileInstance();
 
@@ -321,8 +378,7 @@ class Detail extends \Magento\Backend\App\Action
                 $filePath,
                 json_decode($fileEntity->getData('file_content'))
             );
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -330,7 +386,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Get a file content from database.
      */
-    public function getFileEntityContent($isLogView) {
+    public function getFileEntityContent($isLogView)
+    {
         // Get the file entity instance
         $fileEntity = $this->getFileInstance();
 
@@ -338,7 +395,7 @@ class Detail extends \Magento\Backend\App\Action
         $output = [
             'table_data' => [],
             'error_data' => []
-        ]; 
+        ];
 
         // Get the file content rows
         $rows = json_decode($fileEntity->getData('file_content'));
@@ -353,8 +410,7 @@ class Detail extends \Magento\Backend\App\Action
                 $rowIndex = $rowId + 1;
                 if (!$this->logDataService->hasErrors($fileId, $row, $rowId)) {
                     $output['table_data'][] = $this->buildRow($row, $rowId, $rowIndex, $fileEntity);
-                }
-                else {
+                } else {
                     $output['table_data'][] = $this->buildErrorRow($row, $rowId, $rowIndex, $fileEntity);
                     $output['error_data'][] = $rowIndex;
                 }
@@ -368,7 +424,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Prepare a file row content for display.
      */
-    public function buildRow($rowDataArray, $rowId, $rowIndex, $fileEntity) {
+    public function buildRow($rowDataArray, $rowId, $rowIndex, $fileEntity)
+    {
         // Add the index to the row array
         array_unshift($rowDataArray, $rowIndex);
 
@@ -380,6 +437,9 @@ class Detail extends \Magento\Backend\App\Action
         $rowDataArray['is_readable'] = $fileEntity->getData('is_readable');
         $rowDataArray['is_writable'] = $fileEntity->getData('is_writable');
 
+        // Add the error state
+        $rowDataArray['is_error'] = 0;
+
         // Retun combined data
         return (object) array_combine(
             $this->getColumns(),
@@ -390,7 +450,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Prepare a file content row error for display.
      */
-    public function buildErrorRow($rowDataArray, $rowId, $rowIndex, $fileEntity) {
+    public function buildErrorRow($rowDataArray, $rowId, $rowIndex, $fileEntity)
+    {
         // Build the error line
         $errorLine = [];
         $errorLine[] = $rowIndex;
@@ -405,6 +466,9 @@ class Detail extends \Magento\Backend\App\Action
         $errorLine['is_readable'] = $fileEntity->getData('is_readable');
         $errorLine['is_writable'] = $fileEntity->getData('is_writable');
 
+        // Add the error state
+        $errorLine['is_error'] = 1;
+
         // Retun combined data
         return (object) array_combine(
             $this->getColumns(),
@@ -415,7 +479,8 @@ class Detail extends \Magento\Backend\App\Action
     /**
      * Get the detail table columns.
      */
-    public function getColumns() {
+    public function getColumns()
+    {
         return [
             'index',
             'key',
@@ -423,7 +488,8 @@ class Detail extends \Magento\Backend\App\Action
             'row_id',
             'file_id',
             'is_readable',
-            'is_writable'
+            'is_writable',
+            'is_error'
         ];
     }
 }

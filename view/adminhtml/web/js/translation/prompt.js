@@ -26,7 +26,7 @@ define(
 
         // Return the component
         return {
-            importData: function(com) {
+            importData: function (com) {
                 // Prepare the data
                 var requestData = {
                     block_type: 'prompt',
@@ -40,32 +40,44 @@ define(
                     url: com.options.promptUrl,
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (data) {
                         // Trigger the prompt
                         prompt({
                             title: __('Import translation data'),
                             content: data.html,
                             actions: {
-                                confirm: function() {
+                                confirm: function () {
                                     // Prepare the form data
                                     var fileData = $('#new_file_import')[0].files[0];
 
                                     // Trigger the import request
-                                    core.importFile(com, fileData, com.detailViewId); 
-                                }, 
-                                cancel: function() {}, 
-                                always: function() {}
+                                    core.importFile(com, fileData, com.detailViewId);
+                                },
+                                cancel: function () {},
+                                always: function () {}
+                            },
+                            opened: function () {
+                                $('button.action-accept').prop('disabled', true);
                             }
                         });
+
+                        // Add the validation checks
+                        $('#new_file_import').on('change', function () {
+                            var val = $(this).val().replace(' ', '');
+                            val.length == 0
+                            ? $('button.action-accept').prop('disabled', true)
+                            : $('button.action-accept').prop('disabled', false);
+                        });
                     },
-                    error: function(request, status, error) {
+                    error: function (request, status, error) {
                         console.log(error);
                     }
                 });
             },
 
-            newFile: function(com) {
+            newFile: function (com) {
                 // Prepare the data
+                var self = this;
                 var requestData = {
                     block_type: 'prompt',
                     template_name: 'new-file',
@@ -78,13 +90,13 @@ define(
                     url: com.options.promptUrl,
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (data) {
                         // Trigger the prompt
                         prompt({
                             title: __('New translation file'),
                             content: data.html,
                             actions: {
-                                confirm: function() {
+                                confirm: function () {
                                     core.createFile(
                                         com,
                                         {
@@ -92,9 +104,12 @@ define(
                                             file_name: $('#new_file_name').val()
                                         }
                                     );
-                                }, 
-                                cancel: function() {}, 
-                                always: function() {}
+                                },
+                                cancel: function () {},
+                                always: function () {}
+                            },
+                            opened: function () {
+                                $('button.action-accept').prop('disabled', true);
                             }
                         });
 
@@ -104,7 +119,7 @@ define(
                         var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
 
                         // Build the autocomplete data
-                        tableRows.forEach(function(row) {
+                        tableRows.forEach(function (row) {
                             // Prepare the variables
                             var filePath = row.getData().file_path;
                             var pathArray = filePath.split('/');
@@ -122,23 +137,52 @@ define(
                             }
                         });
 
-                        // Initialize the file path field
-                        $('#new_file_path').autocomplete({
-                            source: filePathList
-                        });
-
-                        // Initialize the file name field
-                        $('#new_file_name').autocomplete({
-                            source: fileNameList
-                        });
+                        // Initialize the autocomplete fields
+                        self.initAutocompleteFields([
+                            {id: 'new_file_path', source: filePathList},
+                            {id: 'new_file_name', source: fileNameList}
+                        ]);
                     },
-                    error: function(request, status, error) {
+                    error: function (request, status, error) {
                         console.log(error);
                     }
                 });
             },
 
-            newScan: function(com) {
+            initAutocompleteFields: function (fieldsArray) {
+                // Initialise the widgets
+                fieldsArray.forEach(function (field) {
+                    $('#' + field.id).autocomplete({
+                        source: field.source,
+                        open: function (event, ui) {
+                            $(this).autocomplete('widget').css({
+                                'width': ($(this).width() + 'px')
+                            });
+                        }
+                    });
+
+                    // Add the validation checks
+                    $('#' + field.id).on('input', function () {
+                        // Prepare the variables
+                        var isEmpty = 0;
+
+                        // Loop through the fields
+                        $('input[name^="new_file_"]').each(function (i) {
+                            var val = $(this).val().replace(' ', '');
+                            if (val.length === 0) {
+                                isEmpty++;
+                            }
+                        });
+
+                        // Set the confirmation button state
+                        isEmpty == 0
+                        ? $('button.action-accept').prop('disabled', false)
+                        : $('button.action-accept').prop('disabled', true);
+                    });
+                });
+            },
+
+            newScan: function (com) {
                 // Prepare the data
                 var requestData = {
                     block_type: 'prompt',
@@ -152,22 +196,22 @@ define(
                     url: com.options.promptUrl,
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (data) {
                         // Trigger the prompt
                         prompt({
                             title: __('Scan files'),
                             content: data.html,
                             actions: {
-                                confirm: function() {
+                                confirm: function () {
                                     var optChecked = com.cache._('input[name=update_mode]:checked').val();
                                     core.updateFileIndex(com, optChecked);
-                                }, 
-                                cancel: function(){}, 
-                                always: function(){}
+                                },
+                                cancel: function (){},
+                                always: function (){}
                             }
                         });
                     },
-                    error: function(request, status, error) {
+                    error: function (request, status, error) {
                         console.log(error);
                     }
                 });

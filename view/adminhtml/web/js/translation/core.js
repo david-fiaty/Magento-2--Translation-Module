@@ -15,10 +15,11 @@
 define(
     [
         'jquery',
+        'Naxero_Translation/js/translation/filters',
         'mage/translate',
         'mage/cookies'
     ],
-    function ($, __) {
+    function ($, filters, __) {
         'use strict';
 
         // Define constants
@@ -27,10 +28,11 @@ define(
 
         // Return the component
         return {
-            initCache: function() {
+            initCache: function () {
                 var collection = {};
 
-                function get_from_cache(selector) {
+                function get_from_cache(selector)
+                {
                     if (undefined === collection[selector]) {
                         collection[selector] = $(selector);
                     }
@@ -41,23 +43,49 @@ define(
                 return { _: get_from_cache };
             },
 
-            callMethod: function(obj, method, args) {
+            callMethod: function (obj, method, args) {
                 if (typeof obj[method] === 'function') {
                     (typeof args === 'undefined') ? obj[method]() : obj[method](args);
                 }
             },
 
-            getDownloadFileName: function() {
+            /**
+             * Show a message.
+             */
+            showMessage: function (com, type, message) {
+                // Prepare the variables
+                var self = this;
+                var messageHtml = $('<div class="message"></div>');
+
+                // Clear any existing message
+                this.clearMessages(com);
+
+                // Build the message to display
+                messageHtml.addClass('message-' + type + ' ' + type);
+                messageHtml.append('<div>' + __(message) + '</div>');
+                messageHtml.insertBefore('.tabulator-header');
+                messageHtml.show(400, function() {
+                    var displayed = $(this);
+                    setTimeout(function() {
+                        displayed.hide('slow');
+                        self.clearMessages(com);
+                    }, 5000);
+                });
+            },
+
+            /**
+             * Clear all messages.
+             */
+            clearMessages: function (com) {
+                $('.message').hide().remove();
+            },
+
+            getDownloadFileName: function () {
                 var fileName = 'trans_' + Date.now() + '.csv';
                 return fileName;
             },
 
-            getLocaleData: function(com) {
-                var data = com.options.localeData.replace(new RegExp("\\\\", "g"), "");
-                return JSON.parse(data);
-            },
-
-            setPaging: function(com, targetTable, val) {
+            setPaging: function (com, targetTable, val) {
                 // Prepare the pager value
                 var val = val || $.cookie(PAGER_SELECTOR) || DEFAULT_PAGER_VALUE;
 
@@ -71,7 +99,49 @@ define(
                 com.cache._('.' + PAGER_SELECTOR).val(val);
             },
 
-            getData: function(com) {
+            getDetailColumns: function (com) {
+                var self = this;
+                return [
+                    {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
+                    {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
+                    {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
+                    {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
+                    {title: __('Is error'), field: 'is_error', sorter: 'number', width: 90, visible: false},
+                    {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
+                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
+                    {
+                        title: '',
+                        field: 'delete',
+                        width: 50,
+                        headerSort: false,
+                        formatter: function (cell, formatterParams, onRendered) {
+                            return '&ominus;';
+                        },
+                        cellClick: function (e, cell) {
+                            // Get the row
+                            var row = cell.getRow();
+
+                            // Get the row data
+                            var rowData = row.getData();
+
+                            // Delete the row in file
+                            self.deleteRow(
+                                com,
+                                {
+                                    fileId: rowData.file_id,
+                                    rowId: rowData.row_id
+                                }
+                            );
+
+                            // Delete the row in table
+                            row.delete();
+                        }
+                }
+                ];
+            },
+
+            getData: function (com) {
                 // Prepare the variables
                 var self = this;
                 var requestData = {
@@ -85,7 +155,7 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (data) {
                         // Set the table data
                         self.prepareData(com, com.options.targetTable, data);
 
@@ -93,23 +163,23 @@ define(
                         self.setPaging(com, com.options.targetTable);
 
                         // Build options for the lists
-                        self.buildFilters(com, data);
+                        filters.build(com, data);
     
                         // Add the list events
-                        self.addFilterEvents(com);
+                        filters.addEvents(com);
 
                         // Handle invalid rows display
                         if (data.error_data) {
                             self.displayFileErrors(com, data);
                         }
                     },
-                    error: function(request, status, error) {
-                        console.log(error);
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            prepareData: function(com, targetTable, data) {
+            prepareData: function (com, targetTable, data) {
                 // Prepare variables
                 var noResultsClassName = 'no-results';
                 var containerClassName = 'tabulator-tableHolder';
@@ -131,8 +201,7 @@ define(
                 if (rowsCount != 0) {
                     // Set the table data
                     com.cache._(targetTable).tabulator('setData', data.table_data);
-                }
-                else {
+                } else {
                     // Prepare the no results HTML
                     var html = '<div class="'+ noResultsClassName +'">';
                     html += __('No results found.');
@@ -143,7 +212,7 @@ define(
                 }
             },
 
-            setRowsCount: function(com, targetTable, rowsCount, errorsCount) {
+            setRowsCount: function (com, targetTable, rowsCount, errorsCount) {
                 // Prepare the html
                 var className = 'translation-rows-count';
                 var html = '<div class="' + className + '">';
@@ -161,7 +230,7 @@ define(
                 com.cache._(targetTable).prepend(html);
             },
 
-            createFile: function(com, params) {
+            createFile: function (com, params) {
                 // Prepare the data
                 var self = this;
                 var requestData = params;
@@ -174,16 +243,18 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
                         self.getData(com);
                     },
-                    error: function(request, status, error) {
-                        console.log(error);
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            updateFileIndex: function(com, updateMode) {    
+            updateFileIndex: function (com, updateMode) {
                 // Prepare the variables
                 var self = this;
     
@@ -200,120 +271,27 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
                         self.getData(com);
                     },
-                    error: function(request, status, error) {
-                        console.log(error);
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            buildFilters: function(com, data) {
-                if (com.filters && data.filter_data) {
-                    // Create the group filter
-                    this.createOptions(com, com.filters.group, data.filter_data.file_group);
-        
-                    // Create the type filter
-                    this.createOptions(com, com.filters.type, data.filter_data.file_type);
-        
-                    // Create the locale filter
-                    this.createOptions(com, com.filters.locale, data.filter_data.file_locale);
-        
-                    // Create the status filter
-                    this.createOptions(com, com.filters.status, data.filter_data.file_status);
-                }
-            },
-
-            createOptions: function(com, sel, arr) {
-                // Prepare the options
-                var output = [];
-                $.each(arr, function(key, value) {
-                    // Create the option
-                    var option = '<option value="' + value + '">' + value + '</option>';
-    
-                    // Add it to the output
-                    output.push(option);
-                });
-
-                // Append the options
-                com.cache._(sel).children('option:not(:first)').remove();
-                com.cache._(sel).append(output.join(''));
-            },
-
-            addFilterEvents: function(com) {
-                var self = this;
-
-                // Pager events
-                com.cache._('.' + PAGER_SELECTOR).off().on('change', function() {
-                    let selectedKey = $(this).find(':selected').val();
-                    self.setPaging(com, com.options.targetTable, selectedKey);
-                });
-
-                // Filters events
-                if (com.filters) {
-                    var self = this;
-
-                    // Prepare the fields
-                    var fields = [
-                        {selector: com.filters.group, field: 'file_group'},
-                        {selector: com.filters.type, field: 'file_type'},
-                        {selector: com.filters.locale, field: 'file_locale'}
-                    ];
-        
-                    // Assign the events
-                    $.each(fields, function(k, obj) {
-                        com.cache._(obj.selector).off().on('change', function() {
-                            let selectedKey = $(this).find(':selected').val();
-                            self.updateFilters(
-                                com,
-                                {field: obj.field, type: '=', value: selectedKey}
-                            );
-                        });
-                    });
-                }
-            },
-
-            updateFilters: function(com, newFilter) {
-                // Get the existing filters
-                var filters = $(com.options.targetTable).tabulator('getFilters'); 
-                var found = filters.find(function(element) {
-                    return element.field == newFilter.field;
-                });
-    
-                // Process the new filter
-                if (filters.length == 0 || typeof found === 'undefined') {
-                    filters.push(newFilter);
-                } else {
-                    for (var i = 0; i < filters.length; i++) {
-                        if (filters[i].field == newFilter.field) {
-                            if (newFilter.value === 'alltx') {
-                                filters.splice(i, 1);
-                            } 
-                            else if (newFilter.value !== 'alltx' && newFilter.field === filters[i].field) {
-                                filters[i] = newFilter;
-                            }
-                        } 
-                        else if (filters[i].field == newFilter.field && newFilter.value !== 'alltx') {
-                            filters.push(newFilter);
-                        }                    
-                    }
-                }
-    
-                // Clear filters and set the new one
-                com.cache._(com.options.targetTable).tabulator('clearFilter');
-                com.cache._(com.options.targetTable).tabulator('setFilter', filters);
-            },
-
-            updateEntityData: function(com, data) {
+            updateEntityData: function (com, data) {
                 // Prepare the variables
+                var self = this;
                 var fileUpdateUrl = com.options.detailViewUrl;
                 var requestData = {
-                        row_content: data.rowContent,
-                        action: 'update_data',
-                        file_id: data.fileId,
-                        form_key: window.FORM_KEY
-                    };
+                    row_content: data.rowContent,
+                    action: 'update_data',
+                    file_id: data.fileId,
+                    form_key: window.FORM_KEY
+                };
     
                 // Send the the request
                 $.ajax({
@@ -321,22 +299,22 @@ define(
                     url: fileUpdateUrl,
                     data: requestData,
                     dataType: 'json',
-                    showLoader: true,
-                    success: function(res) {},
-                    error: function(request, status, error) {
-                        console.log(error);
+                    success: function (res) {},
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            deleteRow: function(com, data) {
+            deleteRow: function (com, data) {
                 // Prepare the variables
+                var self = this;
                 var requestData = {
-                        action: 'delete_row',
-                        file_id: data.fileId,
-                        row_id: data.rowId,
-                        form_key: window.FORM_KEY
-                    };
+                    action: 'delete_row',
+                    file_id: data.fileId,
+                    row_id: data.rowId,
+                    form_key: window.FORM_KEY
+                };
     
                 // Send the request
                 $.ajax({
@@ -345,14 +323,43 @@ define(
                     data: requestData,
                     dataType: 'json',
                     showLoader: true,
-                    success: function(res) {},
-                    error: function(request, status, error) {
-                        console.log(error);
+                    success: function (res) {},
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
+                    }
+                });
+
+                // Set the view edited state
+                com.rowsCountEdited = true;
+            },
+
+            deleteFile: function (com, rowData) {
+                // Prepare the variables
+                var self = this;
+                var requestData = {
+                    action: 'delete_file',
+                    file_id: rowData.file_id,
+                    form_key: window.FORM_KEY
+                };
+    
+                // Send the request
+                $.ajax({
+                    type: 'POST',
+                    url: com.options.detailViewUrl,
+                    data: requestData,
+                    dataType: 'json',
+                    showLoader: true,
+                    success: function (response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
+                    },
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            importFile: function(com, fileData, fileId) {
+            importFile: function (com, fileData, fileId) {
                 // Prepare the request data
                 var self = this;
                 var requestData = new FormData();
@@ -371,38 +378,38 @@ define(
                     contentType: false,
                     processData: false,
                     showLoader: true,
-                    success: function(data) {
-                        if (JSON.parse(data.success) === true) {
-                            self.getRowDetails(com, fileId, false);
-                        }
+                    success: function (response) {
+                        var msgType = response.success ? 'success' : 'error';
+                        self.showMessage(com, msgType, response.message);
+                        self.getRowDetails(com, fileId, false);
                     },
-                    error: function(request, status, error) {
-                        console.log(error);
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            loadRowDetails: function(com, rowData, isLogView) {
+            loadRowDetails: function (com, rowData, isLogView) {
                 // Prepare the variables
                 var self = this;
     
                 // Create the detail table
                 com.cache._(com.options.detailView).tabulator({
-                    langs: self.getLocaleData(com),
+                    langs: com.options.localeData,
                     pagination: 'local',
                     layout: 'fitColumns',
                     responsiveLayout: true,
                     height: '100%',
                     resizableRows: true,
                     columns: self.getDetailColumns(com),
-                    cellEdited: function(cell) {
+                    cellEdited: function (cell) {
                         self.handleCellEdit(com, cell, true);
                     },
-                    rowClick: function(e, row) {
+                    rowClick: function (e, row) {
                         self.handleCellEdit(com, row, false);
                     },
                     initialSort:[{
-                        column: 'index', 
+                        column: 'index',
                         dir: 'asc'
                     }]
                 });
@@ -417,48 +424,7 @@ define(
                 this.togglePanes(com, rowData.file_id);
             },
 
-            getDetailColumns: function(com) {
-                var self = this;
-                return [
-                    {title: __('File Id'), field: 'file_id', sorter: 'number', visible: false},
-                    {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                    {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85, visible: false},
-                    {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90, visible: false},
-                    {title: __('Row Id'), field: 'row_id', sorter: 'number', visible: false},
-                    {title: __('Key'), field: 'key', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
-                    {title: __('Value'), field: 'value', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), formatter: 'textarea', editor: 'input'},
-                    {
-                        title: '',
-                        field: 'delete',
-                        width: 10,
-                        headerSort: false,
-                        formatter: function(cell, formatterParams, onRendered) {
-                            return '&ominus;';
-                        }, 
-                        cellClick: function(e, cell) {
-                            // Get the row
-                            var row = cell.getRow();
-
-                            // Get the row data
-                            var rowData = row.getData();
-
-                            // Delete the row in file
-                            self.deleteRow(
-                                com,
-                                {
-                                    fileId: rowData.file_id,
-                                    rowId: rowData.row_id
-                                }
-                            );
-
-                            // Delete the row in table
-                            row.delete();
-                        }
-                    }
-                ];
-            },
-
-            getRowDetails: function(com, fileId, isLogView) {
+            getRowDetails: function (com, fileId, isLogView) {
                 // Prepare the variables
                 var self = this;
                 var requestData = {
@@ -475,13 +441,13 @@ define(
                     dataType: 'json',
                     showLoader: true,
                     data: requestData,
-                    success: function(data) {
+                    success: function (data) {
                         // Set the table data
                         self.prepareData(com, com.options.detailView, data);
 
                         // Set the table paging
                         self.setPaging(com, com.options.detailView);
-                        com.cache._('.' + PAGER_SELECTOR).on('change', function() {
+                        com.cache._('.' + PAGER_SELECTOR).on('change', function () {
                             let selectedKey = $(this).find(':selected').val();
                             self.setPaging(com, com.options.detailView, selectedKey);
                         });
@@ -491,23 +457,22 @@ define(
                             self.displayRowErrors(com, data);
                         }
                     },
-                    error: function(request, status, error) {
-                        console.log(error);
+                    error: function (request, status, error) {
+                        self.showMessage(com, 'error', error);
                     }
                 });
             },
 
-            handleRowView: function(com, row) {
+            handleRowView: function (com, row) {
                 var rowData = row.getData();
                 if (rowData.is_readable == '1') {
                     this.loadRowDetails(com, rowData, false);
-                }
-                else {
+                } else {
                     alert(__('This file is not readable. Please check the file permissions.'));
                 }
             },
 
-            handleCellEdit: function(com, item, isCell) {
+            handleCellEdit: function (com, item, isCell) {
                 var row = isCell ? item.getRow() : item;
                 var rowData = row.getData();
                 if (rowData.is_writable == '1') {
@@ -518,13 +483,12 @@ define(
                             rowContent: rowData
                         }
                     );
-                }
-                else {
+                } else {
                     alert(__('This file is not writable. Please check the file permissions.'));
                 }
             },
 
-            displayRowErrors: function(com, data) {
+            displayRowErrors: function (com, data) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.detailView).tabulator('getRows');
 
@@ -532,7 +496,7 @@ define(
                 this.displayErrors(tableRows, data);
             },
 
-            displayFileErrors: function(com, data) {
+            displayFileErrors: function (com, data) {
                 // Get the table rows
                 var tableRows = com.cache._(com.options.targetTable).tabulator('getRows');
 
@@ -541,7 +505,7 @@ define(
             },
 
             displayErrors(tableRows, data)  {
-                tableRows.forEach(function(row) {
+                tableRows.forEach(function (row) {
                     var rowIndex = row.getData().index;
                     if (data.error_data.indexOf(rowIndex) != -1) {
                         row.getElement().css({'background-color':'#FF9900'});
@@ -549,13 +513,13 @@ define(
                 });
             },
 
-            togglePanes: function(com, fileId) {
-                if (com.isListView) {    
+            togglePanes: function (com, fileId) {
+                if (com.isListView) {
                     // Move main table
                     com.cache._('#translation-table-list').animate({ left: '-50px' });
                     com.cache._('#translation-table-list').hide();
     
-                    // Show the details table  
+                    // Show the details table
                     com.cache._('#translation-table-detail').show();
     
                     // Set the detail view state

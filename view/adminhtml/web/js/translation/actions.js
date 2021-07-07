@@ -24,20 +24,20 @@ define(
 
         // Return the component
         return {
-            initNewFileButton: function(com) {
-                com.cache._('#new-file').off().on('click', function() {
+            initNewFileButton: function (com) {
+                com.cache._('#new-file').off().on('click', function () {
                     prompt.newFile(com);
                 });
             },
 
-            initImportDataButton: function(com) {
-                com.cache._('#import-data').off().on('click', function() {
+            initImportDataButton: function (com) {
+                com.cache._('#import-data').off().on('click', function () {
                     prompt.importData(com);
                 });
             },
 
-            initNewRowButton: function(com) {
-                com.cache._('#add-row').off().on('click', function() {
+            initNewRowButton: function (com) {
+                com.cache._('#add-row').off().on('click', function () {
                     // Remove the no results message if exists
                     com.cache._('.no-results').remove();
 
@@ -62,6 +62,9 @@ define(
                         newRowData,
                         true
                     );
+                    
+                    // Set the sort
+                    com.cache._(com.options.detailView).tabulator('setSort', "row_id", "desc");
 
                     // Update the file
                     core.updateEntityData(
@@ -70,20 +73,26 @@ define(
                             fileId: com.detailViewId.toString(),
                             rowContent: newRowData
                         }
-                    );                    
+                    );
+                    
+                    // Set the view edited state
+                    com.rowsCountEdited = true;
                 });
             },
 
-            initBackButton: function(com) {
-                com.cache._('#button-back').off().on('click', function() {
+            initBackButton: function (com) {
+                com.cache._('#button-back').off().on('click', function () {
                     core.togglePanes(com, 0);
                     com.cache._(com.options.detailView).tabulator('destroy');
-                    core.getData(com);
+                    if (com.rowsCountEdited) {
+                        core.getData(com);
+                        com.rowsCountEdited = false;
+                    }
                 });
             },
 
-            initDownloadButton: function(com) {
-                com.cache._('#download-file').off().on('click', function() {
+            initDownloadButton: function (com) {
+                com.cache._('#download-file').off().on('click', function () {
                     com.cache._(com.options.detailView).tabulator(
                         'download',
                         'csv',
@@ -92,14 +101,14 @@ define(
                 });
             },
 
-            initScanButton: function(com) {
-                com.cache._('#update-files').off().on('click', function() {
+            initScanButton: function (com) {
+                com.cache._('#update-files').off().on('click', function () {
                     prompt.newScan(com);
                 });
             },
 
-            initCacheButton: function(com) {
-                com.cache._('button[id^="flush-cache"]').off().on('click', function() {
+            initCacheButton: function (com) {
+                com.cache._('button[id^="flush-cache"]').off().on('click', function () {
                     // Prepare the data
                     var requestData = {
                         action: 'flush_cache',
@@ -112,21 +121,19 @@ define(
                         url: com.options.cacheUrl,
                         showLoader: true,
                         data: requestData,
-                        success: function(data) {
-                            var success = JSON.parse(data.success);
-                            if (!success) {
-                                alert(data.message);
-                            }
+                        success: function (response) {
+                            var msgType = response.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, response.message);
                         },
-                        error: function(request, status, error) {
-                            console.log(error);
+                        error: function (request, status, error) {
+                            core.showMessage(com, 'error', error);
                         }
                     });
-                });   
+                });
             },
 
-            initLogsButton: function(com) {
-                com.cache._('#clear-logs').off().on('click', function() {
+            initLogsButton: function (com) {
+                com.cache._('#clear-logs').off().on('click', function () {
                     // Prepare the data
                     var requestData = {
                         form_key: window.FORM_KEY
@@ -138,19 +145,15 @@ define(
                         url: com.options.clearLogsUrl,
                         showLoader: true,
                         data: requestData,
-                        success: function(data) {
-                            var success = JSON.parse(data.success);
-                            if (!success) {
-                                alert(data.message);
-                            }
-                            else {
-                                core.getData(com);
-                            }
+                        success: function (response) {
+                            var msgType = response.success ? 'success' : 'error';
+                            core.showMessage(com, msgType, response.message);
+                            core.getData(com);
                         },
-                        error: function(request, status, error) {
-                            console.log(error);
+                        error: function (request, status, error) {
+                            core.showMessage(com, 'error', error);
                         }
-                    });   
+                    });
                 });
             }
         };

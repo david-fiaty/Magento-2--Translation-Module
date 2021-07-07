@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Naxero\Translation\Model\ResourceModel\LogEntity;
 
@@ -17,8 +17,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     public function _construct()
     {
         $this->_init(
-            'Naxero\Translation\Model\LogEntity',
-            'Naxero\Translation\Model\ResourceModel\LogEntity'
+            \Naxero\Translation\Model\LogEntity::class,
+            \Naxero\Translation\Model\ResourceModel\LogEntity::class
         );
     }
 }

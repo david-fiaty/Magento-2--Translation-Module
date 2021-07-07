@@ -12,13 +12,14 @@
  * @link      https://www.naxero.com
  */
 
- define([
+define([
     'jquery',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'Naxero_Translation/js/translation/actions',
+    'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, tabulator) {
+], function ($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -39,6 +40,7 @@
             fileUpdateUrl: '',
             cacheUrl: '',
             detailViewId: 0,
+            settings: {}
         },
 
         filters: {
@@ -48,31 +50,50 @@
             status: '#translation-status-filter'
         },
 
-        _create: function() {
+        _create: function () {
             this.cache = new core.initCache();
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             // Assign this to self
             var self = this;
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                langs: core.getLocaleData(self),
+                langs: self.options.localeData,
                 pagination: 'local',
                 persistentSort: true,
                 layout: 'fitColumns',
                 responsiveLayout: true,
                 height: '100%',
                 resizableRows: true,
-                columns: self.getListColumns(),
+                columns: columns.getFilesList(self),
                 initialSort:[{
-                    column: 'index', 
+                    column: 'index',
                     dir: 'asc'
                 }],
-                rowClick: function(e, row) {
-                    core.handleRowView(self, row);
+                cellClick: function (e, cell) {
+                    // Prepare the variables
+                    var clickedField = cell.getColumn().getField();
+                    var row = cell.getRow();
+                    var rowData = row.getData();
+
+                    // Handle the click cases
+                    if (clickedField == 'delete') {
+                        // Check core file deletion
+                        if (self.options.settings.allow_core_files_deletion == '0' && rowData.is_core) {
+                            alert(__('Deletion of core files is not allowed.'));
+                        } else {
+                            // Delete the file
+                            core.deleteFile(self, rowData);
+
+                            // Delete the row in table
+                            row.delete();
+                        }
+                    } else {
+                        core.handleRowView(self, row);
+                    }
                 }
             });
 
@@ -83,7 +104,7 @@
             this.setToolbarActions();
         },
 
-        setToolbarActions: function() {   
+        setToolbarActions: function () {
             // Back button
             actions.initBackButton(this);
 
@@ -104,23 +125,6 @@
 
             // Import Data
             actions.initImportDataButton(this);
-        },
-
-        getListColumns: function() {
-            return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                {title: __('Id'), field: 'file_id', sorter: 'number', visible: false},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...')},
-                {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
-                {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
-                {title: __('Created'), field: 'file_creation_time', sorter: 'string', visible: false},
-                {title: __('Updated'), field: 'file_update_time', sorter: 'string', visible: false},
-                {title: __('Rows'), field: 'rows_count', sorter: 'number', width: 85},
-                {title: __('Errors'), field: 'errors', sorter: 'number', width: 100},
-                {title: __('Type'), field: 'file_type', sorter: 'string', width: 100},
-                {title: __('Group'), field: 'file_group', sorter: 'string', width: 100, visible: false},
-                {title: __('Locale'), field: 'file_locale', sorter: 'string', width: 100}
-            ];
         }
     });
 

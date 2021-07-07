@@ -31,6 +31,10 @@
     display: none;
 }
 
+.tabulator-cell[tabulator-field="delete"] {
+    font-size: 18px;
+}
+
 .tabulator-tableHolder {
     border-left: solid 1px #e0e0e0;
     border-right: solid 1px #e0e0e0;
@@ -114,6 +118,10 @@ div#translation-file-path {
 }
 
 /* Modal prompt */
+.modal-inner-wrap {
+    background-color: #f1f1f1 !important;
+}
+
 .modal-popup.prompt input[data-role="promptField"] {
     display: none !important;
 }
@@ -144,7 +152,7 @@ div#translation-file-path {
 ul.ui-autocomplete {
     background-color: white;
     list-style-type: none;
-    max-width: 700px !important;
+    border: solid 1px #cccccc;
 }
 
 ul.ui-autocomplete li {

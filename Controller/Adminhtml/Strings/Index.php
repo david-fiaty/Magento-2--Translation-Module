@@ -17,7 +17,7 @@ namespace Naxero\Translation\Controller\Adminhtml\Strings;
 
 class Index extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var PageFactory
      */
     public $resultPageFactory;

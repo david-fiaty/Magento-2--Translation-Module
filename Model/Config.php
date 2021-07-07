@@ -20,42 +20,42 @@ namespace Naxero\Translation\Model;
  */
 class Config extends \Magento\Framework\DataObject
 {
-	/**
+    /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     public $storeManager;
 
-	/**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface 
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     public $scopeConfig;
 
-	/**
+    /**
      * @var \Magento\Framework\App\Config\ValueInterface
      */
     public $backendModel;
 
-	/**
+    /**
      * @var \Magento\Framework\DB\Transaction
      */
     public $transaction;
 
-	/**
+    /**
      * @var \Magento\Framework\App\Config\ValueFactory
      */
     public $configValueFactory;
 
-	/**
+    /**
      * @var int $storeId
      */
     public $storeId;
 
-	/**
+    /**
      * @var string $storeCode
      */
     public $storeCode;
 
-	/**
+    /**
      * Config class constructor
      */
     public function __construct(
@@ -72,25 +72,27 @@ class Config extends \Magento\Framework\DataObject
         $this->backendModel = $backendModel;
         $this->transaction = $transaction;
         $this->configValueFactory = $configValueFactory;
-		$this->storeId = (int) $this->storeManager->getStore()->getId();
-		$this->storeCode = $this->storeManager->getStore()->getCode();
-	}
-	
-	/**
-	 * Function for getting config value of current store
+        $this->storeId = (int) $this->storeManager->getStore()->getId();
+        $this->storeCode = $this->storeManager->getStore()->getCode();
+    }
+    
+    /**
+     * Function for getting config value of current store
      * @param string $path,
      */
-	public function getCurrentStoreConfigValue($path){
-		return $this->scopeConfig->getValue($path, 'store', $this->storeCode);
-	}
-	
-	/**
-	 * Function for setting config value of current store
+    public function getCurrentStoreConfigValue($path)
+    {
+        return $this->scopeConfig->getValue($path, 'store', $this->storeCode);
+    }
+    
+    /**
+     * Function for setting config value of current store
      * @param string $path,
-	 * @param string $value,
+     * @param string $value,
      */
-	public function setCurrentStoreConfigValue($path,$value){
-		$data = [
+    public function setCurrentStoreConfigValue($path, $value)
+    {
+        $data = [
                     'path' => $path,
                     'scope' =>  'stores',
                     'scope_id' => $this->storeId,
@@ -98,8 +100,8 @@ class Config extends \Magento\Framework\DataObject
                     'value' => $value,
                 ];
 
-		$this->backendModel->addData($data);
-		$this->transaction->addObject($this->backendModel);
-		$this->transaction->save();
-	}
+        $this->backendModel->addData($data);
+        $this->transaction->addObject($this->backendModel);
+        $this->transaction->save();
+    }
 }

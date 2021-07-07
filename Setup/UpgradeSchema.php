@@ -29,8 +29,7 @@ class UpgradeSchema implements \Magento\Framework\Setup\UpgradeSchemaInterface
     public function upgrade(
         \Magento\Framework\Setup\SchemaSetupInterface $setup,
         \Magento\Framework\Setup\ModuleContextInterface $context
-    )
-    {
+    ) {
         $installer = $setup;
         $installer->startSetup();
         $tableName1 = 'naxero_translation_files';

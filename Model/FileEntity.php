@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Naxero.com
  * Professional ecommerce integrations for Magento
@@ -15,8 +15,11 @@
 
 namespace Naxero\Translation\Model;
 
-class FileEntity extends \Magento\Framework\Model\AbstractModel 
-implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\DataObject\IdentityInterface
+use Naxero\Translation\Api\Data\FileEntityInterface;
+use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Model\AbstractModel;
+
+class FileEntity extends AbstractModel implements FileEntityInterface, IdentityInterface
 {
     /**
      * CMS page cache tag
@@ -42,19 +45,9 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      */
     public function _construct()
     {
-        $this->_init('Naxero\Translation\Model\ResourceModel\FileEntity');
-    }
-
-    /**
-     * Check if file path exists
-     * return file id if file path exists
-     *
-     * @param string $filePath
-     * @return int
-     */
-    public function checkFilePath($filePath)
-    {
-        return $this->_getResource()->checkFilePath($filePath);
+        $this->_init(
+            \Naxero\Translation\Model\ResourceModel\FileEntity::class
+        );
     }
 
     /**
@@ -82,7 +75,8 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      *
      * @return bool
      */
-    public function getIsReadable() {
+    public function getIsReadable()
+    {
         return $this->getData(self::IS_READABLE);
     }
 
@@ -91,12 +85,13 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      *
      * @return bool
      */
-    public function getIsWritable() {
+    public function getIsWritable()
+    {
         return $this->getData(self::IS_WRITABLE);
     }
 
     /**
-     * Get file path 
+     * Get file path
      *
      * @return string
      */
@@ -162,7 +157,8 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      * @param bool $isReadable
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
-    public function setIsReadable($isReadable) {
+    public function setIsReadable($isReadable)
+    {
         return $this->setData(self::IS_READABLE, $isReadable);
     }
 
@@ -172,7 +168,8 @@ implements \Naxero\Translation\Api\Data\FileEntityInterface, \Magento\Framework\
      * @param bool $isWritable
      * @return \Naxero\Translation\Api\Data\FileEntityInterface
      */
-    public function setIsWritable($isWritable) {
+    public function setIsWritable($isWritable)
+    {
         return $this->setData(self::IS_WRITABLE, $isWritable);
     }
 

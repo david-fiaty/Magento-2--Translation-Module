@@ -36,7 +36,7 @@ class Index extends \Magento\Backend\App\Action
      * @var Csv
      */
     public $csvParser;
-    
+
     /**
      * @var Data
      */
@@ -104,57 +104,60 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        // Prepare the output
-        $result = $this->resultJsonFactory->create();
-
-        // Prepare the output
-        $output = [];
+        // Prepare the output array
+        $output = [
+            'success' => true,
+            'message' => __('The index was updated successfully.')
+        ];
 
         // Loop through the directory tree
-        if ($this->getRequest()->isAjax()) 
-        {
-            // Get the update mode
-            $update_mode = $this->getRequest()->getParam('update_mode');
+        if ($this->getRequest()->isAjax()) {
+            try {
+                // Get the update mode
+                $update_mode = $this->getRequest()->getParam('update_mode');
 
-            // Get the view mode
-            $view = $this->getRequest()->getParam('view');
+                // Get the view mode
+                $view = $this->getRequest()->getParam('view');
 
-            // Clear the table data
-            if ($update_mode == 'update_replace') {
-                $this->clearTableData();
-            }
-
-            // Get the root directory
-            $rootPath = $this->tree->getRoot();
-
-            // Scan the files
-            $rdi = new \RecursiveDirectoryIterator($rootPath);
-            foreach(new \RecursiveIteratorIterator($rdi) as $filePath)
-            {
-                if ($this->isWantedFile($filePath)) {
-                    $this->saveFile($filePath);
+                // Clear the table data
+                if ($update_mode == 'update_replace') {
+                    $this->clearTableData();
                 }
-            }
 
-            // Get the output
-            $output = $this->viewHelper->render($view);
+                // Get the root directory
+                $rootPath = $this->tree->getRoot();
+
+                // Scan the files
+                $rdi = new \RecursiveDirectoryIterator($rootPath);
+                foreach (new \RecursiveIteratorIterator($rdi) as $filePath) {
+                    if ($this->isWantedFile($filePath)) {
+                        $this->saveFile($filePath);
+                    }
+                }
+            } catch (\Exception $e) {
+                $output = [
+                    'success' => false,
+                    'message' => __($e->getMessage())
+                ];
+            }
         }
 
-        return $result->setData($output);
+        return $this->resultJsonFactory->create()->setData($output);
     }
 
     /**
      * Clear the file records in database.
      */
-    public function clearTableData() {
+    public function clearTableData()
+    {
         // Clear the files index
-        $fileEntity = $this->fileEntityFactory->create(); 
+        $fileEntity = $this->fileEntityFactory->create();
         $connection = $fileEntity->getCollection()->getConnection();
         $tableName  = $fileEntity->getCollection()->getMainTable();
         $connection->truncateTable($tableName);
 
         // Clear the logs index
-        $logEntity = $this->logEntityFactory->create(); 
+        $logEntity = $this->logEntityFactory->create();
         $connection = $logEntity->getCollection()->getConnection();
         $tableName  = $logEntity->getCollection()->getMainTable();
         $connection->truncateTable($tableName);
@@ -202,15 +205,14 @@ class Index extends \Magento\Backend\App\Action
 
             // Loop through the rows
             $rowId = 0;
-            foreach ($rows as $row) {        
+            foreach ($rows as $row) {
                 // Check errors
                 $this->logDataService->hasErrors($arr['file_id'], $row, $rowId);
 
                 // Increment
                 $rowId++;
             }
-        }
-        else {
+        } else {
             // Create the log error
             $this->logDataService->createLog(
                 4,
@@ -225,7 +227,7 @@ class Index extends \Magento\Backend\App\Action
                 5,
                 $arr['file_id'],
                 $rowId = null
-            );        
+            );
         }
     }
 
@@ -234,16 +236,20 @@ class Index extends \Magento\Backend\App\Action
      */
     public function isWantedFile($filePath)
     {
-        return pathinfo($filePath, PATHINFO_EXTENSION) == 'csv'
-        && is_file($filePath)
+        // Get the file extension
+        $extension = $this->helper->getPathInfo($filePath, 'extension');
+
+        return ($extension) && $extension == 'csv'
+        && $this->helper->fileExists($filePath)
         && strpos($filePath, 'i18n') !== false
-        && !$this->isIndexed($filePath);          
+        && !$this->isIndexed($filePath);
     }
 
     /**
      * Check if a file is already indexed in database.
      */
-    public function isIndexed($filePath) {
+    public function isIndexed($filePath)
+    {
         // Get the update mode
         $update_mode = $this->getRequest()->getParam('update_mode');
 
@@ -252,18 +258,17 @@ class Index extends \Magento\Backend\App\Action
             $cleanPath = $this->helper->getCleanPath($filePath);
 
             // Create the collection
-            $fileEntity = $this->fileEntityFactory->create(); 
+            $fileEntity = $this->fileEntityFactory->create();
             $collection = $fileEntity->getCollection();
 
             // Prepare the output array
-            foreach($collection as $item)
-            {
+            foreach ($collection as $item) {
                 if ($fileEntity->getData('file_path') == $cleanPath) {
                     return true;
                 }
-            }    
+            }
         }
 
-        return false;    
+        return false;
     }
 }

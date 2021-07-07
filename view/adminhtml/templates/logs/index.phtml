@@ -19,10 +19,10 @@
 		<div id="translation-table-toolbar">
 			<div class="admin__form-field">
 				<label class="label admin__form-field-label">
-					<span><?= __('Pagination'); ?></span>
+					<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 				</label>
 				<div class="admin__form-field-control">
-					<?= $block->helper->getPagerSelect([
+					<?= /* @noEscape */ $block->helper->getPagerSelect([
 			            'name' => 'translation-paging-filter',
 			            'class' => 'admin__control-select translation-paging-filter'
 			    	], $block->getLayout()); ?>	
@@ -32,10 +32,10 @@
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="update-files" name="update-files" type="button" class="action-default primary">
-							<span><?= __('Scan files'); ?></span>
+							<span><?= $block->escapeHtml(__('Scan files')); ?></span>
 						</button>
 						<button id="clear-logs" name="clear-logs" type="button" class="action-default primary">
-							<span><?= __('Clear logs'); ?></span>
+							<span><?= $block->escapeHtml(__('Clear logs')); ?></span>
 						</button>
 					</div>
 				</div>
@@ -49,13 +49,13 @@
 				<div class="page-actions-inner">
 					<div class="page-actions-buttons">
 						<button id="button-back" name="button-back" type="button" class="action- scalable back">
-							<span><?= __('Back'); ?></span>
+							<span><?= $block->escapeHtml(__('Back')); ?></span>
 						</button>
 						<button id="download-file" name="download-file" type="button" class="action- scalable action-secondary">
-							<span><?= __('Download CSV'); ?></span>
+							<span><?= $block->escapeHtml(__('Download CSV')); ?></span>
 						</button>
 						<button id="flush-cache-detail" name="flush-cache-detail" type="button" class="action-default primary">
-							<span><?= __('Flush cache'); ?></span>
+							<span><?= $block->escapeHtml(__('Flush cache')); ?></span>
 						</button>
 					</div>
 				</div>
@@ -64,10 +64,10 @@
 		<div id="translation-file-path"></div>	
 		<div class="admin__form-field">
 			<label class="label admin__form-field-label">
-				<span><?= __('Pagination'); ?></span>
+				<span><?= $block->escapeHtml(__('Pagination')); ?></span>
 			</label>
 			<div class="admin__form-field-control">
-				<?= $block->helper->getPagerSelect([
+				<?= /* @noEscape */ $block->helper->getPagerSelect([
 					'name' => 'translation-paging-filter',
 					'class' => 'admin__control-select translation-paging-filter'
 				], $block->getLayout()); ?>	
@@ -79,11 +79,11 @@
 
 <div data-mage-init='{
 	"logsjs": {
-		"dataUrl": "<?= $block->getUrl('translation/data/index', ['view' => 'logs']); ?>",
-		"scanUrl": "<?= $block->getUrl('translation/scan/index', ['view' => 'logs']); ?>",
-		"clearLogsUrl": "<?= $block->getUrl('translation/logs/index', ['action' => 'clear_logs']); ?>",
-		"detailViewUrl": "<?= $block->getUrl('translation/files/detail'); ?>",
-		"cacheUrl": "<?= $block->getUrl('translation/cache/index'); ?>",
-		"localeData": "<?= $block->helper->getTableLocaleData(); ?>"
+		"dataUrl": "<?= $block->escapeUrl($block->getUrl('translation/data/index', ['view' => 'logs'])); ?>",
+		"scanUrl": "<?= $block->escapeUrl($block->getUrl('translation/scan/index', ['view' => 'logs'])); ?>",
+		"clearLogsUrl": "<?= $block->escapeUrl($block->getUrl('translation/logs/index', ['action' => 'clear_logs'])); ?>",
+		"detailViewUrl": "<?= $block->escapeUrl($block->getUrl('translation/files/detail')); ?>",
+		"cacheUrl": "<?= $block->escapeUrl($block->getUrl('translation/cache/index')); ?>",
+		"localeData": <?= /* @noEscape */ json_encode($block->helper->getTableLocaleData()); ?>
 	}
 }'>

@@ -20,7 +20,7 @@ class FileDataService
     /**
      * @var FileEntityFactory
      */
-    public $fileEntityFactory;    
+    public $fileEntityFactory;
 
     /**
      * @var Array
@@ -60,7 +60,8 @@ class FileDataService
     /**
      * Initilaise the class instance.
      */
-    public function init() {
+    public function init()
+    {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
 
@@ -75,15 +76,14 @@ class FileDataService
     public function getList()
     {
         // Get the factory
-        $fileEntity = $this->fileEntityFactory->create(); 
+        $fileEntity = $this->fileEntityFactory->create();
 
         // Create the collection
         $collection = $fileEntity->getCollection();
 
         // Prepare the output array
         $fileCount = 0;
-        foreach ($collection as $item)
-        {
+        foreach ($collection as $item) {
             // Get the item data as array
             $arr = $item->getData();
 
@@ -105,13 +105,12 @@ class FileDataService
                     $isReadable = $this->helper->isReadable($arr['file_path']);
                     $isWritable = $this->helper->isWritable($arr['file_path']);
 
-                    // Process the read/write state 
+                    // Process the read/write state
                     if (!$isReadable || !$isWritable) {
                         $this->output['error_data'][] = $fileIndex;
                     }
-                }
-                else {
-                    $this->output['error_data'][] = $fileIndex;  
+                } else {
+                    $this->output['error_data'][] = $fileIndex;
                 }
 
                 // Remove uneeded file content for performance
@@ -132,13 +131,14 @@ class FileDataService
     /**
      * Prepare the JS table data structure.
      */
-    public function prepareOutputArray() {
+    public function prepareOutputArray()
+    {
         return [
             'table_data' => [],
             'filter_data' => [
-                'file_type' => [], 
-                'file_group' => [], 
-                'file_locale' => [], 
+                'file_type' => [],
+                'file_group' => [],
+                'file_locale' => [],
                 'file_status' => [
                     __('Error'),
                     __('Active')
@@ -150,7 +150,8 @@ class FileDataService
     /**
      * Format a file row data for display.
      */
-    public function formatFileRow($arr, $fileEntity, $fileIndex) {
+    public function formatFileRow($arr, $fileEntity, $fileIndex)
+    {
         // Add the index
         $arr['index'] = $fileIndex;
 
@@ -158,18 +159,25 @@ class FileDataService
         $arr['file_id'] = (int) $arr['file_id'];
 
         // Set the language field
-        $arr['file_locale'] =  basename($arr['file_path'], '.csv');
-
+        $arr['file_locale'] = $this->helper->getPathInfo(
+            $arr['file_path'],
+            'filename'
+        );
+        
         // Add the errors column
-        $arr['errors'] = $this->getFileErrorCount($fileEntity);
+        $arr['errors'] = (int) $this->getFileErrorCount($fileEntity);
+
+        // Add the is_core column
+        $arr['is_core'] = $this->helper->isCoreFile($arr['file_path']);
 
         return $arr;
-    }	
+    }
 
     /**
      * Count the error rows in a file.
      */
-    function getFileErrorCount($fileEntity) {
+    public function getFileErrorCount($fileEntity)
+    {
         // Get the file id
         $fileId = $fileEntity->getId();
 
@@ -184,7 +192,8 @@ class FileDataService
     /**
      * Save a file entity.
      */
-    function saveFileEntity($data) {
+    public function saveFileEntity($data)
+    {
         try {
             // Get a file entity instance
             $fileEntity = $this->fileEntityFactory->create();
@@ -198,8 +207,7 @@ class FileDataService
             $fileEntity->save();
 
             return $fileEntity;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

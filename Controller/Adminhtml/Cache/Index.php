@@ -17,7 +17,7 @@ namespace Naxero\Translation\Controller\Adminhtml\Cache;
 
 class Index extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var JsonFactory
      */
     public $resultJsonFactory;
@@ -49,23 +49,29 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         // Prepare the output array
-        $output = ['success' => 'true'];
+        $output = [
+            'success' => true,
+            'message' => __('The cache has been cleared successfully.')
+        ];
 
         // Get the view mode
         $action = $this->getRequest()->getParam('action');
 
         // Process the request
-        if ($this->getRequest()->isAjax() && $action == 'flush_cache') 
-        {
+        if ($this->getRequest()->isAjax() && $action == 'flush_cache') {
             try {
                 $this->helper->flushCache();
-            }
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $output = [
                     'success' => false,
                     'message' => __($e->getMessage())
                 ];
             }
+        } else {
+            $output = [
+                'success' => false,
+                'message' => __('This request is not allowed. Please check your code and server settings.')
+            ];
         }
 
         return $this->resultJsonFactory->create()->setData($output);

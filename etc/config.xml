@@ -20,10 +20,20 @@
         <translation>
             <general>
                 <enable>1</enable>
-                <exclude_core_files>0</exclude_core_files>
-                <exclude_test_files>1</exclude_test_files>
-                <exclude_static_files>1</exclude_static_files>
+                <allow_file_deletion>1</allow_file_deletion>
+                <allow_file_creation>1</allow_file_creation>
             </general>
+            <core_files>
+                <exclude_core_files>0</exclude_core_files>
+                <allow_core_files_edition>0</allow_core_files_edition>
+                <allow_core_files_deletion>0</allow_core_files_deletion>
+            </core_files>
+            <static_files>
+                <exclude_static_files>1</exclude_static_files>
+            </static_files>
+            <test_files>
+                <exclude_test_files>1</exclude_test_files>
+            </test_files>
         </translation> 
     </default>
 </config>

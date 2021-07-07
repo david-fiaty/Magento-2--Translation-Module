@@ -20,7 +20,7 @@ class StringDataService
     /**
      * @var FileEntityFactory
      */
-    public $fileEntityFactory;    
+    public $fileEntityFactory;
 
     /**
      * @var Array
@@ -53,7 +53,8 @@ class StringDataService
     /**
      * Initilaise the class instance.
      */
-    public function init() {
+    public function init()
+    {
         // Prepare the output array
         $this->output = $this->prepareOutputArray();
 
@@ -68,15 +69,14 @@ class StringDataService
     public function getList()
     {
         // Get the factory
-        $fileEntity = $this->fileEntityFactory->create(); 
+        $fileEntity = $this->fileEntityFactory->create();
 
         // Create the collection
         $collection = $fileEntity->getCollection();
 
         // Process the files content
         $rowCount = 0;
-        foreach ($collection as $item)
-        {
+        foreach ($collection as $item) {
             // Get the item data
             $arr = $item->getData();
             if (!$this->helper->excludeFile($arr)) {
@@ -90,8 +90,11 @@ class StringDataService
                 unset($arr['file_content']);
 
                 // Set the language field
-                $arr['file_locale'] =  basename($arr['file_path'], '.csv');
-
+                $arr['file_locale'] = $this->helper->getPathInfo(
+                    $arr['file_path'],
+                    'filename'
+                );
+                
                 // Loop through the rows
                 if (!empty($rows)) {
                     $rowId = 0;
@@ -111,8 +114,7 @@ class StringDataService
                                 $rowIndex,
                                 $arr
                             );
-                        }
-                        else {
+                        } else {
                             // Store the item as an object
                             $this->output['table_data'][] = (object) $this->buildErrorRow(
                                 $row,
@@ -122,7 +124,7 @@ class StringDataService
                             );
 
                             // Store the error reference
-                            $this->output['error_data'][] = $rowIndex;  
+                            $this->output['error_data'][] = $rowIndex;
                         }
 
                         // Increment the row id
@@ -139,10 +141,12 @@ class StringDataService
     /**
      * Format a CSV file row for display.
      */
-    public function buildRow($line, $rowId, $rowIndex, $arr) {
+    public function buildRow($line, $rowId, $rowIndex, $arr)
+    {
         return array_merge([
             'index' => $rowIndex,
             'row_id' => $rowId,
+            'is_error' => 0,
             'key' => $line[0],
             'value' => $line[1]
         ], $arr);
@@ -151,10 +155,12 @@ class StringDataService
     /**
      * Format a CSV file error row for display.
      */
-    public function buildErrorRow($line, $rowId, $rowIndex, $arr) {
+    public function buildErrorRow($line, $rowId, $rowIndex, $arr)
+    {
         $errorLine = [];
         $errorLine['index'] = $rowIndex;
         $errorLine['row_id'] = $rowId;
+        $errorLine['is_error'] = 1;
         $errorLine['key'] = isset($line[0]) ? $line[0] : '';
         $errorLine['value'] = isset($line[1]) ? $line[1] : '';
 
@@ -164,13 +170,14 @@ class StringDataService
     /**
      * Prepare the JS table data structure.
      */
-    public function prepareOutputArray() {
+    public function prepareOutputArray()
+    {
         return [
             'table_data' => [],
             'filter_data' => [
-                'file_type' => [], 
-                'file_group' => [], 
-                'file_locale' => [], 
+                'file_type' => [],
+                'file_group' => [],
+                'file_locale' => [],
                 'file_status' => [
                     __('Error'),
                     __('Active')

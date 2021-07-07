@@ -17,12 +17,12 @@ namespace Naxero\Translation\Controller\Adminhtml\Logs;
 
 class Index extends \Magento\Backend\App\Action
 {
-	/**
+    /**
      * @var PageFactory
      */
     public $resultPageFactory;
 
-	/**
+    /**
      * @var JsonFactory
      */
     public $resultJsonFactory;
@@ -30,7 +30,7 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @var LogEntityFactory
      */
-    public $logEntityFactory; 
+    public $logEntityFactory;
 
     /**
      * Index class constructor
@@ -58,16 +58,13 @@ class Index extends \Magento\Backend\App\Action
         $action = $this->getRequest()->getParam('action');
 
         // Process the request
-        if ($this->getRequest()->isAjax()) 
-        {
+        if ($this->getRequest()->isAjax()) {
             switch ($action) {
                 case 'clear_logs':
                     return $this->clearLogs();
-                    break;
 
                 default:
                     return $this->getData();
-                    break;
             }
         }
 
@@ -78,17 +75,20 @@ class Index extends \Magento\Backend\App\Action
     /**
      * Clear the log records in database.
      */
-    public function clearLogs() {
+    public function clearLogs()
+    {
         // Prepare the output array
-        $output = ['success' => 'true'];
+        $output = [
+            'success' => true,
+            'message' => __('The logs have been cleared successfully.')
+        ];
 
         try {
-            $logEntity = $this->logEntityFactory->create(); 
+            $logEntity = $this->logEntityFactory->create();
             $connection = $logEntity->getCollection()->getConnection();
             $tableName  = $logEntity->getCollection()->getMainTable();
             $connection->truncateTable($tableName);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $output = [
                 'success' => false,
                 'message' => __($e->getMessage())
@@ -101,7 +101,8 @@ class Index extends \Magento\Backend\App\Action
     /**
      * Send the logs data for display.
      */
-    public function getData() {
+    public function getData()
+    {
         return $this->resultPageFactory->create();
     }
 }

@@ -12,13 +12,14 @@
  * @link      https://www.naxero.com
  */
 
- define([
+define([
     'jquery',
     'mage/translate',
     'Naxero_Translation/js/translation/core',
     'Naxero_Translation/js/translation/actions',
+    'Naxero_Translation/js/translation/columns',
     'tabulator'
-], function($, __, core, actions, tabulator) {
+], function ($, __, core, actions, columns, tabulator) {
     'use strict';
 
     // Build the widget
@@ -40,35 +41,34 @@
             clearLogsUrl: '',
         },
 
-        _create: function() {
+        _create: function () {
             this.cache = new core.initCache();
             this._bind();
         },
 
-        _bind: function() {
+        _bind: function () {
             // Assign this to self
             var self = this;
 
             // Create the table
             this.cache._(this.options.targetTable).tabulator({
-                langs: core.getLocaleData(self),
+                langs: self.options.localeData,
                 pagination: 'local',
                 persistentSort: true,
                 layout: 'fitColumns',
                 responsiveLayout: true,
                 height: '100%',
                 resizableRows:true,
-                columns: self.getListColumns(),
+                columns: columns.getLogsList(),
                 initialSort:[{
                     column: 'index',
                     dir: 'asc'
                 }],
-                rowClick: function(e, row) {
+                rowClick: function (e, row) {
                     var rowData = row.getData();
                     if (rowData.is_readable == '1') {
                         core.loadRowDetails(self, rowData, false);
-                    }
-                    else {
+                    } else {
                         alert(__('This file is not readable. Please check the file permissions.'));
                     }
                 }
@@ -81,7 +81,7 @@
             this.setToolbarActions();
         },
 
-        setToolbarActions: function() {
+        setToolbarActions: function () {
             // Back button
             actions.initBackButton(this);
 
@@ -96,19 +96,6 @@
 
             // Flush cache
             actions.initCacheButton(this);
-        },
-
-        getListColumns: function() {
-            return [
-                {title: __('#'), field: 'index', sorter: 'number', width: 70, visible: false},
-                {title: __('Id'), field: 'id', sorter: 'number', visible: false},
-                {title: __('File Id'), field: 'file_id', sorter: 'string', visible: false},
-                {title: __('Path'), field: 'file_path', sorter: 'string', headerFilter: 'input', headerFilterPlaceholder: __('Search...'), width: 550},
-                {title: __('Read'), field: 'is_readable', sorter: 'number', formatter: 'tickCross', width: 85},
-                {title: __('Write'), field: 'is_writable', sorter: 'number', formatter: 'tickCross', width: 90},
-                {title: __('Row Id'), field: 'row_id', sorter: 'number', width: 100},
-                {title: __('Comments'), field: 'comments', formatter: 'textarea'}
-            ];
         }
     });
 
